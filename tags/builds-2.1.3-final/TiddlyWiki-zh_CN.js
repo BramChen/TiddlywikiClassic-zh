@@ -256,11 +256,11 @@ merge(config.options,{
 
 // Messages
 merge(config.messages,{
-	customConfigError: "套件载入发生错误，详细请参考 PluginManager",
+	customConfigError: "插件载入发生错误，详细请参考 PluginManager",
 	pluginError: "发生错误: %0",
 	pluginDisabled: "未执行，因标签设为 'systemConfigDisable'",
 	pluginForced: "已执行，因标签设为 'systemConfigForce'",
-	pluginVersionError: "未执行，套件需较新版本的 TiddlyWiki",
+	pluginVersionError: "未执行，插件需较新版本的 TiddlyWiki",
 	nothingSelected: "尚未作任何选择，至少需选择一项",
 	savedSnapshotError: "此 TiddlyWiki 未正确保存，详见 http://www.tiddlywiki.com/#DownloadSoftware",
 	subtitleUnknown: "(未知)",
@@ -270,7 +270,7 @@ merge(config.messages,{
 	externalLinkTooltip: "外部链接至 %0",
 	noTags: "未设置标签的文章",
 	notFileUrlError: "须先将此 TiddlyWiki 存至本机文件，才可保存变更",
-	cantSaveError: "此浏览器无法保存变更，建议使用FireFox；也可能是你的 TiddlyWiki 文件名称包含不合法的字元所致。",
+	cantSaveError: "此浏览器无法保存变更，建议使用FireFox；也可能是你的 TiddlyWiki 文件名称包含不合法的字符所致。",
 	invalidFileError: " '%0' 非有效之 TiddlyWiki",
 	backupSaved: "已保存备份",
 	backupFailed: "无法保存备份",
@@ -316,7 +316,7 @@ merge(config.views.wikified,{
 	defaultText: "",
 	defaultModifier: "(未完成)",
 	shadowModifier: "(默认)",
-	createdPrompt: "添加于"});
+	createdPrompt: "创建于"});
 
 merge(config.views.editor,{
 	tagPrompt: "设置标签之间以空白区隔，[[标签含空白时请使用双中括弧]]，或点选现有之标签加入",
@@ -357,7 +357,7 @@ merge(config.macros.closeAll,{
 	prompt: "关闭所有开启中的 tiddler (编辑中除外)"});
 
 merge(config.macros.permaview,{
-	label: "引用链接",
+	label: "永久链接",
 	prompt: "可存取现有开启之文章的链接位址"});
 
 merge(config.macros.saveChanges,{
@@ -366,19 +366,19 @@ merge(config.macros.saveChanges,{
 	accessKey: "S"});
 
 merge(config.macros.newTiddler,{
-	label: "添加文章",
-	prompt: "添加 tiddler",
-	title: "添加文章",
+	label: "创建文章",
+	prompt: "创建 tiddler",
+	title: "创建文章",
 	accessKey: "N"});
 
 merge(config.macros.newJournal,{
-	label: "添加日志",
-	prompt: "添加 jounal",
+	label: "创建日志",
+	prompt: "创建 jounal",
 	accessKey: "J"});
 	
 merge(config.macros.plugins,{
-	skippedText: "(此套件因刚加入，故尚未执行)",
-	noPluginText: "未安装套件",
+	skippedText: "(此插件因刚加入，故尚未执行)",
+	noPluginText: "未安装插件",
 	confirmDeleteText: "确认是否删除此文章:\n\n%0",
 	listViewTemplate : {
 		// Fields needing localisation are: title, trueText, falseText and caption
@@ -389,14 +389,11 @@ merge(config.macros.plugins,{
 			{name: "Error", field: "error", title: "载入状态", type: "Boolean", trueText: "错误", falseText: "正常"},
 			{name: "Forced", field: "forced", title: "强制执行", tag: "systemConfigDisable", type: "TagCheckbox"},
 			{name: "Disabled", field: "disabled", title: "停用", tag: "systemConfigDisable", type: "TagCheckbox"},
-			{name: "Log", field: "log", title: "纪录", type: "StringList"}
+			{name: "Log", field: "log", title: "记录", type: "StringList"}
 			],
 		rowClasses: [
-			{className: "error", field: "error"}
-			],
-		sort: [
-			{name: "Executed", sortType: "asc"},
-			{name: "Name", sortType: "desc"}
+			{className: "error", field: "error"},
+			{className: 'warning', field: 'warning'}
 			],
 		actions: [
 			{caption: "执行选项...", name: ""},
@@ -411,22 +408,22 @@ merge(config.macros.refreshDisplay,{
 	});
 
 merge(config.macros.importTiddlers,{
-	readOnlyWarning: "TiddlyWiki 于唯读模式下，不支援汇入文章。请由本机（file://）开启 TiddlyWiki 文件",
+	readOnlyWarning: "TiddlyWiki 于唯读模式下，不支援导入文章。请由本机（file://）开启 TiddlyWiki 文件",
 	defaultPath: "http://www.tiddlywiki.com/index.html",
-	fetchLabel: "汇入",
-	fetchPrompt: "汇入 TiddlyWiki 档",
-	fetchError: "汇入 TiddlyWiki 档时发生错误",
+	fetchLabel: "导入",
+	fetchPrompt: "导入 TiddlyWiki 档",
+	fetchError: "导入 TiddlyWiki 档时发生错误",
 	confirmOverwriteText: "确定要覆写这些文章:\n\n%0",
-	wizardTitle: "自其他 TiddlyWiki 档汇入文章",
-	step1: "步骤一：指定欲汇入之档案",
+	wizardTitle: "自其他 TiddlyWiki 档导入文章",
+	step1: "步骤一：指定欲导入之档案",
 	step1prompt: "在此输入 URL 或路径：",
-	step1promptFile: "...或选择欲汇入之档案：",
+	step1promptFile: "...或选择欲导入之档案：",
 	step1promptFeeds: "...或选择指定的 feed：",
 	step1feedPrompt: "选择...",
 	step2: "步骤二：TiddlyWiki 档载入中",
 	step2Text: "档案载入中，请稍后：%0",
-	step3: "步骤三：选择欲汇入之文章",
-	step4: "已汇入%0 篇文章",
+	step3: "步骤三：选择欲导入之文章",
+	step4: "已导入%0 篇文章",
 	step5: "Done",
 	listViewTemplate: {
 		columns: [
@@ -437,12 +434,9 @@ merge(config.macros.importTiddlers,{
 			],
 		rowClasses: [
 			],
-		sort: [
-			{name: 'Title', sortType: 'asc'}
-			],
 		actions: [
 			{caption: "执行选项......", name: ''},
-			{caption: "汇入所选文章", name: 'import'}
+			{caption: "导入所选文章", name: 'import'}
 			]}
 	});
 
@@ -457,8 +451,8 @@ merge(config.commands.closeOthers,{
 merge(config.commands.editTiddler,{
 	text: "编辑",
 	tooltip: "编辑本文",
-	readOnlyText: "检视",
-	readOnlyTooltip: "检视本文之原始内容"});
+	readOnlyText: "查阅",
+	readOnlyTooltip: "查阅本文之原始内容"});
 
 merge(config.commands.saveTiddler,{
 	text: "完成",
@@ -477,8 +471,8 @@ merge(config.commands.deleteTiddler,{
 	warning: "确定删除 '%0'?"});
 
 merge(config.commands.permalink,{
-	text: "引用链接",
-	tooltip: "本文引用链接"});
+	text: "永久链接",
+	tooltip: "本文永久链接"});
 
 merge(config.commands.references,{
 	text: "引用",
@@ -486,8 +480,8 @@ merge(config.commands.references,{
 	popupNone: "本文未被引用"});
 
 merge(config.commands.jump,{
-	text: "卷页",
-	tooltip: "卷页至其他已开启的文章"});
+	text: "跳转",
+	tooltip: "跳转至其他已开启的文章"});
 
 merge(config.shadowTiddlers,{
 	DefaultTiddlers: "GettingStarted",
@@ -497,8 +491,8 @@ merge(config.shadowTiddlers,{
 	SiteUrl: "http://www.tiddlywiki.com/",
 	GettingStarted: "使用此 TiddlyWiki 的空白范本之前，请先修改以下默认文章：:\n* SiteTitle 及 SiteSubtitle：网站的标题和副标题，显示于页面上方（在保存变更后，将显示于浏览器视窗的标题列）。\n* MainMenu：主菜单（通常在页面左测）。\n* DefaultTiddlers：包含一些文章的标题，可于进入TiddlyWiki 后开启。\n请输入您的大名，作为所建立/ 编辑文章的署名：<<option txtUserName>>",
 	SideBarOptions: "<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal ' YYYY0MM0DD'>><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  '偏好设置 »' '变更 TiddlyWiki 选项'>>",
-	OptionsPanel: "这些设置将缓存于浏览器\n请签名<<option txtUserName>>\n (范例：WikiWord)\n\n<<option chkSaveBackups>> 保存备份\n<<option chkAutoSave>> 自动保存\n<<option chkRegExpSearch>> 正规式搜寻\n<<option chkCaseSensitiveSearch>> 区分大小写搜寻\n<<option chkAnimate>> 使用动画显示\n\n[[进阶选项|AdvancedOptions]]\n[[套件管理|PluginManager]]\n[[汇入文章|ImportTiddlers]]",
-	AdvancedOptions: "<<option chkGenerateAnRssFeed>> 产生 RssFeed\n<<option chkOpenInNewWindow>> 链接开启于新视窗\n<<option chkSaveEmptyTemplate>> 保存范本\n<<option chkToggleLinks>> 点击文章使已开启者关闭\n\n<<option chkHttpReadOnly>> 隐藏编辑功能 ({{{http:}}})\n<<option chkForceMinorUpdate>> 修改文章不变更日期时间\n(确认修改同时按 Shift 键，或只按 Ctrl-Shift-Enter)\n<<option chkConfirmDelete>> 删除文章前确认\n\n编辑模式中显示列数: <<option txtMaxEditRows>>\n存放备份文件的资料夹: <<option txtBackupFolder>>\n<<option chkInsertTabs>> 使用 tab 键插入定位字元，而非跳至下一个栏位\n",
+	OptionsPanel: "这些设置将缓存于浏览器\n请签名<<option txtUserName>>\n (范例：WikiWord)\n\n<<option chkSaveBackups>> 保存备份\n<<option chkAutoSave>> 自动保存\n<<option chkRegExpSearch>> 正规式搜寻\n<<option chkCaseSensitiveSearch>> 区分大小写搜寻\n<<option chkAnimate>> 使用动画显示\n\n[[进阶选项|AdvancedOptions]]\n[[插件管理|PluginManager]]\n[[导入文章|ImportTiddlers]]",
+	AdvancedOptions: "<<option chkGenerateAnRssFeed>> 产生 RssFeed\n<<option chkOpenInNewWindow>> 链接开启于新视窗\n<<option chkSaveEmptyTemplate>> 保存范本\n<<option chkToggleLinks>> 点击文章使已开启者关闭\n\n<<option chkHttpReadOnly>> 隐藏编辑功能 ({{{http:}}})\n<<option chkForceMinorUpdate>> 修改文章不变更日期时间\n(确认修改同时按 Shift 键，或只按 Ctrl-Shift-Enter)\n<<option chkConfirmDelete>> 删除文章前确认\n\n编辑模式中显示列数: <<option txtMaxEditRows>>\n存放备份文件的资料夹: <<option txtBackupFolder>>\n<<option chkInsertTabs>> 使用 tab 键插入定位字符，而非跳至下一个栏位\n",
 	SideBarTabs: "<<tabs txtMainTab 最近更新 '依更新日期排序' TabTimeline 全部 '所有文章' TabAll 分类 '所有标签' TabTags 更多 '其他' TabMore>>",
 	TabTimeline: "<<timeline>>",
 	TabAll: "<<list all>>",

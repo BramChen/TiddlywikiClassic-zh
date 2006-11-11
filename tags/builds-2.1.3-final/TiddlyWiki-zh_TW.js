@@ -392,11 +392,8 @@ merge(config.macros.plugins,{
 			{name: "Log", field: "log", title: "紀錄", type: "StringList"}
 			],
 		rowClasses: [
-			{className: "error", field: "error"}
-			],
-		sort: [
-			{name: "Executed", sortType: "asc"},
-			{name: "Name", sortType: "desc"}
+			{className: "error", field: "error"},
+			{className: 'warning', field: 'warning'}
 			],
 		actions: [
 			{caption: "執行選項...", name: ""},
@@ -436,9 +433,6 @@ merge(config.macros.importTiddlers,{
 			{name: 'Tags', field: 'tags', title: "標籤", type: 'Tags'}
 			],
 		rowClasses: [
-			],
-		sort: [
-			{name: 'Title', sortType: 'asc'}
 			],
 		actions: [
 			{caption: "執行選項......", name: ''},
