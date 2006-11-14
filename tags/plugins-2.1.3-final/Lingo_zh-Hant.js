@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------
 // Translateable strings
 // ---------------------------------------------------------------------------------
-version.extensions.Lingo_zh_TW = {major: 2, minor: 1, revision: 3,
+version.extensions.Lingo_zh_Hant = {major: 2, minor: 1, revision: 3,
 	date: new Date("Nov 4, 2006"),
 	author: "BramChen",
 	source: "http://sourceforge.net/project/showfiles.php?group_id=150646"
