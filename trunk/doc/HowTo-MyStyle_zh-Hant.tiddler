@@ -1,11 +1,11 @@
-''內建功能：''
+!''內建功能：''
 * 版面調整可修改：PageTemplate、ViewTemplate、EditTemplate與StyleSheetLayout
 * 樣式調整可修改：StyleSheet、StyleSheetColors與StyleSheetPrint
 >建議對 StyleSheet* 的修改可放至於 StyleSheet，不要直接修改其他 StyleSheet*，可避免文件虛胖
 * 於 MarkupPreHead 定義載入的外部CSS，也可於 StyleSheet 利用 @import 載入外部 CSS。
 * TW2.1 提供一個簡易的 ColorPalette。可自訂不同的調色盤，改變TW的預設顏色組，有興趣也可試試。
 
-''使用套件：''
+!''使用套件：''
 * BigThemePack 因包含定義多組 PageTemplate 與 StyleSheet 因此體積龐大，建議以外部 script 的方式載入。
 >先將BigThemePack 內容存成獨立檔案（BigThemePack.js）在MarkupPreBody 加入
 >{{{<script type="text/javascript" src="BigThemePack.js"></script>}}}

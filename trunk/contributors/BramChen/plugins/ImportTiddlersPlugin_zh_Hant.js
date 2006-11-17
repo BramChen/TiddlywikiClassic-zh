@@ -1,7 +1,7 @@
 /***
 |''Name:''|ImportTiddlersPlugin_zh-Hant|
-|''Source:''|http://sourceforge.net/project/showfiles.php?group_id=150646|
-|''Author:''|BramChen|
+|''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/plugins/|
+|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.0.10|
 |''Required:''|ImportTiddlersPlugin 3.0.4+|
@@ -11,7 +11,8 @@
 version.extensions.ImportTiddlersPlugin_zh_Hant = {major: 3, minor: 0, revision: 4,
 	date: new Date("Apr 27, 2006"),
 	author: "BramChen",
-	source: "http://sourceforge.net/project/showfiles.php?group_id=150646"
+	type: "Lingo",
+	source: "http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/plugins/"
 };
 
 if (config.macros.importTiddlers){
