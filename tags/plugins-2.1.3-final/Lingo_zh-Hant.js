@@ -153,8 +153,8 @@ merge(config.macros.plugins,{
 			],
 		actions: [
 			{caption: "執行選項...", name: ""},
-			{caption: "移除 'systemConfig' 標籤", name: "移除"},
-			{caption: "永遠刪除", name: "刪除"}
+			{caption: "移除 'systemConfig' 標籤", name: "remove"},
+			{caption: "永遠刪除", name: "delete"}
 			]}
 	});
 
@@ -185,7 +185,7 @@ merge(config.macros.importTiddlers,{
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
 			{name: 'Title', field: 'title', title: "標題", type: 'String'},
-			{name: 'Snippet', field: 'text', title: "Snippet", type: 'String'},
+			{name: 'Snippet', field: 'text', title: "文章摘要", type: 'String'},
 			{name: 'Tags', field: 'tags', title: "標籤", type: 'Tags'}
 			],
 		rowClasses: [
