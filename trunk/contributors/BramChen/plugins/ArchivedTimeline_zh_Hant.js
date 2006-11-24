@@ -16,7 +16,7 @@
 !Code section:
 ***/
 //{{{
-version.extensions.archivedTimeline_zh-Hant = {major: 0, minor: 6, revision: 1,
+version.extensions.archivedTimeline_zh_Hant = {major: 0, minor: 6, revision: 1,
 	date: new Date("Nov 18, 2006"),
 	name: "ArchivedTimeline_zh-Hant",
 	type: "Lingo",
@@ -24,9 +24,11 @@ version.extensions.archivedTimeline_zh-Hant = {major: 0, minor: 6, revision: 1,
 	source: "http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/plugins/"
 };
 
-if (config.macros.archivedTimeline != undefined){
-	config.macros.archivedTimeline.tooltips = "歸檔順序: ";
-	config.macros.archivedTimeline.orderBy = {modified: "修改日期", created: "建立日期"};
-	config.macros.archivedTimeline.dateFormat = "YYYY0MM0DD";
+if (typeof config.macros.archivedTimeline != "undefined"){
+	merge(config.macros.archivedTimeline, {
+		tooltips: "歸檔順序: ",
+		orderBy: {modified: "修改日期", created: "建立日期"},
+		dateFormat: "YYYY0MM0DD"
+	});
 }
 //}}}

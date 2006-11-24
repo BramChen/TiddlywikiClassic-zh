@@ -27,7 +27,7 @@ merge(config.messages,{
 	noTags: "未设置标签的文章",
 	notFileUrlError: "须先将此 TiddlyWiki 存至本机文件，才可保存变更",
 	cantSaveError: "此浏览器无法保存变更，建议使用FireFox；也可能是你的 TiddlyWiki 文件名称包含不合法的字符所致。",
-	invalidFileError: " '%0' 非有效之 TiddlyWiki",
+	invalidFileError: " '%0' 非有效之 TiddlyWiki 文件",
 	backupSaved: "已保存备份",
 	backupFailed: "无法保存备份",
 	rssSaved: "RSS feed 已保存",
@@ -35,7 +35,7 @@ merge(config.messages,{
 	emptySaved: "已保存范本",
 	emptyFailed: "无法保存范本",
 	mainSaved: "主要的TiddlyWiki已保存",
-	mainFailed: "无法保存主要 TiddlyWiki. 所作的改变未保存",
+	mainFailed: "无法保存主要 TiddlyWiki，所作的改变未保存",
 	macroError: "宏 <<%0>> 执行错误",
 	macroErrorDetails: "执行宏 <<%0>> 时，发生错误 :\n%1",
 	missingMacro: "无此宏",
@@ -166,21 +166,21 @@ merge(config.macros.refreshDisplay,{
 merge(config.macros.importTiddlers,{
 	readOnlyWarning: "TiddlyWiki 于唯读模式下，不支援导入文章。请由本机（file://）开启 TiddlyWiki 文件",
 	defaultPath: "http://www.tiddlywiki.com/index.html",
-	fetchLabel: "导入",
-	fetchPrompt: "导入 TiddlyWiki 档",
-	fetchError: "导入 TiddlyWiki 档时发生错误",
+	fetchLabel: "读取来源文件",
+	fetchPrompt: "读取 TiddlyWiki 文件",
+	fetchError: "读取来源文件时发生错误",
 	confirmOverwriteText: "确定要覆写这些文章:\n\n%0",
-	wizardTitle: "自其他 TiddlyWiki 档导入文章",
-	step1: "步骤一：指定欲导入之档案",
+	wizardTitle: "自其他 TiddlyWiki 文件导入文章",
+	step1: "步骤一：指定来源文件",
 	step1prompt: "在此输入 URL 或路径：",
-	step1promptFile: "...或选择欲导入之档案：",
+	step1promptFile: "...或选择来源文件：",
 	step1promptFeeds: "...或选择指定的 feed：",
 	step1feedPrompt: "选择...",
-	step2: "步骤二：TiddlyWiki 档载入中",
-	step2Text: "档案载入中，请稍后：%0",
+	step2: "步骤二：载入来源文件",
+	step2Text: "文件载入中，请稍后：%0",
 	step3: "步骤三：选择欲导入之文章",
 	step4: "已导入%0 篇文章",
-	step5: "Done",
+	step5: "导入完成",
 	listViewTemplate: {
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
@@ -259,7 +259,3 @@ merge(config.shadowTiddlers,{
 	TabMoreShadowed: "<<list shadowed>>",
 	PluginManager: "<<plugins>>", 
 	ImportTiddlers: "<<importTiddlers>>"});
-
-config.options.txtFsEncode = "GBK";
-config.shadowTiddlers["AdvancedOptions"]+="\n档案系统编码：<<option txtFsEncode>>\n<<<\n使用Gecko based的浏览器（如：Firefox）时，\n指定正确系统环境编码（BIG5、GBK、SHIFT-JIS、EUC-KR....等），\n可支持保存文件于非 ASCII 路径及文件名。\n<<<";
-config.shadowTiddlers.ViewTemplate = "<div class='toolbar' macro='toolbar closeTiddler closeOthers +editTiddler permalink references jump'></div>\n<div class='title' macro='view title'></div>\n<div class='subtitle'><span macro='view modifier link'></span>, <span macro='view modified date YYYY0MM0DD'></span> (<span macro='message views.wikified.createdPrompt'></span> <span macro='view created date YYYY0MM0DD'></span>)</div>\n<div class='tagging' macro='tagging'></div>\n<div class='tagged' macro='tags'></div>\n<div class='viewer' macro='view text wikified'></div>\n<div class='tagClear'></div>";
