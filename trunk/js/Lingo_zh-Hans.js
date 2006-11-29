@@ -133,6 +133,8 @@ merge(config.macros.newJournal,{
 	accessKey: "J"});
 	
 merge(config.macros.plugins,{
+	wizardTitle: "插件管理",
+	step1: " - 已载入之插件",
 	skippedText: "(此插件因刚加入，故尚未执行)",
 	noPluginText: "未安装插件",
 	confirmDeleteText: "确认是否删除此文章:\n\n%0",
@@ -159,8 +161,8 @@ merge(config.macros.plugins,{
 	});
 
 merge(config.macros.refreshDisplay,{
-	label: "refresh",
-	prompt: "Redraw the entire TiddlyWiki display"
+	label: "刷新",
+	prompt: "刷新此 TiddlyWiki 显示"
 	});
 
 merge(config.macros.importTiddlers,{

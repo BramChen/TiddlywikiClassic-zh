@@ -133,11 +133,12 @@ merge(config.macros.newJournal,{
 	accessKey: "J"});
 
 merge(config.macros.plugins,{
+	wizardTitle: "擴充套件管理",
+	step1: "- 已載入之套件",
 	skippedText: "(此套件因剛加入，故尚未執行)",
 	noPluginText: "未安裝套件",
 	confirmDeleteText: "確認是否刪除此文章:\n\n%0",
 	listViewTemplate : {
-		// Fields needing localisation are: title, trueText, falseText and caption
 		columns: [
 			{name: "Selected", field: "Selected", rowName: "title", type: "Selector"},
 			{name: "Title", field: "title", tiddlerLink: "title", title: "標題", type: "TiddlerLink"},
