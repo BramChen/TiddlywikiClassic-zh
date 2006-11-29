@@ -230,8 +230,24 @@ config.shadowTiddlers = {
 				  "TertiaryDark: #666\n" +
 				  "Error: #f88\n",
 	StyleSheet: "",
-	StyleSheetColors: "/*{{{*/\nbody {\n	background: [[ColorPalette::Background]];\n	color: [[ColorPalette::Foreground]];\n}\n\na{\n	color: [[ColorPalette::PrimaryMid]];\n}\n\na:hover{\n	background: [[ColorPalette::PrimaryMid]];\n	color: [[ColorPalette::Background]];\n}\n\na img{\n	border: 0;\n}\n\nh1,h2,h3,h4,h5 {\n	color: [[ColorPalette::SecondaryDark]];\n	background: [[ColorPalette::PrimaryPale]];\n}\n\n.button {\n	color: [[ColorPalette::PrimaryDark]];\n	border: 1px solid [[ColorPalette::Background]];\n}\n\n.button:hover {\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::SecondaryLight]];\n	border-color: [[ColorPalette::SecondaryMid]];\n}\n\n.button:active {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::SecondaryMid]];\n	border: 1px solid [[ColorPalette::SecondaryDark]];\n}\n\n.header {\n	background: [[ColorPalette::PrimaryMid]];\n}\n\n.headerShadow {\n	color: [[ColorPalette::Foreground]];\n}\n\n.headerShadow a {\n	font-weight: normal;\n	color: [[ColorPalette::Foreground]];\n}\n\n.headerForeground {\n	color: [[ColorPalette::Background]];\n}\n\n.headerForeground a {\n	font-weight: normal;\n	color: [[ColorPalette::PrimaryPale]];\n}\n\n.tabSelected{\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::TertiaryPale]];\n	border-left: 1px solid [[ColorPalette::TertiaryLight]];\n	border-top: 1px solid [[ColorPalette::TertiaryLight]];\n	border-right: 1px solid [[ColorPalette::TertiaryLight]];\n}\n\n.tabUnselected {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::TertiaryMid]];\n}\n\n.tabContents {\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::TertiaryPale]];\n	border: 1px solid [[ColorPalette::TertiaryLight]];\n}\n\n.tabContents .button {\n	 border: 0;}\n\n#sidebar {\n}\n\n#sidebarOptions input {\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n}\n\n#sidebarOptions .sliderPanel {\n	background: [[ColorPalette::PrimaryPale]];\n}\n\n#sidebarOptions .sliderPanel a {\n	border: none;\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n#sidebarOptions .sliderPanel a:hover {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::PrimaryMid]];\n}\n\n#sidebarOptions .sliderPanel a:active {\n	color: [[ColorPalette::PrimaryMid]];\n	background: [[ColorPalette::Background]];\n}\n\n.wizard {\n	background: [[ColorPalette::SecondaryLight]];\n	border-top: 1px solid [[ColorPalette::SecondaryMid]];\n	border-left: 1px solid [[ColorPalette::SecondaryMid]];\n}\n\n.wizard h1 {\n	color: [[ColorPalette::SecondaryDark]];\n}\n\n.wizard h2 {\n	color: [[ColorPalette::Foreground]];\n}\n\n.wizardStep {\n	background: [[ColorPalette::Background]];\n	border-top: 1px solid [[ColorPalette::SecondaryMid]];\n	border-bottom: 1px solid [[ColorPalette::SecondaryMid]];\n	border-left: 1px solid [[ColorPalette::SecondaryMid]];\n}\n\n.wizard .button {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::PrimaryMid]];\n	border-top: 1px solid [[ColorPalette::PrimaryLight]];\n	border-right: 1px solid [[ColorPalette::PrimaryDark]];\n	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];\n	border-left: 1px solid [[ColorPalette::PrimaryLight]];\n}\n\n.wizard .button:hover {\n	color: [[ColorPalette::PrimaryLight]];\n	background: [[ColorPalette::PrimaryDark]];\n	border-color: [[ColorPalette::PrimaryLight]];\n}\n\n.wizard .button:active {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::PrimaryMid]];\n	border-top: 1px solid [[ColorPalette::PrimaryLight]];\n	border-right: 1px solid [[ColorPalette::PrimaryDark]];\n	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];\n	border-left: 1px solid [[ColorPalette::PrimaryLight]];\n}\n\n#messageArea {\n	border: 1px solid [[ColorPalette::SecondaryDark]];\n	background: [[ColorPalette::SecondaryMid]];\n	color: [[ColorPalette::PrimaryDark]];\n}\n\n#messageArea .button {\n	padding: 0.2em 0.2em 0.2em 0.2em;\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::Background]];\n}\n\n.popup {\n	background: [[ColorPalette::PrimaryLight]];\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n}\n\n.popup hr {\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::PrimaryDark]];\n	border-bottom: 1px;\n}\n\n.listBreak div{\n	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];\n}\n\n.popup li.disabled {\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n.popup li a, .popup li a:visited {\n	color: [[ColorPalette::TertiaryPale]];\n	border: none;\n}\n\n.popup li a:hover {\n	background: [[ColorPalette::PrimaryDark]];\n	color: [[ColorPalette::Background]];\n	border: none;\n}\n\n.tiddler .defaultCommand {\n font-weight: bold;\n}\n\n.shadow .title {\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.title {\n	color: [[ColorPalette::SecondaryDark]];\n}\n\n.subtitle {\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.toolbar {\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n.tagging, .tagged {\n	border: 1px solid [[ColorPalette::TertiaryPale]];\n	background-color: [[ColorPalette::TertiaryPale]];\n}\n\n.selected .tagging, .selected .tagged {\n	background-color: [[ColorPalette::TertiaryLight]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.tagging .listTitle, .tagged .listTitle {\n	color: [[ColorPalette::PrimaryDark]];\n}\n\n.tagging .button, .tagged .button {\n		border: none;\n}\n\n.footer {\n	color: [[ColorPalette::TertiaryLight]];\n}\n\n.selected .footer {\n	color: [[ColorPalette::TertiaryMid]];\n}\n\n.sparkline {\n	background: [[ColorPalette::PrimaryPale]];\n	border: 0;\n}\n\n.sparktick {\n	background: [[ColorPalette::PrimaryDark]];\n}\n\n.error, .errorButton {\n	color: [[ColorPalette::Foreground]];\n	background: [[ColorPalette::Error]];\n}\n\n.warning {\n	color: [[ColorPalette::Foreground]];\n	background: [[ColorPalette::SecondaryPale]];\n}\n\n.cascade {\n	background: [[ColorPalette::TertiaryPale]];\n	color: [[ColorPalette::TertiaryMid]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.imageLink, #displayArea .imageLink {\n	background: transparent;\n}\n\n.viewer .listTitle {list-style-type: none; margin-left: -2em;}\n\n.viewer .button {\n	border: 1px solid [[ColorPalette::SecondaryMid]];\n}\n\n.viewer blockquote {\n	border-left: 3px solid [[ColorPalette::TertiaryDark]];\n}\n\n.viewer table {\n	border: 2px solid [[ColorPalette::TertiaryDark]];\n}\n\n.viewer th, thead td {\n	background: [[ColorPalette::SecondaryMid]];\n	border: 1px solid [[ColorPalette::TertiaryDark]];\n	color: [[ColorPalette::Background]];\n}\n\n.viewer td, .viewer tr {\n	border: 1px solid [[ColorPalette::TertiaryDark]];\n}\n\n.viewer pre {\n	border: 1px solid [[ColorPalette::SecondaryLight]];\n	background: [[ColorPalette::SecondaryPale]];\n}\n\n.viewer code {\n	color: [[ColorPalette::SecondaryDark]];\n}\n\n.viewer hr {\n	border: 0;\n	border-top: dashed 1px [[ColorPalette::TertiaryDark]];\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.highlight, .marked {\n	background: [[ColorPalette::SecondaryLight]];\n}\n\n.editor input {\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n}\n\n.editor textarea {\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n	width: 100%;\n}\n\n.editorFooter {\n	color: [[ColorPalette::TertiaryMid]];\n}\n\n/*}}}*/",
-	StyleSheetLayout: "/*{{{*/\n* html .tiddler {\n    height: 1%;\n}\n\nbody {\n	font-size: .75em;\n	font-family: arial,helvetica;\n	margin: 0;\n	padding: 0;\n}\n\nh1,h2,h3,h4,h5 {\n	font-weight: bold;\n	text-decoration: none;\n	padding-left: 0.4em;\n}\n\nh1 {font-size: 1.35em;}\nh2 {font-size: 1.25em;}\nh3 {font-size: 1.1em;}\nh4 {font-size: 1em;}\nh5 {font-size: .9em;}\n\nhr {\n	height: 1px;\n}\n\na{\n	text-decoration: none;\n}\n\ndt {font-weight: bold;}\n\nol { list-style-type: decimal }\nol ol { list-style-type: lower-alpha }\nol ol ol { list-style-type: lower-roman }\nol ol ol ol { list-style-type: decimal }\nol ol ol ol ol { list-style-type: lower-alpha }\nol ol ol ol ol ol { list-style-type: lower-roman }\nol ol ol ol ol ol ol { list-style-type: decimal }\n\n.txtOptionInput {\n	width: 11em;\n}\n\n#contentWrapper .chkOptionInput {\n	border: 0;\n}\n\n.externalLink {\n	text-decoration: underline;\n}\n\n.indent {margin-left:3em;}\n.outdent {margin-left:3em; text-indent:-3em;}\ncode.escaped {white-space:nowrap;}\n\n.tiddlyLinkExisting {\n	font-weight: bold;\n}\n\n.tiddlyLinkNonExisting {\n	font-style: italic;\n}\n\n/* the 'a' is required for IE, otherwise it renders the whole tiddler a bold */\na.tiddlyLinkNonExisting.shadow {\n	font-weight: bold;\n}\n\n#mainMenu .tiddlyLinkExisting, \n#mainMenu .tiddlyLinkNonExisting,\n#sidebarTabs .tiddlyLinkNonExisting{\n font-weight: normal;\n font-style: normal;\n}\n\n#sidebarTabs .tiddlyLinkExisting {\n font-weight: bold;\n font-style: normal;\n}\n\n.header {\n		position: relative;\n}\n\n.header a:hover {\n	background: transparent;\n}\n\n.headerShadow {\n	position: relative;\n	padding: 4.5em 0em 1em 1em;\n	left: -1px;\n	top: -1px;\n}\n\n.headerForeground {\n	position: absolute;\n	padding: 4.5em 0em 1em 1em;\n	left: 0px;\n	top: 0px;\n}\n\n.siteTitle {\n	font-size: 3em;\n}\n\n.siteSubtitle {\n	font-size: 1.2em;\n}\n\n#mainMenu {\n	position: absolute;\n	left: 0;\n	width: 10em;\n	text-align: right;\n	line-height: 1.6em;\n	padding: 1.5em 0.5em 0.5em 0.5em;\n	font-size: 1.1em;\n}\n\n#sidebar {\n	position: absolute;\n	right: 3px;\n	width: 16em;\n	font-size: .9em;\n}\n\n#sidebarOptions {\n	padding-top: 0.3em;\n}\n\n#sidebarOptions a {\n	margin: 0em 0.2em;\n	padding: 0.2em 0.3em;\n	display: block;\n}\n\n#sidebarOptions input {\n	margin: 0.4em 0.5em;\n}\n\n#sidebarOptions .sliderPanel {\n	margin-left: 1em;\n	padding: 0.5em;\n	font-size: .85em;\n}\n\n#sidebarOptions .sliderPanel a {\n	font-weight: bold;\n	display: inline;\n	padding: 0;\n}\n\n#sidebarOptions .sliderPanel input {\n	margin: 0 0 .3em 0;\n}\n\n#sidebarTabs .tabContents {\n	width: 15em;\n	overflow: hidden;\n}\n\n.wizard {\n	padding: 0.1em 0em 0em 2em;\n}\n\n.wizard h1 {\n	font-size: 2em;\n	font-weight: bold;\n	background: none;\n	padding: 0em 0em 0em 0em;\n	margin: 0.4em 0em 0.2em 0em;\n}\n\n.wizard h2 {\n	font-size: 1.2em;\n	font-weight: bold;\n	background: none;\n	padding: 0em 0em 0em 0em;\n	margin: 0.2em 0em 0.2em 0em;\n}\n\n.wizardStep {\n	padding: 1em 1em 1em 1em;\n}\n\n.wizard .button {\n	margin: 0.5em 0em 0em 0em;\n	font-size: 1.2em;\n}\n\n#messageArea {\nposition:absolute; top:0; right:0; margin: 0.5em; padding: 0.5em;\n}\n\n*[id='messageArea'] {\nposition:fixed !important; z-index:99;}\n\n.messageToolbar {\ndisplay: block;\ntext-align: right;\n}\n\n#messageArea a{\n	text-decoration: underline;\n}\n\n.popup {\n	font-size: .9em;\n	padding: 0.2em;\n	list-style: none;\n	margin: 0;\n}\n\n.popup hr {\n	display: block;\n	height: 1px;\n	width: auto;\n	padding: 0;\n	margin: 0.2em 0em;\n}\n\n.listBreak {\n	font-size: 1px;\n	line-height: 1px;\n}\n\n.listBreak div {\n	margin: 2px 0;\n}\n\n.popup li.disabled {\n	padding: 0.2em;\n}\n\n.popup li a{\n	display: block;\n	padding: 0.2em;\n}\n\n.tabset {\n	padding: 1em 0em 0em 0.5em;\n}\n\n.tab {\n	margin: 0em 0em 0em 0.25em;\n	padding: 2px;\n}\n\n.tabContents {\n	padding: 0.5em;\n}\n\n.tabContents ul, .tabContents ol {\n	margin: 0;\n	padding: 0;\n}\n\n.txtMainTab .tabContents li {\n	list-style: none;\n}\n\n.tabContents li.listLink {\n	 margin-left: .75em;\n}\n\n#displayArea {\n	margin: 1em 17em 0em 14em;\n}\n\n\n.toolbar {\n	text-align: right;\n	font-size: .9em;\n	visibility: hidden;\n}\n\n.selected .toolbar {\n	visibility: visible;\n}\n\n.tiddler {\n	padding: 1em 1em 0em 1em;\n}\n\n.missing .viewer,.missing .title {\n	font-style: italic;\n}\n\n.title {\n	font-size: 1.6em;\n	font-weight: bold;\n}\n\n.missing .subtitle {\n display: none;\n}\n\n.subtitle {\n	font-size: 1.1em;\n}\n\n.tiddler .button {\n	padding: 0.2em 0.4em;\n}\n\n.tagging {\nmargin: 0.5em 0.5em 0.5em 0;\nfloat: left;\ndisplay: none;\n}\n\n.isTag .tagging {\ndisplay: block;\n}\n\n.tagged {\nmargin: 0.5em;\nfloat: right;\n}\n\n.tagging, .tagged {\nfont-size: 0.9em;\npadding: 0.25em;\n}\n\n.tagging ul, .tagged ul {\nlist-style: none;margin: 0.25em;\npadding: 0;\n}\n\n.tagClear {\nclear: both;\n}\n\n.footer {\n	font-size: .9em;\n}\n\n.footer li {\ndisplay: inline;\n}\n\n* html .viewer pre {\n	width: 99%;\n	padding: 0 0 1em 0;\n}\n\n.viewer {\n	line-height: 1.4em;\n	padding-top: 0.5em;\n}\n\n.viewer .button {\n	margin: 0em 0.25em;\n	padding: 0em 0.25em;\n}\n\n.viewer blockquote {\n	line-height: 1.5em;\n	padding-left: 0.8em;\n	margin-left: 2.5em;\n}\n\n.viewer ul, .viewer ol{\n	margin-left: 0.5em;\n	padding-left: 1.5em;\n}\n\n.viewer table {\n	border-collapse: collapse;\n	margin: 0.8em 1.0em;\n}\n\n.viewer th, .viewer td, .viewer tr,.viewer caption{\n	padding: 3px;\n}\n\n.viewer table.listView {\n	font-size: 0.85em;\n	margin: 0.8em 1.0em;\n}\n\n.viewer table.listView th, .viewer table.listView td, .viewer table.listView tr {\n	padding: 0px 3px 0px 3px;\n}\n\n.viewer pre {\n	padding: 0.5em;\n	margin-left: 0.5em;\n	font-size: 1.2em;\n	line-height: 1.4em;\n	overflow: auto;\n}\n\n.viewer code {\n	font-size: 1.2em;\n	line-height: 1.4em;\n}\n\n.editor {\nfont-size: 1.1em;\n}\n\n.editor input, .editor textarea {\n	display: block;\n	width: 100%;\n	font: inherit;\n}\n\n.editorFooter {\n	padding: 0.25em 0em;\n	font-size: .9em;\n}\n\n.editorFooter .button {\npadding-top: 0px; padding-bottom: 0px;}\n\n.fieldsetFix {border: 0;\npadding: 0;\nmargin: 1px 0px 1px 0px;\n}\n\n.sparkline {\n	line-height: 1em;\n}\n\n.sparktick {\n	outline: 0;\n}\n\n.zoomer {\n	font-size: 1.1em;\n	position: absolute;\n	padding: 1em;\n}\n\n.cascade {\n	font-size: 1.1em;\n	position: absolute;\n	overflow: hidden;\n}\n/*}}}*/",
+	StyleSheetColors: "/*{{{*/\nbody {\n	background: [[ColorPalette::Background]];\n	color: [[ColorPalette::Foreground]];\n}\n\na{\n	color: [[ColorPalette::PrimaryMid]];\n}\n\na:hover{\n	background-color: [[ColorPalette::PrimaryMid]];\n	color: [[ColorPalette::Background]];\n}\n\na img{\n	border: 0;\n}\n\nh1,h2,h3,h4,h5 {\n	color: [[ColorPalette::SecondaryDark]];\n	background: [[ColorPalette::PrimaryPale]];\n}\n\n.button {\n	color: [[ColorPalette::PrimaryDark]];\n	border: 1px solid [[ColorPalette::Background]];\n}\n\n.button:hover {\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::SecondaryLight]];\n	border-color: [[ColorPalette::SecondaryMid]];\n}\n\n.button:active {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::SecondaryMid]];\n	border: 1px solid [[ColorPalette::SecondaryDark]];\n}\n\n.header {\n	background: [[ColorPalette::PrimaryMid]];\n}\n\n.headerShadow {\n	color: [[ColorPalette::Foreground]];\n}\n\n.headerShadow a {\n	font-weight: normal;\n	color: [[ColorPalette::Foreground]];\n}\n\n.headerForeground {\n	color: [[ColorPalette::Background]];\n}\n\n.headerForeground a {\n	font-weight: normal;\n	color: [[ColorPalette::PrimaryPale]];\n}\n\n.tabSelected{\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::TertiaryPale]];\n	border-left: 1px solid [[ColorPalette::TertiaryLight]];\n	border-top: 1px solid [[ColorPalette::TertiaryLight]];\n	border-right: 1px solid [[ColorPalette::TertiaryLight]];\n}\n\n.tabUnselected {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::TertiaryMid]];\n}\n\n.tabContents {\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::TertiaryPale]];\n	border: 1px solid [[ColorPalette::TertiaryLight]];\n}\n\n.tabContents .button {\n	 border: 0;}\n\n#sidebar {\n}\n\n#sidebarOptions input {\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n}\n\n#sidebarOptions .sliderPanel {\n	background: [[ColorPalette::PrimaryPale]];\n}\n\n#sidebarOptions .sliderPanel a {\n	border: none;\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n#sidebarOptions .sliderPanel a:hover {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::PrimaryMid]];\n}\n\n#sidebarOptions .sliderPanel a:active {\n	color: [[ColorPalette::PrimaryMid]];\n	background: [[ColorPalette::Background]];\n}\n\n.wizard {\n	background: [[ColorPalette::TertiaryLight]];\n	border-top: 1px solid [[ColorPalette::TertiaryMid]];\n	border-left: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.wizard h1 {\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.wizard h2 {\n	color: [[ColorPalette::Foreground]];\n}\n\n.wizardStep {\n	background: [[ColorPalette::Background]];\n	border-top: 1px solid [[ColorPalette::TertiaryMid]];\n	border-bottom: 1px solid [[ColorPalette::TertiaryMid]];\n	border-left: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.wizard .button {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::PrimaryMid]];\n	border-top: 1px solid [[ColorPalette::PrimaryLight]];\n	border-right: 1px solid [[ColorPalette::PrimaryDark]];\n	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];\n	border-left: 1px solid [[ColorPalette::PrimaryLight]];\n}\n\n.wizard .button:hover {\n	color: [[ColorPalette::PrimaryLight]];\n	background: [[ColorPalette::PrimaryDark]];\n	border-color: [[ColorPalette::PrimaryLight]];\n}\n\n.wizard .button:active {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::PrimaryMid]];\n	border-top: 1px solid [[ColorPalette::PrimaryLight]];\n	border-right: 1px solid [[ColorPalette::PrimaryDark]];\n	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];\n	border-left: 1px solid [[ColorPalette::PrimaryLight]];\n}\n\n#messageArea {\n	border: 1px solid [[ColorPalette::SecondaryDark]];\n	background: [[ColorPalette::SecondaryMid]];\n	color: [[ColorPalette::PrimaryDark]];\n}\n\n#messageArea .button {\n	padding: 0.2em 0.2em 0.2em 0.2em;\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::Background]];\n}\n\n.popup {\n	background: [[ColorPalette::PrimaryLight]];\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n}\n\n.popup hr {\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::PrimaryDark]];\n	border-bottom: 1px;\n}\n\n.listBreak div{\n	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];\n}\n\n.popup li.disabled {\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n.popup li a, .popup li a:visited {\n	color: [[ColorPalette::TertiaryPale]];\n	border: none;\n}\n\n.popup li a:hover {\n	background: [[ColorPalette::PrimaryDark]];\n	color: [[ColorPalette::Background]];\n	border: none;\n}\n\n.tiddler .defaultCommand {\n font-weight: bold;\n}\n\n.shadow .title {\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.title {\n	color: [[ColorPalette::SecondaryDark]];\n}\n\n.subtitle {\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.toolbar {\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n.tagging, .tagged {\n	border: 1px solid [[ColorPalette::TertiaryPale]];\n	background-color: [[ColorPalette::TertiaryPale]];\n}\n\n.selected .tagging, .selected .tagged {\n	background-color: [[ColorPalette::TertiaryLight]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.tagging .listTitle, .tagged .listTitle {\n	color: [[ColorPalette::PrimaryDark]];\n}\n\n.tagging .button, .tagged .button {\n		border: none;\n}\n\n.footer {\n	color: [[ColorPalette::TertiaryLight]];\n}\n\n.selected .footer {\n	color: [[ColorPalette::TertiaryMid]];\n}\n\n.sparkline {\n	background: [[ColorPalette::PrimaryPale]];\n	border: 0;\n}\n\n.sparktick {\n	background: [[ColorPalette::PrimaryDark]];\n}\n\n.error, .errorButton {\n	color: [[ColorPalette::Foreground]];\n	background: [[ColorPalette::Error]];\n}\n\n.warning {\n	color: [[ColorPalette::Foreground]];\n	background: [[ColorPalette::SecondaryPale]];\n}\n\n.cascade {\n	background: [[ColorPalette::TertiaryPale]];\n	color: [[ColorPalette::TertiaryMid]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.imageLink, #displayArea .imageLink {\n	background: transparent;\n}\n\n.viewer .listTitle {list-style-type: none; margin-left: -2em;}\n\n.viewer .button {\n	border: 1px solid [[ColorPalette::SecondaryMid]];\n}\n\n.viewer blockquote {\n	border-left: 3px solid [[ColorPalette::TertiaryDark]];\n}\n\ntable {\n	border: 2px solid [[ColorPalette::TertiaryDark]];\n}\n\nth, thead td {\n	background: [[ColorPalette::SecondaryMid]];\n	border: 1px solid [[ColorPalette::TertiaryDark]];\n	color: [[ColorPalette::Background]];\n}\n\ntd, tr {\n	border: 1px solid [[ColorPalette::TertiaryDark]];\n}\n\n.viewer pre {\n	border: 1px solid [[ColorPalette::SecondaryLight]];\n	background: [[ColorPalette::SecondaryPale]];\n}\n\n.viewer code {\n	color: [[ColorPalette::SecondaryDark]];\n}\n\n.viewer hr {\n	border: 0;\n	border-top: dashed 1px [[ColorPalette::TertiaryDark]];\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.highlight, .marked {\n	background: [[ColorPalette::SecondaryLight]];\n}\n\n.editor input {\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n}\n\n.editor textarea {\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n	width: 100%;\n}\n\n.editorFooter {\n	color: [[ColorPalette::TertiaryMid]];\n}\n\n" +
+	".backstageSelTab {\n	background: [[ColorPalette::Foreground]];\n	color: [[ColorPalette::Background]];\n}\n\n" +
+	"#backstagePanel {\n	background: [[ColorPalette::Foreground]];\n	color: [[ColorPalette::Background]];\n}\n\n" +
+	"#backstagePanel a {\n	color: [[ColorPalette::PrimaryPale]];\n}\n\n" +
+	"#backstagePanel a:hover {\n	background-color: [[ColorPalette::Background]];\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n" +
+	"#backstagePanel table {\n	border: 2px solid [[ColorPalette::TertiaryMid]];\n}\n\n" +
+	"#backstagePanel th, #backstagePanel thead td {\n	background: [[ColorPalette::TertiaryDark]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n	color: [[ColorPalette::Background]];\n}\n\n" +
+	"#backstagePanel td, #backstagePanel tr {\n	background: [[ColorPalette::Foreground]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n" +
+	"#backstagePanel .wizardStep {\n	background: [[ColorPalette::Foreground]];\n}\n\n" +
+	"#backstageCloak {\n	background: [[ColorPalette::Background]];\n	opacity: 0.5;\n	filter:'alpha(opacity:50)';\n}\n\n" +
+	"/*}}}*/",
+	StyleSheetLayout: "/*{{{*/\n* html .tiddler {\n    height: 1%;\n}\n\nbody {\n	font-size: .75em;\n	font-family: arial,helvetica;\n	margin: 0;\n	padding: 0;\n}\n\nh1,h2,h3,h4,h5 {\n	font-weight: bold;\n	text-decoration: none;\n	padding-left: 0.4em;\n}\n\nh1 {font-size: 1.35em;}\nh2 {font-size: 1.25em;}\nh3 {font-size: 1.1em;}\nh4 {font-size: 1em;}\nh5 {font-size: .9em;}\n\nhr {\n	height: 1px;\n}\n\na{\n	text-decoration: none;\n}\n\ndt {font-weight: bold;}\n\nol { list-style-type: decimal }\nol ol { list-style-type: lower-alpha }\nol ol ol { list-style-type: lower-roman }\nol ol ol ol { list-style-type: decimal }\nol ol ol ol ol { list-style-type: lower-alpha }\nol ol ol ol ol ol { list-style-type: lower-roman }\nol ol ol ol ol ol ol { list-style-type: decimal }\n\n.txtOptionInput {\n	width: 11em;\n}\n\n#contentWrapper .chkOptionInput {\n	border: 0;\n}\n\n.externalLink {\n	text-decoration: underline;\n}\n\n.indent {margin-left:3em;}\n.outdent {margin-left:3em; text-indent:-3em;}\ncode.escaped {white-space:nowrap;}\n\n.tiddlyLinkExisting {\n	font-weight: bold;\n}\n\n.tiddlyLinkNonExisting {\n	font-style: italic;\n}\n\n/* the 'a' is required for IE, otherwise it renders the whole tiddler a bold */\na.tiddlyLinkNonExisting.shadow {\n	font-weight: bold;\n}\n\n#mainMenu .tiddlyLinkExisting, \n#mainMenu .tiddlyLinkNonExisting,\n#sidebarTabs .tiddlyLinkNonExisting{\n font-weight: normal;\n font-style: normal;\n}\n\n#sidebarTabs .tiddlyLinkExisting {\n font-weight: bold;\n font-style: normal;\n}\n\n.header {\n		position: relative;\n}\n\n.header a:hover {\n	background: transparent;\n}\n\n.headerShadow {\n	position: relative;\n	padding: 4.5em 0em 1em 1em;\n	left: -1px;\n	top: -1px;\n}\n\n.headerForeground {\n	position: absolute;\n	padding: 4.5em 0em 1em 1em;\n	left: 0px;\n	top: 0px;\n}\n\n.siteTitle {\n	font-size: 3em;\n}\n\n.siteSubtitle {\n	font-size: 1.2em;\n}\n\n#mainMenu {\n	position: absolute;\n	left: 0;\n	width: 10em;\n	text-align: right;\n	line-height: 1.6em;\n	padding: 1.5em 0.5em 0.5em 0.5em;\n	font-size: 1.1em;\n}\n\n#sidebar {\n	position: absolute;\n	right: 3px;\n	width: 16em;\n	font-size: .9em;\n}\n\n#sidebarOptions {\n	padding-top: 0.3em;\n}\n\n#sidebarOptions a {\n	margin: 0em 0.2em;\n	padding: 0.2em 0.3em;\n	display: block;\n}\n\n#sidebarOptions input {\n	margin: 0.4em 0.5em;\n}\n\n#sidebarOptions .sliderPanel {\n	margin-left: 1em;\n	padding: 0.5em;\n	font-size: .85em;\n}\n\n#sidebarOptions .sliderPanel a {\n	font-weight: bold;\n	display: inline;\n	padding: 0;\n}\n\n#sidebarOptions .sliderPanel input {\n	margin: 0 0 .3em 0;\n}\n\n#sidebarTabs .tabContents {\n	width: 15em;\n	overflow: hidden;\n}\n\n.wizard {\n	padding: 0.1em 0em 0em 2em;\n}\n\n.wizard h1 {\n	font-size: 2em;\n	font-weight: bold;\n	background: none;\n	padding: 0em 0em 0em 0em;\n	margin: 0.4em 0em 0.2em 0em;\n}\n\n.wizard h2 {\n	font-size: 1.2em;\n	font-weight: bold;\n	background: none;\n	padding: 0em 0em 0em 0em;\n	margin: 0.2em 0em 0.2em 0em;\n}\n\n.wizardStep {\n	padding: 1em 1em 1em 1em;\n}\n\n.wizard .button {\n	margin: 0.5em 0em 0em 0em;\n	font-size: 1.2em;\n}\n\n#messageArea {\nposition:absolute; top:2em; right:0; margin: 0.5em; padding: 0.5em;\n}\n\n*[id='messageArea'] {\nposition:fixed !important; z-index:99;}\n\n.messageToolbar {\ndisplay: block;\ntext-align: right;\n}\n\n#messageArea a{\n	text-decoration: underline;\n}\n\n.popup {\n	z-index: 100;\n	font-size: .9em;\n	padding: 0.2em;\n	list-style: none;\n	margin: 0;\n}\n\n.popup hr {\n	display: block;\n	height: 1px;\n	width: auto;\n	padding: 0;\n	margin: 0.2em 0em;\n}\n\n.listBreak {\n	font-size: 1px;\n	line-height: 1px;\n}\n\n.listBreak div {\n	margin: 2px 0;\n}\n\n.popup li.disabled {\n	padding: 0.2em;\n}\n\n.popup li a{\n	display: block;\n	padding: 0.2em;\n}\n\n.tabset {\n	padding: 1em 0em 0em 0.5em;\n}\n\n.tab {\n	margin: 0em 0em 0em 0.25em;\n	padding: 2px;\n}\n\n.tabContents {\n	padding: 0.5em;\n}\n\n.tabContents ul, .tabContents ol {\n	margin: 0;\n	padding: 0;\n}\n\n.txtMainTab .tabContents li {\n	list-style: none;\n}\n\n.tabContents li.listLink {\n	 margin-left: .75em;\n}\n\n#displayArea {\n	margin: 1em 17em 0em 14em;\n}\n\n\n.toolbar {\n	text-align: right;\n	font-size: .9em;\n	visibility: hidden;\n}\n\n.selected .toolbar {\n	visibility: visible;\n}\n\n.tiddler {\n	padding: 1em 1em 0em 1em;\n}\n\n.missing .viewer,.missing .title {\n	font-style: italic;\n}\n\n.title {\n	font-size: 1.6em;\n	font-weight: bold;\n}\n\n.missing .subtitle {\n display: none;\n}\n\n.subtitle {\n	font-size: 1.1em;\n}\n\n.tiddler .button {\n	padding: 0.2em 0.4em;\n}\n\n.tagging {\nmargin: 0.5em 0.5em 0.5em 0;\nfloat: left;\ndisplay: none;\n}\n\n.isTag .tagging {\ndisplay: block;\n}\n\n.tagged {\nmargin: 0.5em;\nfloat: right;\n}\n\n.tagging, .tagged {\nfont-size: 0.9em;\npadding: 0.25em;\n}\n\n.tagging ul, .tagged ul {\nlist-style: none;margin: 0.25em;\npadding: 0;\n}\n\n.tagClear {\nclear: both;\n}\n\n.footer {\n	font-size: .9em;\n}\n\n.footer li {\ndisplay: inline;\n}\n\n* html .viewer pre {\n	width: 99%;\n	padding: 0 0 1em 0;\n}\n\n.viewer {\n	line-height: 1.4em;\n	padding-top: 0.5em;\n}\n\n.viewer .button {\n	margin: 0em 0.25em;\n	padding: 0em 0.25em;\n}\n\n.viewer blockquote {\n	line-height: 1.5em;\n	padding-left: 0.8em;\n	margin-left: 2.5em;\n}\n\n.viewer ul, .viewer ol{\n	margin-left: 0.5em;\n	padding-left: 1.5em;\n}\n\ntable {\n	border-collapse: collapse;\n	margin: 0.8em 1.0em;\n}\n\n.viewer th, .viewer td, .viewer tr,.viewer caption{\n	padding: 3px;\n}\n\ntable.listView {\n	font-size: 0.85em;\n	margin: 0.8em 1.0em;\n}\n\ntable.listView th, table.listView td, table.listView tr {\n	padding: 0px 3px 0px 3px;\n}\n\n.viewer pre {\n	padding: 0.5em;\n	margin-left: 0.5em;\n	font-size: 1.2em;\n	line-height: 1.4em;\n	overflow: auto;\n}\n\n.viewer code {\n	font-size: 1.2em;\n	line-height: 1.4em;\n}\n\n.editor {\nfont-size: 1.1em;\n}\n\n.editor input, .editor textarea {\n	display: block;\n	width: 100%;\n	font: inherit;\n}\n\n.editorFooter {\n	padding: 0.25em 0em;\n	font-size: .9em;\n}\n\n.editorFooter .button {\npadding-top: 0px; padding-bottom: 0px;}\n\n.fieldsetFix {border: 0;\npadding: 0;\nmargin: 1px 0px 1px 0px;\n}\n\n.sparkline {\n	line-height: 1em;\n}\n\n.sparktick {\n	outline: 0;\n}\n\n.zoomer {\n	font-size: 1.1em;\n	position: absolute;\n	padding: 1em;\n}\n\n.cascade {\n	font-size: 1.1em;\n	position: absolute;\n	overflow: hidden;\n}\n" +
+	"#backstage {\n	position: absolute;\n	z-index: 100;\n	left: 3em;\n	right: 3em;\n}\n\n" +
+	"#backstageTabs {\n	font-size: 1.1em;\n	font-weight: bold;\n	visibility: hidden;\n	background: none;\n	text-align: right;\n}\n\n" +
+	"#backstageTabs a {\n	padding: 0.2em 0.5em 0.2em 0.5em;\n}\n\n" +
+	"#backstagePanel {\n	display: none;\n	padding: 1em 1em 1em 1em;\n}\n\n" +
+	"#backstageCloak {\n	display: none;\n	z-index: 50;\n	position: absolute;\n	width: 100%;\n	height: 100px;\n}\n\n" +
+	"/*}}}*/",
 	StyleSheetPrint: "/*{{{*/\n@media print {\n#mainMenu, #sidebar, #messageArea, .toolbar {display: none ! important;}\n#displayArea {margin: 1em 1em 0em 1em;}\n/* Fixes a feature in Firefox 1.5.0.2 where print preview displays the noscript content */\nnoscript {display:none;}\n}\n/*}}}*/",
 	PageTemplate: "<!--{{{-->\n<div class='header' macro='gradient vert [[ColorPalette::PrimaryLight]] [[ColorPalette::PrimaryMid]]'>\n<div class='headerShadow'>\n<span class='siteTitle' refresh='content' tiddler='SiteTitle'></span>&nbsp;\n<span class='siteSubtitle' refresh='content' tiddler='SiteSubtitle'></span>\n</div>\n<div class='headerForeground'>\n<span class='siteTitle' refresh='content' tiddler='SiteTitle'></span>&nbsp;\n<span class='siteSubtitle' refresh='content' tiddler='SiteSubtitle'></span>\n</div>\n</div>\n<div id='mainMenu' refresh='content' tiddler='MainMenu'></div>\n<div id='sidebar'>\n<div id='sidebarOptions' refresh='content' tiddler='SideBarOptions'></div>\n<div id='sidebarTabs' refresh='content' force='true' tiddler='SideBarTabs'></div>\n</div>\n<div id='displayArea'>\n<div id='messageArea'></div>\n<div id='tiddlerDisplay'></div>\n</div>\n<!--}}}-->",
 	ViewTemplate: "<!--{{{-->\n<div class='toolbar' macro='toolbar closeTiddler closeOthers +editTiddler permalink references jump'></div>\n<div class='title' macro='view title'></div>\n<div class='subtitle'><span macro='view modifier link'></span>, <span macro='view modified date [[DD MMM YYYY]]'></span> (<span macro='message views.wikified.createdPrompt'></span> <span macro='view created date [[DD MMM YYYY]]'></span>)</div>\n<div class='tagging' macro='tagging'></div>\n<div class='tagged' macro='tags'></div>\n<div class='viewer' macro='view text wikified'></div>\n<div class='tagClear'></div>\n<!--}}}-->",
@@ -377,11 +393,12 @@ merge(config.macros.newJournal,{
 	accessKey: "J"});
 
 merge(config.macros.plugins,{
+	wizardTitle: "擴充套件管理",
+	step1: "- 已載入之套件",
 	skippedText: "(此套件因剛加入，故尚未執行)",
 	noPluginText: "未安裝套件",
 	confirmDeleteText: "確認是否刪除此文章:\n\n%0",
 	listViewTemplate : {
-		// Fields needing localisation are: title, trueText, falseText and caption
 		columns: [
 			{name: "Selected", field: "Selected", rowName: "title", type: "Selector"},
 			{name: "Title", field: "title", tiddlerLink: "title", title: "標題", type: "TiddlerLink"},
@@ -554,6 +571,11 @@ function main()
 		story.displayTiddler(null,"PluginManager");
 		displayMessage(config.messages.customConfigError);
 		}
+	for(var m in config.macros)
+		if(config.macros[m].init)
+			config.macros[m].init();
+	if(!readOnly)
+		backstage.init();
 	now = new Date();
 	if(config.displayStartupTime)
 		displayMessage("TiddlyWiki startup in " + (now-then)/1000 + " seconds");
@@ -567,7 +589,7 @@ function restart()
 	if(story.isEmpty())
 		{
 		var defaultParams = store.getTiddlerText("DefaultTiddlers").parseParams("open",null,false);
-		invokeParamifier(defaultParams,"onstart");
+		invokeParamifierAsync(defaultParams,"onstart");
 		}
 	window.scrollTo(0,0);
 }
@@ -694,6 +716,34 @@ function invokeParamifier(params,handler)
 		}
 }
 
+function AsyncParamifier(p,h)
+{
+	this.params = p;
+	this.handler = h;
+	this.index = 1; // p[0] is not used
+	if(!p || p.length == undefined || p.length <= 1)
+		this.params.length = 0;
+	return this;
+}
+
+AsyncParamifier.prototype.tick = function()
+{
+	if(this.index<this.params.length)
+		{
+		var p = config.paramifiers[this.params[this.index].name];
+		if(p && p[this.handler] instanceof Function)
+			p[this.handler](this.params[this.index].value,this.index);
+		this.index++;
+		return true;
+		}
+	return false;
+};
+
+function invokeParamifierAsync(params,handler)
+{
+	anim.startAnimating(new AsyncParamifier(params,handler));
+}
+
 config.paramifiers = {};
 
 config.paramifiers.start = {
@@ -703,8 +753,8 @@ config.paramifiers.start = {
 };
 
 config.paramifiers.open = {
-	onstart: function(v) {
-		story.displayTiddler("bottom",v,null,false,false);
+	onstart: function(v,i) {
+		story.displayTiddler(i == 1 ? null : "bottom",v,null,false,false);
 		}
 };
 
@@ -757,6 +807,12 @@ config.paramifiers.newJournal = {
 		}
 };
 
+config.paramifiers.readOnly = {
+	onconfig: function(v) {
+		var p = v.toLowerCase();
+		readOnly = p == "yes" ? true : (p == "no" ? false : readOnly);
+		}
+};
 // ---------------------------------------------------------------------------------
 // Formatter helpers
 // ---------------------------------------------------------------------------------
@@ -979,7 +1035,7 @@ config.formatters = [
 				else
 					cell = createTiddlyElement(e,"td");
 				prevCell = cell;
-				prevColumns[col] = {rowSpanCount:1, element:cell};
+				prevColumns[col] = {rowSpanCount:1,element:cell};
 				if(colSpanCount > 1)
 					{
 					cell.setAttribute("colspan",colSpanCount);
@@ -1013,12 +1069,12 @@ config.formatters = [
 
 {
 	name: "list",
-	match: "^(?:(?:(?:\\*)|(?:#)|(?:;)|(?::))+)",
+	match: "^(?:[\\*#;:]+)",
 	lookaheadRegExp: /^(?:(?:(\*)|(#)|(;)|(:))+)/mg,
 	termRegExp: /(\n)/mg,
 	handler: function(w)
 	{
-		var placeStack = [w.output];
+		var stack = [w.output];
 		var currLevel = 0, currType = null;
 		var listLevel, listType, itemType;
 		w.nextMatch = w.matchStart;
@@ -1051,21 +1107,21 @@ config.formatters = [
 			if(listLevel > currLevel)
 				{
 				for(var t=currLevel; t<listLevel; t++)
-					placeStack.push(createTiddlyElement(placeStack[placeStack.length-1],listType));
+					stack.push(createTiddlyElement(stack[stack.length-1],listType));
 				}
 			else if(listLevel < currLevel)
 				{
 				for(var t=currLevel; t>listLevel; t--)
-					placeStack.pop();
+					stack.pop();
 				}
 			else if(listLevel == currLevel && listType != currType)
 				{
-				placeStack.pop();
-				placeStack.push(createTiddlyElement(placeStack[placeStack.length-1],listType));
+				stack.pop();
+				stack.push(createTiddlyElement(stack[stack.length-1],listType));
 				}
 			currLevel = listLevel;
 			currType = listType;
-			var e = createTiddlyElement(placeStack[placeStack.length-1],itemType);
+			var e = createTiddlyElement(stack[stack.length-1],itemType);
 			w.subWikifyTerm(e,this.termRegExp);
 			this.lookaheadRegExp.lastIndex = w.nextMatch;
 			lookaheadMatch = this.lookaheadRegExp.exec(w.source);
@@ -1089,7 +1145,7 @@ config.formatters = [
 	element: "blockquote",
 	handler: function(w)
 	{
-		var placeStack = [w.output];
+		var stack = [w.output];
 		var currLevel = 0;
 		var newLevel = w.matchLength;
 		var t;
@@ -1097,16 +1153,16 @@ config.formatters = [
 			if(newLevel > currLevel)
 				{
 				for(t=currLevel; t<newLevel; t++)
-					placeStack.push(createTiddlyElement(placeStack[placeStack.length-1],this.element));
+					stack.push(createTiddlyElement(stack[stack.length-1],this.element));
 				}
 			else if(newLevel < currLevel)
 				{
 				for(t=currLevel; t>newLevel; t--)
-					placeStack.pop();
+					stack.pop();
 				}
 			currLevel = newLevel;
-			w.subWikifyTerm(placeStack[placeStack.length-1],this.termRegExp);
-			createTiddlyElement(placeStack[placeStack.length-1],"br");
+			w.subWikifyTerm(stack[stack.length-1],this.termRegExp);
+			createTiddlyElement(stack[stack.length-1],"br");
 			this.lookaheadRegExp.lastIndex = w.nextMatch;
 			var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 			var matched = lookaheadMatch && lookaheadMatch.index == w.nextMatch;
@@ -1138,8 +1194,8 @@ config.formatters = [
 
 {
 	name: "monospacedByLineForCSS",
-	match: "^/\\*[\\{]{3}\\*/\\n",
-	lookaheadRegExp: /\/\*[\{]{3}\*\/\n*((?:^[^\n]*\n)+?)(\n*^\/\*[\}]{3}\*\/$\n?)/mg,
+	match: "^/\\*\\{\\{\\{\\*/\\n",
+	lookaheadRegExp: /\/\*\{\{\{\*\/\n*((?:^[^\n]*\n)+?)(\n*^\/\*\}\}\}\*\/$\n?)/mg,
 	element: "pre",
 	handler: config.formatterHelpers.enclosedTextHelper
 },
@@ -1154,14 +1210,14 @@ config.formatters = [
 
 {
 	name: "monospacedByLineForTemplate",
-	match: "^<!--[\\{]{3}-->\\n",
-	lookaheadRegExp: /<!--[\{]{3}-->\n*((?:^[^\n]*\n)+?)(\n*^<!--[\}]{3}-->$\n?)/mg, 
+	match: "^<!--\\{\\{\\{-->\\n",
+	lookaheadRegExp: /<!--\{\{\{-->\n*((?:^[^\n]*\n)+?)(\n*^<!--\}\}\}-->$\n?)/mg,
 	element: "pre",
 	handler: config.formatterHelpers.enclosedTextHelper
 },
 
 {
-	name: "wikifyCommentForPlugin", 
+	name: "wikifyCommentForPlugin",
 	match: "^/\\*\\*\\*\\n",
 	termRegExp: /(^\*\*\*\/\n)/mg,
 	handler: function(w)
@@ -1171,7 +1227,7 @@ config.formatters = [
 },
 
 {
-	name: "wikifyCommentForTemplate", 
+	name: "wikifyCommentForTemplate",
 	match: "^<!---\\n",
 	termRegExp: /(^--->\n)/mg,
 	handler: function(w) 
@@ -1281,7 +1337,7 @@ config.formatters = [
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		if(lookaheadMatch && lookaheadMatch.index == w.matchStart) // Simple bracketted link
+		if(lookaheadMatch && lookaheadMatch.index == w.matchStart)
 			{
 			var e = w.output;
 			if(lookaheadMatch[5])
@@ -1400,7 +1456,7 @@ config.formatters = [
 	name: "styleByChar",
 	match: "@@",
 	termRegExp: /(@@)/mg,
-	handler:  function(w)
+	handler: function(w)
 	{
 		var e = createTiddlyElement(w.output,"span");
 		var styles = config.formatterHelpers.inlineCssHelper(w);
@@ -1534,11 +1590,11 @@ function wikifyPlain(title)
 }
 
 // Highlight plain text into an element
-function highlightify(source,output,highlightRegExp)
+function highlightify(source,output,highlightRegExp,tiddler)
 {
 	if(source && source != "")
 		{
-		var wikifier = new Wikifier(source,formatter,highlightRegExp);
+		var wikifier = new Wikifier(source,formatter,highlightRegExp,tiddler);
 		wikifier.outputText(output,0,source.length);
 		}
 }
@@ -1775,7 +1831,7 @@ config.macros.list.shadowed.handler = function(params)
 
 config.macros.allTags.handler = function(place,macroName,params)
 {
-	var tags = store.getTags();
+	var tags = store.getTags(params[0]);
 	var theDateList = createTiddlyElement(place,"ul");
 	if(tags.length == 0)
 		createTiddlyElement(theDateList,"li",null,"listTitle",this.noTags);
@@ -2013,7 +2069,7 @@ config.macros.slider.onClickSlider = function(e)
 	var n = this.nextSibling;
 	var cookie = n.getAttribute("cookie");
 	var isOpen = n.style.display != "none";
-	if(anim && config.options.chkAnimate)
+	if(config.options.chkAnimate && anim && typeof Slider == "function")
 		anim.startAnimating(new Slider(n,!isOpen,e.shiftKey || e.altKey,"none"));
 	else
 		n.style.display = isOpen ? "none" : "block";
@@ -2101,8 +2157,6 @@ config.macros.option.handler = function(place,macroName,params)
 		}
 }
 
-
-
 config.macros.newTiddler.createNewTiddlerButton = function(place,title,params,label,prompt,accessKey,newFocus,isJournal)
 {
 	var tags = [];
@@ -2113,12 +2167,14 @@ config.macros.newTiddler.createNewTiddlerButton = function(place,title,params,la
 	prompt = getParam(params,"prompt",prompt);
 	accessKey = getParam(params,"accessKey",accessKey);
 	newFocus = getParam(params,"focus",newFocus);
+	var customFields = getParam(params,"fields",newFocus);
 	var btn = createTiddlyButton(place,label,prompt,this.onClickNewTiddler,null,null,accessKey);
 	btn.setAttribute("newTitle",title);
 	btn.setAttribute("isJournal",isJournal);
 	btn.setAttribute("params",tags.join("|"));
 	btn.setAttribute("newFocus",newFocus);
 	btn.setAttribute("newTemplate",getParam(params,"template",DEFAULT_EDIT_TEMPLATE));
+	btn.setAttribute("customFields",customFields);
 	var text = getParam(params,"text");
 	if(text !== undefined) 
 		btn.setAttribute("newText",text);
@@ -2136,7 +2192,8 @@ config.macros.newTiddler.onClickNewTiddler = function()
 	var params = this.getAttribute("params").split("|");
 	var focus = this.getAttribute("newFocus");
 	var template = this.getAttribute("newTemplate");
-	story.displayTiddler(null,title,template);
+	var customFields = this.getAttribute("customFields");
+	story.displayTiddler(null,title,template,false,false,customFields);
 	var text = this.getAttribute("newText");
 	if(typeof text == "string")
 		story.getTiddlerField(title,"text").value = text.format([title]);
@@ -2328,7 +2385,7 @@ config.macros.view.handler = function(place,macroName,params,wikifier,paramStrin
 			switch(params[1])
 				{
 				case undefined:
-					highlightify(value,place,highlightHack);
+					highlightify(value,place,highlightHack,tiddler);
 					break;
 				case "link":
 					createTiddlyLink(place,value,true);
@@ -2450,23 +2507,34 @@ config.macros.toolbar.createCommand = function(place,commandName,tiddler,theClas
 		}
 	if((tiddler instanceof Tiddler) && (typeof commandName == "string"))
 		{
-		var title = tiddler.title;
 		var command = config.commands[commandName];
-		var ro = tiddler.isReadOnly();
-		var shadow = store.isShadowTiddler(title) && !store.tiddlerExists(title);
-		var text = ro && command.readOnlyText ? command.readOnlyText : command.text;
-		var tooltip = ro && command.readOnlyTooltip ? command.readOnlyTooltip : command.tooltip;
-		if((!ro || (ro && !command.hideReadOnly)) && !(shadow && command.hideShadow))
-
+		if(command.isEnabled ? command.isEnabled(tiddler) : this.isCommandEnabled(command,tiddler))
 			{
+			var text = command.getText ? command.getText(tiddler) : this.getCommandText(command,tiddler);
+			var tooltip = command.getTooltip ? command.getTooltip(tiddler) : this.getCommandTooltip(command,tiddler);
 			var btn = createTiddlyButton(null,text,tooltip,this.onClickCommand);
 			btn.setAttribute("commandName", commandName);
-			btn.setAttribute("tiddler", title);
+			btn.setAttribute("tiddler", tiddler.title);
 			if(theClass)
 				addClass(btn,theClass);
 			place.appendChild(btn);
 			}
 		}
+}
+
+config.macros.toolbar.isCommandEnabled = function(command, tiddler) {
+	var title = tiddler.title;
+	var ro = tiddler.isReadOnly();
+	var shadow = store.isShadowTiddler(title) && !store.tiddlerExists(title);
+	return (!ro || (ro && !command.hideReadOnly)) && !(shadow && command.hideShadow);
+}
+
+config.macros.toolbar.getCommandText = function(command, tiddler) {
+	return tiddler.isReadOnly() && command.readOnlyText ? command.readOnlyText : command.text;
+}
+
+config.macros.toolbar.getCommandTooltip = function(command, tiddler) {
+	return tiddler.isReadOnly() && command.readOnlyTooltip ? command.readOnlyTooltip : command.tooltip;
 }
 
 config.macros.toolbar.onClickCommand = function(e)
@@ -2514,75 +2582,6 @@ config.macros.toolbar.handler = function(place,macroName,params,wikifier,paramSt
 		}
 }
 
-config.macros.plugins.handler = function(place,macroName,params,wikifier,paramString,tiddler)
-{
-	var e = createTiddlyElement(place,"div");
-	e.setAttribute("refresh","macro");
-	e.setAttribute("macroName","plugins");
-	e.setAttribute("params",paramString);
-	this.refresh(e,paramString);
-}
-
-config.macros.plugins.refresh = function(place,params)
-{
-	var selectedRows = [];
-	ListView.forEachSelector(place,function(e,rowName) {
-			if(e.checked)
-				selectedRows.push(e.getAttribute("rowName"));
-		});
-	removeChildren(place);
-	params = params.parseParams("anon");
-	var plugins = installedPlugins.slice(0);
-	var t,tiddler,p;
-	var configTiddlers = store.getTaggedTiddlers("systemConfig");
-	for(t=0; t<configTiddlers.length; t++)
-		{
-		tiddler = configTiddlers[t];
-		if(plugins.findByField("title",tiddler.title) == null)
-			{
-			p = getPluginInfo(tiddler);
-			p.executed = false;
-			p.log.splice(0,0,this.skippedText);
-			plugins.push(p);
-			}
-		}
-	for(t=0; t<plugins.length; t++)
-		{
-		var p = plugins[t];
-		p.forced = p.tiddler.isTagged("systemConfigForce");
-		p.disabled = p.tiddler.isTagged("systemConfigDisable");
-		p.Selected = selectedRows.indexOf(plugins[t].title) != -1;
-		}
-	if(plugins.length == 0)
-		createTiddlyElement(place,"em",null,null,this.noPluginText);
-	else
-		ListView.create(place,plugins,this.listViewTemplate,this.onSelectCommand);
-}
-
-config.macros.plugins.onSelectCommand = function(command,rowNames)
-{
-	var t;
-	switch(command)
-		{
-		case "remove":
-			for(t=0; t<rowNames.length; t++)
-				store.setTiddlerTag(rowNames[t],false,"systemConfig");
-			break;
-		case "delete":
-			if(rowNames.length > 0 && confirm(config.macros.plugins.confirmDeleteText.format([rowNames.join(", ")])))
-				{
-				for(t=0; t<rowNames.length; t++)
-					{
-					store.removeTiddler(rowNames[t]);
-					story.closeTiddler(rowNames[t],true,false);
-					}
-				}
-			break;
-		}
-	if(config.options.chkAutoSave)
-		saveChanges(true);
-}
-
 config.macros.refreshDisplay.handler = function(place)
 {
 	createTiddlyButton(place,this.label,this.prompt,this.onClick);
@@ -2592,185 +2591,6 @@ config.macros.refreshDisplay.onClick = function(e)
 {
 	refreshAll();
 	return false;
-}
-
-config.macros.importTiddlers.handler = function(place,macroName,params,wikifier,paramString,tiddler)
-{
-	if(readOnly)
-		{
-		createTiddlyElement(place,"div",null,"marked",this.readOnlyWarning);
-		return;
-		}
-	var importer = createTiddlyElement(null,"div",null,"importTiddler wizard");
-	createTiddlyElement(importer,"h1",null,null,this.wizardTitle);
-	createTiddlyElement(importer,"h2",null,"step1",this.step1);
-	var step = createTiddlyElement(importer,"div",null,"wizardStep");
-	createTiddlyText(step,this.step1prompt);
-	var input = createTiddlyElement(null,"input",null,"txtOptionInput");
-	input.type = "text";
-	input.size = 50;
-	step.appendChild(input);
-	importer.inputBox = input;
-	createTiddlyElement(step,"br");
-	createTiddlyText(step,this.step1promptFile);
-	var fileInput = createTiddlyElement(null,"input",null,"txtOptionInput");
-	fileInput.type = "file";
-	fileInput.size = 50;
-	fileInput.onchange = this.onBrowseChange;
-	fileInput.onkeyup = this.onBrowseChange;
-	step.appendChild(fileInput);
-	createTiddlyElement(step,"br");
-	createTiddlyText(step,this.step1promptFeeds);
-	var feeds = this.getFeeds([{caption: this.step1feedPrompt, name: ""}]);
-	createTiddlyDropDown(step,this.onFeedChange,feeds);
-	createTiddlyElement(step,"br");
-	createTiddlyButton(step,this.fetchLabel,this.fetchPrompt,this.onFetch,null,null,null);
-        place.appendChild(importer);
-}
-
-config.macros.importTiddlers.getFeeds = function(feeds)
-{
-	var tagged = store.getTaggedTiddlers("contentPublisher","title");
-	for(var t=0; t<tagged.length; t++)
-		feeds.push({caption: tagged[t].title, name: store.getTiddlerSlice(tagged[t].title,"URL")});
-	return feeds;
-}
-
-config.macros.importTiddlers.onFeedChange = function(e)
-{
-	var importer = findRelated(this,"importTiddler","className","parentNode");
-	importer.inputBox.value = this.value;
-	this.selectedIndex = 0;
-}
-
-config.macros.importTiddlers.onBrowseChange = function(e)
-{
-	var importer = findRelated(this,"importTiddler","className","parentNode");
-	importer.inputBox.value = "file://" + this.value;
-}
-
-config.macros.importTiddlers.onFetch = function(e)
-{
-	var importer = findRelated(this,"importTiddler","className","parentNode");
-	var url = importer.inputBox.value;
-	var cutoff = findRelated(importer.firstChild,"step2","className","nextSibling");
-	while(cutoff)
-		{
-		var temp = cutoff.nextSibling;
-		cutoff.parentNode.removeChild(cutoff);
-		cutoff = temp;
-		}
-	createTiddlyElement(importer,"h2",null,"step2",config.macros.importTiddlers.step2);
-	var step = createTiddlyElement(importer,"div",null,"wizardStep",config.macros.importTiddlers.step2Text.format([url]));
-	loadRemoteFile(url,config.macros.importTiddlers.onLoad,importer);
-}
-
-config.macros.importTiddlers.onLoad = function(status,params,responseText,url,xhr)
-{
-	if(!status)
-		{
-		displayMessage(this.fetchError);
-		return;
-		}
-	var importer = params;
-	// Check that the tiddler we're in hasn't been closed - doesn't work on IE
-//	var p = importer;
-//	while(p.parentNode)
-//		p = p.parentNode;
-//	if(!(p instanceof HTMLDocument))
-//		return;
-	// Crack out the content - (should be refactored)
-	var posOpeningDiv = responseText.indexOf(startSaveArea);
-	var limitClosingDiv = responseText.indexOf("<!--POST-BODY-START--"+">");
-	var posClosingDiv = responseText.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? responseText.length : limitClosingDiv);
-	if((posOpeningDiv == -1) || (posClosingDiv == -1))
-		{
-		alert(config.messages.invalidFileError.format([url]));
-		return;
-		}
-	var content = "<html><body>" + responseText.substring(posOpeningDiv,posClosingDiv + endSaveArea.length) + "</body></html>";
-	// Create the iframe
-	var iframe = document.createElement("iframe");
-	iframe.style.display = "none";
-	importer.insertBefore(iframe,importer.firstChild);
-	var doc = iframe.document;
-	if(iframe.contentDocument)
-		doc = iframe.contentDocument; // For NS6
-	else if(iframe.contentWindow)
-		doc = iframe.contentWindow.document; // For IE5.5 and IE6
-	// Put the content in the iframe
-	doc.open();
-	doc.writeln(content);
-	doc.close();
-	// Load the content into a TiddlyWiki() object
-	var storeArea = doc.getElementById("storeArea");
-	var importStore = new TiddlyWiki();
-	importStore.loadFromDiv(storeArea,"store");
-	// Get rid of the iframe
-	iframe.parentNode.removeChild(iframe);
-	// Extract data for the listview
-	var tiddlers = [];
-	importStore.forEachTiddler(function(title,tiddler)
-		{
-		var t = {};
-		t.title = title;
-		t.modified = tiddler.modified;
-		t.modifier = tiddler.modifier;
-		t.text = tiddler.text.substr(0,50);
-		t.tags = tiddler.tags;
-		tiddlers.push(t);
-		});
-	// Display the listview
-	createTiddlyElement(importer,"h2",null,"step3",config.macros.importTiddlers.step3);
-	var step = createTiddlyElement(importer,"div",null,"wizardStep");
-	ListView.create(step,tiddlers,config.macros.importTiddlers.listViewTemplate,config.macros.importTiddlers.onSelectCommand);
-	// Save the importer
-	importer.store = importStore;
-}
-
-config.macros.importTiddlers.onSelectCommand = function(listView,command,rowNames)
-{
-	var importer = findRelated(listView,"importTiddler","className","parentNode");
-	switch(command)
-		{
-		case "import":
-			config.macros.importTiddlers.doImport(importer,rowNames);
-			break;
-		}
-	if(config.options.chkAutoSave)
-		saveChanges(true);
-}
-
-config.macros.importTiddlers.doImport = function(importer,rowNames)
-{
-	var theStore = importer.store;
-	var overwrite = new Array();
-	var t;
-	for(t=0; t<rowNames.length; t++)
-		{
-		if(store.tiddlerExists(rowNames[t]))
-			overwrite.push(rowNames[t]);
-	}
-	if(overwrite.length > 0)
-		if(!confirm(this.confirmOverwriteText.format([overwrite.join(", ")])))
-			return;
-	for(t=0; t<rowNames.length; t++)
-		{
-		var inbound = theStore.fetchTiddler(rowNames[t]);
-		store.saveTiddler(inbound.title, inbound.title, inbound.text, inbound.modifier, inbound.modified, inbound.tags);
-		store.fetchTiddler(inbound.title).created = inbound.created;
-		store.notify(rowNames[t],false);
-		}
-	store.notifyAll();
-	store.setDirty(true);
-	createTiddlyElement(importer,"h2",null,"step4",this.step4.format([rowNames.length]));
-	var step = createTiddlyElement(importer,"div",null,"wizardStep");
-	for(t=0; t<rowNames.length; t++)
-		{
-		createTiddlyLink(step,rowNames[t],true);
-		createTiddlyElement(step,"br");
-		}
-	createTiddlyElement(importer,"h2",null,"step5",this.step5);
 }
 // ---------------------------------------------------------------------------------
 // Menu and toolbar commands
@@ -2874,70 +2694,6 @@ config.commands.jump.handler = function(event,src,title)
 	return false;
 }
 
-//# -------------------------
-//# LoaderBase: A (abstract) storage loader that loads the tiddlers from a list of HTML elements.
-//# The format of the elements is defined by subclasses of this loader through the internalizeTiddler implementation.
-//# Subclasses must implement:
-//# 			function getTitle(store, e)
-//#
-//# store must implement:
-//# 			function createTiddler(title).
-//#
-
-function LoaderBase()
-{
-}
-
-LoaderBase.prototype.loadTiddler = function(store,e,tiddlers)
-{
-	var title = this.getTitle(store, e);
-	if (title)
-		{
-		var tiddler = store.createTiddler(title);
-		this.internalizeTiddler(store, tiddler, title, e);
-		tiddlers.push(tiddler);
-		}
-}
-
-LoaderBase.prototype.loadTiddlers = function(store,nodes)
-{
-	var tiddlers = [];
-	for (var t = 0; t < nodes.length; t++)
-		{
-		try
-			{
-			this.loadTiddler(store, nodes[t], tiddlers);
-			}
-		catch(e)
-			{
-			showException(e, config.messages.tiddlerLoadError.format([this.getTitle(store, nodes[t])]));
-			}
-		}
-	return tiddlers;
-}
-	
-//# -------------------------
-//# SaverBase: a (abstract) storage saver that externalizes all tiddlers into a string, 
-//# with every tiddler individually externalized (using this.externalizeTiddler) and joined with newlines 
-//# Subclasses must implement:
-//# 			function externalizeTiddler(store, tiddler)
-//#
-//# store must implement:
-//# 			function getTiddlers(sortByFieldName)
-//#
-
-function SaverBase()
-{
-}
-
-SaverBase.prototype.externalize = function(store) 
-{
-	var results = [];
-	var tiddlers = store.getTiddlers("title");
-	for (var t = 0; t < tiddlers.length; t++)
-		results.push(this.externalizeTiddler(store, tiddlers[t]));
-	return results.join("\n");
-}
 // ---------------------------------------------------------------------------------
 // Tiddler() object
 // ---------------------------------------------------------------------------------
@@ -3041,6 +2797,7 @@ Tiddler.prototype.changed = function()
 	var formatMatch = tiddlerLinkRegExp.exec(this.text);
 	while(formatMatch)
 		{
+		var lastIndex = tiddlerLinkRegExp.lastIndex;
 		if(t==0 && formatMatch[1] && formatMatch[1] != this.title) // wikiWordLink
 			{
 			if(formatMatch.index > 0)
@@ -3059,6 +2816,7 @@ Tiddler.prototype.changed = function()
 		else if(formatMatch[4-t] && formatMatch[4-t] != this.title) // brackettedLink
 			this.links.pushUnique(formatMatch[4-t]);
 		// Do not add link if match urlPattern (formatMatch[5-t])
+		tiddlerLinkRegExp.lastIndex = lastIndex;
 		formatMatch = tiddlerLinkRegExp.exec(this.text);
 		}
 	this.linksUpdated = true;
@@ -3269,8 +3027,8 @@ TiddlyWiki.prototype.calcAllSlices = function(title)
 //# or
 //#    |aName| textSlice |
 //#
-//# In the text the name (or name:) may be decorated with '' or //. I.e.
-//# this would also a possible text slice:
+//# In the text the name (or name:) may be decorated with '' or //
+//# ie this would also a valid text slice:
 //#
 //#    |''aName:''| textSlice |
 //#
@@ -3338,6 +3096,7 @@ TiddlyWiki.prototype.setTiddlerTag = function(title,status,tag)
 		if(status)
 			tiddler.tags.push(tag);
 		tiddler.changed();
+		this.incChangeCount(title);
 		this.notify(title,true);
 		this.setDirty(true);
 		}
@@ -3359,11 +3118,20 @@ TiddlyWiki.prototype.saveTiddler = function(title,newTitle,newBody,modifier,modi
 		}
 	tiddler.set(newTitle,newBody,modifier,modified,tags,created,fields);
 	this.addTiddler(tiddler);
+	this.incChangeCount(newTitle);
 	if(title != newTitle)
 		this.notify(title,true);
 	this.notify(newTitle,true);
 	this.setDirty(true);
 	return tiddler;
+}
+
+TiddlyWiki.prototype.incChangeCount = function(title)
+{
+	var c = this.getValue(title,"changeCount");
+	if(!c)
+		c = 0;
+	this.setValue(title,"changeCount",++c);
 }
 
 TiddlyWiki.prototype.createTiddler = function(title)
@@ -3424,13 +3192,19 @@ TiddlyWiki.prototype.search = function(searchRegExp,sortField,excludeTag)
 }
 
 // Return an array of all the tags in use. Each member of the array is another array where [0] is the name of the tag and [1] is the number of occurances
-TiddlyWiki.prototype.getTags = function()
+TiddlyWiki.prototype.getTags = function(excludeTag)
 {
 	var results = [];
 	this.forEachTiddler(function(title,tiddler) {
 		for(var g=0; g<tiddler.tags.length; g++)
 			{
 			var tag = tiddler.tags[g];
+			if(excludeTag)
+				{
+				var t = store.fetchTiddler(tag);
+				if(t && t.isTagged(excludeTag))
+					return false;
+				}
 			var f = false;
 			for(var c=0; c<results.length; c++)
 				if(results[c][0] == tag)
@@ -3772,10 +3546,10 @@ Story.prototype.forEachTiddler = function(fn)
 
 // Display several tiddlers given their titles in an array. Parameters same as displayTiddler(), except:
 // titles - array of string titles
-Story.prototype.displayTiddlers = function(srcElement,titles,template,animate,slowly)
+Story.prototype.displayTiddlers = function(srcElement,titles,template,animate,slowly,customFields)
 {
 	for(var t = titles.length-1;t>=0;t--)
-		this.displayTiddler(srcElement,titles[t],template,animate,slowly);
+		this.displayTiddler(srcElement,titles[t],template,animate,slowly,customFields);
 }
 
 // Display a given tiddler with a given template. If the tiddler is already displayed but with a different
@@ -3788,20 +3562,21 @@ Story.prototype.displayTiddlers = function(srcElement,titles,template,animate,sl
 //			  null or undefined to indicate the current template if there is one, DEFAULT_VIEW_TEMPLATE if not
 // animate - whether to perform animations
 // slowly - whether to perform animations in slomo
-Story.prototype.displayTiddler = function(srcElement,title,template,animate,slowly)
+// customFields - an optional list of name/value pairs to be assigned as tiddler fields (for edit templates)
+Story.prototype.displayTiddler = function(srcElement,title,template,animate,slowly,customFields)
 {
 	var place = document.getElementById(this.container);
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
 	if(tiddlerElem)
-		this.refreshTiddler(title,template);
+		this.refreshTiddler(title,template,false,customFields);
 	else
 		{
 		var before = this.positionTiddler(srcElement);
-		tiddlerElem = this.createTiddler(place,before,title,template);
+		tiddlerElem = this.createTiddler(place,before,title,template,customFields);
 		}
 	if(srcElement && typeof srcElement !== "string")
 		{
-		if(anim && config.options.chkAnimate && (animate == undefined || animate == true))
+		if(config.options.chkAnimate && (animate == undefined || animate == true) && anim && typeof Cascade == "function" && typeof Scroller == "function")
 			anim.startAnimating(new Cascade(title,srcElement,tiddlerElem,slowly),new Scroller(tiddlerElem,slowly));
 		else
 			window.scrollTo(0,ensureVisible(tiddlerElem));
@@ -3846,12 +3621,13 @@ Story.prototype.positionTiddler = function(srcElement)
 // before - null, or reference to element before which to insert new tiddler
 // title - title of new tiddler
 // template - the name of the tiddler containing the template or one of the constants DEFAULT_VIEW_TEMPLATE and DEFAULT_EDIT_TEMPLATE
-Story.prototype.createTiddler = function(place,before,title,template)
+// customFields - an optional list of name/value pairs to be assigned as tiddler fields (for edit templates)
+Story.prototype.createTiddler = function(place,before,title,template,customFields)
 {
 	var tiddlerElem = createTiddlyElement(null,"div",this.idPrefix + title,"tiddler");
 	tiddlerElem.setAttribute("refresh","tiddler");
 	place.insertBefore(tiddlerElem,before);
-	this.refreshTiddler(title,template);
+	this.refreshTiddler(title,template,false,customFields);
 	return tiddlerElem;
 }
 
@@ -3875,7 +3651,8 @@ Story.prototype.getTemplateForTiddler = function(title,template,tiddler)
 // title - title of tiddler to update
 // template - the name of the tiddler containing the template or one of the constants DEFAULT_VIEW_TEMPLATE and DEFAULT_EDIT_TEMPLATE
 // force - if true, forces the refresh even if the template hasn't changedd
-Story.prototype.refreshTiddler = function(title,template,force)
+// customFields - an optional list of name/value pairs to be assigned as tiddler fields (for edit templates)
+Story.prototype.refreshTiddler = function(title,template,force,customFields)
 {
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
 	if(tiddlerElem)
@@ -3927,9 +3704,40 @@ Story.prototype.refreshTiddler = function(title,template,force)
 				removeClass(tiddlerElem,"shadow");
 				removeClass(tiddlerElem,"missing");
 				}
+			if(customFields)
+				this.addCustomFields(tiddlerElem,customFields);
 			}
 		}
 	return tiddlerElem;
+}
+
+// Add hidden input elements for the custom fields of a tiddler
+Story.prototype.addCustomFields = function(place,customFields)
+{
+	var fieldsPattern = "(?:(" + config.textPrimitives.anyLetter + "+)\\(([^\\)\\|\\n]+)(?:\\):))|(?:(" + config.textPrimitives.anyLetter + "+):([^;\\|\\n]+);)";
+	var fieldsPattern = "([^:]*):([^;]*);";
+	var fieldsRegExp = new RegExp(fieldsPattern,"mg");
+	var fields = [];
+	var lastMatch = 0;
+	var match = fieldsRegExp.exec(customFields);
+	while(match && match.index == lastMatch)
+		{
+		fields.push({field: match[1], value: match[2]});
+		lastMatch = match.index + match[0].length;
+		fieldsRegExp.lastIndex = lastMatch;
+		match = fieldsRegExp.exec(customFields);
+		}
+	for(var t=0; t<fields.length; t++)
+		{
+		var e = createTiddlyElement(null,"input");
+		e.setAttribute("edit",fields[t].field);
+		e.setAttribute("type","text");
+		e.value = fields[t].value;
+		e.setAttribute("size","40");
+		e.setAttribute("autocomplete","off");
+		e.style.display = "none";
+		place.appendChild(e);
+		}
 }
 
 // Refresh all tiddlers in the Story
@@ -4103,7 +3911,7 @@ Story.prototype.closeTiddler = function(title,animate,slowly)
 		{
 		clearMessage();
 		this.scrubTiddler(tiddlerElem);
-		if(anim && config.options.chkAnimate && animate)
+		if(config.options.chkAnimate && animate && anim && typeof Slider == "function")
 			anim.startAnimating(new Slider(tiddlerElem,false,slowly,"all"));
 		else
 			tiddlerElem.parentNode.removeChild(tiddlerElem);
@@ -4283,6 +4091,481 @@ Story.prototype.permaView = function()
 		t = "#";
 	if(window.location.hash != t)
 		window.location.hash = t;
+}
+
+// ---------------------------------------------------------------------------------
+// Backstage
+// ---------------------------------------------------------------------------------
+
+var backstage = {
+	backstage: null,
+	cloak: null,
+	tabs: null,
+	panel: null,
+	currTabName: null,
+	currTabElem: null,
+
+	init: function() {
+		this.cloak = document.getElementById("backstageCloak");
+		this.backstage = document.getElementById("backstage");
+		this.tabs = document.getElementById("backstageTabs");
+		this.panel = document.getElementById("backstagePanel");
+		this.backstage.onmouseover = function(e) {
+			backstage.tabs.style.visibility = "visible";
+		};
+		this.backstage.onmouseout = function(e) {
+			backstage.tabs.style.visibility = "hidden";
+		};
+		this.cloak.onmousedown = function(e) {
+			backstage.switchTab(null);
+		};
+		for(var t=0; t<config.backstageTasks.length; t++) {
+			var taskName = config.backstageTasks[t];
+			var task = config.tasks[taskName];
+			var btn = createTiddlyButton(this.tabs,task.text,task.tooltip,this.onClickTab,"backstageTab");
+			btn.setAttribute("task",taskName);
+			}
+		this.switchTab(null);
+	},
+
+	onClickTab: function(e) {
+		backstage.switchTab(this.getAttribute("task"));
+	},
+
+	// Switch to a given tab, or none if null is passed
+	switchTab: function(tabName) {
+		var tabElem = null;
+		var e = this.tabs.firstChild;
+		while(e)
+			{
+			if(e.getAttribute("task") == tabName)
+				tabElem = e;
+			e = e.nextSibling
+			}
+		if(tabName == backstage.currTabName)
+			return;
+		if(backstage.currTabElem) {
+			removeClass(this.currTabElem,"backstageSelTab");
+			}
+		if(tabElem && tabName) {
+			backstage.preparePanel();
+			addClass(tabElem,"backstageSelTab");
+			var task = config.tasks[tabName];
+			wikify(task.content,backstage.panel,null,null)
+			backstage.showPanel();
+		} else if(backstage.currTabElem) {
+			backstage.hidePanel();
+		}
+		backstage.currTabName = tabName;
+		backstage.currTabElem = tabElem;
+	},
+
+	preparePanel: function() {
+		backstage.cloak.style.height = document.documentElement.scrollHeight + "px";
+		backstage.cloak.style.display = "block";
+		removeChildren(backstage.panel);
+		return backstage.panel;
+	},
+	
+	showPanel: function() {
+		if(anim && config.options.chkAnimate)
+			anim.startAnimating(new Slider(backstage.panel,true,false,"none"),new Scroller(backstage.backstage,false));
+		else
+			backstage.panel.style.display = "block";
+		return this.panel;
+	},
+	
+	hidePanel: function() {
+		if(anim && config.options.chkAnimate)
+			anim.startAnimating(new Slider(backstage.panel,false,false,"none"));
+		else
+			backstage.panel.style.display = "none";
+		backstage.cloak.style.display = "none";
+	}
+};
+
+config.backstage = {
+}
+
+config.backstageTasks = ["tidy","sync","importTask","copy","plugins"];
+
+config.tasks = {
+		tidy: {text: "tidy up", tooltip: "Make bulk changes across groups of tiddlers"},
+		sync: {text: "sync", tooltip: "Synchronise changes with other TiddlyWiki files and servers", content: "<<sync>>"},
+		importTask: {text: "import", tooltip: "Import tiddlers and plugins from other TiddlyWiki files and servers", content: "<<importTiddlers>>"},
+		copy: {text: "copy", tooltip: "Copy tiddlers to other TiddlyWiki files and servers"},
+		plugins: {text: "plugins", tooltip: "Manage installed plugins", content: "<<plugins>>"}
+};
+
+config.macros.backstage = {};
+
+config.macros.backstage.handler = function(place,macroName,params,wikifier,paramString,tiddler)
+{
+	var backstageTask = config.tasks[params[0]];
+	if(backstageTask)
+		createTiddlyButton(place,backstageTask.text,backstageTask.tooltip,function(e) {backstage.switchTab(params[0]);})
+}
+// ---------------------------------------------------------------------------------
+// ImportTiddlers macro
+// ---------------------------------------------------------------------------------
+
+config.macros.importTiddlers.handler = function(place,macroName,params,wikifier,paramString,tiddler)
+{
+	if(readOnly)
+		{
+		createTiddlyElement(place,"div",null,"marked",this.readOnlyWarning);
+		return;
+		}
+	var importer = createTiddlyElement(null,"div",null,"importTiddler wizard");
+	createTiddlyElement(importer,"h1",null,null,this.wizardTitle);
+	createTiddlyElement(importer,"h2",null,"step1",this.step1);
+	var step = createTiddlyElement(importer,"div",null,"wizardStep");
+	createTiddlyText(step,this.step1prompt);
+	var input = createTiddlyElement(null,"input",null,"txtOptionInput");
+	input.type = "text";
+	input.size = 50;
+	step.appendChild(input);
+	importer.inputBox = input;
+	createTiddlyElement(step,"br");
+	createTiddlyText(step,this.step1promptFile);
+	var fileInput = createTiddlyElement(null,"input",null,"txtOptionInput");
+	fileInput.type = "file";
+	fileInput.size = 50;
+	fileInput.onchange = this.onBrowseChange;
+	fileInput.onkeyup = this.onBrowseChange;
+	step.appendChild(fileInput);
+	createTiddlyElement(step,"br");
+	createTiddlyText(step,this.step1promptFeeds);
+	var feeds = this.getFeeds([{caption: this.step1feedPrompt, name: ""}]);
+	createTiddlyDropDown(step,this.onFeedChange,feeds);
+	createTiddlyElement(step,"br");
+	createTiddlyButton(step,this.fetchLabel,this.fetchPrompt,this.onFetch,null,null,null);
+        place.appendChild(importer);
+}
+
+config.macros.importTiddlers.getFeeds = function(feeds)
+{
+	var tagged = store.getTaggedTiddlers("contentPublisher","title");
+	for(var t=0; t<tagged.length; t++)
+		feeds.push({caption: tagged[t].title, name: store.getTiddlerSlice(tagged[t].title,"URL")});
+	return feeds;
+}
+
+config.macros.importTiddlers.onFeedChange = function(e)
+{
+	var importer = findRelated(this,"importTiddler","className","parentNode");
+	importer.inputBox.value = this.value;
+	this.selectedIndex = 0;
+}
+
+config.macros.importTiddlers.onBrowseChange = function(e)
+{
+	var importer = findRelated(this,"importTiddler","className","parentNode");
+	importer.inputBox.value = "file://" + this.value;
+}
+
+config.macros.importTiddlers.onFetch = function(e)
+{
+	var importer = findRelated(this,"importTiddler","className","parentNode");
+	var url = importer.inputBox.value;
+	var cutoff = findRelated(importer.firstChild,"step2","className","nextSibling");
+	while(cutoff)
+		{
+		var temp = cutoff.nextSibling;
+		cutoff.parentNode.removeChild(cutoff);
+		cutoff = temp;
+		}
+	createTiddlyElement(importer,"h2",null,"step2",config.macros.importTiddlers.step2);
+	var step = createTiddlyElement(importer,"div",null,"wizardStep",config.macros.importTiddlers.step2Text.format([url]));
+	loadRemoteFile(url,config.macros.importTiddlers.onLoad,importer);
+}
+
+config.macros.importTiddlers.onLoad = function(status,params,responseText,url,xhr)
+{
+	if(!status)
+		{
+		displayMessage(this.fetchError);
+		return;
+		}
+	var importer = params;
+	// Check that the tiddler we're in hasn't been closed - doesn't work on IE
+//	var p = importer;
+//	while(p.parentNode)
+//		p = p.parentNode;
+//	if(!(p instanceof HTMLDocument))
+//		return;
+	// Crack out the content - (should be refactored)
+	var posOpeningDiv = responseText.indexOf(startSaveArea);
+	var limitClosingDiv = responseText.indexOf("<!--POST-BODY-START--"+">");
+	var posClosingDiv = responseText.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? responseText.length : limitClosingDiv);
+	if((posOpeningDiv == -1) || (posClosingDiv == -1))
+		{
+		alert(config.messages.invalidFileError.format([url]));
+		return;
+		}
+	var content = "<html><body>" + responseText.substring(posOpeningDiv,posClosingDiv + endSaveArea.length) + "</body></html>";
+	// Create the iframe
+	var iframe = document.createElement("iframe");
+	iframe.style.display = "none";
+	importer.insertBefore(iframe,importer.firstChild);
+	var doc = iframe.document;
+	if(iframe.contentDocument)
+		doc = iframe.contentDocument; // For NS6
+	else if(iframe.contentWindow)
+		doc = iframe.contentWindow.document; // For IE5.5 and IE6
+	// Put the content in the iframe
+	doc.open();
+	doc.writeln(content);
+	doc.close();
+	// Load the content into a TiddlyWiki() object
+	var storeArea = doc.getElementById("storeArea");
+	var importStore = new TiddlyWiki();
+	importStore.loadFromDiv(storeArea,"store");
+	// Get rid of the iframe
+	iframe.parentNode.removeChild(iframe);
+	// Extract data for the listview
+	var tiddlers = [];
+	importStore.forEachTiddler(function(title,tiddler)
+		{
+		var t = {};
+		t.title = title;
+		t.modified = tiddler.modified;
+		t.modifier = tiddler.modifier;
+		t.text = tiddler.text.substr(0,50);
+		t.tags = tiddler.tags;
+		tiddlers.push(t);
+		});
+	// Display the listview
+	createTiddlyElement(importer,"h2",null,"step3",config.macros.importTiddlers.step3);
+	var step = createTiddlyElement(importer,"div",null,"wizardStep");
+	ListView.create(step,tiddlers,config.macros.importTiddlers.listViewTemplate,config.macros.importTiddlers.onSelectCommand);
+	// Save the importer
+	importer.store = importStore;
+}
+
+config.macros.importTiddlers.onSelectCommand = function(listView,command,rowNames)
+{
+	var importer = findRelated(listView,"importTiddler","className","parentNode");
+	switch(command)
+		{
+		case "import":
+			config.macros.importTiddlers.doImport(importer,rowNames);
+			break;
+		}
+	if(config.options.chkAutoSave)
+		saveChanges(true);
+}
+
+config.macros.importTiddlers.doImport = function(importer,rowNames)
+{
+	var theStore = importer.store;
+	var overwrite = new Array();
+	var t;
+	for(t=0; t<rowNames.length; t++)
+		{
+		if(store.tiddlerExists(rowNames[t]))
+			overwrite.push(rowNames[t]);
+	}
+	if(overwrite.length > 0)
+		if(!confirm(this.confirmOverwriteText.format([overwrite.join(", ")])))
+			return;
+	for(t=0; t<rowNames.length; t++)
+		{
+		var inbound = theStore.fetchTiddler(rowNames[t]);
+		store.saveTiddler(inbound.title, inbound.title, inbound.text, inbound.modifier, inbound.modified, inbound.tags);
+		store.fetchTiddler(inbound.title).created = inbound.created;
+		store.notify(rowNames[t],false);
+		}
+	store.notifyAll();
+	store.setDirty(true);
+	createTiddlyElement(importer,"h2",null,"step4",this.step4.format([rowNames.length]));
+	var step = createTiddlyElement(importer,"div",null,"wizardStep");
+	for(t=0; t<rowNames.length; t++)
+		{
+		createTiddlyLink(step,rowNames[t],true);
+		createTiddlyElement(step,"br");
+		}
+	createTiddlyElement(importer,"h2",null,"step5",this.step5);
+}
+// ---------------------------------------------------------------------------------
+// Sync macro
+// ---------------------------------------------------------------------------------
+
+// Synchronisation handlers
+config.syncers = {};
+
+// Translateable strings
+config.macros.sync = {
+	label: "sync",
+	prompt: "Plug back in to the server and synchronize changes",
+	listViewTemplate: {
+		columns: [
+			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},
+			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "Title", type: 'TiddlerLink'},
+			{name: 'Local Status', field: 'localStatus', title: "Local Status", type: 'String'},
+			{name: 'Server Status', field: 'serverStatus', title: "Server Status", type: 'String'},
+			{name: 'Server URL', field: 'serverUrl', title: "Server URL", text: "View", type: 'Link'}
+			],
+		rowClasses: [
+			],
+		buttons: [
+			{caption: "Sync these tiddlers", name: 'sync'}
+			]},
+	wizardTitle: "Synchronize your content with external servers and feeds",
+	step1: "Choose the tiddlers you want to synchronize"
+};
+
+// Sync state. Members:
+//	syncList - List of sync objects (title, tiddler, server, workspace, page, version)
+//	listView - DOM element of the listView table
+var currSync = null;
+
+// sync macro
+config.macros.sync.handler = function(place,macroName,params,wikifier,paramString,tiddler)
+{
+	if(!wikifier.isStatic)
+		config.macros.sync.startSync(place);
+}
+
+config.macros.sync.startSync = function(place)
+{
+	if(currSync)
+		config.macros.sync.cancelSync();
+	currSync = {};
+	var syncer;
+	for(syncer in config.syncers)
+		if(config.syncers[syncer].init)
+			config.syncers[syncer].init(currSync);
+	currSync.syncList = [];
+	store.forEachTiddler(function(title,tiddler) {
+		var syncType = store.getValue(tiddler,"sync");
+		if(store.getValue(tiddler,"socialtext.server"))
+			syncType = "socialtext";
+		var syncItem = {title: title,
+			tiddler: tiddler,
+			syncType: syncType,
+			changeCount: store.getValue(tiddler,"changeCount"),
+			serverStatus: "..."
+			};
+		syncItem.localStatus = syncItem.changeCount > 0 ? "Changed while unplugged" : "Unchanged while unplugged";
+		syncItem.selected = syncItem.changeCount > 0;
+		syncer = config.syncers[syncType];
+		if(syncType && syncer)
+			{
+			if(syncer.addSyncable)
+				syncer.addSyncable(currSync,tiddler,syncItem);
+			currSync.syncList.push(syncItem);
+			}
+		});
+	var wizard = createTiddlyElement(place,"div",null,"importTiddler wizard");
+	createTiddlyElement(wizard,"h1",null,null,this.wizardTitle);
+	createTiddlyElement(wizard,"h2",null,"step1",this.step1);
+	var step = createTiddlyElement(wizard,"div",null,"wizardStep");
+	currSync.listView = ListView.create(step,currSync.syncList,this.listViewTemplate,this.onSelectCommand);
+}
+
+config.macros.sync.cancelSync = function()
+{
+}
+
+config.macros.sync.onSelectCommand = function(listView,command,rowNames)
+{
+	switch(command)
+		{
+		case "cancel":
+			break;
+		case "sync":
+			config.macros.sync.doSync(rowNames);
+			break;
+		}
+}
+
+config.macros.sync.doSync = function(selNames)
+{
+	for(var t=0; t<selNames.length; t++)
+		{
+		var f = currSync.syncList.findByField("title",selNames[t])
+		var s = currSync.syncList[f];
+		var syncer = config.syncers[s.syncType];
+		if(syncer.doSync)
+			syncer.doSync(currSync,s);
+		}
+}
+// ---------------------------------------------------------------------------------
+// Manager UI for groups of tiddlers
+// ---------------------------------------------------------------------------------
+
+config.macros.plugins.handler = function(place,macroName,params,wikifier,paramString,tiddler)
+{
+	var wizard = createTiddlyElement(place,"div",null,"importTiddler wizard");
+	createTiddlyElement(wizard,"h1",null,null,this.wizardTitle);
+	createTiddlyElement(wizard,"h2",null,"step1",this.step1);
+	var step = createTiddlyElement(wizard,"div",null,"wizardStep");
+	var e = createTiddlyElement(step,"div");
+	e.setAttribute("refresh","macro");
+	e.setAttribute("macroName","plugins");
+	e.setAttribute("params",paramString);
+	this.refresh(e,paramString);
+}
+
+config.macros.plugins.refresh = function(place,params)
+{
+	var selectedRows = [];
+	ListView.forEachSelector(place,function(e,rowName) {
+			if(e.checked)
+				selectedRows.push(e.getAttribute("rowName"));
+		});
+	removeChildren(place);
+	params = params.parseParams("anon");
+	var plugins = installedPlugins.slice(0);
+	var t,tiddler,p;
+	var configTiddlers = store.getTaggedTiddlers("systemConfig");
+	for(t=0; t<configTiddlers.length; t++)
+		{
+		tiddler = configTiddlers[t];
+		if(plugins.findByField("title",tiddler.title) == null)
+			{
+			p = getPluginInfo(tiddler);
+			p.executed = false;
+			p.log.splice(0,0,this.skippedText);
+			plugins.push(p);
+			}
+		}
+	for(t=0; t<plugins.length; t++)
+		{
+		var p = plugins[t];
+		p.forced = p.tiddler.isTagged("systemConfigForce");
+		p.disabled = p.tiddler.isTagged("systemConfigDisable");
+		p.Selected = selectedRows.indexOf(plugins[t].title) != -1;
+		}
+	if(plugins.length == 0)
+		createTiddlyElement(place,"em",null,null,this.noPluginText);
+	else
+		ListView.create(place,plugins,this.listViewTemplate,this.onSelectCommand);
+}
+
+config.macros.plugins.onSelectCommand = function(command,rowNames)
+{
+	var t;
+	switch(command)
+		{
+		case "remove":
+			for(t=0; t<rowNames.length; t++)
+				store.setTiddlerTag(rowNames[t],false,"systemConfig");
+			break;
+		case "delete":
+			if(rowNames.length > 0 && confirm(config.macros.plugins.confirmDeleteText.format([rowNames.join(", ")])))
+				{
+				for(t=0; t<rowNames.length; t++)
+					{
+					store.removeTiddler(rowNames[t]);
+					story.closeTiddler(rowNames[t],true,false);
+					}
+				}
+			break;
+		}
+	if(config.options.chkAutoSave)
+		saveChanges(true);
 }
 
 // ---------------------------------------------------------------------------------
@@ -5085,6 +5368,40 @@ function javaLoadFile(filePath)
 //     xhr - the underlying XMLHttpRequest object
 function loadRemoteFile(url,callback,params)
 {
+	var x = doHttp("GET",url,null,null,null,null,callback,params,null);
+}
+
+// HTTP status codes
+var httpStatus = {
+	OK: 200,
+	ContentCreated: 201,
+	NoContent: 204,
+	Unauthorized: 401,
+	Forbidden: 403,
+	NotFound: 404,
+	MethodNotAllowed: 405
+};
+
+// Perform an http request
+//   type - GET/POST/PUT/DELETE
+//   url - the source url
+//   data - optional data for POST and PUT
+//   contentType - optionalContent type for the data (defaults to application/x-www-form-urlencoded)
+//   username - optional username for basic authentication
+//   password - optional password for basic authentication
+//   callback - function to call when there's a response
+//   params - parameter object that gets passed to the callback for storing it's state
+//   headers - optional hashmap of additional headers
+// Return value is the underlying XMLHttpRequest object, or a string if there was an error
+// Callback function is called like this:
+//   callback(status,params,responseText,xhr)
+//     status - true if OK, false if error
+//     params - the parameter object provided to loadRemoteFile()
+//     responseText - the text of the file
+//     url - requested URL
+//     xhr - the underlying XMLHttpRequest object
+function doHttp(type,url,data,contentType,username,password,callback,params,headers)
+{
 	// Get an xhr object
 	var x;
 	try
@@ -5099,20 +5416,20 @@ function loadRemoteFile(url,callback,params)
 			}
 		catch (e)
 			{
-			return null;
+			return "Can't create XMLHttpRequest object";
 			}
 		}
 	// Install callback
 	x.onreadystatechange = function()
 		{
-		if (x.readyState == 4)
+		if (x.readyState == 4 && callback)
 			{
-			if ((x.status == 0 || x.status == 200) && callback)
-				{
+			if([0, httpStatus.OK, httpStatus.ContentCreated, httpStatus.NoContent].contains(x.status))
 				callback(true,params,x.responseText,url,x);
-			}
 			else
 				callback(false,params,null,url,x);
+			x.onreadystatechange = function(){};
+			x = null;
 			}
 		}
 	// Send request
@@ -5121,15 +5438,22 @@ function loadRemoteFile(url,callback,params)
 	try
 		{
 		url = url + (url.indexOf("?") < 0 ? "?" : "&") + "nocache=" + Math.random();
-		x.open("GET",url,true);
+		x.open(type,url,true,username,password);
+		if (data)
+			x.setRequestHeader("Content-Type", contentType ? contentType : "application/x-www-form-urlencoded");
 		if (x.overrideMimeType)
-			x.overrideMimeType("text/html");
-		x.send(null);
+			x.setRequestHeader("Connection", "close");
+		if(headers)
+			{
+			for(n in headers)
+				x.setRequestHeader(n,headers[n]);
+			}
+		x.setRequestHeader("X-Requested-With", "TiddlyWiki " + version.major + "." + version.minor + "." + version.revision + (version.beta ? " (beta " + version.beta + ")" : ""));
+		x.send(data);
 		}
 	catch (e)
 		{
-		alert("Error in send " + e);
-		return null;
+		return exceptionText(e);
 		}
 	return x;
 }
@@ -5363,6 +5687,12 @@ function exceptionText(e, message)
 function showException(e, message)
 {
 	alert(exceptionText(e, message));
+}
+
+function alertAndThrow(m)
+{
+	alert(m);
+	throw(m);
 }
 
 // ---------------------------------------------------------------------------------
@@ -5626,7 +5956,7 @@ Popup.show = function(unused,slowly)
 	curr.popup.style.top = popupTop + "px";
 	curr.popup.style.display = "block";
 	addClass(curr.root,"highlight");
-	if(anim && config.options.chkAnimate)
+	if(config.options.chkAnimate && anim && typeof Scroller == "function")
 		anim.startAnimating(new Scroller(curr.popup,slowly));
 	else
 		window.scrollTo(0,ensureVisible(curr.popup));
@@ -5777,6 +6107,17 @@ ListView.columnTypes.String = {
 			var v = listObject[field];
 			if(v != undefined)
 				createTiddlyText(place,v);
+		}
+};
+
+ListView.columnTypes.Link = {
+	createHeader: ListView.columnTypes.String.createHeader,
+	createItem: function(place,listObject,field,columnTemplate,col,row)
+		{
+			var v = listObject[field];
+			var c = columnTemplate.text;
+			if(v != undefined)
+				createTiddlyText(createExternalLink(place,v),c ? c : v);
 		}
 };
 
@@ -6923,31 +7264,109 @@ function getNodeText(e)
 		}
 	return t;
 }
+//# -------------------------
+//# LoaderBase: A (abstract) storage loader that loads the tiddlers from a list of HTML elements.
+//# The format of the elements is defined by subclasses of this loader through the internalizeTiddler implementation.
+//# Subclasses must implement:
+//# 			function getTitle(store, e)
+//#
+//# store must implement:
+//# 			function createTiddler(title).
+//#
+
+function LoaderBase()
+{
+}
+
+LoaderBase.prototype.loadTiddler = function(store,e,tiddlers)
+{
+	var title = this.getTitle(store, e);
+	if (title)
+		{
+		var tiddler = store.createTiddler(title);
+		this.internalizeTiddler(store, tiddler, title, e);
+		tiddlers.push(tiddler);
+		}
+}
+
+LoaderBase.prototype.loadTiddlers = function(store,nodes)
+{
+	var tiddlers = [];
+	for (var t = 0; t < nodes.length; t++)
+		{
+		try
+			{
+			this.loadTiddler(store, nodes[t], tiddlers);
+			}
+		catch(e)
+			{
+			showException(e, config.messages.tiddlerLoadError.format([this.getTitle(store, nodes[t])]));
+			}
+		}
+	return tiddlers;
+}
+	
+//# -------------------------
+//# SaverBase: a (abstract) storage saver that externalizes all tiddlers into a string, 
+//# with every tiddler individually externalized (using this.externalizeTiddler) and joined with newlines 
+//# Subclasses must implement:
+//# 			function externalizeTiddler(store, tiddler)
+//#
+//# store must implement:
+//# 			function getTiddlers(sortByFieldName)
+//#
+
+function SaverBase()
+{
+}
+
+SaverBase.prototype.externalize = function(store) 
+{
+	var results = [];
+	var tiddlers = store.getTiddlers("title");
+	for (var t = 0; t < tiddlers.length; t++)
+		results.push(this.externalizeTiddler(store, tiddlers[t]));
+	return results.join("\n");
+}
 //--------------------------------
 // TW21Loader (inherits from LoaderBase)
 
-function TW21Loader() {};
+function TW21Loader() {}
 
 TW21Loader.prototype = new LoaderBase();
 
-TW21Loader.prototype.getTitle = function(store, e) {
+TW21Loader.prototype.getTitle = function(store,e)
+{
 	var title = null;
-	if(e.getAttribute)
-		title = e.getAttribute("tiddler");
-	if(!title && e.id) {	
+	if(e.getAttribute) {
+		title = e.getAttribute("title");
+		if(!title)
+			title = e.getAttribute("tiddler");
+	}
+	if(!title && e.id) {
 		var lenPrefix = store.idPrefix.length;
 		if (e.id.substr(0,lenPrefix) == store.idPrefix)
 			title = e.id.substr(lenPrefix);
 	}
 	return title;
-}
+};
 
-TW21Loader.prototype.internalizeTiddler = function(store, tiddler, title, data) {
-	var text = getNodeText(data.firstChild).unescapeLineBreaks();
+TW21Loader.prototype.internalizeTiddler = function(store,tiddler,title,data)
+{
+	var e = data.firstChild;
+	var text = null;
+	if(data.getAttribute("tiddler")) {
+		text = getNodeText(e).unescapeLineBreaks();
+	} else {
+		while(e.nodeName!="PRE" && e.nodeName!="pre") {
+			e = e.nextSibling;
+		}
+		text = e.innerHTML.replace(/\r/mg,"").htmlDecode();
+	}
 	var modifier = data.getAttribute("modifier");
-	var modified = Date.convertFromYYYYMMDDHHMM(data.getAttribute("modified"));
-	var c = data.getAttribute("created");
-	var created = c ? Date.convertFromYYYYMMDDHHMM(c) : modified;
+	var created = Date.convertFromYYYYMMDDHHMM(data.getAttribute("created"));
+	var m = data.getAttribute("modified");
+	var modified = m ? Date.convertFromYYYYMMDDHHMM(m) : created;
 	var tags = data.getAttribute("tags");
 	var fields = {};
 	var attrs = data.attributes;
@@ -6957,38 +7376,45 @@ TW21Loader.prototype.internalizeTiddler = function(store, tiddler, title, data) 
 			fields[name] = attrs[i].value.unescapeLineBreaks();
 		}
 	}
-	tiddler.assign(title,text,modifier,modified,tags,created, fields);
+	tiddler.assign(title,text,modifier,modified,tags,created,fields);
 	return tiddler;
 };
 
 //--------------------------------
 // TW21Saver (inherits from SaverBase)
 
-function TW21Saver() {};
+function TW21Saver() {}
 
 TW21Saver.prototype = new SaverBase();
 
-TW21Saver.prototype.externalizeTiddler = function(store, tiddler) 
+TW21Saver.prototype.externalizeTiddler = function(store,tiddler) 
 {
 	try {
-		var extendedFieldAttributes = "";
-		store.forEachField(tiddler, 
-			function(tiddler, fieldName, value) {
+		var extendedAttributes = "";
+		var usePre = config.usePreForStorage;
+		store.forEachField(tiddler,
+			function(tiddler,fieldName,value) {
 				// don't store stuff from the temp namespace
 				if (!fieldName.match(/^temp\./))
-					extendedFieldAttributes += ' %0="%1"'.format([fieldName, value.escapeLineBreaks().htmlEncode()]);
-			}, true);
-		return '<div tiddler="%0" modifier="%1" modified="%2" created="%3" tags="%4"%6>%5</div>'.format([
+					extendedAttributes += ' %0="%1"'.format([fieldName,value.escapeLineBreaks().htmlEncode()]);
+			},true);
+		var created = tiddler.created.convertToYYYYMMDDHHMM();
+		var modified = tiddler.modified.convertToYYYYMMDDHHMM();
+		var attributes = ' modifier="' + tiddler.modifier.htmlEncode() + '"';
+		attributes += (usePre && modified == created) ? "" : ' modified="' + modified +'"';
+		attributes += ' created="' + created + '"';
+		var tags = tiddler.getTags();
+		if(!usePre || tags)
+			attributes += ' tags="' + tags.htmlEncode() + '"';
+		return '<div %0="%1"%2%3>%4</div>'.format([
+				usePre ? "title" : "tiddler",
 				tiddler.title.htmlEncode(),
-				tiddler.modifier.htmlEncode(),
-				tiddler.modified.convertToYYYYMMDDHHMM(),
-				tiddler.created.convertToYYYYMMDDHHMM(),
-				tiddler.getTags().htmlEncode(),
-				tiddler.escapeLineBreaks().htmlEncode(),
-				extendedFieldAttributes
+				attributes,
+				extendedAttributes,
+				usePre ? "\n<pre>" + tiddler.text.htmlEncode() + "</pre>\n" : tiddler.escapeLineBreaks().htmlEncode()
 			]);
-	} catch (e) {
-		throw exceptionText(e, config.messages.tiddlerSaveError.format([tiddler.title]));
+	} catch (ex) {
+		throw exceptionText(ex, config.messages.tiddlerSaveError.format([tiddler.title]));
 	}
 }
 
