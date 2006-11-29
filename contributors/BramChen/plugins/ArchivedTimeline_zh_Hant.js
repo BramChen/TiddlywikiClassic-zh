@@ -11,7 +11,7 @@
 
 !Revision History:
 |''Version''|''Date''|''Note''|
-|0.1.0|Nov 18, 2006|Initial release|
+|0.6.0|Nov 18, 2006|Initial release|
 
 !Code section:
 ***/
