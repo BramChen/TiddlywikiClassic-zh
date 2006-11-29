@@ -76,6 +76,6 @@ if (typeof config.macros.tidIDE != "undefined"){
 	for (var i=0; i<TIDEPlingo.length; i++){
 		config.macros.tidIDE.html.editorpanel = config.macros.tidIDE.html.editorpanel.replace(TIDEPlingo[i].en_US, TIDEPlingo[i].zh_Hant);
 	}
-	IPTPlingo=[]; TIDEPsyslingo=[];
+	TIDEPlingo=[]; TIDEPsyslingo=[];
 };
 //}}}
