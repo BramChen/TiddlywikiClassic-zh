@@ -105,6 +105,9 @@ config.views = {
 		}
 	};
 
+// Backstage tasks
+config.backstageTasks = ["tidy","sync","importTask","copy","plugins"];
+
 // Macros; each has a 'handler' member that is inserted later
 config.macros = {
 	today: {},
@@ -214,61 +217,41 @@ config.textPrimitives.tiddlerAnyLinkRegExp = new RegExp("("+ config.textPrimitiv
 // ---------------------------------------------------------------------------------
 
 config.shadowTiddlers = {
-	ColorPalette: "Background: #fff\n" + 
-				  "Foreground: #000\n" +
-				  "PrimaryPale: #8cf\n" +
-				  "PrimaryLight: #18f\n" +
-				  "PrimaryMid: #04b\n" +
-				  "PrimaryDark: #014\n" +
-				  "SecondaryPale: #ffc\n" +
-				  "SecondaryLight: #fe8\n" +
-				  "SecondaryMid: #db4\n" +
-				  "SecondaryDark: #841\n" +
-				  "TertiaryPale: #eee\n" +
-				  "TertiaryLight: #ccc\n" +
-				  "TertiaryMid: #999\n" +
-				  "TertiaryDark: #666\n" +
-				  "Error: #f88\n",
 	StyleSheet: "",
-	StyleSheetColors: "/*{{{*/\nbody {\n	background: [[ColorPalette::Background]];\n	color: [[ColorPalette::Foreground]];\n}\n\na{\n	color: [[ColorPalette::PrimaryMid]];\n}\n\na:hover{\n	background-color: [[ColorPalette::PrimaryMid]];\n	color: [[ColorPalette::Background]];\n}\n\na img{\n	border: 0;\n}\n\nh1,h2,h3,h4,h5 {\n	color: [[ColorPalette::SecondaryDark]];\n	background: [[ColorPalette::PrimaryPale]];\n}\n\n.button {\n	color: [[ColorPalette::PrimaryDark]];\n	border: 1px solid [[ColorPalette::Background]];\n}\n\n.button:hover {\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::SecondaryLight]];\n	border-color: [[ColorPalette::SecondaryMid]];\n}\n\n.button:active {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::SecondaryMid]];\n	border: 1px solid [[ColorPalette::SecondaryDark]];\n}\n\n.header {\n	background: [[ColorPalette::PrimaryMid]];\n}\n\n.headerShadow {\n	color: [[ColorPalette::Foreground]];\n}\n\n.headerShadow a {\n	font-weight: normal;\n	color: [[ColorPalette::Foreground]];\n}\n\n.headerForeground {\n	color: [[ColorPalette::Background]];\n}\n\n.headerForeground a {\n	font-weight: normal;\n	color: [[ColorPalette::PrimaryPale]];\n}\n\n.tabSelected{\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::TertiaryPale]];\n	border-left: 1px solid [[ColorPalette::TertiaryLight]];\n	border-top: 1px solid [[ColorPalette::TertiaryLight]];\n	border-right: 1px solid [[ColorPalette::TertiaryLight]];\n}\n\n.tabUnselected {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::TertiaryMid]];\n}\n\n.tabContents {\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::TertiaryPale]];\n	border: 1px solid [[ColorPalette::TertiaryLight]];\n}\n\n.tabContents .button {\n	 border: 0;}\n\n#sidebar {\n}\n\n#sidebarOptions input {\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n}\n\n#sidebarOptions .sliderPanel {\n	background: [[ColorPalette::PrimaryPale]];\n}\n\n#sidebarOptions .sliderPanel a {\n	border: none;\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n#sidebarOptions .sliderPanel a:hover {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::PrimaryMid]];\n}\n\n#sidebarOptions .sliderPanel a:active {\n	color: [[ColorPalette::PrimaryMid]];\n	background: [[ColorPalette::Background]];\n}\n\n.wizard {\n	background: [[ColorPalette::TertiaryLight]];\n	border-top: 1px solid [[ColorPalette::TertiaryMid]];\n	border-left: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.wizard h1 {\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.wizard h2 {\n	color: [[ColorPalette::Foreground]];\n}\n\n.wizardStep {\n	background: [[ColorPalette::Background]];\n	border-top: 1px solid [[ColorPalette::TertiaryMid]];\n	border-bottom: 1px solid [[ColorPalette::TertiaryMid]];\n	border-left: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.wizard .button {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::PrimaryMid]];\n	border-top: 1px solid [[ColorPalette::PrimaryLight]];\n	border-right: 1px solid [[ColorPalette::PrimaryDark]];\n	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];\n	border-left: 1px solid [[ColorPalette::PrimaryLight]];\n}\n\n.wizard .button:hover {\n	color: [[ColorPalette::PrimaryLight]];\n	background: [[ColorPalette::PrimaryDark]];\n	border-color: [[ColorPalette::PrimaryLight]];\n}\n\n.wizard .button:active {\n	color: [[ColorPalette::Background]];\n	background: [[ColorPalette::PrimaryMid]];\n	border-top: 1px solid [[ColorPalette::PrimaryLight]];\n	border-right: 1px solid [[ColorPalette::PrimaryDark]];\n	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];\n	border-left: 1px solid [[ColorPalette::PrimaryLight]];\n}\n\n#messageArea {\n	border: 1px solid [[ColorPalette::SecondaryDark]];\n	background: [[ColorPalette::SecondaryMid]];\n	color: [[ColorPalette::PrimaryDark]];\n}\n\n#messageArea .button {\n	padding: 0.2em 0.2em 0.2em 0.2em;\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::Background]];\n}\n\n.popup {\n	background: [[ColorPalette::PrimaryLight]];\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n}\n\n.popup hr {\n	color: [[ColorPalette::PrimaryDark]];\n	background: [[ColorPalette::PrimaryDark]];\n	border-bottom: 1px;\n}\n\n.listBreak div{\n	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];\n}\n\n.popup li.disabled {\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n.popup li a, .popup li a:visited {\n	color: [[ColorPalette::TertiaryPale]];\n	border: none;\n}\n\n.popup li a:hover {\n	background: [[ColorPalette::PrimaryDark]];\n	color: [[ColorPalette::Background]];\n	border: none;\n}\n\n.tiddler .defaultCommand {\n font-weight: bold;\n}\n\n.shadow .title {\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.title {\n	color: [[ColorPalette::SecondaryDark]];\n}\n\n.subtitle {\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.toolbar {\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n.tagging, .tagged {\n	border: 1px solid [[ColorPalette::TertiaryPale]];\n	background-color: [[ColorPalette::TertiaryPale]];\n}\n\n.selected .tagging, .selected .tagged {\n	background-color: [[ColorPalette::TertiaryLight]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.tagging .listTitle, .tagged .listTitle {\n	color: [[ColorPalette::PrimaryDark]];\n}\n\n.tagging .button, .tagged .button {\n		border: none;\n}\n\n.footer {\n	color: [[ColorPalette::TertiaryLight]];\n}\n\n.selected .footer {\n	color: [[ColorPalette::TertiaryMid]];\n}\n\n.sparkline {\n	background: [[ColorPalette::PrimaryPale]];\n	border: 0;\n}\n\n.sparktick {\n	background: [[ColorPalette::PrimaryDark]];\n}\n\n.error, .errorButton {\n	color: [[ColorPalette::Foreground]];\n	background: [[ColorPalette::Error]];\n}\n\n.warning {\n	color: [[ColorPalette::Foreground]];\n	background: [[ColorPalette::SecondaryPale]];\n}\n\n.cascade {\n	background: [[ColorPalette::TertiaryPale]];\n	color: [[ColorPalette::TertiaryMid]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n.imageLink, #displayArea .imageLink {\n	background: transparent;\n}\n\n.viewer .listTitle {list-style-type: none; margin-left: -2em;}\n\n.viewer .button {\n	border: 1px solid [[ColorPalette::SecondaryMid]];\n}\n\n.viewer blockquote {\n	border-left: 3px solid [[ColorPalette::TertiaryDark]];\n}\n\ntable {\n	border: 2px solid [[ColorPalette::TertiaryDark]];\n}\n\nth, thead td {\n	background: [[ColorPalette::SecondaryMid]];\n	border: 1px solid [[ColorPalette::TertiaryDark]];\n	color: [[ColorPalette::Background]];\n}\n\ntd, tr {\n	border: 1px solid [[ColorPalette::TertiaryDark]];\n}\n\n.viewer pre {\n	border: 1px solid [[ColorPalette::SecondaryLight]];\n	background: [[ColorPalette::SecondaryPale]];\n}\n\n.viewer code {\n	color: [[ColorPalette::SecondaryDark]];\n}\n\n.viewer hr {\n	border: 0;\n	border-top: dashed 1px [[ColorPalette::TertiaryDark]];\n	color: [[ColorPalette::TertiaryDark]];\n}\n\n.highlight, .marked {\n	background: [[ColorPalette::SecondaryLight]];\n}\n\n.editor input {\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n}\n\n.editor textarea {\n	border: 1px solid [[ColorPalette::PrimaryMid]];\n	width: 100%;\n}\n\n.editorFooter {\n	color: [[ColorPalette::TertiaryMid]];\n}\n\n" +
-	".backstageSelTab {\n	background: [[ColorPalette::Foreground]];\n	color: [[ColorPalette::Background]];\n}\n\n" +
-	"#backstagePanel {\n	background: [[ColorPalette::Foreground]];\n	color: [[ColorPalette::Background]];\n}\n\n" +
-	"#backstagePanel a {\n	color: [[ColorPalette::PrimaryPale]];\n}\n\n" +
-	"#backstagePanel a:hover {\n	background-color: [[ColorPalette::Background]];\n	color: [[ColorPalette::PrimaryMid]];\n}\n\n" +
-	"#backstagePanel table {\n	border: 2px solid [[ColorPalette::TertiaryMid]];\n}\n\n" +
-	"#backstagePanel th, #backstagePanel thead td {\n	background: [[ColorPalette::TertiaryDark]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n	color: [[ColorPalette::Background]];\n}\n\n" +
-	"#backstagePanel td, #backstagePanel tr {\n	background: [[ColorPalette::Foreground]];\n	border: 1px solid [[ColorPalette::TertiaryMid]];\n}\n\n" +
-	"#backstagePanel .wizardStep {\n	background: [[ColorPalette::Foreground]];\n}\n\n" +
-	"#backstageCloak {\n	background: [[ColorPalette::Background]];\n	opacity: 0.5;\n	filter:'alpha(opacity:50)';\n}\n\n" +
-	"/*}}}*/",
-	StyleSheetLayout: "/*{{{*/\n* html .tiddler {\n    height: 1%;\n}\n\nbody {\n	font-size: .75em;\n	font-family: arial,helvetica;\n	margin: 0;\n	padding: 0;\n}\n\nh1,h2,h3,h4,h5 {\n	font-weight: bold;\n	text-decoration: none;\n	padding-left: 0.4em;\n}\n\nh1 {font-size: 1.35em;}\nh2 {font-size: 1.25em;}\nh3 {font-size: 1.1em;}\nh4 {font-size: 1em;}\nh5 {font-size: .9em;}\n\nhr {\n	height: 1px;\n}\n\na{\n	text-decoration: none;\n}\n\ndt {font-weight: bold;}\n\nol { list-style-type: decimal }\nol ol { list-style-type: lower-alpha }\nol ol ol { list-style-type: lower-roman }\nol ol ol ol { list-style-type: decimal }\nol ol ol ol ol { list-style-type: lower-alpha }\nol ol ol ol ol ol { list-style-type: lower-roman }\nol ol ol ol ol ol ol { list-style-type: decimal }\n\n.txtOptionInput {\n	width: 11em;\n}\n\n#contentWrapper .chkOptionInput {\n	border: 0;\n}\n\n.externalLink {\n	text-decoration: underline;\n}\n\n.indent {margin-left:3em;}\n.outdent {margin-left:3em; text-indent:-3em;}\ncode.escaped {white-space:nowrap;}\n\n.tiddlyLinkExisting {\n	font-weight: bold;\n}\n\n.tiddlyLinkNonExisting {\n	font-style: italic;\n}\n\n/* the 'a' is required for IE, otherwise it renders the whole tiddler a bold */\na.tiddlyLinkNonExisting.shadow {\n	font-weight: bold;\n}\n\n#mainMenu .tiddlyLinkExisting, \n#mainMenu .tiddlyLinkNonExisting,\n#sidebarTabs .tiddlyLinkNonExisting{\n font-weight: normal;\n font-style: normal;\n}\n\n#sidebarTabs .tiddlyLinkExisting {\n font-weight: bold;\n font-style: normal;\n}\n\n.header {\n		position: relative;\n}\n\n.header a:hover {\n	background: transparent;\n}\n\n.headerShadow {\n	position: relative;\n	padding: 4.5em 0em 1em 1em;\n	left: -1px;\n	top: -1px;\n}\n\n.headerForeground {\n	position: absolute;\n	padding: 4.5em 0em 1em 1em;\n	left: 0px;\n	top: 0px;\n}\n\n.siteTitle {\n	font-size: 3em;\n}\n\n.siteSubtitle {\n	font-size: 1.2em;\n}\n\n#mainMenu {\n	position: absolute;\n	left: 0;\n	width: 10em;\n	text-align: right;\n	line-height: 1.6em;\n	padding: 1.5em 0.5em 0.5em 0.5em;\n	font-size: 1.1em;\n}\n\n#sidebar {\n	position: absolute;\n	right: 3px;\n	width: 16em;\n	font-size: .9em;\n}\n\n#sidebarOptions {\n	padding-top: 0.3em;\n}\n\n#sidebarOptions a {\n	margin: 0em 0.2em;\n	padding: 0.2em 0.3em;\n	display: block;\n}\n\n#sidebarOptions input {\n	margin: 0.4em 0.5em;\n}\n\n#sidebarOptions .sliderPanel {\n	margin-left: 1em;\n	padding: 0.5em;\n	font-size: .85em;\n}\n\n#sidebarOptions .sliderPanel a {\n	font-weight: bold;\n	display: inline;\n	padding: 0;\n}\n\n#sidebarOptions .sliderPanel input {\n	margin: 0 0 .3em 0;\n}\n\n#sidebarTabs .tabContents {\n	width: 15em;\n	overflow: hidden;\n}\n\n.wizard {\n	padding: 0.1em 0em 0em 2em;\n}\n\n.wizard h1 {\n	font-size: 2em;\n	font-weight: bold;\n	background: none;\n	padding: 0em 0em 0em 0em;\n	margin: 0.4em 0em 0.2em 0em;\n}\n\n.wizard h2 {\n	font-size: 1.2em;\n	font-weight: bold;\n	background: none;\n	padding: 0em 0em 0em 0em;\n	margin: 0.2em 0em 0.2em 0em;\n}\n\n.wizardStep {\n	padding: 1em 1em 1em 1em;\n}\n\n.wizard .button {\n	margin: 0.5em 0em 0em 0em;\n	font-size: 1.2em;\n}\n\n#messageArea {\nposition:absolute; top:2em; right:0; margin: 0.5em; padding: 0.5em;\n}\n\n*[id='messageArea'] {\nposition:fixed !important; z-index:99;}\n\n.messageToolbar {\ndisplay: block;\ntext-align: right;\n}\n\n#messageArea a{\n	text-decoration: underline;\n}\n\n.popup {\n	z-index: 100;\n	font-size: .9em;\n	padding: 0.2em;\n	list-style: none;\n	margin: 0;\n}\n\n.popup hr {\n	display: block;\n	height: 1px;\n	width: auto;\n	padding: 0;\n	margin: 0.2em 0em;\n}\n\n.listBreak {\n	font-size: 1px;\n	line-height: 1px;\n}\n\n.listBreak div {\n	margin: 2px 0;\n}\n\n.popup li.disabled {\n	padding: 0.2em;\n}\n\n.popup li a{\n	display: block;\n	padding: 0.2em;\n}\n\n.tabset {\n	padding: 1em 0em 0em 0.5em;\n}\n\n.tab {\n	margin: 0em 0em 0em 0.25em;\n	padding: 2px;\n}\n\n.tabContents {\n	padding: 0.5em;\n}\n\n.tabContents ul, .tabContents ol {\n	margin: 0;\n	padding: 0;\n}\n\n.txtMainTab .tabContents li {\n	list-style: none;\n}\n\n.tabContents li.listLink {\n	 margin-left: .75em;\n}\n\n#displayArea {\n	margin: 1em 17em 0em 14em;\n}\n\n\n.toolbar {\n	text-align: right;\n	font-size: .9em;\n	visibility: hidden;\n}\n\n.selected .toolbar {\n	visibility: visible;\n}\n\n.tiddler {\n	padding: 1em 1em 0em 1em;\n}\n\n.missing .viewer,.missing .title {\n	font-style: italic;\n}\n\n.title {\n	font-size: 1.6em;\n	font-weight: bold;\n}\n\n.missing .subtitle {\n display: none;\n}\n\n.subtitle {\n	font-size: 1.1em;\n}\n\n.tiddler .button {\n	padding: 0.2em 0.4em;\n}\n\n.tagging {\nmargin: 0.5em 0.5em 0.5em 0;\nfloat: left;\ndisplay: none;\n}\n\n.isTag .tagging {\ndisplay: block;\n}\n\n.tagged {\nmargin: 0.5em;\nfloat: right;\n}\n\n.tagging, .tagged {\nfont-size: 0.9em;\npadding: 0.25em;\n}\n\n.tagging ul, .tagged ul {\nlist-style: none;margin: 0.25em;\npadding: 0;\n}\n\n.tagClear {\nclear: both;\n}\n\n.footer {\n	font-size: .9em;\n}\n\n.footer li {\ndisplay: inline;\n}\n\n* html .viewer pre {\n	width: 99%;\n	padding: 0 0 1em 0;\n}\n\n.viewer {\n	line-height: 1.4em;\n	padding-top: 0.5em;\n}\n\n.viewer .button {\n	margin: 0em 0.25em;\n	padding: 0em 0.25em;\n}\n\n.viewer blockquote {\n	line-height: 1.5em;\n	padding-left: 0.8em;\n	margin-left: 2.5em;\n}\n\n.viewer ul, .viewer ol{\n	margin-left: 0.5em;\n	padding-left: 1.5em;\n}\n\ntable {\n	border-collapse: collapse;\n	margin: 0.8em 1.0em;\n}\n\n.viewer th, .viewer td, .viewer tr,.viewer caption{\n	padding: 3px;\n}\n\ntable.listView {\n	font-size: 0.85em;\n	margin: 0.8em 1.0em;\n}\n\ntable.listView th, table.listView td, table.listView tr {\n	padding: 0px 3px 0px 3px;\n}\n\n.viewer pre {\n	padding: 0.5em;\n	margin-left: 0.5em;\n	font-size: 1.2em;\n	line-height: 1.4em;\n	overflow: auto;\n}\n\n.viewer code {\n	font-size: 1.2em;\n	line-height: 1.4em;\n}\n\n.editor {\nfont-size: 1.1em;\n}\n\n.editor input, .editor textarea {\n	display: block;\n	width: 100%;\n	font: inherit;\n}\n\n.editorFooter {\n	padding: 0.25em 0em;\n	font-size: .9em;\n}\n\n.editorFooter .button {\npadding-top: 0px; padding-bottom: 0px;}\n\n.fieldsetFix {border: 0;\npadding: 0;\nmargin: 1px 0px 1px 0px;\n}\n\n.sparkline {\n	line-height: 1em;\n}\n\n.sparktick {\n	outline: 0;\n}\n\n.zoomer {\n	font-size: 1.1em;\n	position: absolute;\n	padding: 1em;\n}\n\n.cascade {\n	font-size: 1.1em;\n	position: absolute;\n	overflow: hidden;\n}\n" +
-	"#backstage {\n	position: absolute;\n	z-index: 100;\n	left: 3em;\n	right: 3em;\n}\n\n" +
-	"#backstageTabs {\n	font-size: 1.1em;\n	font-weight: bold;\n	visibility: hidden;\n	background: none;\n	text-align: right;\n}\n\n" +
-	"#backstageTabs a {\n	padding: 0.2em 0.5em 0.2em 0.5em;\n}\n\n" +
-	"#backstagePanel {\n	display: none;\n	padding: 1em 1em 1em 1em;\n}\n\n" +
-	"#backstageCloak {\n	display: none;\n	z-index: 50;\n	position: absolute;\n	width: 100%;\n	height: 100px;\n}\n\n" +
-	"/*}}}*/",
-	StyleSheetPrint: "/*{{{*/\n@media print {\n#mainMenu, #sidebar, #messageArea, .toolbar {display: none ! important;}\n#displayArea {margin: 1em 1em 0em 1em;}\n/* Fixes a feature in Firefox 1.5.0.2 where print preview displays the noscript content */\nnoscript {display:none;}\n}\n/*}}}*/",
-	PageTemplate: "<!--{{{-->\n<div class='header' macro='gradient vert [[ColorPalette::PrimaryLight]] [[ColorPalette::PrimaryMid]]'>\n<div class='headerShadow'>\n<span class='siteTitle' refresh='content' tiddler='SiteTitle'></span>&nbsp;\n<span class='siteSubtitle' refresh='content' tiddler='SiteSubtitle'></span>\n</div>\n<div class='headerForeground'>\n<span class='siteTitle' refresh='content' tiddler='SiteTitle'></span>&nbsp;\n<span class='siteSubtitle' refresh='content' tiddler='SiteSubtitle'></span>\n</div>\n</div>\n<div id='mainMenu' refresh='content' tiddler='MainMenu'></div>\n<div id='sidebar'>\n<div id='sidebarOptions' refresh='content' tiddler='SideBarOptions'></div>\n<div id='sidebarTabs' refresh='content' force='true' tiddler='SideBarTabs'></div>\n</div>\n<div id='displayArea'>\n<div id='messageArea'></div>\n<div id='tiddlerDisplay'></div>\n</div>\n<!--}}}-->",
-	ViewTemplate: "<!--{{{-->\n<div class='toolbar' macro='toolbar closeTiddler closeOthers +editTiddler permalink references jump'></div>\n<div class='title' macro='view title'></div>\n<div class='subtitle'><span macro='view modifier link'></span>, <span macro='view modified date [[DD MMM YYYY]]'></span> (<span macro='message views.wikified.createdPrompt'></span> <span macro='view created date [[DD MMM YYYY]]'></span>)</div>\n<div class='tagging' macro='tagging'></div>\n<div class='tagged' macro='tags'></div>\n<div class='viewer' macro='view text wikified'></div>\n<div class='tagClear'></div>\n<!--}}}-->",
-	EditTemplate: "<!--{{{-->\n<div class='toolbar' macro='toolbar +saveTiddler -cancelTiddler deleteTiddler'></div>\n<div class='title' macro='view title'></div>\n<div class='editor' macro='edit title'></div>\n<div class='editor' macro='edit text'></div>\n<div class='editor' macro='edit tags'></div><div class='editorFooter'><span macro='message views.editor.tagPrompt'></span><span macro='tagChooser'></span></div>\n<!--}}}-->",
 	MarkupPreHead: "<!--{{{-->\n<link rel='alternate' type='application/rss+xml' title='RSS' href='index.xml'/>\n<!--}}}-->",
 	MarkupPostHead: "",
 	MarkupPreBody: "",
 	MarkupPostBody: ""
 	};
 
-// ---------------------------------------------------------------------------------
+/***
+|''Name:''|zh-HansTranslationPlugin|
+|''Description:''|Translation of TiddlyWiki into Simply Chinese|
+|''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
+|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
+|''Version:''|1.0.0.1|
+|''Date:''|Dec 04, 2006|
+|''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
+|''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
+|''~CoreVersion:''|2.1.0|
+***/
+
+/*{{{*/
 // Translateable strings
-// ---------------------------------------------------------------------------------
-version.extensions.Lingo_zh_Hans = {major: 2, minor: 1, revision: 3,
-	date: new Date("Nov 4, 2006"),
-	author: "BramChen",
-	source: "http://sourceforge.net/project/showfiles.php?group_id=150646"
-};
+// ---------------------
+
+// Strings in "double quotes" should be translated; strings in 'single quotes' should be left alone
 
 merge(config.options,{
 	txtUserName: "YourName"});
+	
+config.tasks = {
+		tidy: {text: "整理", tooltip: "对群组文章作大量更新"},
+		sync: {text: "同步", tooltip: "与别的 TiddlyWiki 文件及服务器同步化", content: '<<sync>>'},
+		importTask: {text: "导入", tooltip: "从别的 TiddlyWiki 文件及服务器导入文章与套件", content: '<<importTiddlers>>'},
+		copy: {text: "复制", tooltip: "复制文章至别的 TiddlyWiki 文件及服务器"},
+		plugins: {text: "套件管理", tooltip: "管理已安装的套件", content: '<<plugins>>'}
+};
 
 // Messages
 merge(config.messages,{
@@ -308,7 +291,8 @@ merge(config.messages,{
 	tiddlerLoadError: "载入文章 '%0' 时，发生错误。",
 	wrongSaveFormat: "无法使用格式 '%0' 保存，请使用标准格式存放",
 	invalidFieldName: "无效的栏位名称：%0",
-	fieldCannotBeChanged: "无法变更栏位：'%0'"});
+	fieldCannotBeChanged: "无法变更栏位：'%0'",
+	backstagePrompt: "后台："});
 
 merge(config.messages.messageClose,{
 	text: "关闭",
@@ -399,7 +383,6 @@ merge(config.macros.plugins,{
 	noPluginText: "未安装插件",
 	confirmDeleteText: "确认是否删除此文章:\n\n%0",
 	listViewTemplate : {
-		// Fields needing localisation are: title, trueText, falseText and caption
 		columns: [
 			{name: "Selected", field: "Selected", rowName: "title", type: "Selector"},
 			{name: "Title", field: "title", tiddlerLink: "title", title: "标题", type: "TiddlerLink"},
@@ -507,20 +490,22 @@ merge(config.shadowTiddlers,{
 	SiteTitle: "My TiddlyWiki",
 	SiteSubtitle: "a reusable non-linear personal web notebook",
 	SiteUrl: "http://www.tiddlywiki.com/",
-	GettingStarted: "使用此 TiddlyWiki 的空白范本之前，请先修改以下默认文章：:\n* SiteTitle 及 SiteSubtitle：网站的标题和副标题，显示于页面上方（在保存变更后，将显示于浏览器视窗的标题列）。\n* MainMenu：主菜单（通常在页面左测）。\n* DefaultTiddlers：包含一些文章的标题，可于进入TiddlyWiki 后开启。\n请输入您的大名，作为所创建/ 编辑文章的署名：<<option txtUserName>>",
-	SideBarOptions: "<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal ' YYYY0MM0DD'>><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  '偏好设置 »' '变更 TiddlyWiki 选项'>>",
-	OptionsPanel: "这些设置将缓存于浏览器\n请签名<<option txtUserName>>\n (范例：WikiWord)\n\n<<option chkSaveBackups>> 保存备份\n<<option chkAutoSave>> 自动保存\n<<option chkRegExpSearch>> 正规式搜寻\n<<option chkCaseSensitiveSearch>> 区分大小写搜寻\n<<option chkAnimate>> 使用动画显示\n\n[[进阶选项|AdvancedOptions]]\n[[插件管理|PluginManager]]\n[[导入文章|ImportTiddlers]]",
-	AdvancedOptions: "<<option chkGenerateAnRssFeed>> 产生 RssFeed\n<<option chkOpenInNewWindow>> 链接开启于新视窗\n<<option chkSaveEmptyTemplate>> 保存范本\n<<option chkToggleLinks>> 点击文章使已开启者关闭\n\n<<option chkHttpReadOnly>> 隐藏编辑功能 ({{{http:}}})\n<<option chkForceMinorUpdate>> 修改文章不变更日期时间\n(确认修改同时按 Shift 键，或只按 Ctrl-Shift-Enter)\n<<option chkConfirmDelete>> 删除文章前确认\n\n编辑模式中显示列数: <<option txtMaxEditRows>>\n存放备份文件的资料夹: <<option txtBackupFolder>>\n<<option chkInsertTabs>> 使用 tab 键插入定位字符，而非跳至下一个栏位\n",
-	SideBarTabs: "<<tabs txtMainTab 最近更新 '依更新日期排序' TabTimeline 全部 '所有文章' TabAll 分类 '所有标签' TabTags 更多 '其他' TabMore>>",
+//	GettingStarted: "使用此 TiddlyWiki 的空白范本之前，请先修改以下默认文章：:\n* SiteTitle 及 SiteSubtitle：网站的标题和副标题，显示于页面上方（在保存变更后，将显示于浏览器视窗的标题列）。\n* MainMenu：主菜单（通常在页面左测）。\n* DefaultTiddlers：包含一些文章的标题，可于进入TiddlyWiki 后开启。\n请输入您的大名，作为所创建/ 编辑文章的署名：<<option txtUserName>>",
+//	SideBarOptions: "<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal ' YYYY0MM0DD'>><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  '偏好设置 »' '变更 TiddlyWiki 选项'>>",
+//	OptionsPanel: "这些设置将缓存于浏览器\n请签名<<option txtUserName>>\n (范例：WikiWord)\n\n<<option chkSaveBackups>> 保存备份\n<<option chkAutoSave>> 自动保存\n<<option chkRegExpSearch>> 正规式搜寻\n<<option chkCaseSensitiveSearch>> 区分大小写搜寻\n<<option chkAnimate>> 使用动画显示\n\n[[进阶选项|AdvancedOptions]]\n[[插件管理|PluginManager]]\n[[导入文章|ImportTiddlers]]",
+//	AdvancedOptions: "<<option chkGenerateAnRssFeed>> 产生 RssFeed\n<<option chkOpenInNewWindow>> 链接开启于新视窗\n<<option chkSaveEmptyTemplate>> 保存范本\n<<option chkToggleLinks>> 点击文章使已开启者关闭\n\n<<option chkHttpReadOnly>> 隐藏编辑功能 ({{{http:}}})\n<<option chkForceMinorUpdate>> 修改文章不变更日期时间\n(确认修改同时按 Shift 键，或只按 Ctrl-Shift-Enter)\n<<option chkConfirmDelete>> 删除文章前确认\n\n编辑模式中显示列数: <<option txtMaxEditRows>>\n存放备份文件的资料夹: <<option txtBackupFolder>>\n<<option chkInsertTabs>> 使用 tab 键插入定位字符，而非跳至下一个栏位\n",
+//	SideBarTabs: "<<tabs txtMainTab 最近更新 '依更新日期排序' TabTimeline 全部 '所有文章' TabAll 分类 '所有标签' TabTags 更多 '其他' TabMore>>",
 	TabTimeline: "<<timeline>>",
 	TabAll: "<<list all>>",
 	TabTags: "<<allTags>>",
-	TabMore: "<<tabs txtMoreTab 未完成 '内容空白的文章' TabMoreMissing 未引用 '未被引用的文章' TabMoreOrphans 默认文章 '默认的影子文章' TabMoreShadowed>>",
+//	TabMore: "<<tabs txtMoreTab 未完成 '内容空白的文章' TabMoreMissing 未引用 '未被引用的文章' TabMoreOrphans 默认文章 '默认的影子文章' TabMoreShadowed>>",
 	TabMoreMissing: "<<list missing>>",
 	TabMoreOrphans: "<<list orphans>>",
 	TabMoreShadowed: "<<list shadowed>>",
 	PluginManager: "<<plugins>>", 
 	ImportTiddlers: "<<importTiddlers>>"});
+
+/*}}}*/
 // ---------------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------------
@@ -560,6 +545,7 @@ function main()
 	for(var s=0; s<config.notifyTiddlers.length; s++)
 		store.addNotification(config.notifyTiddlers[s].name,config.notifyTiddlers[s].notify);
 	store.loadFromDiv("storeArea","store",true);
+	loadShadowTiddlers();
 	invokeParamifier(params,"onload");
 	var pluginProblem = loadPlugins();
 	formatter = new Formatter(config.formatters);
@@ -601,6 +587,14 @@ function saveTest()
 	if(saveTest.hasChildNodes())
 		alert(config.messages.savedSnapshotError);
 	saveTest.appendChild(document.createTextNode("savetest"));
+}
+
+function loadShadowTiddlers()
+{
+	var shadows = new TiddlyWiki();
+	shadows.loadFromDiv("shadowArea","shadows",true);
+	shadows.forEachTiddler(function(title,tiddler){config.shadowTiddlers[title] = tiddler.text;});
+	delete shadows;
 }
 
 function loadPlugins()
@@ -897,7 +891,6 @@ config.formatterHelpers = {
 	{
 		if(store.tiddlerExists(link) || store.isShadowTiddler(link))
 			{
-			//# Definitely not an external link
 			return false;
 			}
 		var urlRegExp = new RegExp(config.textPrimitives.urlPattern,"mg");
@@ -908,10 +901,8 @@ config.formatterHelpers = {
 			}
 		if (link.indexOf(".")!=-1 || link.indexOf("\\")!=-1 || link.indexOf("/")!=-1)
 			{
-			//# Link contains . / or \ so is probably an external link
 			return true;
 			}
-		//# Otherwise assume it is not an external link
 		return false;
 	}
 
@@ -1833,14 +1824,18 @@ config.macros.list.shadowed.handler = function(params)
 config.macros.allTags.handler = function(place,macroName,params)
 {
 	var tags = store.getTags(params[0]);
-	var theDateList = createTiddlyElement(place,"ul");
+	var ul = createTiddlyElement(place,"ul");
 	if(tags.length == 0)
-		createTiddlyElement(theDateList,"li",null,"listTitle",this.noTags);
+		createTiddlyElement(ul,"li",null,"listTitle",this.noTags);
 	for(var t=0; t<tags.length; t++)
 		{
-		var theListItem =createTiddlyElement(theDateList,"li");
-		var theTag = createTiddlyButton(theListItem,tags[t][0] + " (" + tags[t][1] + ")",this.tooltip.format([tags[t][0]]),onClickTag);
-		theTag.setAttribute("tag",tags[t][0]);
+		var title = tags[t][0];
+		var info = getTiddlyLinkInfo(title)
+		var li =createTiddlyElement(ul,"li");
+		var btn = createTiddlyButton(li,title + " (" + tags[t][1] + ")",this.tooltip.format([title]),onClickTag,info.classes);
+		btn.setAttribute("tag",title);
+		btn.setAttribute("refresh","link");
+		btn.setAttribute("tiddlyLink",title);
 		}
 }
 
@@ -3019,22 +3014,6 @@ TiddlyWiki.prototype.calcAllSlices = function(title)
 }
 
 // Returns the slice of text of the given name
-//#
-//# A text slice is a substring in the tiddler's text that is defined
-//# either like this
-//#    aName:  textSlice
-//# or
-//#    |aName:| textSlice |
-//# or
-//#    |aName| textSlice |
-//#
-//# In the text the name (or name:) may be decorated with '' or //
-//# ie this would also a valid text slice:
-//#
-//#    |''aName:''| textSlice |
-//#
-//# @param name should only contain "word characters" (i.e. "a-ZA-Z_0-9")
-//# @return [may be undefined] the (trimmed) text of the specified slice.
 TiddlyWiki.prototype.getTiddlerSlice = function(title,sliceName)
 {
 	var slices = this.slices[title];
@@ -3153,6 +3132,8 @@ TiddlyWiki.prototype.loadFromDiv = function(src,idPrefix,noUpdate)
 {
 	this.idPrefix = idPrefix;
 	var storeElem = (typeof src == "string") ? document.getElementById(src) : src;
+	if(!storeElem)
+		return;
 	var tiddlers = this.getLoader().loadTiddlers(this,storeElem.childNodes);
 	this.setDirty(false);
 	if(!noUpdate)
@@ -4120,6 +4101,7 @@ var backstage = {
 		this.cloak.onmousedown = function(e) {
 			backstage.switchTab(null);
 		};
+		createTiddlyText(this.tabs,config.messages.backstagePrompt);
 		for(var t=0; t<config.backstageTasks.length; t++) {
 			var taskName = config.backstageTasks[t];
 			var task = config.tasks[taskName];
@@ -4139,7 +4121,7 @@ var backstage = {
 		var e = this.tabs.firstChild;
 		while(e)
 			{
-			if(e.getAttribute("task") == tabName)
+			if(e.getAttribute && e.getAttribute("task") == tabName)
 				tabElem = e;
 			e = e.nextSibling
 			}
@@ -4183,19 +4165,6 @@ var backstage = {
 			backstage.panel.style.display = "none";
 		backstage.cloak.style.display = "none";
 	}
-};
-
-config.backstage = {
-}
-
-config.backstageTasks = ["tidy","sync","importTask","copy","plugins"];
-
-config.tasks = {
-		tidy: {text: "tidy up", tooltip: "Make bulk changes across groups of tiddlers"},
-		sync: {text: "sync", tooltip: "Synchronise changes with other TiddlyWiki files and servers", content: "<<sync>>"},
-		importTask: {text: "import", tooltip: "Import tiddlers and plugins from other TiddlyWiki files and servers", content: "<<importTiddlers>>"},
-		copy: {text: "copy", tooltip: "Copy tiddlers to other TiddlyWiki files and servers"},
-		plugins: {text: "plugins", tooltip: "Manage installed plugins", content: "<<plugins>>"}
 };
 
 config.macros.backstage = {};
@@ -4297,7 +4266,7 @@ config.macros.importTiddlers.onLoad = function(status,params,responseText,url,xh
 //		return;
 	// Crack out the content - (should be refactored)
 	var posOpeningDiv = responseText.indexOf(startSaveArea);
-	var limitClosingDiv = responseText.indexOf("<!--POST-BODY-START--"+">");
+	var limitClosingDiv = responseText.indexOf("<!--STORE-AREA-END--"+">");
 	var posClosingDiv = responseText.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? responseText.length : limitClosingDiv);
 	if((posOpeningDiv == -1) || (posClosingDiv == -1))
 		{
@@ -4894,7 +4863,7 @@ function saveChanges(onlyIfDirty)
 		}
 	// Locate the storeArea div's
 	var posOpeningDiv = original.indexOf(startSaveArea);
-	var limitClosingDiv = original.indexOf("<!--POST-BODY-START--"+">");
+	var limitClosingDiv = original.indexOf("<!--STORE-AREA-END--"+">");
 	var posClosingDiv = original.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? original.length : limitClosingDiv);
 	if((posOpeningDiv == -1) || (posClosingDiv == -1))
 		{
@@ -6578,11 +6547,6 @@ String.prototype.startsWith = function(prefix)
 }
 
 // Returns the first value of the given named parameter.
-//#
-//# @param params
-//#         as returned by parseParams or null/undefined
-//# @return [may be null/undefined]
-//#
 function getParam(params, name, defaultValue) {
 	if (!params)
 		return defaultValue;
@@ -6591,10 +6555,6 @@ function getParam(params, name, defaultValue) {
 }
 
 // Returns the first value of the given boolean named parameter.
-//#
-//# @param params
-//#         as returned by parseParams or null/undefined
-//#
 function getFlag(params, name, defaultValue) {
 	return !!getParam(params, name, defaultValue);
 } 
@@ -6699,41 +6659,12 @@ Date.convertFromYYYYMMDDHHMM = function(d)
 	return(theDate);
 }
 
-// Substitute date components into a string
-Date.prototype.formatString = function(template)
-{
-	var t = template.replace(/0hh12/g,String.zeroPad(this.getHours12(),2));
-	t = t.replace(/hh12/g,this.getHours12());
-	t = t.replace(/0hh/g,String.zeroPad(this.getHours(),2));
-	t = t.replace(/hh/g,this.getHours());
-	t = t.replace(/0mm/g,String.zeroPad(this.getMinutes(),2));
-	t = t.replace(/mm/g,this.getMinutes());
-	t = t.replace(/0ss/g,String.zeroPad(this.getSeconds(),2));
-	t = t.replace(/ss/g,this.getSeconds());
-	t = t.replace(/[ap]m/g,this.getAmPm().toLowerCase());
-	t = t.replace(/[AP]M/g,this.getAmPm().toUpperCase());
-	t = t.replace(/wYYYY/g,this.getYearForWeekNo());
-	t = t.replace(/wYY/g,String.zeroPad(this.getYearForWeekNo()-2000,2));
-	t = t.replace(/YYYY/g,this.getFullYear() + '年');
-	t = t.replace(/YY/g,String.zeroPad(this.getFullYear()-2000,2) + '年');
-	t = t.replace(/MMM/g,config.messages.dates.months[this.getMonth()] + '月');
-	t = t.replace(/mmm/g,config.messages.dates.shortMonths[this.getMonth()]);
-	t = t.replace(/0MM/g,String.zeroPad(this.getMonth()+1,2) + '月');
-	t = t.replace(/MM/g,this.getMonth()+1 + '月');
-	t = t.replace(/0WW/g,String.zeroPad(this.getWeek(),2));
-	t = t.replace(/WW/g,this.getWeek());
-	t = t.replace(/DDD/g,'星期'+config.messages.dates.days[this.getDay()]);
-	t = t.replace(/ddd/g,config.messages.dates.shortDays[this.getDay()]);
-	t = t.replace(/0DD/g,String.zeroPad(this.getDate(),2)+ '日');
-	t = t.replace(/DDth/g,this.getDate()+this.daySuffix());
-	t = t.replace(/DD/g,this.getDate() + '日');
-	return t;
-}
 
 Date.prototype.getAmPm = function()
 {
 	return this.getHours() >= 12 ? "下午" : "上午";
-}// ---------------------------------------------------------------------------------
+}
+// ---------------------------------------------------------------------------------
 // Crypto functions and associated conversion routines
 // ---------------------------------------------------------------------------------
 
@@ -6793,7 +6724,6 @@ Crypto.sha1Str = function(str)
 Crypto.sha1 = function(x,blen)
 {
 	// Add 32-bit integers, wrapping at 32 bits
-	//# Uses 16-bit operations internally to work around bugs in some JavaScript interpreters.
 	add32 = function(a,b)
 	{
 		var lsw = (a&0xFFFF)+(b&0xFFFF);
@@ -6801,7 +6731,6 @@ Crypto.sha1 = function(x,blen)
 		return (msw<<16)|(lsw&0xFFFF);
 	};
 	// Add five 32-bit integers, wrapping at 32 bits
-	//# Uses 16-bit operations internally to work around bugs in some JavaScript interpreters.
 	add32x5 = function(a,b,c,d,e)
 	{
 		var lsw = (a&0xFFFF)+(b&0xFFFF)+(c&0xFFFF)+(d&0xFFFF)+(e&0xFFFF);
@@ -7265,15 +7194,6 @@ function getNodeText(e)
 		}
 	return t;
 }
-//# -------------------------
-//# LoaderBase: A (abstract) storage loader that loads the tiddlers from a list of HTML elements.
-//# The format of the elements is defined by subclasses of this loader through the internalizeTiddler implementation.
-//# Subclasses must implement:
-//# 			function getTitle(store, e)
-//#
-//# store must implement:
-//# 			function createTiddler(title).
-//#
 
 function LoaderBase()
 {
@@ -7307,15 +7227,6 @@ LoaderBase.prototype.loadTiddlers = function(store,nodes)
 	return tiddlers;
 }
 	
-//# -------------------------
-//# SaverBase: a (abstract) storage saver that externalizes all tiddlers into a string, 
-//# with every tiddler individually externalized (using this.externalizeTiddler) and joined with newlines 
-//# Subclasses must implement:
-//# 			function externalizeTiddler(store, tiddler)
-//#
-//# store must implement:
-//# 			function getTiddlers(sortByFieldName)
-//#
 
 function SaverBase()
 {
@@ -7365,8 +7276,9 @@ TW21Loader.prototype.internalizeTiddler = function(store,tiddler,title,data)
 		text = e.innerHTML.replace(/\r/mg,"").htmlDecode();
 	}
 	var modifier = data.getAttribute("modifier");
-	var created = Date.convertFromYYYYMMDDHHMM(data.getAttribute("created"));
+	var c = data.getAttribute("created");
 	var m = data.getAttribute("modified");
+	var created = c ? Date.convertFromYYYYMMDDHHMM(c) : version.date;
 	var modified = m ? Date.convertFromYYYYMMDDHHMM(m) : created;
 	var tags = data.getAttribute("tags");
 	var fields = {};
@@ -7401,9 +7313,10 @@ TW21Saver.prototype.externalizeTiddler = function(store,tiddler)
 			},true);
 		var created = tiddler.created.convertToYYYYMMDDHHMM();
 		var modified = tiddler.modified.convertToYYYYMMDDHHMM();
-		var attributes = ' modifier="' + tiddler.modifier.htmlEncode() + '"';
+		var vdate = version.date.convertToYYYYMMDDHHMM();
+		var attributes = tiddler.modifier ? ' modifier="' + tiddler.modifier.htmlEncode() + '"' : "";
 		attributes += (usePre && modified == created) ? "" : ' modified="' + modified +'"';
-		attributes += ' created="' + created + '"';
+		attributes += (usePre && created == vdate) ? "" :' created="' + created + '"';
 		var tags = tiddler.getTags();
 		if(!usePre || tags)
 			attributes += ' tags="' + tags.htmlEncode() + '"';
@@ -7508,19 +7421,14 @@ var regexpBackSlash = new RegExp("\\\\","mg");
 var regexpBackSlashEss = new RegExp("\\\\s","mg");
 var regexpNewLine = new RegExp("\n","mg");
 var regexpCarriageReturn = new RegExp("\r","mg");
-// zh-Hant Tweaks 
+/*{{{*/
 merge(config.options,{
 	txtFsEncode: "GBK"});
 
 merge(config.shadowTiddlers,{
-	MarkupPreHead: "<!--{{{-->\n<link rel='shortcut icon' href='favicon.ico' />\n<link rel='alternate' type='application/rss+xml' title='RSS' href='ptwe.xml' />\n<!--}}}-->\n<!--{{{-->\n<!-- WikiEdit -->\n<link rel='stylesheet' type='text/css' href='./wikiedit/wikiedit.css' />\n<script type='text/javascript' src='./wikiedit/wikiedit_zh-Hans.js'></script>\n<!-- End of WikiEdit -->\n<!--}}}-->\n",
-	MarkupPreBody: "<!--{{{-->\n<!-- WikiEdit -->\n<script type='text/javascript' src='./wikiedit/WikiEditPlugin.js'></script>\n<!-- End of WikiEdit -->\n<!--}}}-->\n",
-	StyleSheet: "[[StyleSheetLayoutAdjustZH]]",
-	StyleSheetLayoutAdjustZH: "/***\n	''Title:'' StyleSheetLayoutAdjustZH\n	''Usage:'' Add {{{[[StyleSheetLayoutAdjustZH]]}}} to StyleSheet\n***/\n/*{{{*/\n#sidebarOptions {\n	font-size: 1.1em;\n}\n#sidebarOptions a {\n font-style: normal;\n}\n#sidebarOptions .sliderPanel {\n	font-size: .95em;\n}\n.viewer table.listView {\n	font-size: .95em;\n}\n/*}}}*/",
 	AdvancedOptions: config.shadowTiddlers.AdvancedOptions +"\n档案系统编码：<<option txtFsEncode>>\n<<<\n使用Gecko based的浏览器（如：Firefox）时，\n指定正确系统环境编码（BIG5、GBK、SHIFT-JIS、EUC-KR....等），\n可支持保存文件于非 ASCII 路径及文件名。\n<<<",
 	ViewTemplate: "<div class='toolbar' macro='toolbar closeTiddler closeOthers +editTiddler permalink references jump'></div>\n<div class='title' macro='view title'></div>\n<div class='subtitle'><span macro='view modifier link'></span>, <span macro='view modified date YYYY0MM0DD'></span> (<span macro='message views.wikified.createdPrompt'></span> <span macro='view created date YYYY0MM0DD'></span>)</div>\n<div class='tagging' macro='tagging'></div>\n<div class='tagged' macro='tags'></div>\n<div class='viewer' macro='view text wikified'></div>\n<div class='tagClear'></div>"
 });
-// -End of Tweak
-// ---------------------------------------------------------------------------------
+/*}}}*/// ---------------------------------------------------------------------------------
 // End of scripts
 // ---------------------------------------------------------------------------------
