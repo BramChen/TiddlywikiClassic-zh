@@ -234,10 +234,10 @@ merge(config.options,{
 	txtUserName: "YourName"});
 
 config.tasks = {
-		tidy: {text: "tidy up", tooltip: "Make bulk changes across groups of tiddlers"},
+		tidy: {text: "tidy up", tooltip: "Make bulk changes across groups of tiddlers", content: 'Coming soon...\n\nThis tab will allow bulk operations on tiddlers, and tags. It will be a generalised, extensible version of the plugins tab'},
 		sync: {text: "sync", tooltip: "Synchronise changes with other TiddlyWiki files and servers", content: '<<sync>>'},
 		importTask: {text: "import", tooltip: "Import tiddlers and plugins from other TiddlyWiki files and servers", content: '<<importTiddlers>>'},
-		copy: {text: "copy", tooltip: "Copy tiddlers to other TiddlyWiki files and servers"},
+		copy: {text: "copy", tooltip: "Copy tiddlers to other TiddlyWiki files and servers", content: 'Coming soon...\n\nThis tab will allow tiddlers to be copied to remote servers'},
 		plugins: {text: "plugins", tooltip: "Manage installed plugins", content: '<<plugins>>'}
 };
 
@@ -289,6 +289,8 @@ config.messages.dates.months = ["January", "February", "March", "April", "May", 
 config.messages.dates.days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 config.messages.dates.shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 config.messages.dates.shortDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+config.messages.dates.am = "am";
+config.messages.dates.pm = "pm";
 
 merge(config.views.wikified.tag,{
 	labelNoTags: "no tags",
@@ -3691,16 +3693,16 @@ Story.prototype.addCustomFields = function(place,customFields)
 		fieldsRegExp.lastIndex = lastMatch;
 		match = fieldsRegExp.exec(customFields);
 		}
+	var w = document.createElement("div");
+	w.style.display = "none";
+	place.appendChild(w);
 	for(var t=0; t<fields.length; t++)
 		{
-		var e = createTiddlyElement(null,"input");
-		e.setAttribute("edit",fields[t].field);
+		var e = document.createElement("input");
 		e.setAttribute("type","text");
-		e.value = fields[t].value;
-		e.setAttribute("size","40");
-		e.setAttribute("autocomplete","off");
-		e.style.display = "none";
-		place.appendChild(e);
+		e.setAttribute("value",fields[t].value);
+		w.appendChild(e);
+		e.setAttribute("edit",fields[t].field);
 		}
 }
 
@@ -3928,7 +3930,7 @@ Story.prototype.closeAllTiddlers = function(exclude)
 		if((title != exclude) && element.getAttribute("dirty") != "true")
 			this.closeTiddler(title);
 		});
-	window.scrollTo(0,0);
+	window.scrollTo(0,ensureVisible(this.container));
 }
 
 // Check if there are any tiddlers in the story
@@ -4066,6 +4068,8 @@ var backstage = {
 	cloak: null,
 	tabs: null,
 	panel: null,
+	panelBody: null,
+	panelFooter: null,
 	currTabName: null,
 	currTabElem: null,
 
@@ -4074,6 +4078,9 @@ var backstage = {
 		this.backstage = document.getElementById("backstage");
 		this.tabs = document.getElementById("backstageTabs");
 		this.panel = document.getElementById("backstagePanel");
+		this.panelBody = createTiddlyElement(this.panel,"div",null,"backstagePanelBody");
+		this.panelFooter = createTiddlyElement(this.panel,"div",null,"backstagePanelFooter wizardFooter");
+		createTiddlyButton(this.panelFooter,"close","Close backstage",backstage.hidePanel);
 		this.backstage.onmouseover = function(e) {
 			backstage.tabs.style.visibility = "visible";
 		};
@@ -4095,6 +4102,7 @@ var backstage = {
 
 	onClickTab: function(e) {
 		backstage.switchTab(this.getAttribute("task"));
+		return false;
 	},
 
 	// Switch to a given tab, or none if null is passed
@@ -4116,7 +4124,7 @@ var backstage = {
 			backstage.preparePanel();
 			addClass(tabElem,"backstageSelTab");
 			var task = config.tasks[tabName];
-			wikify(task.content,backstage.panel,null,null)
+			wikify(task.content,backstage.panelBody,null,null)
 			backstage.showPanel();
 		} else if(backstage.currTabElem) {
 			backstage.hidePanel();
@@ -4128,16 +4136,19 @@ var backstage = {
 	preparePanel: function() {
 		backstage.cloak.style.height = document.documentElement.scrollHeight + "px";
 		backstage.cloak.style.display = "block";
-		removeChildren(backstage.panel);
-		return backstage.panel;
+		removeChildren(backstage.panelBody);
+		return backstage.panelBody;
 	},
 	
 	showPanel: function() {
 		if(anim && config.options.chkAnimate)
 			anim.startAnimating(new Slider(backstage.panel,true,false,"none"),new Scroller(backstage.backstage,false));
 		else
+			{
+			backstage.panel.height = "auto";
 			backstage.panel.style.display = "block";
-		return this.panel;
+			}
+		return backstage.panelBody;
 	},
 	
 	hidePanel: function() {
@@ -4146,6 +4157,16 @@ var backstage = {
 		else
 			backstage.panel.style.display = "none";
 		backstage.cloak.style.display = "none";
+	},
+	
+	setButtons: function(buttons,callback) {
+		removeChildren(backstage.panelFooter);
+		for(t=0; t<buttons.length; t++)
+			{
+			var a = buttons[t];
+			if(a && a.name != "")
+				createTiddlyButton(backstage.panelFooter,a.caption,a.tooltip,function (e) {a.onclick.apply(this,arguments); return false;});
+			}
 	}
 };
 
@@ -4155,7 +4176,7 @@ config.macros.backstage.handler = function(place,macroName,params,wikifier,param
 {
 	var backstageTask = config.tasks[params[0]];
 	if(backstageTask)
-		createTiddlyButton(place,backstageTask.text,backstageTask.tooltip,function(e) {backstage.switchTab(params[0]);})
+		createTiddlyButton(place,backstageTask.text,backstageTask.tooltip,function(e) {backstage.switchTab(params[0]); return false;})
 }
 // ---------------------------------------------------------------------------------
 // ImportTiddlers macro
@@ -4354,8 +4375,8 @@ config.macros.sync = {
 		columns: [
 			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},
 			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "Title", type: 'TiddlerLink'},
-			{name: 'Local Status', field: 'localStatus', title: "Local Status", type: 'String'},
-			{name: 'Server Status', field: 'serverStatus', title: "Server Status", type: 'String'},
+			{name: 'Local Status', field: 'localStatus', title: "Changed on your computer?", type: 'String'},
+			{name: 'Server Status', field: 'serverStatus', title: "Changed on server?", type: 'String'},
 			{name: 'Server URL', field: 'serverUrl', title: "Server URL", text: "View", type: 'Link'}
 			],
 		rowClasses: [
@@ -6599,7 +6620,7 @@ Date.prototype.getHours12 = function()
 
 Date.prototype.getAmPm = function()
 {
-	return this.getHours() >= 12 ? "pm" : "am";
+	return this.getHours() >= 12 ? config.messages.dates.pm : config.messages.dates.am;
 }
 
 Date.prototype.daySuffix = function()
