@@ -32,6 +32,14 @@ DAMAGE.
 */
 var version = {major: 2, minor: 1, revision: 3, date: new Date("Nov 3, 2006"), extensions: {}};
 
+//
+// 
+// This code is designed to be readable but for compactness it only includes brief comments. You can see fuller comments
+// in the project Subversion repository:
+//
+// http://svn.tiddlywiki.org/Trunk/core/
+//
+//
 // ---------------------------------------------------------------------------------
 // Configuration repository
 // ---------------------------------------------------------------------------------
@@ -498,14 +506,14 @@ merge(config.shadowTiddlers,{
 	SiteSubtitle: "a reusable non-linear personal web notebook",
 	SiteUrl: "http://www.tiddlywiki.com/",
 //	GettingStarted: "使用此 TiddlyWiki 的空白范本之前，请先修改以下默认文章：:\n* SiteTitle 及 SiteSubtitle：网站的标题和副标题，显示于页面上方（在保存变更后，将显示于浏览器视窗的标题列）。\n* MainMenu：主菜单（通常在页面左测）。\n* DefaultTiddlers：包含一些文章的标题，可于进入TiddlyWiki 后开启。\n请输入您的大名，作为所创建/ 编辑文章的署名：<<option txtUserName>>",
-//	SideBarOptions: "<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal ' YYYY年0MM月0DD日'>><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  '偏好设置 »' '变更 TiddlyWiki 选项'>>",
+	SideBarOptions: "<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal ' YYYY年0MM月0DD日'>><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  '偏好设置 »' '变更 TiddlyWiki 选项'>>",
 //	OptionsPanel: "这些设置将缓存于浏览器\n请签名<<option txtUserName>>\n (范例：WikiWord)\n\n<<option chkSaveBackups>> 保存备份\n<<option chkAutoSave>> 自动保存\n<<option chkRegExpSearch>> 正规式搜寻\n<<option chkCaseSensitiveSearch>> 区分大小写搜寻\n<<option chkAnimate>> 使用动画显示\n\n[[进阶选项|AdvancedOptions]]\n[[插件管理|PluginManager]]\n[[导入文章|ImportTiddlers]]",
 //	AdvancedOptions: "<<option chkGenerateAnRssFeed>> 产生 RssFeed\n<<option chkOpenInNewWindow>> 链接开启于新视窗\n<<option chkSaveEmptyTemplate>> 保存范本\n<<option chkToggleLinks>> 点击文章使已开启者关闭\n\n<<option chkHttpReadOnly>> 隐藏编辑功能 ({{{http:}}})\n<<option chkForceMinorUpdate>> 修改文章不变更日期时间\n(确认修改同时按 Shift 键，或只按 Ctrl-Shift-Enter)\n<<option chkConfirmDelete>> 删除文章前确认\n\n编辑模式中显示列数: <<option txtMaxEditRows>>\n存放备份文件的资料夹: <<option txtBackupFolder>>\n<<option chkInsertTabs>> 使用 tab 键插入定位字符，而非跳至下一个栏位\n",
-//	SideBarTabs: "<<tabs txtMainTab 最近更新 '依更新日期排序' TabTimeline 全部 '所有文章' TabAll 分类 '所有标签' TabTags 更多 '其他' TabMore>>",
+	SideBarTabs: "<<tabs txtMainTab 最近更新 '依更新日期排序' TabTimeline 全部 '所有文章' TabAll 分类 '所有标签' TabTags 更多 '其他' TabMore>>",
 	TabTimeline: "<<timeline>>",
 	TabAll: "<<list all>>",
 	TabTags: "<<allTags>>",
-//	TabMore: "<<tabs txtMoreTab 未完成 '内容空白的文章' TabMoreMissing 未引用 '未被引用的文章' TabMoreOrphans 默认文章 '默认的影子文章' TabMoreShadowed>>",
+	TabMore: "<<tabs txtMoreTab 未完成 '内容空白的文章' TabMoreMissing 未引用 '未被引用的文章' TabMoreOrphans 默认文章 '默认的影子文章' TabMoreShadowed>>",
 	TabMoreMissing: "<<list missing>>",
 	TabMoreOrphans: "<<list orphans>>",
 	TabMoreShadowed: "<<list shadowed>>",
@@ -537,7 +545,7 @@ var useJavaSaver = config.browser.isSafari || config.browser.isOpera;
 // Starting up
 function main()
 {
-	var now, then = new Date();
+	var t9,t8,t7,t6,t5,t4,t3,t2,t1,t0 = new Date();
 	startingUp = true;
 	window.onbeforeunload = function(e) {if(window.confirmExit) return confirmExit();};
 	params = getParameters();
@@ -551,15 +559,23 @@ function main()
 	loadOptionsCookie();
 	for(var s=0; s<config.notifyTiddlers.length; s++)
 		store.addNotification(config.notifyTiddlers[s].name,config.notifyTiddlers[s].notify);
+	t1 = new Date();
 	store.loadFromDiv("storeArea","store",true);
+	t2 = new Date();
 	loadShadowTiddlers();
+	t3 = new Date();
 	invokeParamifier(params,"onload");
+	t4 = new Date();
 	var pluginProblem = loadPlugins();
+	t5 = new Date();
 	formatter = new Formatter(config.formatters);
 	readOnly = (window.location.protocol == "file:") ? false : config.options.chkHttpReadOnly;
 	invokeParamifier(params,"onconfig");
+	t6 = new Date();
 	store.notifyAll();
+	t7 = new Date();
 	restart();
+	t8 = new Date();
 	if(pluginProblem)
 		{
 		story.displayTiddler(null,"PluginManager");
@@ -570,9 +586,16 @@ function main()
 			config.macros[m].init();
 	if(!readOnly)
 		backstage.init();
-	now = new Date();
+	t9 = new Date();
 	if(config.displayStartupTime)
-		displayMessage("TiddlyWiki startup in " + (now-then)/1000 + " seconds");
+		{
+		displayMessage("Load in " + (t2-t1) + " ms");
+		displayMessage("Loadshadows in " + (t3-t2) + " ms");
+		displayMessage("Loadplugins in " + (t5-t4) + " ms");
+		displayMessage("Notify in " + (t7-t6) + " ms");
+		displayMessage("Restart in " + (t8-t7) + " ms");
+		displayMessage("Total startup in " + (t9-t0) + " ms");
+		}
 	startingUp = false;
 }
 
@@ -3504,9 +3527,6 @@ TiddlyWiki.prototype.forEachField = function(tiddler, callback, onlyExtendedFiel
 // Story functions
 // ---------------------------------------------------------------------------------
 
-// A story is a HTML div containing a sequence of tiddlers that can be manipulated
-// container - id of containing element
-// idPrefix - string prefix prepended to title to make ids for tiddlers in this story
 function Story(container,idPrefix)
 {
 	this.container = container;
@@ -3514,10 +3534,6 @@ function Story(container,idPrefix)
 	this.highlightRegExp = null;
 }
 
-// Iterate through all the tiddlers in a story
-// fn - callback function to be called for each tiddler. Arguments are:
-//		tiddler - reference to Tiddler object
-//		element - reference to tiddler display element
 Story.prototype.forEachTiddler = function(fn)
 {
 	var place = document.getElementById(this.container);
@@ -3533,25 +3549,12 @@ Story.prototype.forEachTiddler = function(fn)
 		}
 }
 
-// Display several tiddlers given their titles in an array. Parameters same as displayTiddler(), except:
-// titles - array of string titles
 Story.prototype.displayTiddlers = function(srcElement,titles,template,animate,slowly,customFields)
 {
 	for(var t = titles.length-1;t>=0;t--)
 		this.displayTiddler(srcElement,titles[t],template,animate,slowly,customFields);
 }
 
-// Display a given tiddler with a given template. If the tiddler is already displayed but with a different
-// template, it is switched to the specified template
-// srcElement - reference to element from which this one is being opened -or-
-//              special positions "top", "bottom"
-// title - title of tiddler to display
-// template - the name of the tiddler containing the template -or-
-//			  one of the constants DEFAULT_VIEW_TEMPLATE and DEFAULT_EDIT_TEMPLATE -or-
-//			  null or undefined to indicate the current template if there is one, DEFAULT_VIEW_TEMPLATE if not
-// animate - whether to perform animations
-// slowly - whether to perform animations in slomo
-// customFields - an optional list of name/value pairs to be assigned as tiddler fields (for edit templates)
 Story.prototype.displayTiddler = function(srcElement,title,template,animate,slowly,customFields)
 {
 	var place = document.getElementById(this.container);
@@ -3572,10 +3575,6 @@ Story.prototype.displayTiddler = function(srcElement,title,template,animate,slow
 		}
 }
 
-// Figure out the appropriate position for a newly opened tiddler
-// srcElement - reference to the element containing the link to the tiddler -or-
-//              special positions "top", "bottom"
-// returns - reference to the tiddler that the new one should appear before (null for the bottom of the story)
 Story.prototype.positionTiddler = function(srcElement)
 {
 	var place = document.getElementById(this.container);
@@ -3605,12 +3604,6 @@ Story.prototype.positionTiddler = function(srcElement)
 	return before;
 }
 
-// Create a tiddler frame at the appropriate place in a story column
-// place - reference to parent element
-// before - null, or reference to element before which to insert new tiddler
-// title - title of new tiddler
-// template - the name of the tiddler containing the template or one of the constants DEFAULT_VIEW_TEMPLATE and DEFAULT_EDIT_TEMPLATE
-// customFields - an optional list of name/value pairs to be assigned as tiddler fields (for edit templates)
 Story.prototype.createTiddler = function(place,before,title,template,customFields)
 {
 	var tiddlerElem = createTiddlyElement(null,"div",this.idPrefix + title,"tiddler");
@@ -3620,7 +3613,6 @@ Story.prototype.createTiddler = function(place,before,title,template,customField
 	return tiddlerElem;
 }
 
-// Overridable for choosing the name of the template to apply for a tiddler
 Story.prototype.chooseTemplateForTiddler = function(title,template)
 {
 	if(!template)
@@ -3630,17 +3622,11 @@ Story.prototype.chooseTemplateForTiddler = function(title,template)
 	return template;
 }
 
-// Overridable for extracting the text of a template from a tiddler
 Story.prototype.getTemplateForTiddler = function(title,template,tiddler)
 {
 	return store.getRecursiveTiddlerText(template,null,10);
 }
 
-// Apply a template to an existing tiddler if it is not already displayed using that template
-// title - title of tiddler to update
-// template - the name of the tiddler containing the template or one of the constants DEFAULT_VIEW_TEMPLATE and DEFAULT_EDIT_TEMPLATE
-// force - if true, forces the refresh even if the template hasn't changedd
-// customFields - an optional list of name/value pairs to be assigned as tiddler fields (for edit templates)
 Story.prototype.refreshTiddler = function(title,template,force,customFields)
 {
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
@@ -3700,7 +3686,6 @@ Story.prototype.refreshTiddler = function(title,template,force,customFields)
 	return tiddlerElem;
 }
 
-// Add hidden input elements for the custom fields of a tiddler
 Story.prototype.addCustomFields = function(place,customFields)
 {
 	var fieldsPattern = "(?:(" + config.textPrimitives.anyLetter + "+)\\(([^\\)\\|\\n]+)(?:\\):))|(?:(" + config.textPrimitives.anyLetter + "+):([^;\\|\\n]+);)";
@@ -3729,7 +3714,6 @@ Story.prototype.addCustomFields = function(place,customFields)
 		}
 }
 
-// Refresh all tiddlers in the Story
 Story.prototype.refreshAllTiddlers = function() 
 {
 	var place = document.getElementById(this.container);
@@ -3741,7 +3725,6 @@ Story.prototype.refreshAllTiddlers = function()
 		this.refreshTiddler(e.getAttribute("tiddler"),e.getAttribute("template"),true);
 }
 
-// Default tiddler onmouseover/out event handlers
 Story.prototype.onTiddlerMouseOver = function(e)
 {
 	if(window.addClass instanceof Function)
@@ -3754,7 +3737,6 @@ Story.prototype.onTiddlerMouseOut = function(e)
 		removeClass(this,"selected");
 }
 
-// Default tiddler ondblclick event handler
 Story.prototype.onTiddlerDblClick = function(e)
 {
 	if(!e) var e = window.event;
@@ -3822,8 +3804,6 @@ Story.prototype.onTiddlerKeyPress = function(e)
 	return(!consume);
 };
 
-// Returns the specified field (input or textarea element) in a tiddler, otherwise the first edit field it finds
-// or null if it found no edit field at all
 Story.prototype.getTiddlerField = function(title,field)
 {
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
@@ -3846,7 +3826,6 @@ Story.prototype.getTiddlerField = function(title,field)
 	return e;
 }
 
-// Focus a specified tiddler. Attempts to focus the specified field, otherwise the first edit field it finds
 Story.prototype.focusTiddler = function(title,field)
 {
 	var e = this.getTiddlerField(title,field);
@@ -3857,7 +3836,6 @@ Story.prototype.focusTiddler = function(title,field)
 		}
 }
 
-// Ensures that a specified tiddler does not have the focus
 Story.prototype.blurTiddler = function(title)
 {
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
@@ -3868,12 +3846,6 @@ Story.prototype.blurTiddler = function(title)
 		}
 }
 
-// Adds a specified value to the edit controls (if any) of a particular
-// array-formatted field of a particular tiddler (eg "tags")
-//  title - name of tiddler
-//  tag - value of field, without any [[brackets]]
-//  mode - +1 to add the tag, -1 to remove it, 0 to toggle it
-//  field - name of field (eg "tags")
 Story.prototype.setTiddlerField = function(title,tag,mode,field)
 {
 	var c = story.getTiddlerField(title,field);
@@ -3883,16 +3855,11 @@ Story.prototype.setTiddlerField = function(title,tag,mode,field)
 	c.value = String.encodeTiddlyLinkList(tags);
 }
 
-// The same as setTiddlerField but preset to the "tags" field
 Story.prototype.setTiddlerTag = function(title,tag,mode)
 {
 	Story.prototype.setTiddlerField(title,tag,mode,"tags");
 }
 
-// Close a specified tiddler
-// title - name of tiddler to close
-// animate - whether to perform animations
-// slowly - whether to perform animations in slomo
 Story.prototype.closeTiddler = function(title,animate,slowly)
 {
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
@@ -3907,17 +3874,11 @@ Story.prototype.closeTiddler = function(title,animate,slowly)
 		}
 }
 
-// Scrub IDs from a tiddler. This is so that the 'ghost' of a tiddler while it is being closed
-// does not interfere with things
-// tiddler - reference to the tiddler element
 Story.prototype.scrubTiddler = function(tiddlerElem)
 {
 	tiddlerElem.id = null;
 }
 
-// Set the 'dirty' flag of a tiddler
-// title - title of tiddler to change
-// dirty - new boolean status of flag
 Story.prototype.setDirty = function(title,dirty)
 {
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
@@ -3925,7 +3886,6 @@ Story.prototype.setDirty = function(title,dirty)
 		tiddlerElem.setAttribute("dirty",dirty ? "true" : "false");
 }
 
-// Is a particular tiddler dirty (with unsaved changes)?
 Story.prototype.isDirty = function(title)
 {
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
@@ -3934,7 +3894,6 @@ Story.prototype.isDirty = function(title)
 	return null;
 }
 
-// Determine whether any open tiddler are dirty
 Story.prototype.areAnyDirty = function()
 {
 	var r = false;
@@ -3945,7 +3904,6 @@ Story.prototype.areAnyDirty = function()
 	return r;
 }
 
-// Close all tiddlers in the story
 Story.prototype.closeAllTiddlers = function(exclude)
 {
 	clearMessage();
@@ -3956,17 +3914,12 @@ Story.prototype.closeAllTiddlers = function(exclude)
 	window.scrollTo(0,ensureVisible(this.container));
 }
 
-// Check if there are any tiddlers in the story
 Story.prototype.isEmpty = function()
 {
 	var place = document.getElementById(this.container);
 	return(place && place.firstChild == null);
 }
 
-// Perform a search and display the result
-// text - text to search for
-// useCaseSensitive - true for case sensitive matching
-// useRegExp - true to interpret text as a RegExp
 Story.prototype.search = function(text,useCaseSensitive,useRegExp)
 {
 	this.closeAllTiddlers();
@@ -3984,9 +3937,6 @@ Story.prototype.search = function(text,useCaseSensitive,useRegExp)
 		displayMessage(config.macros.search.failureMsg.format([q + text + q]));
 }
 
-// Determine if the specified element is within a tiddler in this story
-// e - reference to an element
-// returns: reference to a tiddler element or null if none
 Story.prototype.findContainingTiddler = function(e)
 {
 	while(e && !hasClass(e,"tiddler"))
@@ -3994,9 +3944,6 @@ Story.prototype.findContainingTiddler = function(e)
 	return(e);
 }
 
-// Gather any saveable fields from a tiddler element
-// e - reference to an element to scan recursively
-// fields - object to contain gathered field values
 Story.prototype.gatherSaveFields = function(e,fields)
 {
 	if(e && e.getAttribute)
@@ -4013,8 +3960,6 @@ Story.prototype.gatherSaveFields = function(e,fields)
 		}
 }
 
-// Determine whether a tiddler has any edit fields, and if so if their values have been changed
-// title - name of tiddler
 Story.prototype.hasChanges = function(title)
 {
 	var e = document.getElementById(this.idPrefix + title);
@@ -4032,10 +3977,6 @@ Story.prototype.hasChanges = function(title)
 	return false;
 }
 
-// Save any open edit fields of a tiddler and updates the display as necessary
-// title - name of tiddler
-// minorUpdate - true if the modified date shouldn't be updated
-// returns: title of saved tiddler, or null if not saved
 Story.prototype.saveTiddler = function(title,minorUpdate)
 {
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
