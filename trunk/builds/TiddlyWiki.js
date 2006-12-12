@@ -297,6 +297,11 @@ config.messages.dates.months = ["January", "February", "March", "April", "May", 
 config.messages.dates.days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 config.messages.dates.shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 config.messages.dates.shortDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// suffixes for dates, eg "1st","2nd","3rd"..."30th","31st"
+config.messages.dates.daySuffixes = ["st","nd","rd","th","th","th","th","th","th","th",
+		"th","th","th","th","th","th","th","th","th","th",
+		"st","nd","rd","th","th","th","th","th","th","th",
+		"st"];
 config.messages.dates.am = "am";
 config.messages.dates.pm = "pm";
 
@@ -1536,19 +1541,17 @@ config.formatters = [
 
 function getParser(tiddler)
 {
-	var f = formatter;
 	if(tiddler!=null)
 		{
 		for(var i in config.parsers)
 			{
-			if(tiddler.isTagged(config.parsers[i].formatTag))
+			if(tiddler.isTagged(config.parsers[i].formatTag)||(tiddler.fields&&tiddler.fields["wikiformat"]==config.parsers[i].format))
 				{
-				f = config.parsers[i];
-				break;
+				return config.parsers[i];
 				}
 			}
 		}
-	return f;
+	return formatter;
 }
 
 function wikify(source,output,highlightRegExp,tiddler)
@@ -4093,6 +4096,8 @@ var backstage = {
 	},
 	
 	hidePanel: function() {
+		backstage.currTabName = null;
+		backstage.currTabElem = null;
 		if(anim && config.options.chkAnimate)
 			anim.startAnimating(new Slider(backstage.panel,false,false,"none"));
 		else
@@ -4757,7 +4762,7 @@ var endSaveArea = '</d' + 'iv>';
 function confirmExit()
 {
 	hadConfirmExit = true;
-	if(store && store.isDirty && store.isDirty())
+	if((store && store.isDirty && store.isDirty()) || (story && story.areAnyDirty && story.areAnyDirty()))
 		return config.messages.confirmExit;
 }
 
@@ -4792,7 +4797,7 @@ function saveChanges(onlyIfDirty)
 		{
 		alert(config.messages.notFileUrlError);
 		if(store.tiddlerExists(config.messages.saveInstructions))
-			displayTiddler(null,config.messages.saveInstructions);
+			story.displayTiddler(null,config.messages.saveInstructions);
 		return;
 		}
 	var localPath = getLocalPath(originalPath);
@@ -4802,12 +4807,12 @@ function saveChanges(onlyIfDirty)
 		{
 		alert(config.messages.cantSaveError);
 		if(store.tiddlerExists(config.messages.saveInstructions))
-			displayTiddler(null,config.messages.saveInstructions);
+			story.displayTiddler(null,config.messages.saveInstructions);
 		return;
 		}
 	// Locate the storeArea div's
 	var posOpeningDiv = original.indexOf(startSaveArea);
-	var limitClosingDiv = original.indexOf("<!--STORE-AREA-END--"+">");
+	var limitClosingDiv = original.indexOf("<"+"!--STORE-AREA-END--"+">");
 	var posClosingDiv = original.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? original.length : limitClosingDiv);
 	if((posOpeningDiv == -1) || (posClosingDiv == -1))
 		{
@@ -4818,8 +4823,7 @@ function saveChanges(onlyIfDirty)
 	if(config.options.chkSaveBackups)
 		{
 		var backupPath = getBackupPath(localPath);
-//		var backup = saveFile(backupPath,original);
-		var backup = (config.browser.isIE)?ieCopyFile(localPath,backupPath):saveFile(backupPath,original);
+		var backup = config.browser.isIE ? ieCopyFile(backupPath,localPath) : saveFile(backupPath,original);
 		if(backup)
 			displayMessage(config.messages.backupSaved,"file://" + backupPath);
 		else
@@ -4880,8 +4884,9 @@ function saveChanges(onlyIfDirty)
 		alert(config.messages.mainFailed);
 }
 
-function getLocalPath(originalPath)
+function getLocalPath(origPath)
 {
+	var originalPath = convertUriToUTF8(origPath,config.options.txtFileSystemCharSet);
 	// Remove any location or query part of the URL
 	var argPos = originalPath.indexOf("?");
 	if(argPos != -1)
@@ -4892,11 +4897,7 @@ function getLocalPath(originalPath)
 	// Convert file://localhost/ to file:///
 	if(originalPath.indexOf("file://localhost/") == 0)
 		originalPath = "file://" + originalPath.substr(16);
-	// Convert to a native file format assuming
-	// "file:///x:/path/path/path..." - pc local file --> "x:\path\path\path..."
-	// "file://///server/share/path/path/path..." - FireFox pc network file --> "\\server\share\path\path\path..."
-	// "file:///path/path/path..." - mac/unix local file --> "/path/path/path..."
-	// "file://server/share/path/path/path..." - pc network file --> "\\server\share\path\path\path..."
+	// Convert to a native file format
 	var localPath;
 	if(originalPath.charAt(9) == ":") // pc local file
 		localPath = unescape(originalPath.substr(8)).replace(new RegExp("/","g"),"\\");
@@ -4937,7 +4938,7 @@ function generateRss()
 	s.push("<" + "?xml version=\"1.0\"?" + ">");
 	s.push("<rss version=\"2.0\">");
 	s.push("<channel>");
-	s.push("<title>" + wikifyPlain("SiteTitle").htmlEncode() + "</title>");
+	s.push("<title" + ">" + wikifyPlain("SiteTitle").htmlEncode() + "</title" + ">");
 	if(u)
 		s.push("<link>" + u.htmlEncode() + "</link>");
 	s.push("<description>" + wikifyPlain("SiteSubtitle").htmlEncode() + "</description>");
@@ -4959,51 +4960,7 @@ function generateRss()
 	return s.join("\n");
 }
 
-function ieCopyFile(source, destination)
-{
-	try
-	{
-		var fso = new ActiveXObject("Scripting.FileSystemObject");
-	}
-	catch(e)
-	{
-		return(null);
-	}
-	var file = fso.GetFile(source);
-	file.Copy(destination);
-	return(true);
 
-} // ---------------------------------------------------------------------------------
-// Convert URI encoding to Utf-8 for getLocalPath
-// ---------------------------------------------------------------------------------
-/***
-Assign correct encode of file system to config.options.txtFsEncode, 
-in order to save document to non-asscii path and/or file name on Gecko-based browsers (for Windows).
-For example, setting config.options.txtFsEncode to "BIG5" for Trad. Chinese Windows XP.
-***/
-if (window.Components) {
-	var getLocalPath_ori=getLocalPath;
-	getLocalPath = function(s) {return getLocalPath_ori(mozConvertUriToUTF8(s));}
-}
-
-function mozConvertUriToUTF8(s) {
-	if (window.netscape == undefined || config.options.txtFsEncode == undefined || config.options.txtFsEncode == "" )
-		return s;
-	try {
-		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-	}
-	catch(e) {
-		return s;
-		}
-	var converter = Components.classes["@mozilla.org/intl/utf8converterservice;1"].getService(Components.interfaces.nsIUTF8ConverterService);
-	var u = converter.convertURISpecToUTF8(s, config.options.txtFsEncode);
-	return u;
-}
-
-// UTF-8 encoding rules:
-// 0x0000 - 0x007F:	0xxxxxxx
-// 0x0080 - 0x07FF:	110xxxxx 10xxxxxx
-// 0x0800 - 0xFFFF:	1110xxxx 10xxxxxx 10xxxxxx
 
 function convertUTF8ToUnicode(u)
 {
@@ -5093,6 +5050,19 @@ function mozConvertUnicodeToUTF8(s)
 		return u;
 }
 
+function convertUriToUTF8(uri,charSet)
+{
+	if(window.netscape == undefined || charSet == undefined || charSet == "")
+		return uri;
+	try {
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+		var converter = Components.classes["@mozilla.org/intl/utf8converterservice;1"].getService(Components.interfaces.nsIUTF8ConverterService);
+	} catch(ex) {
+		return uri;
+	}
+	return converter.convertURISpecToUTF8(uri,charSet);
+}
+
 function saveFile(fileUrl, content)
 {
 	var r = null;
@@ -5151,6 +5121,17 @@ function ieLoadFile(filePath)
 		return(null);
 		}
 	return(content);
+}
+
+function ieCopyFile(dest,source)
+{
+	try {
+		var fso = new ActiveXObject("Scripting.FileSystemObject");
+		fso.GetFile(source).Copy(dest);
+	} catch(ex) {
+		return false;
+	}
+	return true;
 }
 
 // Returns null if it can't do it, false if there's an error, true if it saved OK
@@ -5263,7 +5244,6 @@ function javaLoadFile(filePath)
 		}
 	return content.join("\n");
 }
-
 
 // ---------------------------------------------------------------------------------
 // Remote HTTP requests
@@ -6510,6 +6490,7 @@ Date.prototype.formatString = function(template)
 	t = t.replace(/hh12/g,this.getHours12());
 	t = t.replace(/0hh/g,String.zeroPad(this.getHours(),2));
 	t = t.replace(/hh/g,this.getHours());
+	t = t.replace(/mmm/g,config.messages.dates.shortMonths[this.getMonth()]);
 	t = t.replace(/0mm/g,String.zeroPad(this.getMinutes(),2));
 	t = t.replace(/mm/g,this.getMinutes());
 	t = t.replace(/0ss/g,String.zeroPad(this.getSeconds(),2));
@@ -6521,7 +6502,6 @@ Date.prototype.formatString = function(template)
 	t = t.replace(/YYYY/g,this.getFullYear());
 	t = t.replace(/YY/g,String.zeroPad(this.getFullYear()-2000,2));
 	t = t.replace(/MMM/g,config.messages.dates.months[this.getMonth()]);
-	t = t.replace(/mmm/g,config.messages.dates.shortMonths[this.getMonth()]);
 	t = t.replace(/0MM/g,String.zeroPad(this.getMonth()+1,2));
 	t = t.replace(/MM/g,this.getMonth()+1);
 	t = t.replace(/0WW/g,String.zeroPad(this.getWeek(),2));
@@ -6566,12 +6546,7 @@ Date.prototype.getAmPm = function()
 
 Date.prototype.daySuffix = function()
 {
-	var num = this.getDate();
-	if (num >= 11 && num <= 13) return "th";
-	else if (num.toString().substr(-1)=="1") return "st";
-	else if (num.toString().substr(-1)=="2") return "nd";
-	else if (num.toString().substr(-1)=="3") return "rd";
-	return "th";
+	return config.messages.dates.daySuffixes[this.getDate()-1];
 }
 
 // Convert a date to local YYYYMMDDHHMM string format
