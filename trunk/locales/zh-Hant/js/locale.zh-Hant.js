@@ -20,10 +20,10 @@ merge(config.options,{
 	txtUserName: "YourName"});
 
 config.tasks = {
-		tidy: {text: "整理", tooltip: "對群組文章作大量更新"},
+		tidy: {text: "整理", tooltip: "對群組文章作大量更新", content: 'Coming soon...\n\nThis tab will allow bulk operations on tiddlers, and tags. It will be a generalised, extensible version of the plugins tab'},
 		sync: {text: "同步", tooltip: "與別的 TiddlyWiki 文件及伺服器同步化", content: '<<sync>>'},
 		importTask: {text: "匯入", tooltip: "從別的 TiddlyWiki 文件及伺服器匯入文章與套件", content: '<<importTiddlers>>'},
-		copy: {text: "複製", tooltip: "複製文章至別的 TiddlyWiki 文件及伺服器"},
+		copy: {text: "複製", tooltip: "複製文章至別的 TiddlyWiki 文件及伺服器", content: 'Coming soon...\n\nThis tab will allow tiddlers to be copied to remote servers'},
 		plugins: {text: "套件管理", tooltip: "管理已安裝的套件", content: '<<plugins>>'}
 };
 
@@ -76,6 +76,13 @@ config.messages.dates.months = ["一", "二", "三", "四", "五", "六", "七",
 config.messages.dates.days = ["日", "一","二", "三", "四", "五", "六"];
 config.messages.dates.shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 config.messages.dates.shortDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+// suffixes for dates, eg "1st","2nd","3rd"..."30th","31st"
+config.messages.dates.daySuffixes = ["st","nd","rd","th","th","th","th","th","th","th",
+		"th","th","th","th","th","th","th","th","th","th",
+		"st","nd","rd","th","th","th","th","th","th","th",
+		"st"];
+config.messages.dates.am = "上午";
+config.messages.dates.pm = "下午";
 
 merge(config.views.wikified.tag,{
 	labelNoTags: "未設標籤",
@@ -115,7 +122,7 @@ merge(config.macros.tagging,{
 	tooltip: "列出標籤為 '%0' 的文章"});
 
 merge(config.macros.timeline,{
-	dateFormat: "YYYY0MM0DD"});
+	dateFormat: "YYYY年0MM月0DD日"});
 
 merge(config.macros.allTags,{
 	tooltip: "顯示文章- 標籤為'%0'",
@@ -214,7 +221,27 @@ merge(config.macros.importTiddlers,{
 			{caption: "匯入所選文章", name: 'import'}
 			]}
 	});
-
+/*
+merge(config.macros.sync,{
+	label: "同步",
+	prompt: "連結伺服器且作同步變更",
+	listViewTemplate: {
+		columns: [
+			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},
+			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "文章標題", type: 'TiddlerLink'},
+			{name: 'Local Status', field: 'localStatus', title: "更改本機資料?", type: 'String'},
+			{name: 'Server Status', field: 'serverStatus', title: "更改伺服器上資料?", type: 'String'},
+			{name: 'Server URL', field: 'serverUrl', title: "伺服器網址", text: "View", type: 'Link'}
+			],
+		rowClasses: [
+			],
+		buttons: [
+			{caption: "同步這些文章", name: 'sync'}
+			]},
+	wizardTitle: "將你的資料內容與外部伺服器與資料來源（feeds）同步",
+	step1: "選擇欲同步的文章"
+	});
+*/
 merge(config.commands.closeTiddler,{
 	text: "關閉",
 	tooltip: "關閉本文"});
@@ -265,14 +292,14 @@ merge(config.shadowTiddlers,{
 	SiteSubtitle: "a reusable non-linear personal web notebook",
 	SiteUrl: "http://www.tiddlywiki.com/",
 //	GettingStarted: "使用此 TiddlyWiki 的空白範本之前，請先修改以下預設文章：:\n* SiteTitle 及 SiteSubtitle：網站的標題和副標題，顯示於頁面上方（在儲存變更後，將顯示於瀏覽器視窗的標題列）。\n* MainMenu：主選單（通常在頁面左測）。\n* DefaultTiddlers：內含一些文章的標題，可於載入TiddlyWiki 後的預設開啟。\n請輸入您的大名，作為所建立/ 編輯的文章署名：<<option txtUserName>>",
-//	SideBarOptions: "<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal ' YYYY0MM0DD'>><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  '偏好設定 »' '變更 TiddlyWiki 選項'>>",
+	SideBarOptions: "<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal ' YYYY年0MM月0DD日'>><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  '偏好設定 »' '變更 TiddlyWiki 選項'>>",
 //	OptionsPanel: "這些設定將暫存於瀏覽器\n請簽名<<option txtUserName>>\n (範例：WikiWord)\n\n<<option chkSaveBackups>> 儲存備份\n<<option chkAutoSave>> 自動儲存\n<<option chkRegExpSearch>> 正規式搜尋\n<<option chkCaseSensitiveSearch>> 區分大小寫搜尋\n<<option chkAnimate>> 使用動畫顯示\n\n[[進階選項|AdvancedOptions]]\n[[套件管理|PluginManager]]\n[[匯入文章|ImportTiddlers]]",
 //	AdvancedOptions: "<<option chkGenerateAnRssFeed>> 產生 RssFeed\n<<option chkOpenInNewWindow>> 連結開啟於新視窗\n<<option chkSaveEmptyTemplate>> 儲存範本\n<<option chkToggleLinks>> 點擊文章使已開啟者關閉\n\n<<option chkHttpReadOnly>> 隱藏編輯功能 ({{{http:}}})\n<<option chkForceMinorUpdate>> 修改文章不變更日期時間\n(確認修改同時按 Shift 鍵，或只按 Ctrl-Shift-Enter)\n<<option chkConfirmDelete>> 刪除文章前確認\n\n編輯模式中顯示列數: <<option txtMaxEditRows>>\n存放備份檔案的資料夾: <<option txtBackupFolder>>\n<<option chkInsertTabs>> 使用 tab 鍵插入定位字元，而非跳至下一個欄位\n",
-//	SideBarTabs: "<<tabs txtMainTab 最近更新 '依更新日期排序' TabTimeline 全部 '所有文章' TabAll 分類 '所有標籤' TabTags 更多 '其他' TabMore>>",
+	SideBarTabs: "<<tabs txtMainTab 最近更新 '依更新日期排序' TabTimeline 全部 '所有文章' TabAll 分類 '所有標籤' TabTags 更多 '其他' TabMore>>",
 	TabTimeline: "<<timeline>>",
 	TabAll: "<<list all>>",
 	TabTags: "<<allTags>>",
-//	TabMore: "<<tabs txtMoreTab 未完成 '內容空白的文章' TabMoreMissing 未引用 '未被引用的文章' TabMoreOrphans 預設文章 '預設的影子文章' TabMoreShadowed>>",
+	TabMore: "<<tabs txtMoreTab 未完成 '內容空白的文章' TabMoreMissing 未引用 '未被引用的文章' TabMoreOrphans 預設文章 '預設的影子文章' TabMoreShadowed>>",
 	TabMoreMissing: "<<list missing>>",
 	TabMoreOrphans: "<<list orphans>>",
 	TabMoreShadowed: "<<list shadowed>>",
