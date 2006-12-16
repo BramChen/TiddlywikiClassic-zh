@@ -336,6 +336,7 @@ merge(config.views.wikified,{
 	defaultText: "",
 	defaultModifier: "(未完成)",
 	shadowModifier: "(預設)",
+	dateFormat: "YYYY年0MM月0DD日",
 	createdPrompt: "建立於"});
 
 merge(config.views.editor,{
@@ -370,7 +371,7 @@ merge(config.macros.allTags,{
 config.macros.list.all.prompt = "依字母排序";
 config.macros.list.missing.prompt = "被引用且內容空白的文章";
 config.macros.list.orphans.prompt = "未被引用的文章";
-config.macros.list.shadowed.prompt = "這些隱藏的文章已定義預設內容";
+config.macros.list.shadowed.prompt = "這些隱藏的文章已預設內容";
 
 merge(config.macros.closeAll,{
 	label: "全部關閉",
@@ -538,7 +539,7 @@ merge(config.shadowTiddlers,{
 	TabTimeline: "<<timeline>>",
 	TabAll: "<<list all>>",
 	TabTags: "<<allTags>>",
-	TabMore: "<<tabs txtMoreTab 未完成 '內容空白的文章' TabMoreMissing 未引用 '未被引用的文章' TabMoreOrphans 預設文章 '預設的影子文章' TabMoreShadowed>>",
+	TabMore: "<<tabs txtMoreTab 未完成 '內容空白的文章' TabMoreMissing 未引用 '未被引用的文章' TabMoreOrphans 預設文章 '已預設內容的隱藏文章' TabMoreShadowed>>",
 	TabMoreMissing: "<<list missing>>",
 	TabMoreOrphans: "<<list orphans>>",
 	TabMoreShadowed: "<<list shadowed>>",
@@ -2444,10 +2445,7 @@ config.macros.view.handler = function(place,macroName,params,wikifier,paramStrin
 					break;
 				case "date":
 					value = Date.convertFromYYYYMMDDHHMM(value);
-					if(params[2])
-						createTiddlyText(place,value.formatString(params[2]));
-					else
-						createTiddlyText(place,value);
+					createTiddlyText(place,value.formatString(params[2] ? params[2] : config.views.wikified.dateFormat));
 					break;
 				}
 		}
@@ -4258,7 +4256,7 @@ config.macros.importTiddlers.onLoad = function(status,params,responseText,url,xh
 //		return;
 	// Crack out the content - (should be refactored)
 	var posOpeningDiv = responseText.indexOf(startSaveArea);
-	var limitClosingDiv = responseText.indexOf("<!--STORE-AREA-END--"+">");
+	var limitClosingDiv = responseText.indexOf("<!--POST-BODY-END--"+">");
 	var posClosingDiv = responseText.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? responseText.length : limitClosingDiv);
 	if((posOpeningDiv == -1) || (posClosingDiv == -1))
 		{
@@ -4754,7 +4752,7 @@ function loadOptionsCookie()
 			switch(name.substr(0,3))
 				{
 				case "txt":
-					config.options[name] = DecodeCookie(value);
+					config.options[name] = decodeCookie(value);
 					break;
 				case "chk":
 					config.options[name] = value == "true";
@@ -4772,7 +4770,7 @@ function saveOptionCookie(name)
 	switch(name.substr(0,3))
 		{
 		case "txt":
-			c += EncodeCookie(config.options[name].toString());
+			c += encodeCookie(config.options[name].toString());
 			break;
 		case "chk":
 			c += config.options[name] ? "true" : "false";
@@ -4782,13 +4780,14 @@ function saveOptionCookie(name)
 	document.cookie = c;
 }
 
-function EncodeCookie(s)
+function encodeCookie(s)
 {
 	return escape(manualConvertUnicodeToUTF8(s));
 }
 
-function DecodeCookie(s)
-{	s=unescape(s);
+function decodeCookie(s)
+{	
+	s=unescape(s);
 	var re = /&#[0-9]{1,5};/g;
 	return s.replace(re, function($0) {return(String.fromCharCode(eval($0.replace(/[&#;]/g,""))));});
 }
@@ -4855,7 +4854,7 @@ function saveChanges(onlyIfDirty)
 		}
 	// Locate the storeArea div's
 	var posOpeningDiv = original.indexOf(startSaveArea);
-	var limitClosingDiv = original.indexOf("<"+"!--STORE-AREA-END--"+">");
+	var limitClosingDiv = original.indexOf("<"+"!--POST-BODY-END--"+">");
 	var posClosingDiv = original.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? original.length : limitClosingDiv);
 	if((posOpeningDiv == -1) || (posClosingDiv == -1))
 		{
