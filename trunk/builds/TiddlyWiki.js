@@ -318,6 +318,7 @@ merge(config.views.wikified,{
 	defaultText: "The tiddler '%0' doesn't yet exist. Double-click to create it",
 	defaultModifier: "(missing)",
 	shadowModifier: "(built-in shadow tiddler)",
+	dateFormat: "DD MMM YYYY",
 	createdPrompt: "created"});
 
 merge(config.views.editor,{
@@ -2401,10 +2402,7 @@ config.macros.view.handler = function(place,macroName,params,wikifier,paramStrin
 					break;
 				case "date":
 					value = Date.convertFromYYYYMMDDHHMM(value);
-					if(params[2])
-						createTiddlyText(place,value.formatString(params[2]));
-					else
-						createTiddlyText(place,value);
+					createTiddlyText(place,value.formatString(params[2] ? params[2] : config.views.wikified.dateFormat));
 					break;
 				}
 		}
@@ -4215,7 +4213,7 @@ config.macros.importTiddlers.onLoad = function(status,params,responseText,url,xh
 //		return;
 	// Crack out the content - (should be refactored)
 	var posOpeningDiv = responseText.indexOf(startSaveArea);
-	var limitClosingDiv = responseText.indexOf("<!--STORE-AREA-END--"+">");
+	var limitClosingDiv = responseText.indexOf("<!--POST-BODY-END--"+">");
 	var posClosingDiv = responseText.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? responseText.length : limitClosingDiv);
 	if((posOpeningDiv == -1) || (posClosingDiv == -1))
 		{
@@ -4711,7 +4709,7 @@ function loadOptionsCookie()
 			switch(name.substr(0,3))
 				{
 				case "txt":
-					config.options[name] = DecodeCookie(value);
+					config.options[name] = decodeCookie(value);
 					break;
 				case "chk":
 					config.options[name] = value == "true";
@@ -4729,7 +4727,7 @@ function saveOptionCookie(name)
 	switch(name.substr(0,3))
 		{
 		case "txt":
-			c += EncodeCookie(config.options[name].toString());
+			c += encodeCookie(config.options[name].toString());
 			break;
 		case "chk":
 			c += config.options[name] ? "true" : "false";
@@ -4739,13 +4737,14 @@ function saveOptionCookie(name)
 	document.cookie = c;
 }
 
-function EncodeCookie(s)
+function encodeCookie(s)
 {
 	return escape(manualConvertUnicodeToUTF8(s));
 }
 
-function DecodeCookie(s)
-{	s=unescape(s);
+function decodeCookie(s)
+{	
+	s=unescape(s);
 	var re = /&#[0-9]{1,5};/g;
 	return s.replace(re, function($0) {return(String.fromCharCode(eval($0.replace(/[&#;]/g,""))));});
 }
@@ -4812,7 +4811,7 @@ function saveChanges(onlyIfDirty)
 		}
 	// Locate the storeArea div's
 	var posOpeningDiv = original.indexOf(startSaveArea);
-	var limitClosingDiv = original.indexOf("<"+"!--STORE-AREA-END--"+">");
+	var limitClosingDiv = original.indexOf("<"+"!--POST-BODY-END--"+">");
 	var posClosingDiv = original.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? original.length : limitClosingDiv);
 	if((posOpeningDiv == -1) || (posClosingDiv == -1))
 		{
