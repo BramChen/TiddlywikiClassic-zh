@@ -1,14 +1,14 @@
 //{{{
 config.macros.taskOrganizer.options.nC = {
 		categoryTag: "Category",
-		taskTag: "Task",
 		newCategoryPrompt: "Enter the new category name:",
-		newCategoryTagPrompt: "Enter the new tag of category name:"
+		newTaskTagPrompt: "Enter the new tag of task:",
+		newCategoryTagPrompt: "Enter the new tag of category:"
 };
-config.macros.taskOrganizer.newCategory = function(taskTag) {
-	taskTag = (TaskTag)?taskTag:"Task";
+config.macros.taskOrganizer.newCategory = function() {
 	var nC = config.macros.taskOrganizer.options.nC;
 	var newCategory = prompt(nC.newCategoryPrompt,"");
+	var taskTag = prompt(nC.newTaskTagPrompt,nC.taskTag);
 	var categoryTag = prompt(nC.newCategoryTagPrompt,nC.categoryTag);
 	var tiddler = new Tiddler();
 	tiddler.title = newCategory;
