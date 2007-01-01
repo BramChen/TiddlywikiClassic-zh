@@ -3,11 +3,11 @@
 <head>
 <script type="text/javascript">
 //<![CDATA[
-var version = {major: 2, minor: 1, revision: 3, date: new Date("Nov 3, 2006"), extensions: {}};
+var version = {major: 2, minor: 2, revision: 0, beta: 1, date: new Date("Dec 29, 2006"), extensions: {}};
 //]]>
 </script>
 <!--
-TiddlyWiki 2.1.3 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
+TiddlyWiki 2.2.0 beta 1 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
 
 Copyright (c) Osmosoft Limited 2004-2006
 
@@ -44,50 +44,23 @@ DAMAGE.
 <script type="text/javascript" src="TiddlyWiki.js"></script>
 <style type="text/css">
 
-#saveTest {
-	display: none;
-}
+#saveTest {display:none;}
 
-.zoomer {
-	display: none;
-}
+.zoomer {display:none;}
 
-#messageArea {
-	display: none;
-}
+#messageArea {display:none;}
 
-#copyright {
-	display: none;
-}
+#copyright {display:none;}
 
-.popup {
-	position: absolute;
-}
+.popup {position:absolute;}
 
-#storeArea {
-	display: none;
-	margin: 4em 10em 3em;
-}
+#storeArea {display:none; margin:4em 10em 3em;}
 
-#storeArea div {
- padding: 0.5em;
- margin: 1em 0em 0em 0em;
- border-color: #f0f0f0 #606060 #404040 #d0d0d0; 
- border-style: solid; 
- border-width: 2px;
- overflow: auto;
-}
+#storeArea div {padding:0.5em; margin:1em 0em 0em 0em; border-color:#fff #666 #444 #ddd; border-style:solid; border-width:2px; overflow:auto;}
 
-#shadowArea {display: none;}
+#shadowArea {display:none;}
 
-#javascriptWarning {
-	width: 100%;
-	text-align: center;
-	font-weight: bold;
-	background-color: #dd1100;
-	color: #fff;
-	padding:1em 0em; 
-}
+#javascriptWarning {width:100%; text-align:center; font-weight:bold; background-color:#dd1100; color:#fff; padding:1em 0em;}
 
 </style>
 <!--POST-HEAD-START-->
@@ -136,886 +109,276 @@ Error: #f88</pre>
 </div>
 <div title="StyleSheetColors">
 <pre>/*{{{*/
-body {
-	background: [[ColorPalette::Background]];
-	color: [[ColorPalette::Foreground]];
-}
-
-a{
-	color: [[ColorPalette::PrimaryMid]];
-}
-
-a:hover{
-	background-color: [[ColorPalette::PrimaryMid]];
-	color: [[ColorPalette::Background]];
-}
-
-a img{
-	border: 0;
-}
-
-h1,h2,h3,h4,h5 {
-	color: [[ColorPalette::SecondaryDark]];
-	background: [[ColorPalette::PrimaryPale]];
-}
-
-.button {
-	color: [[ColorPalette::PrimaryDark]];
-	border: 1px solid [[ColorPalette::Background]];
-}
-
-.button:hover {
-	color: [[ColorPalette::PrimaryDark]];
-	background: [[ColorPalette::SecondaryLight]];
-	border-color: [[ColorPalette::SecondaryMid]];
-}
-
-.button:active {
-	color: [[ColorPalette::Background]];
-	background: [[ColorPalette::SecondaryMid]];
-	border: 1px solid [[ColorPalette::SecondaryDark]];
-}
-
-.header {
-	background: [[ColorPalette::PrimaryMid]];
-}
-
-.headerShadow {
-	color: [[ColorPalette::Foreground]];
-}
-
-.headerShadow a {
-	font-weight: normal;
-	color: [[ColorPalette::Foreground]];
-}
-
-.headerForeground {
-	color: [[ColorPalette::Background]];
-}
-
-.headerForeground a {
-	font-weight: normal;
-	color: [[ColorPalette::PrimaryPale]];
-}
-
-.tabSelected{
-	color: [[ColorPalette::PrimaryDark]];
-	background: [[ColorPalette::TertiaryPale]];
-	border-left: 1px solid [[ColorPalette::TertiaryLight]];
-	border-top: 1px solid [[ColorPalette::TertiaryLight]];
-	border-right: 1px solid [[ColorPalette::TertiaryLight]];
-}
-
-.tabUnselected {
-	color: [[ColorPalette::Background]];
-	background: [[ColorPalette::TertiaryMid]];
-}
-
-.tabContents {
-	color: [[ColorPalette::PrimaryDark]];
-	background: [[ColorPalette::TertiaryPale]];
-	border: 1px solid [[ColorPalette::TertiaryLight]];
-}
-
-.tabContents .button {
-	 border: 0;}
-
-#sidebar {
-}
-
-#sidebarOptions input {
-	border: 1px solid [[ColorPalette::PrimaryMid]];
-}
-
-#sidebarOptions .sliderPanel {
-	background: [[ColorPalette::PrimaryPale]];
-}
-
-#sidebarOptions .sliderPanel a {
-	border: none;
-	color: [[ColorPalette::PrimaryMid]];
-}
-
-#sidebarOptions .sliderPanel a:hover {
-	color: [[ColorPalette::Background]];
-	background: [[ColorPalette::PrimaryMid]];
-}
-
-#sidebarOptions .sliderPanel a:active {
-	color: [[ColorPalette::PrimaryMid]];
-	background: [[ColorPalette::Background]];
-}
-
-.wizard {
-	background: [[ColorPalette::TertiaryLight]];
-	border-top: 1px solid [[ColorPalette::TertiaryMid]];
-	border-left: 1px solid [[ColorPalette::TertiaryMid]];
-}
-
-.wizard h1 {
-	color: [[ColorPalette::TertiaryDark]];
-}
-
-.wizard h2 {
-	color: [[ColorPalette::Foreground]];
-}
-
-.wizardStep {
-	background: [[ColorPalette::Background]];
-	border-top: 1px solid [[ColorPalette::TertiaryMid]];
-	border-bottom: 1px solid [[ColorPalette::TertiaryMid]];
-	border-left: 1px solid [[ColorPalette::TertiaryMid]];
-}
-
-.wizard .button {
-	color: [[ColorPalette::Background]];
-	background: [[ColorPalette::PrimaryMid]];
-	border-top: 1px solid [[ColorPalette::PrimaryLight]];
-	border-right: 1px solid [[ColorPalette::PrimaryDark]];
-	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];
-	border-left: 1px solid [[ColorPalette::PrimaryLight]];
-}
-
-.wizard .button:hover {
-	color: [[ColorPalette::PrimaryLight]];
-	background: [[ColorPalette::PrimaryDark]];
-	border-color: [[ColorPalette::PrimaryLight]];
-}
-
-.wizard .button:active {
-	color: [[ColorPalette::Background]];
-	background: [[ColorPalette::PrimaryMid]];
-	border-top: 1px solid [[ColorPalette::PrimaryLight]];
-	border-right: 1px solid [[ColorPalette::PrimaryDark]];
-	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];
-	border-left: 1px solid [[ColorPalette::PrimaryLight]];
-}
-
-#messageArea {
-	border: 1px solid [[ColorPalette::SecondaryDark]];
-	background: [[ColorPalette::SecondaryMid]];
-	color: [[ColorPalette::PrimaryDark]];
-}
-
-#messageArea .button {
-	padding: 0.2em 0.2em 0.2em 0.2em;
-	color: [[ColorPalette::PrimaryDark]];
-	background: [[ColorPalette::Background]];
-}
-
-.popup {
-	background: [[ColorPalette::PrimaryLight]];
-	border: 1px solid [[ColorPalette::PrimaryMid]];
-}
-
-.popup hr {
-	color: [[ColorPalette::PrimaryDark]];
-	background: [[ColorPalette::PrimaryDark]];
-	border-bottom: 1px;
-}
-
-.listBreak div{
-	border-bottom: 1px solid [[ColorPalette::PrimaryDark]];
-}
-
-.popup li.disabled {
-	color: [[ColorPalette::PrimaryMid]];
-}
-
-.popup li a, .popup li a:visited {
-	color: [[ColorPalette::TertiaryPale]];
-	border: none;
-}
-
-.popup li a:hover {
-	background: [[ColorPalette::PrimaryDark]];
-	color: [[ColorPalette::Background]];
-	border: none;
-}
-
-.tiddler .defaultCommand {
- font-weight: bold;
-}
-
-.shadow .title {
-	color: [[ColorPalette::TertiaryDark]];
-}
-
-.title {
-	color: [[ColorPalette::SecondaryDark]];
-}
-
-.subtitle {
-	color: [[ColorPalette::TertiaryDark]];
-}
-
-.toolbar {
-	color: [[ColorPalette::PrimaryMid]];
-}
-
-.tagging, .tagged {
-	border: 1px solid [[ColorPalette::TertiaryPale]];
-	background-color: [[ColorPalette::TertiaryPale]];
-}
-
-.selected .tagging, .selected .tagged {
-	background-color: [[ColorPalette::TertiaryLight]];
-	border: 1px solid [[ColorPalette::TertiaryMid]];
-}
-
-.tagging .listTitle, .tagged .listTitle {
-	color: [[ColorPalette::PrimaryDark]];
-}
-
-.tagging .button, .tagged .button {
-		border: none;
-}
-
-.footer {
-	color: [[ColorPalette::TertiaryLight]];
-}
-
-.selected .footer {
-	color: [[ColorPalette::TertiaryMid]];
-}
-
-.sparkline {
-	background: [[ColorPalette::PrimaryPale]];
-	border: 0;
-}
+body {background:[[ColorPalette::Background]]; color:[[ColorPalette::Foreground]];}
 
-.sparktick {
-	background: [[ColorPalette::PrimaryDark]];
-}
-
-.error, .errorButton {
-	color: [[ColorPalette::Foreground]];
-	background: [[ColorPalette::Error]];
-}
-
-.warning {
-	color: [[ColorPalette::Foreground]];
-	background: [[ColorPalette::SecondaryPale]];
-}
-
-.cascade {
-	background: [[ColorPalette::TertiaryPale]];
-	color: [[ColorPalette::TertiaryMid]];
-	border: 1px solid [[ColorPalette::TertiaryMid]];
-}
-
-.imageLink, #displayArea .imageLink {
-	background: transparent;
-}
-
-.viewer .listTitle {list-style-type: none; margin-left: -2em;}
-
-.viewer .button {
-	border: 1px solid [[ColorPalette::SecondaryMid]];
-}
+a {color:[[ColorPalette::PrimaryMid]];}
+a:hover {background-color:[[ColorPalette::PrimaryMid]]; color:[[ColorPalette::Background]];}
+a img {border:0;}
 
-.viewer blockquote {
-	border-left: 3px solid [[ColorPalette::TertiaryDark]];
-}
+h1,h2,h3,h4,h5 {color:[[ColorPalette::SecondaryDark]]; background:[[ColorPalette::PrimaryPale]];}
 
-table {
-	border: 2px solid [[ColorPalette::TertiaryDark]];
-}
+.button {color:[[ColorPalette::PrimaryDark]]; border:1px solid [[ColorPalette::Background]];}
+.button:hover {color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::SecondaryLight]]; border-color:[[ColorPalette::SecondaryMid]];}
+.button:active {color:[[ColorPalette::Background]]; background:[[ColorPalette::SecondaryMid]]; border:1px solid [[ColorPalette::SecondaryDark]];}
 
-th, thead td {
-	background: [[ColorPalette::SecondaryMid]];
-	border: 1px solid [[ColorPalette::TertiaryDark]];
-	color: [[ColorPalette::Background]];
-}
+.header {background:[[ColorPalette::PrimaryMid]];}
+.headerShadow {color:[[ColorPalette::Foreground]];}
+.headerShadow a {font-weight:normal; color:[[ColorPalette::Foreground]];}
+.headerForeground {color:[[ColorPalette::Background]];}
+.headerForeground a {font-weight:normal; color:[[ColorPalette::PrimaryPale]];}
 
-td, tr {
-	border: 1px solid [[ColorPalette::TertiaryDark]];
+.tabSelected{color:[[ColorPalette::PrimaryDark]];
+	background:[[ColorPalette::TertiaryPale]];
+	border-left:1px solid [[ColorPalette::TertiaryLight]];
+	border-top:1px solid [[ColorPalette::TertiaryLight]];
+	border-right:1px solid [[ColorPalette::TertiaryLight]];
 }
+.tabUnselected {color:[[ColorPalette::Background]]; background:[[ColorPalette::TertiaryMid]];}
+.tabContents {color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::TertiaryPale]]; border:1px solid [[ColorPalette::TertiaryLight]];}
+.tabContents .button {border:0;}
 
-.viewer pre {
-	border: 1px solid [[ColorPalette::SecondaryLight]];
-	background: [[ColorPalette::SecondaryPale]];
-}
+#sidebar {}
+#sidebarOptions input {border:1px solid [[ColorPalette::PrimaryMid]];}
+#sidebarOptions .sliderPanel {background:[[ColorPalette::PrimaryPale]];}
+#sidebarOptions .sliderPanel a {border:none;color:[[ColorPalette::PrimaryMid]];}
+#sidebarOptions .sliderPanel a:hover {color:[[ColorPalette::Background]]; background:[[ColorPalette::PrimaryMid]];}
+#sidebarOptions .sliderPanel a:active {color:[[ColorPalette::PrimaryMid]]; background:[[ColorPalette::Background]];}
 
-.viewer code {
-	color: [[ColorPalette::SecondaryDark]];
-}
+.wizard {background:[[ColorPalette::TertiaryDark]]; border-top:1px solid [[ColorPalette::Foreground]];
+	border-bottom:1px solid [[ColorPalette::Foreground]]; border-left:1px solid [[ColorPalette::Foreground]];}
+.wizard h1 {color:[[ColorPalette::Foreground]];}
+.wizard h2 {color:[[ColorPalette::Background]];}
+.wizardStep {background:[[ColorPalette::TertiaryLight]]; color:[[ColorPalette::Foreground]];
+	border-top:1px solid [[ColorPalette::Foreground]];
+	border-bottom:1px solid [[ColorPalette::Foreground]]; border-left:1px solid [[ColorPalette::Foreground]];}
+.wizardFooter {background:[[ColorPalette::TertiaryDark]];}
+.wizard .button {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::SecondaryMid]]; border: 1px solid;
+	border-color:[[ColorPalette::SecondaryLight]] [[ColorPalette::SecondaryDark]] [[ColorPalette::SecondaryDark]] [[ColorPalette::SecondaryLight]];}
+.wizard .button:hover {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::SecondaryLight]];}
+.wizard .button:active {color:[[ColorPalette::Background]]; background:[[ColorPalette::SecondaryMid]]; border: 1px solid;
+	border-color:[[ColorPalette::SecondaryDark]] [[ColorPalette::SecondaryLight]] [[ColorPalette::SecondaryLight]] [[ColorPalette::SecondaryDark]];}
 
-.viewer hr {
-	border: 0;
-	border-top: dashed 1px [[ColorPalette::TertiaryDark]];
-	color: [[ColorPalette::TertiaryDark]];
-}
+#messageArea {border:1px solid [[ColorPalette::SecondaryDark]]; background:[[ColorPalette::SecondaryMid]]; color:[[ColorPalette::PrimaryDark]];}
+#messageArea .button {padding:0.2em 0.2em 0.2em 0.2em; color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::Background]];}
 
-.highlight, .marked {
-	background: [[ColorPalette::SecondaryLight]];
-}
+.popup {background:[[ColorPalette::PrimaryLight]]; border:1px solid [[ColorPalette::PrimaryMid]];}
+.popup hr {color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::PrimaryDark]]; border-bottom:1px;}
 
-.editor input {
-	border: 1px solid [[ColorPalette::PrimaryMid]];
-}
+.listBreak div {border-bottom:1px solid [[ColorPalette::PrimaryDark]];}
 
-.editor textarea {
-	border: 1px solid [[ColorPalette::PrimaryMid]];
-	width: 100%;
-}
+.popup li.disabled {color:[[ColorPalette::PrimaryMid]];}
+.popup li a, .popup li a:visited {color:[[ColorPalette::TertiaryPale]]; border:none;}
+.popup li a:hover {background:[[ColorPalette::PrimaryDark]]; color:[[ColorPalette::Background]]; border:none;}
 
-.editorFooter {
-	color: [[ColorPalette::TertiaryMid]];
-}
+.tiddler .defaultCommand {font-weight:bold;}
 
-.backstageSelTab {
-	background: [[ColorPalette::Foreground]];
-	color: [[ColorPalette::Background]];
-}
+.shadow .title {color:[[ColorPalette::TertiaryDark]];}
 
-#backstagePanel .wizardStep {
-	background: [[ColorPalette::Foreground]];
-}
+.title {color:[[ColorPalette::SecondaryDark]];}
+.subtitle {color:[[ColorPalette::TertiaryDark]];}
 
-#backstagePanel .wizardFooter {
-	background: [[ColorPalette::TertiaryLight]];
-	border-right: 1px solid [[ColorPalette::TertiaryMid]];
-	border-bottom: 1px solid [[ColorPalette::TertiaryMid]];
-	border-left: 1px solid [[ColorPalette::TertiaryMid]];
-}
+.toolbar {color:[[ColorPalette::PrimaryMid]];}
 
-#backstagePanel .wizardFooter a {	color: [[ColorPalette::Background]];
-	background-color: [[ColorPalette::TertiaryDark]];}
+.tagging, .tagged {border:1px solid [[ColorPalette::TertiaryPale]]; background-color:[[ColorPalette::TertiaryPale]];}
+.selected .tagging, .selected .tagged {background-color:[[ColorPalette::TertiaryLight]]; border:1px solid [[ColorPalette::TertiaryMid]];}
+.tagging .listTitle, .tagged .listTitle {color:[[ColorPalette::PrimaryDark]];}
+.tagging .button, .tagged .button {border:none;}
 
-#backstagePanel .wizardFooter a:hover {
-}
+.footer {color:[[ColorPalette::TertiaryLight]];}
+.selected .footer {color:[[ColorPalette::TertiaryMid]];}
 
-#backstagePanel {
-	background:	[[ColorPalette::Foreground]];
-	color: [[ColorPalette::Background]];
-}
+.sparkline {background:[[ColorPalette::PrimaryPale]]; border:0;}
+.sparktick {background:[[ColorPalette::PrimaryDark]];}
 
-#backstagePanel a {
-	color: [[ColorPalette::PrimaryPale]];
-}
+.error, .errorButton {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::Error]];}
+.warning {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::SecondaryPale]];}
 
-#backstagePanel a:hover {
-	background-color: [[ColorPalette::Background]];
-	color: [[ColorPalette::PrimaryMid]];
-}
+.cascade {background:[[ColorPalette::TertiaryPale]]; color:[[ColorPalette::TertiaryMid]]; border:1px solid [[ColorPalette::TertiaryMid]];}
 
-#backstagePanel table {
-	border: 2px solid [[ColorPalette::TertiaryMid]];
-}
+.imageLink, #displayArea .imageLink {background:transparent;}
 
-#backstagePanel th, #backstagePanel thead td {
-	background: [[ColorPalette::TertiaryDark]];
-	border: 1px solid [[ColorPalette::TertiaryMid]];
-	color: [[ColorPalette::Background]];
-}
+.viewer .listTitle {list-style-type:none; margin-left:-2em;}
+.viewer .button {border:1px solid [[ColorPalette::SecondaryMid]];}
+.viewer blockquote {border-left:3px solid [[ColorPalette::TertiaryDark]];}
 
-#backstagePanel td, #backstagePanel tr {
-	background: [[ColorPalette::Foreground]];
-	border: 1px solid [[ColorPalette::TertiaryMid]];
-}
+table {border:2px solid [[ColorPalette::TertiaryDark]];}
+th, thead td {background:[[ColorPalette::SecondaryMid]]; border:1px solid [[ColorPalette::TertiaryDark]]; color:[[ColorPalette::Background]];}
+td, tr {border:1px solid [[ColorPalette::TertiaryDark]];}
 
-#backstageCloak {
-	background: [[ColorPalette::Background]];
-	opacity: 0.5;
-	filter:'alpha(opacity:50)';
-}
+.viewer pre {border:1px solid [[ColorPalette::SecondaryLight]]; background:[[ColorPalette::SecondaryPale]];}
+.viewer code {color:[[ColorPalette::SecondaryDark]];}
+.viewer hr {border:0; border-top:dashed 1px [[ColorPalette::TertiaryDark]]; color:[[ColorPalette::TertiaryDark]];}
 
+.highlight, .marked {background:[[ColorPalette::SecondaryLight]];}
+
+.editor input {border:1px solid [[ColorPalette::PrimaryMid]];}
+.editor textarea {border:1px solid [[ColorPalette::PrimaryMid]]; width:100%;}
+.editorFooter {color:[[ColorPalette::TertiaryMid]];}
+
+.backstageSelTab {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]];}
+#backstagePanel {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]];}
+.backstagePanelFooter .button {border:none; color:[[ColorPalette::Background]];}
+.backstagePanelFooter .button:hover {color:[[ColorPalette::Foreground]];}
+#backstageCloak {background:[[ColorPalette::Background]]; opacity:0.5; filter:'alpha(opacity:50)';}
 /*}}}*/</pre>
 </div>
 <div title="StyleSheetLayout">
 <pre>/*{{{*/
-* html .tiddler {
-    height: 1%;
-}
+* html .tiddler {height:1%;}
 
-body {
-	font-size: .75em;
-	font-family: arial,helvetica;
-	margin: 0;
-	padding: 0;
-}
+body {font-size:.75em; font-family:arial,helvetica; margin:0; padding:0;}
 
-h1,h2,h3,h4,h5 {
-	font-weight: bold;
-	text-decoration: none;
-	padding-left: 0.4em;
-}
+h1,h2,h3,h4,h5 {font-weight:bold; text-decoration:none; padding-left:0.4em;}
+h1 {font-size:1.35em;}
+h2 {font-size:1.25em;}
+h3 {font-size:1.1em;}
+h4 {font-size:1em;}
+h5 {font-size:.9em;}
 
-h1 {font-size: 1.35em;}
-h2 {font-size: 1.25em;}
-h3 {font-size: 1.1em;}
-h4 {font-size: 1em;}
-h5 {font-size: .9em;}
+hr {height:1px;}
 
-hr {
-	height: 1px;
-}
+a {text-decoration:none;}
 
-a{
-	text-decoration: none;
-}
+dt {font-weight:bold;}
 
-dt {font-weight: bold;}
+ol {list-style-type:decimal;}
+ol ol {list-style-type:lower-alpha;}
+ol ol ol {list-style-type:lower-roman;}
+ol ol ol ol {list-style-type:decimal;}
+ol ol ol ol ol {list-style-type:lower-alpha;}
+ol ol ol ol ol ol {list-style-type:lower-roman;}
+ol ol ol ol ol ol ol {list-style-type:decimal;}
 
-ol { list-style-type: decimal }
-ol ol { list-style-type: lower-alpha }
-ol ol ol { list-style-type: lower-roman }
-ol ol ol ol { list-style-type: decimal }
-ol ol ol ol ol { list-style-type: lower-alpha }
-ol ol ol ol ol ol { list-style-type: lower-roman }
-ol ol ol ol ol ol ol { list-style-type: decimal }
+.txtOptionInput {width:11em;}
 
-.txtOptionInput {
-	width: 11em;
-}
+#contentWrapper .chkOptionInput {border:0;}
 
-#contentWrapper .chkOptionInput {
-	border: 0;
-}
-
-.externalLink {
-	text-decoration: underline;
-}
+.externalLink {text-decoration:underline;}
 
 .indent {margin-left:3em;}
 .outdent {margin-left:3em; text-indent:-3em;}
 code.escaped {white-space:nowrap;}
 
-.tiddlyLinkExisting {
-	font-weight: bold;
-}
-
-.tiddlyLinkNonExisting {
-	font-style: italic;
-}
-
-/* the 'a' is required for IE, otherwise it renders the whole tiddler a bold */
-a.tiddlyLinkNonExisting.shadow {
-	font-weight: bold;
-}
-
-#mainMenu .tiddlyLinkExisting, 
-#mainMenu .tiddlyLinkNonExisting,
-#sidebarTabs .tiddlyLinkNonExisting{
- font-weight: normal;
- font-style: normal;
-}
-
-#sidebarTabs .tiddlyLinkExisting {
- font-weight: bold;
- font-style: normal;
-}
-
-.header {
-		position: relative;
-}
-
-.header a:hover {
-	background: transparent;
-}
-
-.headerShadow {
-	position: relative;
-	padding: 4.5em 0em 1em 1em;
-	left: -1px;
-	top: -1px;
-}
-
-.headerForeground {
-	position: absolute;
-	padding: 4.5em 0em 1em 1em;
-	left: 0px;
-	top: 0px;
-}
-
-.siteTitle {
-	font-size: 3em;
-}
-
-.siteSubtitle {
-	font-size: 1.2em;
-}
-
-#mainMenu {
-	position: absolute;
-	left: 0;
-	width: 10em;
-	text-align: right;
-	line-height: 1.6em;
-	padding: 1.5em 0.5em 0.5em 0.5em;
-	font-size: 1.1em;
-}
-
-#sidebar {
-	position: absolute;
-	right: 3px;
-	width: 16em;
-	font-size: .9em;
-}
-
-#sidebarOptions {
-	padding-top: 0.3em;
-}
-
-#sidebarOptions a {
-	margin: 0em 0.2em;
-	padding: 0.2em 0.3em;
-	display: block;
-}
-
-#sidebarOptions input {
-	margin: 0.4em 0.5em;
-}
-
-#sidebarOptions .sliderPanel {
-	margin-left: 1em;
-	padding: 0.5em;
-	font-size: .85em;
-}
-
-#sidebarOptions .sliderPanel a {
-	font-weight: bold;
-	display: inline;
-	padding: 0;
-}
-
-#sidebarOptions .sliderPanel input {
-	margin: 0 0 .3em 0;
-}
-
-#sidebarTabs .tabContents {
-	width: 15em;
-	overflow: hidden;
-}
-
-.wizard {
-	padding: 0.1em 0em 0em 2em;
-}
-
-.wizard h1 {
-	font-size: 2em;
-	font-weight: bold;
-	background: none;
-	padding: 0em 0em 0em 0em;
-	margin: 0.4em 0em 0.2em 0em;
-}
-
-.wizard h2 {
-	font-size: 1.2em;
-	font-weight: bold;
-	background: none;
-	padding: 0em 0em 0em 0em;
-	margin: 0.2em 0em 0.2em 0em;
-}
-
-.wizardStep {
-	padding: 1em 1em 1em 1em;
-}
-
-.wizard .button {
-	margin: 0.5em 0em 0em 0em;
-	font-size: 1.2em;
-}
-
-#messageArea {
-position:absolute; top:2em; right:0; margin: 0.5em; padding: 0.5em;
-}
-
-*[id='messageArea'] {
-position:fixed !important; z-index:99;}
-
-.messageToolbar {
-display: block;
-text-align: right;
-}
-
-#messageArea a{
-	text-decoration: underline;
-}
-
-.popup {
-	z-index: 100;
-	font-size: .9em;
-	padding: 0.2em;
-	list-style: none;
-	margin: 0;
-}
-
-.popup hr {
-	display: block;
-	height: 1px;
-	width: auto;
-	padding: 0;
-	margin: 0.2em 0em;
-}
-
-.listBreak {
-	font-size: 1px;
-	line-height: 1px;
-}
-
-.listBreak div {
-	margin: 2px 0;
-}
-
-.popup li.disabled {
-	padding: 0.2em;
-}
-
-.popup li a{
-	display: block;
-	padding: 0.2em;
-}
-
-.tabset {
-	padding: 1em 0em 0em 0.5em;
-}
-
-.tab {
-	margin: 0em 0em 0em 0.25em;
-	padding: 2px;
-}
-
-.tabContents {
-	padding: 0.5em;
-}
-
-.tabContents ul, .tabContents ol {
-	margin: 0;
-	padding: 0;
-}
-
-.txtMainTab .tabContents li {
-	list-style: none;
-}
-
-.tabContents li.listLink {
-	 margin-left: .75em;
-}
-
-#displayArea {
-	margin: 1em 17em 0em 14em;
-}
-
-
-.toolbar {
-	text-align: right;
-	font-size: .9em;
-	visibility: hidden;
-}
-
-.selected .toolbar {
-	visibility: visible;
-}
-
-.tiddler {
-	padding: 1em 1em 0em 1em;
-}
-
-.missing .viewer,.missing .title {
-	font-style: italic;
-}
-
-.title {
-	font-size: 1.6em;
-	font-weight: bold;
-}
-
-.missing .subtitle {
- display: none;
-}
-
-.subtitle {
-	font-size: 1.1em;
-}
-
-.tiddler .button {
-	padding: 0.2em 0.4em;
-}
-
-.tagging {
-margin: 0.5em 0.5em 0.5em 0;
-float: left;
-display: none;
-}
-
-.isTag .tagging {
-display: block;
-}
-
-.tagged {
-margin: 0.5em;
-float: right;
-}
-
-.tagging, .tagged {
-font-size: 0.9em;
-padding: 0.25em;
-}
-
-.tagging ul, .tagged ul {
-list-style: none;margin: 0.25em;
-padding: 0;
-}
-
-.tagClear {
-clear: both;
-}
-
-.footer {
-	font-size: .9em;
-}
-
-.footer li {
-display: inline;
-}
-
-* html .viewer pre {
-	width: 99%;
-	padding: 0 0 1em 0;
-}
-
-.viewer {
-	line-height: 1.4em;
-	padding-top: 0.5em;
-}
-
-.viewer .button {
-	margin: 0em 0.25em;
-	padding: 0em 0.25em;
-}
-
-.viewer blockquote {
-	line-height: 1.5em;
-	padding-left: 0.8em;
-	margin-left: 2.5em;
-}
-
-.viewer ul, .viewer ol{
-	margin-left: 0.5em;
-	padding-left: 1.5em;
-}
-
-table {
-	border-collapse: collapse;
-	margin: 0.8em 1.0em;
-}
-
-.viewer th, .viewer td, .viewer tr,.viewer caption{
-	padding: 3px;
-}
-
-table.listView {
-	font-size: 0.85em;
-	margin: 0.8em 1.0em;
-}
-
-table.listView th, table.listView td, table.listView tr {
-	padding: 0px 3px 0px 3px;
-}
-
-.viewer pre {
-	padding: 0.5em;
-	margin-left: 0.5em;
-	font-size: 1.2em;
-	line-height: 1.4em;
-	overflow: auto;
-}
-
-.viewer code {
-	font-size: 1.2em;
-	line-height: 1.4em;
-}
-
-.editor {
-font-size: 1.1em;
-}
-
-.editor input, .editor textarea {
-	display: block;
-	width: 100%;
-	font: inherit;
-}
-
-.editorFooter {
-	padding: 0.25em 0em;
-	font-size: .9em;
-}
-
-.editorFooter .button {
-padding-top: 0px; padding-bottom: 0px;}
-
-.fieldsetFix {border: 0;
-padding: 0;
-margin: 1px 0px 1px 0px;
-}
-
-.sparkline {
-	line-height: 1em;
-}
-
-.sparktick {
-	outline: 0;
-}
-
-.zoomer {
-	font-size: 1.1em;
-	position: absolute;
-	padding: 1em;
-}
-
-.cascade {
-	font-size: 1.1em;
-	position: absolute;
-	overflow: hidden;
-}
-
-#backstage {
-	position: absolute;
-	z-index: 100;
-	width: 100%;
-}
-
-#backstageTabs {
-	visibility: hidden;
-	position: relative;
-	margin: 0.5em 3em 0.2em 3em;
-	font-size: 1.1em;
-	background: none;
-	text-align: right;
-}
-
-#backstageTabs a {
-	font-weight: bold;
-	padding: 0.2em 0.5em 0.2em 0.5em;
-}
-
-#backstagePanel {
-	display: none;
-	position: relative;
-	margin: 0em 3em 0em 3em;
-	padding: 1em 1em 1em 1em;
-}
-
-#backstagePanel .wizardFooter {	padding: 0.4em 0.4em 0.4em 2em;
-	text-align: right;
-}
-
-#backstagePanel .wizardFooter a {	padding: 0.2em 0.2em 0.2em 0.2em;
-}
-
-#backstagePanel .wizardFooter a:hover {
-}
-
-#backstageCloak {
-	display: none;
-	z-index: 50;
-	position: absolute;
-	width: 100%;
-	height: 100px;
-}
+.tiddlyLinkExisting {font-weight:bold;}
+.tiddlyLinkNonExisting {font-style:italic;}
+
+/* the 'a' is required for IE, otherwise it renders the whole tiddler in bold */
+a.tiddlyLinkNonExisting.shadow {font-weight:bold;}
+
+#mainMenu .tiddlyLinkExisting,
+	#mainMenu .tiddlyLinkNonExisting,
+	#sidebarTabs .tiddlyLinkNonExisting {font-weight:normal; font-style:normal;}
+#sidebarTabs .tiddlyLinkExisting {font-weight:bold; font-style:normal;}
 
+.header {position:relative;}
+.header a:hover {background:transparent;}
+.headerShadow {position:relative; padding:4.5em 0em 1em 1em; left:-1px; top:-1px;}
+.headerForeground {position:absolute; padding:4.5em 0em 1em 1em; left:0px; top:0px;}
+
+.siteTitle {font-size:3em;}
+.siteSubtitle {font-size:1.2em;}
+
+#mainMenu {position:absolute; left:0; width:10em; text-align:right; line-height:1.6em; padding:1.5em 0.5em 0.5em 0.5em; font-size:1.1em;}
+
+#sidebar {position:absolute; right:3px; width:16em; font-size:.9em;}
+#sidebarOptions {padding-top:0.3em;}
+#sidebarOptions a {margin:0em 0.2em; padding:0.2em 0.3em; display:block;}
+#sidebarOptions input {margin:0.4em 0.5em;}
+#sidebarOptions .sliderPanel {margin-left:1em; padding:0.5em; font-size:.85em;}
+#sidebarOptions .sliderPanel a {font-weight:bold; display:inline; padding:0;}
+#sidebarOptions .sliderPanel input {margin:0 0 .3em 0;}
+#sidebarTabs .tabContents {width:15em; overflow:hidden;}
+
+.wizard {padding:0.1em 0em 0em 2em;}
+.wizard h1 {font-size:2em; font-weight:bold; background:none; padding:0em 0em 0em 0em; margin:0.4em 0em 0.2em 0em;}
+.wizard h2 {font-size:1.2em; font-weight:bold; background:none; padding:0em 0em 0em 0em; margin:0.4em 0em 0.2em 0em;}
+.wizardStep {padding:1em 1em 1em 1em;}
+.wizard .button {margin:0.5em 0em 0em 0em; font-size:1.2em;}
+.wizardFooter {padding:0.8em 0.4em 0.8em 0em;}
+.wizard .button {padding:0.1em 0.2em 0.1em 0.2em;}
+
+#messageArea {position:absolute; top:2em; right:0; margin:0.5em; padding:0.5em; z-index:200;}
+*[id='messageArea'] {position:fixed !important; z-index:200;}
+.messageToolbar {display:block; text-align:right;}
+#messageArea a {text-decoration:underline;}
+
+.popup {z-index:100; font-size:.9em; padding:0.2em; list-style:none; margin:0;}
+.popup hr {display:block; height:1px; width:auto; padding:0; margin:0.2em 0em;}
+
+.listBreak {font-size:1px; line-height:1px;}
+.listBreak div {margin:2px 0;}
+
+.popup li.disabled {padding:0.2em;}
+.popup li a {display:block; padding:0.2em;}
+
+.tabset {padding:1em 0em 0em 0.5em;}
+.tab {margin:0em 0em 0em 0.25em; padding:2px;}
+.tabContents {padding:0.5em;}
+.tabContents ul, .tabContents ol {margin:0; padding:0;}
+.txtMainTab .tabContents li {list-style:none;}
+.tabContents li.listLink { margin-left:.75em;}
+
+#displayArea {margin:1em 17em 0em 14em;}
+
+.toolbar {text-align:right; font-size:.9em; visibility:hidden;}
+.selected .toolbar {visibility:visible;}
+
+.tiddler {padding:1em 1em 0em 1em;}
+
+.missing .viewer,.missing .title {font-style:italic;}
+
+.title {font-size:1.6em; font-weight:bold;}
+
+.missing .subtitle {display:none;}
+.subtitle {font-size:1.1em;}
+
+.tiddler .button {padding:0.2em 0.4em;}
+
+.tagging {margin:0.5em 0.5em 0.5em 0; float:left; display:none;}
+.isTag .tagging {display:block;}
+.tagged {margin:0.5em; float:right;}
+.tagging, .tagged {font-size:0.9em; padding:0.25em;}
+.tagging ul, .tagged ul {list-style:none; margin:0.25em; padding:0;}
+.tagClear {clear:both;}
+
+.footer {font-size:.9em;}
+.footer li {display:inline;}
+
+* html .viewer pre {width:99%; padding:0 0 1em 0;}
+.viewer {line-height:1.4em; padding-top:0.5em;}
+.viewer .button {margin:0em 0.25em; padding:0em 0.25em;}
+.viewer blockquote {line-height:1.5em; padding-left:0.8em;margin-left:2.5em;}
+.viewer ul, .viewer ol {margin-left:0.5em; padding-left:1.5em;}
+
+table {border-collapse:collapse; margin:0.8em 1.0em;}
+.viewer th, .viewer td, .viewer tr,.viewer caption {padding:3px;}
+table.listView {font-size:0.85em; margin:0.8em 1.0em;}
+table.listView th, table.listView td, table.listView tr {padding:0px 3px 0px 3px;}
+
+.viewer pre {padding:0.5em; margin-left:0.5em; font-size:1.2em; line-height:1.4em; overflow:auto;}
+.viewer code {font-size:1.2em; line-height:1.4em;}
+
+.editor {font-size:1.1em;}
+.editor input, .editor textarea {display:block; width:100%; font:inherit;}
+.editorFooter {padding:0.25em 0em; font-size:.9em;}
+.editorFooter .button {padding-top:0px; padding-bottom:0px;}
+
+.fieldsetFix {border:0; padding:0; margin:1px 0px 1px 0px;}
+
+.sparkline {line-height:1em;}
+.sparktick {outline:0;}
+
+.zoomer {font-size:1.1em; position:absolute; padding:1em;}
+
+.cascade {font-size:1.1em; position:absolute; overflow:hidden;}
+
+#backstage {position:absolute; z-index:100; width:100%;}
+#backstageTabs {visibility:hidden; position:relative; margin:0.5em 3em 0.2em 3em; font-size:1.1em; background:none; text-align:right;}
+#backstageTabs a {font-weight:bold; padding:0.2em 0.5em 0.2em 0.5em;}
+#backstagePanel {display:none; position:relative; margin:0em 3em 0em 3em; padding:1em 1em 1em 1em;}
+.backstagePanelFooter {padding-top:0.2em; float:right;}
+.backstagePanelFooter a {padding:0.2em 0.4em 0.2em 0.4em;}
+#backstageCloak {display:none; z-index:50; position:absolute; width:100%; height:100px;}
 /*}}}*/</pre>
 </div>
 <div title="StyleSheetPrint">
@@ -1091,9 +454,7 @@ Your username for signing your edits. Write it as a WikiWord (eg JoeBloggs)
 &lt;&lt;option chkAnimate&gt;&gt; EnableAnimations
 
 ----
-AdvancedOptions
-PluginManager
-ImportTiddlers</pre>
+Also see AdvancedOptions</pre>
 </div>
 <div title="AdvancedOptions">
 <pre>&lt;&lt;option chkGenerateAnRssFeed&gt;&gt; GenerateAnRssFeed
@@ -1107,12 +468,12 @@ ImportTiddlers</pre>
 &lt;&lt;option chkConfirmDelete&gt;&gt; ConfirmBeforeDeleting
 Maximum number of lines in a tiddler edit box: &lt;&lt;option txtMaxEditRows&gt;&gt;
 Folder name for backup files: &lt;&lt;option txtBackupFolder&gt;&gt;
-&lt;&lt;option chkInsertTabs&gt;&gt; Use tab key to insert tab characters instead of jumping to next field</pre>
+&lt;&lt;option chkInsertTabs&gt;&gt; Use tab key to insert tab characters instead of jumping to next field
+&lt;&lt;option txtFileSystemCharSet&gt;&gt; Character set to use for saving (Firefox/Mozilla only)</pre>
 </div>
 </div>
 <div id="storeArea">
 </div>
-<!--STORE-AREA-END-->
 <!--POST-BODY-START-->
 <!--POST-BODY-END-->
 </body>

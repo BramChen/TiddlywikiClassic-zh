@@ -1,6 +1,6 @@
 /*
 <!--
-TiddlyWiki 2.1.3 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
+TiddlyWiki 2.2.0 beta 1 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
 
 Copyright (c) Osmosoft Limited 2004-2006
 
@@ -30,7 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF S
 DAMAGE.
 -->
 */
-var version = {major: 2, minor: 1, revision: 3, date: new Date("Nov 3, 2006"), extensions: {}};
+var version = {major: 2, minor: 2, revision: 0, beta: 1, date: new Date("Dec 29, 2006"), extensions: {}};
 
 //
 // 
@@ -40,9 +40,9 @@ var version = {major: 2, minor: 1, revision: 3, date: new Date("Nov 3, 2006"), e
 // http://svn.tiddlywiki.org/Trunk/core/
 //
 //
-// ---------------------------------------------------------------------------------
-// Configuration repository
-// ---------------------------------------------------------------------------------
+//--
+//-- Configuration repository
+//--
 
 // Miscellaneous options
 var config = {
@@ -53,7 +53,7 @@ var config = {
 	cascadeSlow: 60, // Speed for EasterEgg cascade animations
 	cascadeDepth: 5, // Depth of cascade animation
 	displayStartupTime: false // Whether to display startup time
-	};
+};
 
 // Messages
 config.messages = {
@@ -79,7 +79,8 @@ config.options = {
 	txtBackupFolder: "",
 	txtMainTab: "tabTimeline",
 	txtMoreTab: "moreTabAll",
-	txtMaxEditRows: "30"
+	txtMaxEditRows: "30",
+	txtFileSystemCharSet: "UTF-8"
 	};
 	
 // List of notification functions to be called when certain tiddlers are changed or deleted
@@ -93,7 +94,7 @@ config.notifyTiddlers = [
 	{name: "SiteSubtitle", notify: refreshPageTitle},
 	{name: "ColorPalette", notify: refreshColorPalette},
 	{name: null, notify: refreshDisplay}
-	];
+];
 
 // Default tiddler templates
 var DEFAULT_VIEW_TEMPLATE = 1;
@@ -101,17 +102,17 @@ var DEFAULT_EDIT_TEMPLATE = 2;
 config.tiddlerTemplates = {
 	1: "ViewTemplate",
 	2: "EditTemplate"
-	};
+};
 
 // More messages (rather a legacy layout that shouldn't really be like this)
 config.views = {
 	wikified: {
 		tag: {}
-		},
+	},
 	editor: {
 		tagChooser: {}
-		}
-	};
+	}
+};
 
 // Backstage tasks
 config.backstageTasks = ["tidy","sync","importTask","copy","plugins"];
@@ -132,7 +133,7 @@ config.macros = {
 		missing: {},
 		orphans: {},
 		shadowed: {}
-		},
+	},
 	closeAll: {},
 	permaview: {},
 	saveChanges: {},
@@ -151,8 +152,9 @@ config.macros = {
 	br: {},
 	plugins: {},
 	refreshDisplay: {},
-	importTiddlers: {}
-	};
+	importTiddlers: {},
+	sync: {}
+};
 
 // Commands supported by the toolbar macro
 config.commands = {
@@ -165,10 +167,9 @@ config.commands = {
 	permalink: {},
 	references: {},
 	jump: {}
-	};
+};
 
-// Browser detection... In a very few places, there's nothing else for it but to
-// know what browser we're using.
+// Browser detection... In a very few places, there's nothing else for it but to know what browser we're using.
 config.userAgent = navigator.userAgent.toLowerCase();
 config.browser = {
 	isIE: config.userAgent.indexOf("msie") != -1 && config.userAgent.indexOf("opera") == -1,
@@ -181,7 +182,7 @@ config.browser = {
 	isUnix: config.userAgent.indexOf("x11") != -1,
 	isMac: config.userAgent.indexOf("mac") != -1,
 	isWindows: config.userAgent.indexOf("win") != -1
-	};
+};
 
 // Basic regular expressions
 config.textPrimitives = {
@@ -189,23 +190,24 @@ config.textPrimitives = {
 	lowerLetter: "[a-z0-9_\\-\u00df-\u00ff\u0151\u0171]",
 	anyLetter:   "[A-Za-z0-9_\\-\u00c0-\u00de\u00df-\u00ff\u0150\u0170\u0151\u0171]",
 	anyLetterStrict: "[A-Za-z0-9\u00c0-\u00de\u00df-\u00ff\u0150\u0170\u0151\u0171]"
-	};
-if(config.browser.isBadSafari)
+};
+if(config.browser.isBadSafari) {
 	config.textPrimitives = {
 		upperLetter: "[A-Z\u00c0-\u00de]",
 		lowerLetter: "[a-z0-9_\\-\u00df-\u00ff]",
 		anyLetter:   "[A-Za-z0-9_\\-\u00c0-\u00de\u00df-\u00ff]",
 		anyLetterStrict: "[A-Za-z0-9\u00c0-\u00de\u00df-\u00ff]"
-		}
+	};
+}
 config.textPrimitives.sliceSeparator = "::";
 config.textPrimitives.urlPattern = "[a-z]{3,8}:[^\\s:'\"][^\\s'\"]*(?:/|\\b)";
 config.textPrimitives.unWikiLink = "~";
 config.textPrimitives.wikiLink = "(?:(?:" + config.textPrimitives.upperLetter + "+" +
-												config.textPrimitives.lowerLetter + "+" +
-												config.textPrimitives.upperLetter +
-												config.textPrimitives.anyLetter + "*)|(?:" +
-												config.textPrimitives.upperLetter + "{2,}" +
-												config.textPrimitives.lowerLetter + "+))";
+	config.textPrimitives.lowerLetter + "+" +
+	config.textPrimitives.upperLetter +
+	config.textPrimitives.anyLetter + "*)|(?:" +
+	config.textPrimitives.upperLetter + "{2,}" +
+	config.textPrimitives.lowerLetter + "+))";
 
 config.textPrimitives.cssLookahead = "(?:(" + config.textPrimitives.anyLetter + "+)\\(([^\\)\\|\\n]+)(?:\\):))|(?:(" + config.textPrimitives.anyLetter + "+):([^;\\|\\n]+);)";
 config.textPrimitives.cssLookaheadRegExp = new RegExp(config.textPrimitives.cssLookahead,"mg");
@@ -220,9 +222,9 @@ config.textPrimitives.tiddlerAnyLinkRegExp = new RegExp("("+ config.textPrimitiv
 	config.textPrimitives.brackettedLink + ")|(?:" +
 	config.textPrimitives.urlPattern + ")","mg");
 
-// ---------------------------------------------------------------------------------
-// Shadow tiddlers
-// ---------------------------------------------------------------------------------
+//--
+//-- Shadow tiddlers
+//--
 
 config.shadowTiddlers = {
 	StyleSheet: "",
@@ -230,7 +232,7 @@ config.shadowTiddlers = {
 	MarkupPostHead: "",
 	MarkupPreBody: "",
 	MarkupPostBody: ""
-	};
+};
 
 // zh-Hant ConfigTweaks 
 /*{{{*/
@@ -246,12 +248,13 @@ config.options.txtFileSystemCharSet = "BIG5";
 |''Date:''|Dec 04, 2006|
 |''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
-|''~CoreVersion:''|2.1.0|
+|''~CoreVersion:''|2.1.3|
 ***/
 
 /*{{{*/
-// Translateable strings
-// ---------------------
+// --
+// -- Translateable strings
+// --
 
 // Strings in "double quotes" should be translated; strings in 'single quotes' should be left alone
 
@@ -260,8 +263,8 @@ merge(config.options,{
 
 config.tasks = {
 		tidy: {text: "整理", tooltip: "對群組文章作大量更新", content: 'Coming soon...\n\nThis tab will allow bulk operations on tiddlers, and tags. It will be a generalised, extensible version of the plugins tab'},
-		sync: {text: "同步", tooltip: "與別的 TiddlyWiki 文件及伺服器同步化", content: '<<sync>>'},
-		importTask: {text: "匯入", tooltip: "從別的 TiddlyWiki 文件及伺服器匯入文章與套件", content: '<<importTiddlers>>'},
+		sync: {text: "同步", tooltip: "將你的資料內容與外部伺服器與檔案同步", content: '<<sync>>'},
+		importTask: {text: "匯入", tooltip: "自其他檔案或伺服器匯入文章或套件", content: '<<importTiddlers>>'},
 		copy: {text: "複製", tooltip: "複製文章至別的 TiddlyWiki 文件及伺服器", content: 'Coming soon...\n\nThis tab will allow tiddlers to be copied to remote servers'},
 		plugins: {text: "套件管理", tooltip: "管理已安裝的套件", content: '<<plugins>>'}
 };
@@ -399,10 +402,16 @@ merge(config.macros.newJournal,{
 
 merge(config.macros.plugins,{
 	wizardTitle: "擴充套件管理",
-	step1: "- 已載入之套件",
+	step1Title: "- 已載入之套件",
+	step1Html: "<input type='hidden' name='markList'></input>",
 	skippedText: "(此套件因剛加入，故尚未執行)",
 	noPluginText: "未安裝套件",
 	confirmDeleteText: "確認是否刪除此文章:\n\n%0",
+	removeLabel: "移除 systemConfig 標籤",
+	removePrompt: "移除 systemConfig 標籤",
+	deleteLabel: "刪除",
+	deletePrompt: "永遠刪除所選",
+
 	listViewTemplate : {
 		columns: [
 			{name: "Selected", field: "Selected", rowName: "title", type: "Selector"},
@@ -416,11 +425,6 @@ merge(config.macros.plugins,{
 		rowClasses: [
 			{className: "error", field: "error"},
 			{className: 'warning', field: 'warning'}
-			],
-		actions: [
-			{caption: "執行選項...", name: ""},
-			{caption: "移除 'systemConfig' 標籤", name: "remove"},
-			{caption: "永遠刪除", name: "delete"}
 			]}
 	});
 
@@ -431,22 +435,26 @@ merge(config.macros.refreshDisplay,{
 	
 merge(config.macros.importTiddlers,{
 	readOnlyWarning: "TiddlyWiki 於唯讀模式下，不支援匯入文章。請由本機（file://）開啟 TiddlyWiki 文件",
-	defaultPath: "http://www.tiddlywiki.com/index.html",
+	wizardTitle: "自其他檔案或伺服器匯入文章",
+	step1Title: "步驟一：指定來源文件",
+	step1Html: "在此輸入 URL 或路徑： <input type='text' size=50 name='txtPath'><br>...或選擇來源文件：<input type='file' size=50 name='txtBrowse'><br>...或選擇指定的 feed：<select name='selFeeds'><option value=''>選擇...</option</select>",
 	fetchLabel: "讀取來源文件",
 	fetchPrompt: "讀取 TiddlyWiki 文件",
 	fetchError: "讀取來源文件時發生錯誤",
-	confirmOverwriteText: "確定要覆寫這些文章:\n\n%0",
-	wizardTitle: "自其他 TiddlyWiki 文件匯入文章",
-	step1: "步驟一：指定來源文件",
-	step1prompt: "在此輸入 URL 或路徑：",
-	step1promptFile: "...或選擇來源文件：",
-	step1promptFeeds: "...或選擇指定的 feed：",
-	step1feedPrompt: "選擇...",
-	step2: "步驟二：載入來源文件",
-	step2Text: "文件載入中，請稍後：%0",
-	step3: "步驟三：選擇欲匯入之文章",
-	step4: "已匯入%0 篇文章",
-	step5: "完成",
+	step2Title: "步驟二：載入來源文件",
+	step2Html: "文件載入中，請稍後：<strong><input type='hidden' name='markPath'></input></strong>",
+	cancelLabel: "取消",
+	cancelPrompt: "取消本次匯入動作",
+	step3Title: "步驟三：選擇欲匯入之文章",
+	step3Html: "<input type='hidden' name='markList'></input>",
+	importLabel: "匯入",
+	importPrompt: "匯入所選文章",
+	confirmOverwriteText: "確定要覆寫這些文章：\n\n%0",
+	step4Title: "已匯入%0 篇文章",
+	step4Html: "<input type='hidden' name='markReport'></input>",
+	doneLabel: "完成",
+	donePrompt: "關閉",
+
 	listViewTemplate: {
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
@@ -455,16 +463,10 @@ merge(config.macros.importTiddlers,{
 			{name: 'Tags', field: 'tags', title: "標籤", type: 'Tags'}
 			],
 		rowClasses: [
-			],
-		actions: [
-			{caption: "執行選項......", name: ''},
-			{caption: "匯入所選文章", name: 'import'}
 			]}
 	});
-/*
+
 merge(config.macros.sync,{
-	label: "同步",
-	prompt: "連結伺服器且作同步變更",
 	listViewTemplate: {
 		columns: [
 			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},
@@ -476,12 +478,15 @@ merge(config.macros.sync,{
 		rowClasses: [
 			],
 		buttons: [
-			{caption: "同步這些文章", name: 'sync'}
+			{caption: "Sync these tiddlers", name: 'sync'}
 			]},
-	wizardTitle: "將你的資料內容與外部伺服器與資料來源（feeds）同步",
-	step1: "選擇欲同步的文章"
-	});
-*/
+	wizardTitle: "將你的資料內容與外部伺服器與檔案同步",
+	step1Title: "選擇欲同步的文章",
+	step1Html: '<input type="hidden" name="markList"></input>',
+	syncLabel: "同步",
+	syncPrompt: "同步更新這些文章"
+});
+
 merge(config.commands.closeTiddler,{
 	text: "關閉",
 	tooltip: "關閉本文"});
@@ -864,19 +869,18 @@ config.paramifiers.readOnly = {
 		readOnly = p == "yes" ? true : (p == "no" ? false : readOnly);
 		}
 };
-// ---------------------------------------------------------------------------------
-// Formatter helpers
-// ---------------------------------------------------------------------------------
+//--
+//-- Formatter helpers
+//--
 
 function Formatter(formatters)
 {
 	this.formatters = [];
 	var pattern = [];
-	for(var n=0; n<formatters.length; n++)
-		{
+	for(var n=0; n<formatters.length; n++) {
 		pattern.push("(" + formatters[n].match + ")");
 		this.formatters.push(formatters[n]);
-		}
+	}
 	this.formatterRegExp = new RegExp(pattern.join("|"),"mg");
 }
 
@@ -892,81 +896,68 @@ config.formatterHelpers = {
 		var styles = [];
 		config.textPrimitives.cssLookaheadRegExp.lastIndex = w.nextMatch;
 		var lookaheadMatch = config.textPrimitives.cssLookaheadRegExp.exec(w.source);
-		while(lookaheadMatch && lookaheadMatch.index == w.nextMatch)
-			{
+		while(lookaheadMatch && lookaheadMatch.index == w.nextMatch) {
 			var s,v;
-			if(lookaheadMatch[1])
-				{
+			if(lookaheadMatch[1]) {
 				s = lookaheadMatch[1].unDash();
 				v = lookaheadMatch[2];
-				}
-			else
-				{
+			} else {
 				s = lookaheadMatch[3].unDash();
 				v = lookaheadMatch[4];
-				}
+			}
 			if (s=="bgcolor")
 				s = "backgroundColor";
 			styles.push({style: s, value: v});
 			w.nextMatch = lookaheadMatch.index + lookaheadMatch[0].length;
 			config.textPrimitives.cssLookaheadRegExp.lastIndex = w.nextMatch;
 			lookaheadMatch = config.textPrimitives.cssLookaheadRegExp.exec(w.source);
-			}
+		}
 		return styles;
 	},
 
 	applyCssHelper: function(e,styles)
 	{
-		for(var t=0; t< styles.length; t++)
-			{
-			try
-				{
+		for(var t=0; t< styles.length; t++) {
+			try {
 				e.style[styles[t].style] = styles[t].value;
-				}
-			catch (ex)
-				{
-				}
+			} catch (ex) {
 			}
+		}
 	},
 
 	enclosedTextHelper: function(w)
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		if(lookaheadMatch && lookaheadMatch.index == w.matchStart)
-			{
+		if(lookaheadMatch && lookaheadMatch.index == w.matchStart) {
 			var text = lookaheadMatch[1];
 			if(config.browser.isIE)
 				text = text.replace(/\n/g,"\r");
 			createTiddlyElement(w.output,this.element,null,null,text);
 			w.nextMatch = lookaheadMatch.index + lookaheadMatch[0].length;
-			}
+		}
 	},
 
 	isExternalLink: function(link)
 	{
-		if(store.tiddlerExists(link) || store.isShadowTiddler(link))
-			{
+		if(store.tiddlerExists(link) || store.isShadowTiddler(link)) {
 			return false;
-			}
+		}
 		var urlRegExp = new RegExp(config.textPrimitives.urlPattern,"mg");
-		if(urlRegExp.exec(link))
-			{
-			// Definitely an external link
+		if(urlRegExp.exec(link)) {
 			return true;
-			}
-		if (link.indexOf(".")!=-1 || link.indexOf("\\")!=-1 || link.indexOf("/")!=-1)
-			{
+		}
+		if (link.indexOf(".")!=-1 || link.indexOf("\\")!=-1 || link.indexOf("/")!=-1){
 			return true;
-			}
+		}
 		return false;
 	}
 
 };
 
-// ---------------------------------------------------------------------------------
-// Standard formatters
-// ---------------------------------------------------------------------------------
+//--
+//-- Standard formatters
+//--
 
 config.formatters = [
 {
@@ -988,39 +979,31 @@ config.formatters = [
 		w.nextMatch = w.matchStart;
 		this.lookaheadRegExp.lastIndex = w.nextMatch;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		while(lookaheadMatch && lookaheadMatch.index == w.nextMatch)
-			{
+		while(lookaheadMatch && lookaheadMatch.index == w.nextMatch) {
 			var nextRowType = lookaheadMatch[2];
-			if(nextRowType == "k")
-				{
+			if(nextRowType == "k") {
 				table.className = lookaheadMatch[1];
 				w.nextMatch += lookaheadMatch[0].length+1;
-				}
-			else
-				{
-				if(nextRowType != currRowType)
-					{
+			} else {
+				if(nextRowType != currRowType) {
 					rowContainer = createTiddlyElement(table,this.rowTypes[nextRowType]);
 					currRowType = nextRowType;
-					}
-				if(currRowType == "c")
-					{
+				}
+				if(currRowType == "c") {
 					// Caption
 					w.nextMatch++;
 					if(rowContainer != table.firstChild)
 						table.insertBefore(rowContainer,table.firstChild);
 					rowContainer.setAttribute("align",rowCount == 0?"top":"bottom");
 					w.subWikifyTerm(rowContainer,this.rowTermRegExp);
-					}
-				else
-					{
+				} else {
 					this.rowHandler(w,createTiddlyElement(rowContainer,"tr",null,(rowCount&1)?"oddRow":"evenRow"),prevColumns);
 					rowCount++;
-					}
 				}
+			}
 			this.lookaheadRegExp.lastIndex = w.nextMatch;
 			lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-			}
+		}
 	},
 	rowHandler: function(w,e,prevColumns)
 	{
@@ -1029,67 +1012,54 @@ config.formatters = [
 		var prevCell = null;
 		this.cellRegExp.lastIndex = w.nextMatch;
 		var cellMatch = this.cellRegExp.exec(w.source);
-		while(cellMatch && cellMatch.index == w.nextMatch)
-			{
-			if(cellMatch[1] == "~")
-				{
+		while(cellMatch && cellMatch.index == w.nextMatch) {
+			if(cellMatch[1] == "~") {
 				// Rowspan
 				var last = prevColumns[col];
-				if(last)
-					{
+				if(last) {
 					last.rowSpanCount++;
 					last.element.setAttribute("rowspan",last.rowSpanCount);
 					last.element.setAttribute("rowSpan",last.rowSpanCount); // Needed for IE
 					last.element.valign = "center";
-					}
-				w.nextMatch = this.cellRegExp.lastIndex-1;
 				}
-			else if(cellMatch[1] == ">")
-				{
+				w.nextMatch = this.cellRegExp.lastIndex-1;
+			} else if(cellMatch[1] == ">") {
 				// Colspan
 				colSpanCount++;
 				w.nextMatch = this.cellRegExp.lastIndex-1;
-				}
-			else if(cellMatch[2])
-				{
+			} else if(cellMatch[2]) {
 				// End of row
-				if(prevCell && colSpanCount > 1)
-					{
+				if(prevCell && colSpanCount > 1) {
 					prevCell.setAttribute("colspan",colSpanCount);
 					prevCell.setAttribute("colSpan",colSpanCount); // Needed for IE
-					}
+				}
 				w.nextMatch = this.cellRegExp.lastIndex;
 				break;
-				}
-			else
-				{
+			} else {
 				// Cell
 				w.nextMatch++;
 				var styles = config.formatterHelpers.inlineCssHelper(w);
 				var spaceLeft = false;
 				var chr = w.source.substr(w.nextMatch,1);
-				while(chr == " ")
-					{
+				while(chr == " ") {
 					spaceLeft = true;
 					w.nextMatch++;
 					chr = w.source.substr(w.nextMatch,1);
-					}
+				}
 				var cell;
-				if(chr == "!")
-					{
+				if(chr == "!") {
 					cell = createTiddlyElement(e,"th");
 					w.nextMatch++;
-					}
-				else
+				} else {
 					cell = createTiddlyElement(e,"td");
+				}
 				prevCell = cell;
 				prevColumns[col] = {rowSpanCount:1,element:cell};
-				if(colSpanCount > 1)
-					{
+				if(colSpanCount > 1) {
 					cell.setAttribute("colspan",colSpanCount);
 					cell.setAttribute("colSpan",colSpanCount); // Needed for IE
 					colSpanCount = 1;
-					}
+				}
 				config.formatterHelpers.applyCssHelper(cell,styles);
 				w.subWikifyTerm(cell,this.cellTermRegExp);
 				if(w.matchText.substr(w.matchText.length-2,1) == " ") // spaceRight
@@ -1097,11 +1067,11 @@ config.formatters = [
 				else if(spaceLeft)
 					cell.align = "right";
 				w.nextMatch--;
-				}
+			}
 			col++;
 			this.cellRegExp.lastIndex = w.nextMatch;
 			cellMatch = this.cellRegExp.exec(w.source);
-			}
+		}
 	}
 },
 
@@ -1128,45 +1098,33 @@ config.formatters = [
 		w.nextMatch = w.matchStart;
 		this.lookaheadRegExp.lastIndex = w.nextMatch;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		while(lookaheadMatch && lookaheadMatch.index == w.nextMatch)
-			{
-			if(lookaheadMatch[1])
-				{
+		while(lookaheadMatch && lookaheadMatch.index == w.nextMatch) {
+			if(lookaheadMatch[1]) {
 				listType = "ul";
 				itemType = "li";
-				}
-			else if(lookaheadMatch[2])
-				{
+			} else if(lookaheadMatch[2]) {
 				listType = "ol";
 				itemType = "li";
-				}
-			else if(lookaheadMatch[3])
-				{
+			} else if(lookaheadMatch[3]) {
 				listType = "dl";
 				itemType = "dt";
-				}
-			else if(lookaheadMatch[4])
-				{
+			} else if(lookaheadMatch[4]) {
 				listType = "dl";
 				itemType = "dd";
-				}
+			}
 			listLevel = lookaheadMatch[0].length;
 			w.nextMatch += lookaheadMatch[0].length;
-			if(listLevel > currLevel)
-				{
-				for(var t=currLevel; t<listLevel; t++)
+			var t;
+			if(listLevel > currLevel) {
+				for(t=currLevel; t<listLevel; t++)
 					stack.push(createTiddlyElement(stack[stack.length-1],listType));
-				}
-			else if(listLevel < currLevel)
-				{
-				for(var t=currLevel; t>listLevel; t--)
+			} else if(listLevel < currLevel) {
+				for(t=currLevel; t>listLevel; t--)
 					stack.pop();
-				}
-			else if(listLevel == currLevel && listType != currType)
-				{
+			} else if(listLevel == currLevel && listType != currType) {
 				stack.pop();
 				stack.push(createTiddlyElement(stack[stack.length-1],listType));
-				}
+			}
 			currLevel = listLevel;
 			currType = listType;
 			var e = createTiddlyElement(stack[stack.length-1],itemType);
@@ -1198,27 +1156,23 @@ config.formatters = [
 		var newLevel = w.matchLength;
 		var t;
 		do {
-			if(newLevel > currLevel)
-				{
+			if(newLevel > currLevel) {
 				for(t=currLevel; t<newLevel; t++)
 					stack.push(createTiddlyElement(stack[stack.length-1],this.element));
-				}
-			else if(newLevel < currLevel)
-				{
+			} else if(newLevel < currLevel) {
 				for(t=currLevel; t>newLevel; t--)
 					stack.pop();
-				}
+			}
 			currLevel = newLevel;
 			w.subWikifyTerm(stack[stack.length-1],this.termRegExp);
 			createTiddlyElement(stack[stack.length-1],"br");
 			this.lookaheadRegExp.lastIndex = w.nextMatch;
 			var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 			var matched = lookaheadMatch && lookaheadMatch.index == w.nextMatch;
-			if(matched)
-				{
+			if(matched) {
 				newLevel = lookaheadMatch[0].length;
 				w.nextMatch += lookaheadMatch[0].length;
-				}
+			}
 		} while(matched);
 	}
 },
@@ -1292,11 +1246,10 @@ config.formatters = [
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		if(lookaheadMatch && lookaheadMatch.index == w.matchStart && lookaheadMatch[1])
-			{
+		if(lookaheadMatch && lookaheadMatch.index == w.matchStart && lookaheadMatch[1]) {
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
 			invokeMacro(w.output,lookaheadMatch[1],lookaheadMatch[2],w,w.tiddler);
-			}
+		}
 	}
 },
 
@@ -1308,26 +1261,21 @@ config.formatters = [
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		if(lookaheadMatch && lookaheadMatch.index == w.matchStart)
-			{
+		if(lookaheadMatch && lookaheadMatch.index == w.matchStart) {
 			var e;
 			var text = lookaheadMatch[1];
-			if(lookaheadMatch[3])
-				{
+			if(lookaheadMatch[3]) {
 				// Pretty bracketted link
 				var link = lookaheadMatch[3];
-				e = (!lookaheadMatch[2] && config.formatterHelpers.isExternalLink(link))
-						? createExternalLink(w.output,link)
-						: createTiddlyLink(w.output,link,false,null,w.isStatic);
-				}
-			else
-				{
+				e = (!lookaheadMatch[2] && config.formatterHelpers.isExternalLink(link)) ?
+						createExternalLink(w.output,link) : createTiddlyLink(w.output,link,false,null,w.isStatic);
+			} else {
 				// Simple bracketted link
 				e = createTiddlyLink(w.output,text,false,null,w.isStatic);
-				}
+			}
 			createTiddlyText(e,text);
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
-			}
+		}
 	}
 },
 
@@ -1345,26 +1293,21 @@ config.formatters = [
 	match: config.textPrimitives.wikiLink,
 	handler: function(w)
 	{
-		if(w.matchStart > 0)
-			{
+		if(w.matchStart > 0) {
 			var preRegExp = new RegExp(config.textPrimitives.anyLetterStrict,"mg");
 			preRegExp.lastIndex = w.matchStart-1;
 			var preMatch = preRegExp.exec(w.source);
-			if(preMatch.index == w.matchStart-1)
-				{
+			if(preMatch.index == w.matchStart-1) {
 				w.outputText(w.output,w.matchStart,w.nextMatch);
 				return;
-				}
 			}
-		if(w.autoLinkWikiWords == true || store.isShadowTiddler(w.matchText))
-			{
+		}
+		if(w.autoLinkWikiWords == true || store.isShadowTiddler(w.matchText)) {
 			var link = createTiddlyLink(w.output,w.matchText,false,null,w.isStatic);
 			w.outputText(link,w.matchStart,w.nextMatch);
-			}
-		else
-			{
+		} else {
 			w.outputText(w.output,w.matchStart,w.nextMatch);
-			}
+		}
 	}
 },
 
@@ -1385,15 +1328,13 @@ config.formatters = [
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		if(lookaheadMatch && lookaheadMatch.index == w.matchStart)
-			{
+		if(lookaheadMatch && lookaheadMatch.index == w.matchStart) {
 			var e = w.output;
-			if(lookaheadMatch[5])
-				{
+			if(lookaheadMatch[5]) {
 				var link = lookaheadMatch[5];
 				e = config.formatterHelpers.isExternalLink(link) ? createExternalLink(w.output,link) : createTiddlyLink(w.output,link,false,null,w.isStatic);
 				addClass(e,"imageLink");
-				}
+			}
 			var img = createTiddlyElement(e,"img");
 			if(lookaheadMatch[1])
 				img.align = "left";
@@ -1403,7 +1344,7 @@ config.formatters = [
 				img.title = lookaheadMatch[3];
 			img.src = lookaheadMatch[4];
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
-			}
+		}
 	}
 },
 
@@ -1414,12 +1355,11 @@ config.formatters = [
 	handler: function(w)
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
-		var lookaheadMatch = this.lookaheadRegExp.exec(w.source)
-		if(lookaheadMatch && lookaheadMatch.index == w.matchStart)
-			{
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch && lookaheadMatch.index == w.matchStart) {
 			createTiddlyElement(w.output,"span").innerHTML = lookaheadMatch[1];
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
-			}
+		}
 	}
 },
 
@@ -1430,7 +1370,7 @@ config.formatters = [
 	handler: function(w)
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
-		var lookaheadMatch = this.lookaheadRegExp.exec(w.source)
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
 		if(lookaheadMatch && lookaheadMatch.index == w.matchStart)
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
 	}
@@ -1491,12 +1431,11 @@ config.formatters = [
 	handler: function(w)
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
-		var lookaheadMatch = this.lookaheadRegExp.exec(w.source)
-		if(lookaheadMatch && lookaheadMatch.index == w.matchStart)
-			{
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch && lookaheadMatch.index == w.matchStart) {
 			createTiddlyElement(w.output,"code",null,null,lookaheadMatch[1]);
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
-			}
+		}
 	}
 },
 
@@ -1532,12 +1471,11 @@ config.formatters = [
 	handler: function(w)
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
-		var lookaheadMatch = this.lookaheadRegExp.exec(w.source)
-		if(lookaheadMatch && lookaheadMatch.index == w.matchStart)
-			{
+		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
+		if(lookaheadMatch && lookaheadMatch.index == w.matchStart) {
 			createTiddlyElement(w.output,"span",null,null,lookaheadMatch[1]);
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
-			}
+		}
 	}
 },
 
@@ -1545,18 +1483,18 @@ config.formatters = [
 	name: "mdash",
 	match: "--",
 	handler: function(w)
-		{
+	{
 		createTiddlyElement(w.output,"span").innerHTML = "&mdash;";
-		}
+	}
 },
 
 {
 	name: "htmlEntitiesEncoding",
 	match: "(?:(?:&#?[a-zA-Z0-9]{2,8};|.)(?:&#?(?:x0*(?:3[0-6][0-9a-fA-F]|1D[c-fC-F][0-9a-fA-F]|20[d-fD-F][0-9a-fA-F]|FE2[0-9a-fA-F])|0*(?:76[89]|7[7-9][0-9]|8[0-7][0-9]|761[6-9]|76[2-7][0-9]|84[0-3][0-9]|844[0-7]|6505[6-9]|6506[0-9]|6507[0-1]));)+|&#?[a-zA-Z0-9]{2,8};)",
 	handler: function(w)
-		{
+	{
 		createTiddlyElement(w.output,"span").innerHTML = w.matchText;
-		}
+	}
 },
 
 {
@@ -1568,20 +1506,19 @@ config.formatters = [
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		if(lookaheadMatch)
-			{
+		if(lookaheadMatch) {
 			var e = createTiddlyElement(w.output,lookaheadMatch[2] == "\n" ? "div" : "span",null,lookaheadMatch[1]);
 			w.nextMatch = this.lookaheadRegExp.lastIndex;
 			w.subWikifyTerm(e,this.termRegExp);
-			}
+		}
 	}
 }
 
 ];
 
-// ---------------------------------------------------------------------------------
-// Wikifier
-// ---------------------------------------------------------------------------------
+//--
+//-- Wikifier
+//--
 
 function getParser(tiddler)
 {
@@ -1589,7 +1526,7 @@ function getParser(tiddler)
 		{
 		for(var i in config.parsers)
 			{
-			if(tiddler.isTagged(config.parsers[i].formatTag)||(tiddler.fields&&tiddler.fields["wikiformat"]==config.parsers[i].format))
+			if(tiddler.isTagged(config.parsers[i].formatTag)||(tiddler.fields&&config.parsers[i].format&&tiddler.fields["wikiformat"]==config.parsers[i].format))
 				{
 				return config.parsers[i];
 				}
@@ -1623,19 +1560,22 @@ function wikifyStatic(source,highlightRegExp,tiddler)
 	return html;
 }
 
-// Wikify a named tiddler to plain text
-function wikifyPlain(title)
+function wikifyPlain(title,theStore,limit)
 {
-	if(store.tiddlerExists(title) || store.isShadowTiddler(title))
+	if(!theStore)
+		theStore = store;
+	if(theStore.tiddlerExists(title) || theStore.isShadowTiddler(title))
 		{
-		var wikifier = new Wikifier(store.getTiddlerText(title),formatter,null,store.getTiddler(title));
+		var text = theStore.getTiddlerText(title);
+		if(limit > 0)
+			text = text.substr(0,limit);
+		var wikifier = new Wikifier(text,formatter,null,theStore.getTiddler(title));
 		return wikifier.wikifyPlain();
 		}
 	else
 		return "";
 }
 
-// Highlight plain text into an element
 function highlightify(source,output,highlightRegExp,tiddler)
 {
 	if(source && source != "")
@@ -1645,11 +1585,6 @@ function highlightify(source,output,highlightRegExp,tiddler)
 		}
 }
 
-// Construct a wikifier object
-// source - source string that's going to be wikified
-// formatter - Formatter() object containing the list of formatters to be used
-// highlightRegExp - regular expression of the text string to highlight
-// tiddler - reference to the tiddler that's taken to be the container for this wikification
 function Wikifier(source,formatter,highlightRegExp,tiddler)
 {
 	this.source = source;
@@ -1680,7 +1615,6 @@ Wikifier.prototype.wikifyPlain = function()
 
 Wikifier.prototype.subWikify = function(output,terminator)
 {
-	// Handle the terminated and unterminated cases separately
 	if (terminator)
 		this.subWikifyTerm(output,new RegExp("(" + terminator + ")","mg"));
 	else
@@ -1692,7 +1626,6 @@ Wikifier.prototype.subWikifyUnterm = function(output)
 	// subWikify() can be indirectly recursive, so we need to save the old output pointer
 	var oldOutput = this.output;
 	this.output = output;
-	// Get the first match
 	this.formatter.formatterRegExp.lastIndex = this.nextMatch;
 	var formatterMatch = this.formatter.formatterRegExp.exec(this.source);
 	while(formatterMatch)
@@ -1705,7 +1638,6 @@ Wikifier.prototype.subWikifyUnterm = function(output)
 		this.matchLength = formatterMatch[0].length;
 		this.matchText = formatterMatch[0];
 		this.nextMatch = this.formatter.formatterRegExp.lastIndex;
-		// Figure out which formatter matched and call its handler
 		for(var t=1; t<formatterMatch.length; t++)
 			{
 			if(formatterMatch[t])
@@ -1715,16 +1647,13 @@ Wikifier.prototype.subWikifyUnterm = function(output)
 				break;
 				}
 			}
-		// Get the next match
 		formatterMatch = this.formatter.formatterRegExp.exec(this.source);
 		}
-	// Output any text after the last match
 	if(this.nextMatch < this.source.length)
 		{
 		this.outputText(this.output,this.nextMatch,this.source.length);
 		this.nextMatch = this.source.length;
 		}
-	// Restore the output pointer
 	this.output = oldOutput;
 }
 
@@ -1740,30 +1669,23 @@ Wikifier.prototype.subWikifyTerm = function(output,terminatorRegExp)
 	var formatterMatch = this.formatter.formatterRegExp.exec(terminatorMatch ? this.source.substr(0,terminatorMatch.index) : this.source);
 	while(terminatorMatch || formatterMatch)
 		{
-		// Check for a terminator match  before the next formatter match
 		if(terminatorMatch && (!formatterMatch || terminatorMatch.index <= formatterMatch.index))
 			{
-			// Output any text before the match
 			if(terminatorMatch.index > this.nextMatch)
 				this.outputText(this.output,this.nextMatch,terminatorMatch.index);
-			// Set the match parameters
 			this.matchText = terminatorMatch[1];
 			this.matchLength = terminatorMatch[1].length;
 			this.matchStart = terminatorMatch.index;
 			this.nextMatch = this.matchStart + this.matchLength;
-			// Restore the output pointer
 			this.output = oldOutput;
 			return;
 			}
-		// It must be a formatter match; output any text before the match
 		if(formatterMatch.index > this.nextMatch)
 			this.outputText(this.output,this.nextMatch,formatterMatch.index);
-		// Set the match parameters
 		this.matchStart = formatterMatch.index;
 		this.matchLength = formatterMatch[0].length;
 		this.matchText = formatterMatch[0];
 		this.nextMatch = this.formatter.formatterRegExp.lastIndex;
-		// Figure out which formatter matched and call its handler
 		for(var t=1; t<formatterMatch.length; t++)
 			{
 			if(formatterMatch[t])
@@ -1773,41 +1695,33 @@ Wikifier.prototype.subWikifyTerm = function(output,terminatorRegExp)
 				break;
 				}
 			}
-		// Get the next match
 		terminatorRegExp.lastIndex = this.nextMatch;
 		terminatorMatch = terminatorRegExp.exec(this.source);
 		formatterMatch = this.formatter.formatterRegExp.exec(terminatorMatch ? this.source.substr(0,terminatorMatch.index) : this.source);
 		}
-	// Output any text after the last match
 	if(this.nextMatch < this.source.length)
 		{
 		this.outputText(this.output,this.nextMatch,this.source.length);
 		this.nextMatch = this.source.length;
 		}
-	// Restore the output pointer
 	this.output = oldOutput;
 }
 
 Wikifier.prototype.outputText = function(place,startPos,endPos)
 {
-	// Check for highlights
 	while(this.highlightMatch && (this.highlightRegExp.lastIndex > startPos) && (this.highlightMatch.index < endPos) && (startPos < endPos))
 		{
-		// Deal with any plain text before the highlight
 		if(this.highlightMatch.index > startPos)
 			{
 			createTiddlyText(place,this.source.substring(startPos,this.highlightMatch.index));
 			startPos = this.highlightMatch.index;
 			}
-		// Deal with the highlight
 		var highlightEnd = Math.min(this.highlightRegExp.lastIndex,endPos);
 		var theHighlight = createTiddlyElement(place,"span",null,"highlight",this.source.substring(startPos,highlightEnd));
 		startPos = highlightEnd;
-		// Nudge along to the next highlight if we're done with this one
 		if(startPos >= this.highlightRegExp.lastIndex)
 			this.highlightMatch = this.highlightRegExp.exec(this.source);
 		}
-	// Do the unhighlighted text left over
 	if(startPos < endPos)
 		{
 		createTiddlyText(place,this.source.substring(startPos,endPos));
@@ -2639,21 +2553,21 @@ config.macros.refreshDisplay.onClick = function(e)
 	refreshAll();
 	return false;
 }
-// ---------------------------------------------------------------------------------
-// Menu and toolbar commands
-// ---------------------------------------------------------------------------------
+//--
+//-- Menu and toolbar commands
+//--
 
 config.commands.closeTiddler.handler = function(event,src,title)
 {
 	story.closeTiddler(title,true,event.shiftKey || event.altKey);
 	return false;
-}
+};
 
 config.commands.closeOthers.handler = function(event,src,title)
 {
 	story.closeAllTiddlers(title);
 	return false;
-}
+};
 
 config.commands.editTiddler.handler = function(event,src,title)
 {
@@ -2661,40 +2575,40 @@ config.commands.editTiddler.handler = function(event,src,title)
 	story.displayTiddler(null,title,DEFAULT_EDIT_TEMPLATE);
 	story.focusTiddler(title,"text");
 	return false;
-}
+};
 
 config.commands.saveTiddler.handler = function(event,src,title)
 {
 	var newTitle = story.saveTiddler(title,event.shiftKey);
 	if(newTitle)
-	   story.displayTiddler(null,newTitle);
+		story.displayTiddler(null,newTitle);
 	return false;
-}
+};
 
 config.commands.cancelTiddler.handler = function(event,src,title)
 {
-	if(story.hasChanges(title) && !readOnly)
+	if(story.hasChanges(title) && !readOnly) {
 		if(!confirm(this.warning.format([title])))
 			return false;
+	}
 	story.setDirty(title,false);
 	story.displayTiddler(null,title);
 	return false;
-}
+};
 
 config.commands.deleteTiddler.handler = function(event,src,title)
 {
 	var deleteIt = true;
 	if (config.options.chkConfirmDelete)
 		deleteIt = confirm(this.warning.format([title]));
-	if (deleteIt)
-		{
+	if (deleteIt) {
 		store.removeTiddler(title);
 		story.closeTiddler(title,true,event.shiftKey || event.altKey);
 		if(config.options.chkAutoSave)
 			saveChanges();
-		}
+	}
 	return false;
-}
+};
 
 config.commands.permalink.handler = function(event,src,title)
 {
@@ -2702,44 +2616,43 @@ config.commands.permalink.handler = function(event,src,title)
 	if(window.location.hash != t)
 		window.location.hash = t;
 	return false;
-}
+};
 
 config.commands.references.handler = function(event,src,title)
 {
 	var popup = Popup.create(src);
-	if(popup)
-		{
+	if(popup) {
 		var references = store.getReferringTiddlers(title);
 		var c = false;
-		for(var r=0; r<references.length; r++)
-			if(references[r].title != title && !references[r].isTagged("excludeLists"))
-				{
+		for(var r=0; r<references.length; r++) {
+			if(references[r].title != title && !references[r].isTagged("excludeLists")) {
 				createTiddlyLink(createTiddlyElement(popup,"li"),references[r].title,true);
 				c = true;
-				}
+			}
+		}
 		if(!c)
 			createTiddlyText(createTiddlyElement(popup,"li",null,"disabled"),this.popupNone);
-		}
+	}
 	Popup.show(popup,false);
 	event.cancelBubble = true;
 	if (event.stopPropagation) event.stopPropagation();
 	return false;
-}
+};
 
 config.commands.jump.handler = function(event,src,title)
 {
 	var popup = Popup.create(src);
-	if(popup)
-		{
+	if(popup) {
 		story.forEachTiddler(function(title,element) {
 			createTiddlyLink(createTiddlyElement(popup,"li"),title,true);
 			});
-		}
+	}
 	Popup.show(popup,false);
 	event.cancelBubble = true;
-	if (event.stopPropagation) event.stopPropagation();
+	if (event.stopPropagation)
+		event.stopPropagation();
 	return false;
-}
+};
 
 // ---------------------------------------------------------------------------------
 // Tiddler() object
@@ -3178,7 +3091,7 @@ TiddlyWiki.prototype.createTiddler = function(title)
 	return tiddler;
 }
 
-// Load contents of a tiddlywiki from an HTML DIV
+// Load contents of a TiddlyWiki from an HTML DIV
 TiddlyWiki.prototype.loadFromDiv = function(src,idPrefix,noUpdate)
 {
 	this.idPrefix = idPrefix;
@@ -3192,6 +3105,37 @@ TiddlyWiki.prototype.loadFromDiv = function(src,idPrefix,noUpdate)
 		for(var i = 0;i<tiddlers.length; i++)
 			tiddlers[i].changed();
 		}
+}
+
+// Load contents of a TiddlyWiki from a string
+TiddlyWiki.prototype.importTiddlyWiki = function(text)
+{
+	// Crack out the content - will be refactored to share code with saveChanges()
+	var posOpeningDiv = text.indexOf(startSaveArea);
+	var limitClosingDiv = text.indexOf("<!--POST-BODY-END--"+">");
+	var posClosingDiv = text.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? text.length : limitClosingDiv);
+	if((posOpeningDiv == -1) || (posClosingDiv == -1))
+		return config.messages.invalidFileError.format([url]);
+	var content = "<html><body>" + text.substring(posOpeningDiv,posClosingDiv + endSaveArea.length) + "</body></html>";
+	// Create the iframe
+	var iframe = document.createElement("iframe");
+	iframe.style.display = "none";
+	document.body.appendChild(iframe);
+	var doc = iframe.document;
+	if(iframe.contentDocument)
+		doc = iframe.contentDocument; // For NS6
+	else if(iframe.contentWindow)
+		doc = iframe.contentWindow.document; // For IE5.5 and IE6
+	// Put the content in the iframe
+	doc.open();
+	doc.writeln(content);
+	doc.close();
+	// Load the content into a TiddlyWiki() object
+	var storeArea = doc.getElementById("storeArea");
+	this.loadFromDiv(storeArea,"store");
+	// Get rid of the iframe
+	iframe.parentNode.removeChild(iframe);
+	return null;
 }
 
 TiddlyWiki.prototype.updateTiddlers = function()
@@ -4020,12 +3964,12 @@ Story.prototype.saveTiddler = function(title,minorUpdate)
 		if(config.options.chkForceMinorUpdate)
 			minorUpdate = !minorUpdate;
 		var newDate = new Date();
-		store.saveTiddler(title,newTitle,fields.text,config.options.txtUserName,minorUpdate ? undefined : newDate,fields.tags);
+		var tiddler = store.saveTiddler(title,newTitle,fields.text,config.options.txtUserName,minorUpdate ? undefined : newDate,fields.tags);
 		for (var n in fields) 
 			if (!TiddlyWiki.isStandardField(n))
 				store.setValue(newTitle,n,fields[n]);
 		if(config.options.chkAutoSave)
-			saveChanges();
+			saveChanges(null,[tiddler]);
 		return newTitle;
 		}
 	return null;
@@ -4063,8 +4007,8 @@ var backstage = {
 		this.backstage = document.getElementById("backstage");
 		this.tabs = document.getElementById("backstageTabs");
 		this.panel = document.getElementById("backstagePanel");
+		this.panelFooter = createTiddlyElement(this.panel,"div",null,"backstagePanelFooter");
 		this.panelBody = createTiddlyElement(this.panel,"div",null,"backstagePanelBody");
-		this.panelFooter = createTiddlyElement(this.panel,"div",null,"backstagePanelFooter wizardFooter");
 		createTiddlyButton(this.panelFooter,"close","Close backstage",backstage.hidePanel);
 		this.backstage.onmouseover = function(e) {
 			backstage.tabs.style.visibility = "visible";
@@ -4130,8 +4074,8 @@ var backstage = {
 			anim.startAnimating(new Slider(backstage.panel,true,false,"none"),new Scroller(backstage.backstage,false));
 		else
 			{
-			backstage.panel.height = "auto";
 			backstage.panel.style.display = "block";
+			backstage.panel.style.height = "auto";
 			}
 		return backstage.panelBody;
 	},
@@ -4176,68 +4120,69 @@ config.macros.importTiddlers.handler = function(place,macroName,params,wikifier,
 		createTiddlyElement(place,"div",null,"marked",this.readOnlyWarning);
 		return;
 		}
-	var importer = createTiddlyElement(null,"div",null,"importTiddler wizard");
-	createTiddlyElement(importer,"h1",null,null,this.wizardTitle);
-	createTiddlyElement(importer,"h2",null,"step1",this.step1);
-	var step = createTiddlyElement(importer,"div",null,"wizardStep");
-	createTiddlyText(step,this.step1prompt);
-	var input = createTiddlyElement(null,"input",null,"txtOptionInput");
-	input.type = "text";
-	input.size = 50;
-	step.appendChild(input);
-	importer.inputBox = input;
-	createTiddlyElement(step,"br");
-	createTiddlyText(step,this.step1promptFile);
-	var fileInput = createTiddlyElement(null,"input",null,"txtOptionInput");
-	fileInput.type = "file";
-	fileInput.size = 50;
-	fileInput.onchange = this.onBrowseChange;
-	fileInput.onkeyup = this.onBrowseChange;
-	step.appendChild(fileInput);
-	createTiddlyElement(step,"br");
-	createTiddlyText(step,this.step1promptFeeds);
-	var feeds = this.getFeeds([{caption: this.step1feedPrompt, name: ""}]);
-	createTiddlyDropDown(step,this.onFeedChange,feeds);
-	createTiddlyElement(step,"br");
-	createTiddlyButton(step,this.fetchLabel,this.fetchPrompt,this.onFetch,null,null,null);
-        place.appendChild(importer);
+	var w = new Wizard();
+	w.createWizard(place,this.wizardTitle);
+	this.restart(w);
 }
 
-config.macros.importTiddlers.getFeeds = function(feeds)
+config.macros.importTiddlers.onCancel = function(e)
 {
+	var wizard = new Wizard(this);
+	var place = wizard.clear();
+	config.macros.importTiddlers.restart(wizard);
+}
+
+config.macros.importTiddlers.restart = function(wizard)
+{
+	wizard.addStep(this.step1Title,this.step1Html);
+	var s = wizard.getElement("selFeeds");
+	var feeds = this.getFeeds();
+	for(var t=0; t<feeds.length; t++)
+		{
+		var e = createTiddlyElement(s,"option",null,null,feeds[t].title);
+		e.value = feeds[t].url;
+		}
+	s.onchange = config.macros.importTiddlers.onFeedChange;
+	var fileInput = wizard.getElement("txtBrowse");
+	fileInput.onchange = config.macros.importTiddlers.onBrowseChange;
+	fileInput.onkeyup = config.macros.importTiddlers.onBrowseChange;
+	wizard.setButtons([{caption: this.fetchLabel, tooltip: this.fetchPrompt, onClick: config.macros.importTiddlers.onFetch}]);
+}
+
+config.macros.importTiddlers.getFeeds = function()
+{
+	var feeds = [];
 	var tagged = store.getTaggedTiddlers("contentPublisher","title");
 	for(var t=0; t<tagged.length; t++)
-		feeds.push({caption: tagged[t].title, name: store.getTiddlerSlice(tagged[t].title,"URL")});
+		feeds.push({title: tagged[t].title, url: store.getTiddlerSlice(tagged[t].title,"URL")});
 	return feeds;
 }
 
 config.macros.importTiddlers.onFeedChange = function(e)
 {
-	var importer = findRelated(this,"importTiddler","className","parentNode");
-	importer.inputBox.value = this.value;
+	var wizard = new Wizard(this);
+	var fileInput = wizard.getElement("txtPath");
+	fileInput.value = this.value;
 	this.selectedIndex = 0;
 }
 
 config.macros.importTiddlers.onBrowseChange = function(e)
 {
-	var importer = findRelated(this,"importTiddler","className","parentNode");
-	importer.inputBox.value = "file://" + this.value;
+	var wizard = new Wizard(this);
+	var fileInput = wizard.getElement("txtPath");
+	fileInput.value = "file://" + this.value;
 }
 
 config.macros.importTiddlers.onFetch = function(e)
 {
-	var importer = findRelated(this,"importTiddler","className","parentNode");
-	var url = importer.inputBox.value;
-	var cutoff = findRelated(importer.firstChild,"step2","className","nextSibling");
-	while(cutoff)
-		{
-		var temp = cutoff.nextSibling;
-		cutoff.parentNode.removeChild(cutoff);
-		cutoff = temp;
-		}
-	createTiddlyElement(importer,"h2",null,"step2",config.macros.importTiddlers.step2);
-	var step = createTiddlyElement(importer,"div",null,"wizardStep",config.macros.importTiddlers.step2Text.format([url]));
-	loadRemoteFile(url,config.macros.importTiddlers.onLoad,importer);
+	var wizard = new Wizard(this);
+	var fileInput = wizard.getElement("txtPath");
+	var url = fileInput.value;
+	wizard.addStep(config.macros.importTiddlers.step2Title,config.macros.importTiddlers.step2Html);
+	var markPath = wizard.getElement("markPath");
+	markPath.parentNode.insertBefore(document.createTextNode(url),markPath);
+	loadRemoteFile(url,config.macros.importTiddlers.onLoad,wizard);
+	wizard.setButtons([{caption: config.macros.importTiddlers.cancelLabel, tooltip: config.macros.importTiddlers.cancelPrompt, onClick: config.macros.importTiddlers.onCancel}]);
 }
 
 config.macros.importTiddlers.onLoad = function(status,params,responseText,url,xhr)
@@ -4247,42 +4192,21 @@ config.macros.importTiddlers.onLoad = function(status,params,responseText,url,xh
 		displayMessage(this.fetchError);
 		return;
 		}
-	var importer = params;
+	var wizard = params;
 	// Check that the tiddler we're in hasn't been closed - doesn't work on IE
 //	var p = importer;
 //	while(p.parentNode)
 //		p = p.parentNode;
 //	if(!(p instanceof HTMLDocument))
 //		return;
-	// Crack out the content - (should be refactored)
-	var posOpeningDiv = responseText.indexOf(startSaveArea);
-	var limitClosingDiv = responseText.indexOf("<!--POST-BODY-END--"+">");
-	var posClosingDiv = responseText.lastIndexOf(endSaveArea,limitClosingDiv == -1 ? responseText.length : limitClosingDiv);
-	if((posOpeningDiv == -1) || (posClosingDiv == -1))
+	// Load the content into a TiddlyWiki() object
+	var importStore = new TiddlyWiki();
+	var r = importStore.importTiddlyWiki(responseText);
+	if(r != null)
 		{
-		alert(config.messages.invalidFileError.format([url]));
+		displayMessage(r);
 		return;
 		}
-	var content = "<html><body>" + responseText.substring(posOpeningDiv,posClosingDiv + endSaveArea.length) + "</body></html>";
-	// Create the iframe
-	var iframe = document.createElement("iframe");
-	iframe.style.display = "none";
-	importer.insertBefore(iframe,importer.firstChild);
-	var doc = iframe.document;
-	if(iframe.contentDocument)
-		doc = iframe.contentDocument; // For NS6
-	else if(iframe.contentWindow)
-		doc = iframe.contentWindow.document; // For IE5.5 and IE6
-	// Put the content in the iframe
-	doc.open();
-	doc.writeln(content);
-	doc.close();
-	// Load the content into a TiddlyWiki() object
-	var storeArea = doc.getElementById("storeArea");
-	var importStore = new TiddlyWiki();
-	importStore.loadFromDiv(storeArea,"store");
-	// Get rid of the iframe
-	iframe.parentNode.removeChild(iframe);
 	// Extract data for the listview
 	var tiddlers = [];
 	importStore.forEachTiddler(function(title,tiddler)
@@ -4291,34 +4215,30 @@ config.macros.importTiddlers.onLoad = function(status,params,responseText,url,xh
 		t.title = title;
 		t.modified = tiddler.modified;
 		t.modifier = tiddler.modifier;
-		t.text = tiddler.text.substr(0,50);
+		t.text = wikifyPlain(title,importStore,100).substr(0,100);
 		t.tags = tiddler.tags;
 		tiddlers.push(t);
 		});
+	wizard.setValue("store",importStore);
 	// Display the listview
-	createTiddlyElement(importer,"h2",null,"step3",config.macros.importTiddlers.step3);
-	var step = createTiddlyElement(importer,"div",null,"wizardStep");
-	ListView.create(step,tiddlers,config.macros.importTiddlers.listViewTemplate,config.macros.importTiddlers.onSelectCommand);
-	// Save the importer
-	importer.store = importStore;
+	wizard.addStep(config.macros.importTiddlers.step3Title,config.macros.importTiddlers.step3Html);
+	var markList = wizard.getElement("markList");
+	var listWrapper = document.createElement("div");
+	markList.parentNode.insertBefore(listWrapper,markList);
+	var listView = ListView.create(listWrapper,tiddlers,config.macros.importTiddlers.listViewTemplate);
+	wizard.setValue("listView",listView);
+	wizard.setButtons([
+			{caption: config.macros.importTiddlers.cancelLabel, tooltip: config.macros.importTiddlers.cancelPrompt, onClick: config.macros.importTiddlers.onCancel},
+			{caption: config.macros.importTiddlers.importLabel, tooltip: config.macros.importTiddlers.importPrompt, onClick:  config.macros.importTiddlers.doImport}
+		]);
 }
 
-config.macros.importTiddlers.onSelectCommand = function(listView,command,rowNames)
+config.macros.importTiddlers.doImport = function(e)
 {
-	var importer = findRelated(listView,"importTiddler","className","parentNode");
-	switch(command)
-		{
-		case "import":
-			config.macros.importTiddlers.doImport(importer,rowNames);
-			break;
-		}
-	if(config.options.chkAutoSave)
-		saveChanges(true);
-}
-
-config.macros.importTiddlers.doImport = function(importer,rowNames)
-{
-	var theStore = importer.store;
+	var wizard = new Wizard(this);
+	var listView = wizard.getValue("listView");
+	var rowNames = ListView.getSelectedRows(listView);
+	var theStore = wizard.getValue("store");
 	var overwrite = new Array();
 	var t;
 	for(t=0; t<rowNames.length; t++)
@@ -4327,7 +4247,7 @@ config.macros.importTiddlers.doImport = function(importer,rowNames)
 			overwrite.push(rowNames[t]);
 	}
 	if(overwrite.length > 0)
-		if(!confirm(this.confirmOverwriteText.format([overwrite.join(", ")])))
+		if(!confirm(config.macros.importTiddlers.confirmOverwriteText.format([overwrite.join(", ")])))
 			return;
 	for(t=0; t<rowNames.length; t++)
 		{
@@ -4338,14 +4258,20 @@ config.macros.importTiddlers.doImport = function(importer,rowNames)
 		}
 	store.notifyAll();
 	store.setDirty(true);
-	createTiddlyElement(importer,"h2",null,"step4",this.step4.format([rowNames.length]));
-	var step = createTiddlyElement(importer,"div",null,"wizardStep");
+	wizard.addStep(config.macros.importTiddlers.step4Title.format([rowNames.length]),config.macros.importTiddlers.step4Html);
+	var reportList = wizard.getElement("markReport");
+	var reportWrapper = document.createElement("div");
+	reportList.parentNode.insertBefore(reportWrapper,reportList);
 	for(t=0; t<rowNames.length; t++)
 		{
-		createTiddlyLink(step,rowNames[t],true);
-		createTiddlyElement(step,"br");
+		createTiddlyLink(reportWrapper,rowNames[t],true);
+		createTiddlyElement(reportWrapper,"br");
 		}
-	createTiddlyElement(importer,"h2",null,"step5",this.step5);
+	if(config.options.chkAutoSave)
+		saveChanges(true);
+	wizard.setButtons([
+			{caption: config.macros.importTiddlers.doneLabel, tooltip: config.macros.importTiddlers.donePrompt, onClick: config.macros.importTiddlers.onCancel}
+		]);
 }
 // ---------------------------------------------------------------------------------
 // Sync macro
@@ -4353,27 +4279,6 @@ config.macros.importTiddlers.doImport = function(importer,rowNames)
 
 // Synchronisation handlers
 config.syncers = {};
-
-// Translateable strings
-config.macros.sync = {
-	label: "sync",
-	prompt: "Plug back in to the server and synchronize changes",
-	listViewTemplate: {
-		columns: [
-			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},
-			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "Title", type: 'TiddlerLink'},
-			{name: 'Local Status', field: 'localStatus', title: "Changed on your computer?", type: 'String'},
-			{name: 'Server Status', field: 'serverStatus', title: "Changed on server?", type: 'String'},
-			{name: 'Server URL', field: 'serverUrl', title: "Server URL", text: "View", type: 'Link'}
-			],
-		rowClasses: [
-			],
-		buttons: [
-			{caption: "Sync these tiddlers", name: 'sync'}
-			]},
-	wizardTitle: "Synchronize your content with external servers and feeds",
-	step1: "Choose the tiddlers you want to synchronize"
-};
 
 // Sync state. Members:
 //	syncList - List of sync objects (title, tiddler, server, workspace, page, version)
@@ -4417,34 +4322,32 @@ config.macros.sync.startSync = function(place)
 			currSync.syncList.push(syncItem);
 			}
 		});
-	var wizard = createTiddlyElement(place,"div",null,"importTiddler wizard");
-	createTiddlyElement(wizard,"h1",null,null,this.wizardTitle);
-	createTiddlyElement(wizard,"h2",null,"step1",this.step1);
-	var step = createTiddlyElement(wizard,"div",null,"wizardStep");
-	currSync.listView = ListView.create(step,currSync.syncList,this.listViewTemplate,this.onSelectCommand);
+	var wizard = new Wizard();
+	wizard.createWizard(place,this.wizardTitle);
+	wizard.addStep(this.step1Title,this.step1Html);
+	var markList = wizard.getElement("markList");
+	var listWrapper = document.createElement("div");
+	markList.parentNode.insertBefore(listWrapper,markList);
+	var listView = ListView.create(listWrapper,currSync.syncList,this.listViewTemplate);
+	wizard.setValue("listView",listView);
+	wizard.setButtons([
+			{caption: config.macros.sync.syncLabel, tooltip: config.macros.sync.syncPrompt, onClick:  config.macros.sync.doSync}
+		]);
 }
 
 config.macros.sync.cancelSync = function()
 {
+	currSync = null;
 }
 
-config.macros.sync.onSelectCommand = function(listView,command,rowNames)
+config.macros.sync.doSync = function(e)
 {
-	switch(command)
+	var wizard = new Wizard(this);
+	var listView = wizard.getValue("listView");
+	var rowNames = ListView.getSelectedRows(listView);
+	for(var t=0; t<rowNames.length; t++)
 		{
-		case "cancel":
-			break;
-		case "sync":
-			config.macros.sync.doSync(rowNames);
-			break;
-		}
-}
-
-config.macros.sync.doSync = function(selNames)
-{
-	for(var t=0; t<selNames.length; t++)
-		{
-		var f = currSync.syncList.findByField("title",selNames[t])
+		var f = currSync.syncList.findByField("title",rowNames[t])
 		var s = currSync.syncList[f];
 		var syncer = config.syncers[s.syncType];
 		if(syncer.doSync)
@@ -4457,25 +4360,27 @@ config.macros.sync.doSync = function(selNames)
 
 config.macros.plugins.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
-	var wizard = createTiddlyElement(place,"div",null,"importTiddler wizard");
-	createTiddlyElement(wizard,"h1",null,null,this.wizardTitle);
-	createTiddlyElement(wizard,"h2",null,"step1",this.step1);
-	var step = createTiddlyElement(wizard,"div",null,"wizardStep");
-	var e = createTiddlyElement(step,"div");
-	e.setAttribute("refresh","macro");
-	e.setAttribute("macroName","plugins");
-	e.setAttribute("params",paramString);
-	this.refresh(e,paramString);
+	var wizard = new Wizard();
+	wizard.createWizard(place,this.wizardTitle);
+	wizard.addStep(this.step1Title,this.step1Html);
+	var markList = wizard.getElement("markList");
+	var listWrapper = document.createElement("div");
+	markList.parentNode.insertBefore(listWrapper,markList);
+	listWrapper.setAttribute("refresh","macro");
+	listWrapper.setAttribute("macroName","plugins");
+	listWrapper.setAttribute("params",paramString);
+	this.refresh(listWrapper,paramString);
 }
 
-config.macros.plugins.refresh = function(place,params)
+config.macros.plugins.refresh = function(listWrapper,params)
 {
+	var wizard = new Wizard(listWrapper);
 	var selectedRows = [];
-	ListView.forEachSelector(place,function(e,rowName) {
+	ListView.forEachSelector(listWrapper,function(e,rowName) {
 			if(e.checked)
 				selectedRows.push(e.getAttribute("rowName"));
 		});
-	removeChildren(place);
+	removeChildren(listWrapper);
 	params = params.parseParams("anon");
 	var plugins = installedPlugins.slice(0);
 	var t,tiddler,p;
@@ -4499,35 +4404,52 @@ config.macros.plugins.refresh = function(place,params)
 		p.Selected = selectedRows.indexOf(plugins[t].title) != -1;
 		}
 	if(plugins.length == 0)
-		createTiddlyElement(place,"em",null,null,this.noPluginText);
-	else
-		ListView.create(place,plugins,this.listViewTemplate,this.onSelectCommand);
-}
-
-config.macros.plugins.onSelectCommand = function(command,rowNames)
-{
-	var t;
-	switch(command)
 		{
-		case "remove":
-			for(t=0; t<rowNames.length; t++)
-				store.setTiddlerTag(rowNames[t],false,"systemConfig");
-			break;
-		case "delete":
-			if(rowNames.length > 0 && confirm(config.macros.plugins.confirmDeleteText.format([rowNames.join(", ")])))
-				{
-				for(t=0; t<rowNames.length; t++)
-					{
-					store.removeTiddler(rowNames[t]);
-					story.closeTiddler(rowNames[t],true,false);
-					}
-				}
-			break;
+		createTiddlyElement(listWrapper,"em",null,null,this.noPluginText);
+		wizard.setButtons([]);
 		}
-	if(config.options.chkAutoSave)
-		saveChanges(true);
+	else
+		{
+		var listView = ListView.create(listWrapper,plugins,this.listViewTemplate,this.onSelectCommand);
+		wizard.setValue("listView",listView);
+		wizard.setButtons([
+				{caption: config.macros.plugins.removeLabel, tooltip: config.macros.plugins.removePrompt, onClick:  config.macros.plugins.doRemoveTag},
+				{caption: config.macros.plugins.deleteLabel, tooltip: config.macros.plugins.deletePrompt, onClick:  config.macros.plugins.doDelete}
+			]);
+		}
 }
 
+config.macros.plugins.doRemoveTag = function(e)
+{
+	var wizard = new Wizard(this);
+	var listView = wizard.getValue("listView");
+	var rowNames = ListView.getSelectedRows(listView);
+	if(rowNames.length == 0)
+		alert(config.messages.nothingSelected);
+	else
+		for(var t=0; t<rowNames.length; t++)
+			store.setTiddlerTag(rowNames[t],false,"systemConfig");
+}
+
+config.macros.plugins.doDelete = function(e)
+{
+	var wizard = new Wizard(this);
+	var listView = wizard.getValue("listView");
+	var rowNames = ListView.getSelectedRows(listView);
+	if(rowNames.length == 0)
+		alert(config.messages.nothingSelected);
+	else
+		{
+		if(confirm(config.macros.plugins.confirmDeleteText.format([rowNames.join(", ")])))
+			{
+			for(t=0; t<rowNames.length; t++)
+				{
+				store.removeTiddler(rowNames[t]);
+				story.closeTiddler(rowNames[t],true,false);
+				}
+			}
+		}
+}
 // ---------------------------------------------------------------------------------
 // Message area
 // ---------------------------------------------------------------------------------
@@ -4827,7 +4749,7 @@ function updateMarkupBlock(s,blockName,tiddlerName)
 }
 
 // Save this tiddlywiki with the pending changes
-function saveChanges(onlyIfDirty)
+function saveChanges(onlyIfDirty,tiddlers)
 {
 	if(onlyIfDirty && !store.isDirty())
 		return;
@@ -5287,24 +5209,13 @@ function javaLoadFile(filePath)
 	return content.join("\n");
 }
 
-// ---------------------------------------------------------------------------------
-// Remote HTTP requests
-// ---------------------------------------------------------------------------------
+//--
+//-- Remote HTTP requests
+//--
 
-// Load a file over http
-//   url - the source url
-//   callback - function to call when there's a response
-//   params - parameter object that gets passed to the callback for storing it's state
-// Return value is the underlying XMLHttpRequest object, or 'null' if there was an error
-// Callback function is called like this:
-//   callback(status,params,responseText,xhr)
-//     status - true if OK, false if error
-//     params - the parameter object provided to loadRemoteFile()
-//     responseText - the text of the file
-//     xhr - the underlying XMLHttpRequest object
 function loadRemoteFile(url,callback,params)
 {
-	var x = doHttp("GET",url,null,null,null,null,callback,params,null);
+	return doHttp("GET",url,null,null,null,null,callback,params,null);
 }
 
 // HTTP status codes
@@ -5318,79 +5229,49 @@ var httpStatus = {
 	MethodNotAllowed: 405
 };
 
-// Perform an http request
-//   type - GET/POST/PUT/DELETE
-//   url - the source url
-//   data - optional data for POST and PUT
-//   contentType - optionalContent type for the data (defaults to application/x-www-form-urlencoded)
-//   username - optional username for basic authentication
-//   password - optional password for basic authentication
-//   callback - function to call when there's a response
-//   params - parameter object that gets passed to the callback for storing it's state
-//   headers - optional hashmap of additional headers
-// Return value is the underlying XMLHttpRequest object, or a string if there was an error
-// Callback function is called like this:
-//   callback(status,params,responseText,xhr)
-//     status - true if OK, false if error
-//     params - the parameter object provided to loadRemoteFile()
-//     responseText - the text of the file
-//     url - requested URL
-//     xhr - the underlying XMLHttpRequest object
 function doHttp(type,url,data,contentType,username,password,callback,params,headers)
 {
 	// Get an xhr object
 	var x;
-	try
-		{
+	try {
 		x = new XMLHttpRequest(); // Modern
-		}
-	catch(e)
-		{
-		try
-			{
+	} catch(ex) {
+		try {
 			x = new ActiveXObject("Msxml2.XMLHTTP"); // IE 6
-			}
-		catch (e)
-			{
+		} catch (ex2) {
 			return "Can't create XMLHttpRequest object";
-			}
 		}
+	}
 	// Install callback
-	x.onreadystatechange = function()
-		{
-		if (x.readyState == 4 && callback)
-			{
+	x.onreadystatechange = function() {
+		if (x.readyState == 4 && callback) {
 			if([0, httpStatus.OK, httpStatus.ContentCreated, httpStatus.NoContent].contains(x.status))
 				callback(true,params,x.responseText,url,x);
 			else
 				callback(false,params,null,url,x);
 			x.onreadystatechange = function(){};
 			x = null;
-			}
 		}
+	};
 	// Send request
 	if(window.netscape && window.netscape.security && document.location.protocol.indexOf("http") == -1)
 		window.netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
-	try
-		{
+	try {
 		url = url + (url.indexOf("?") < 0 ? "?" : "&") + "nocache=" + Math.random();
 		x.open(type,url,true,username,password);
 		if (data)
 			x.setRequestHeader("Content-Type", contentType ? contentType : "application/x-www-form-urlencoded");
 		if (x.overrideMimeType)
 			x.setRequestHeader("Connection", "close");
-		if(headers)
-			{
+		if(headers) {
 			for(n in headers)
 				x.setRequestHeader(n,headers[n]);
-			}
+		}
 		x.setRequestHeader("X-Requested-With", "TiddlyWiki " + version.major + "." + version.minor + "." + version.revision + (version.beta ? " (beta " + version.beta + ")" : ""));
 		x.send(data);
-		}
-	catch (e)
-		{
-		return exceptionText(e);
-		}
+	} catch (ex) {
+		return exceptionText(ex);
+	}
 	return x;
 }
 // ---------------------------------------------------------------------------------
@@ -5631,9 +5512,9 @@ function alertAndThrow(m)
 	throw(m);
 }
 
-// ---------------------------------------------------------------------------------
-// Animation engine
-// ---------------------------------------------------------------------------------
+//-
+//- Animation engine
+//-
 
 function Animator()
 {
@@ -5648,41 +5529,38 @@ Animator.prototype.startAnimating = function() // Variable number of arguments
 {
 	for(var t=0; t<arguments.length; t++)
 		this.animations.push(arguments[t]);
-	if(this.running == 0)
-		{
+	if(this.running == 0) {
 		var me = this;
 		this.timerID = window.setInterval(function() {me.doAnimate(me);},5);
-		}
+	}
 	this.running += arguments.length;
-}
+};
 
 // Perform an animation engine tick, calling each of the known animation modules
 Animator.prototype.doAnimate = function(me)
 {
 	var a = 0;
-	while(a < me.animations.length)
-		{
+	while(a < me.animations.length) {
 		var animation = me.animations[a];
-		if(animation.tick())
+		if(animation.tick()) {
 			a++;
-		else
-			{
+		} else {
 			me.animations.splice(a,1);
 			if(--me.running == 0)
 				window.clearInterval(me.timerID);
-			}
 		}
-}
+	}
+};
 
 // Map a 0..1 value to 0..1, but slow down at the start and end
 Animator.slowInSlowOut = function(progress)
 {
 	return(1-((Math.cos(progress * Math.PI)+1)/2));
-}
+};
 
-// ---------------------------------------------------------------------------------
-// Cascade animation
-// ---------------------------------------------------------------------------------
+//--
+//-- Cascade animation
+//--
 
 function Cascade(text,startElement,targetElement,slowly)
 {
@@ -5711,20 +5589,16 @@ function Cascade(text,startElement,targetElement,slowly)
 Cascade.prototype.tick = function()
 {
 	this.progress++;
-	if(this.progress >= this.steps)
-		{
+	if(this.progress >= this.steps) {
 		while(this.elements.length > 0)
 			this.removeTail();
 		this.targetElement.style.position = "static";
 		this.targetElement.style.zIndex = "";
 		return false;
-		}
-	else
-		{
+	} else {
 		if(this.elements.length > 0 && this.progress > config.cascadeDepth)
 			this.removeTail();
-		if(this.progress < (this.steps - config.cascadeDepth))
-			{
+		if(this.progress < (this.steps - config.cascadeDepth)) {
 			var f = Animator.slowInSlowOut(this.progress/(this.steps - config.cascadeDepth - 1));
 			var e = createTiddlyElement(document.body,"div",null,"cascade",this.text);
 			e.style.zIndex = 1;
@@ -5734,17 +5608,17 @@ Cascade.prototype.tick = function()
 			e.style.height = this.startHeight + (this.targetHeight-this.startHeight) * f + "px";
 			e.style.display = "block";
 			this.elements.push(e);
-			}
-		return true;
 		}
-}
+		return true;
+	}
+};
 
 Cascade.prototype.removeTail = function()
 {
 	var e = this.elements[0];
 	e.parentNode.removeChild(e);
 	this.elements.shift();
-}
+};
 
 // ---------------------------------------------------------------------------------
 // Scroller animation
@@ -5819,6 +5693,8 @@ Slider.prototype.stop = function()
 			{
 			case "none":
 				this.element.style.display = "none";
+				this.element.style.opacity = 1;
+				this.element.style.filter = "alpha(opacity:100)";
 				break;
 			case "all":
 				this.element.parentNode.removeChild(this.element);
@@ -5917,6 +5793,64 @@ Popup.removeFrom = function(from)
 	Popup.stack = Popup.stack.slice(0,from);
 }
 
+//--
+//-- Wizard support
+//--
+
+function Wizard(elem) {
+	if(elem) {
+		this.formElem = findRelated(elem,"wizard","className");
+		this.bodyElem = findRelated(this.formElem.firstChild,"wizardBody","className","nextSibling");
+		this.footElem = findRelated(this.formElem.firstChild,"wizardFooter","className","nextSibling");
+	} else {
+		this.formElem = null;
+		this.bodyElem = null;
+		this.footElem = null;
+	}
+}
+
+Wizard.prototype.setValue = function(name,value) {
+	if(this.formElem)
+		this.formElem[name] = value;
+}
+
+Wizard.prototype.getValue = function(name) {
+	return this.formElem ? this.formElem[name] : null;
+}
+
+Wizard.prototype.createWizard = function(place,title) {
+	this.formElem = createTiddlyElement(place,"form",null,"wizard");
+	createTiddlyElement(this.formElem,"h1",null,null,title);
+	this.bodyElem = createTiddlyElement(this.formElem,"div",null,"wizardBody");
+	this.footElem = createTiddlyElement(this.formElem,"div",null,"wizardFooter");
+	createTiddlyButton(this.footElem,"close","Close backstage",backstage.hidePanel);
+};
+
+Wizard.prototype.clear = function() {
+	removeChildren(this.bodyElem);
+};
+
+
+Wizard.prototype.setButtons = function(buttonInfo) {
+	removeChildren(this.footElem);
+	for(var t=0; t<buttonInfo.length; t++) {
+		if(t != 0)
+			insertSpacer(this.footElem);
+		createTiddlyButton(this.footElem,buttonInfo[t].caption,buttonInfo[t].tooltip,buttonInfo[t].onClick);
+		}
+};
+
+Wizard.prototype.addStep = function(stepTitle,html) {
+	var w = createTiddlyElement(this.bodyElem,"div");
+	createTiddlyElement(w,"h2",null,null,stepTitle);
+	var step = createTiddlyElement(w,"div",null,"wizardStep");
+	step.innerHTML = html;
+	applyHtmlMacros(step,tiddler);
+};
+
+Wizard.prototype.getElement = function(name) {
+	return this.formElem.elements[name];
+};
 // ---------------------------------------------------------------------------------
 // ListView gadget
 // ---------------------------------------------------------------------------------
@@ -6029,6 +5963,16 @@ ListView.forEachSelector = function(view,callback)
 			}
 		}
 	return hadOne;
+}
+
+ListView.getSelectedRows = function(view)
+{
+	var rowNames = [];
+	ListView.forEachSelector(view,function(e,rowName) {
+				if(e.checked)
+					rowNames.push(rowName);
+				});
+	return rowNames;
 }
 
 ListView.columnTypes = {};
@@ -6153,9 +6097,9 @@ ListView.columnTypes.TiddlerLink = {
 				}
 		}
 };
-// ---------------------------------------------------------------------------------
-// Augmented methods for the JavaScript Number(), Array(), String() and Date() objects
-// ---------------------------------------------------------------------------------
+//--
+//-- Augmented methods for the JavaScript Number(), Array(), String() and Date() objects
+//--
 
 // Clamp a number to a range
 Number.prototype.clamp = function(min,max)
@@ -6166,7 +6110,7 @@ Number.prototype.clamp = function(min,max)
 	if(c > max)
 		c = max;
 	return c;
-}
+};
 
 // Add indexOf function if browser does not support it
 if(!Array.indexOf) {
@@ -6174,20 +6118,22 @@ Array.prototype.indexOf = function(item,from)
 {
 	if(!from)
 		from = 0;
-	for(var i=from; i<this.length; i++)
+	for(var i=from; i<this.length; i++) {
 		if(this[i] === item)
 			return i;
+	}
 	return -1;
-}}
+};}
 
 // Find an entry in a given field of the members of an array
 Array.prototype.findByField = function(field,value)
 {
-	for(var t=0; t<this.length; t++)
+	for(var t=0; t<this.length; t++) {
 		if(this[t][field] == value)
 			return t;
+	}
 	return null;
-}
+};
 
 // Return whether an entry exists in an array
 Array.prototype.contains = function(item)
@@ -6203,54 +6149,52 @@ Array.prototype.setItem = function(value,mode)
 	var p = this.indexOf(value);
 	if(mode == 0)
 		mode = (p == -1) ? +1 : -1;
-	if(mode == +1)
-		{
+	if(mode == +1) {
 		if(p == -1)
 			this.push(value);
-		}
-	else if(mode == -1)
-		{
+	} else if(mode == -1) {
 		if(p != -1)
 			this.splice(p,1);
-		}
-}
+	}
+};
 
 // Return whether one of a list of values exists in an array
 Array.prototype.containsAny = function(items)
 {
-	for(var i=0; i<items.length; i++)
+	for(var i=0; i<items.length; i++) {
 		if (this.indexOf(items[i]) != -1)
 			return true;
+	}
 	return false;
 };
 
 // Return whether all of a list of values exists in an array
 Array.prototype.containsAll = function(items)
 {
-	for (var i = 0; i<items.length; i++)
+	for (var i = 0; i<items.length; i++) {
 		if (this.indexOf(items[i]) == -1)
 			return false;
+	}
 	return true;
 };
 
 // Push a new value into an array only if it is not already present in the array. If the optional unique parameter is false, it reverts to a normal push
 Array.prototype.pushUnique = function(item,unique)
 {
-	if(unique != undefined && unique == false)
+	if(unique != undefined && unique == false) {
 		this.push(item);
-	else
-		{
+	} else {
 		if(this.indexOf(item) == -1)
 			this.push(item);
-		}
-}
+	}
+};
 
 Array.prototype.remove = function(item)
 {
 	var p = this.indexOf(item);
 	if(p != -1)
 		this.splice(p,1);
-}
+};
 
 // Get characters from the right end of a string
 String.prototype.right = function(n)
@@ -6554,7 +6498,7 @@ Date.prototype.formatString = function(template)
 	t = t.replace(/DDth/g,this.getDate()+this.daySuffix());
 	t = t.replace(/DD/g,this.getDate());
 	return t;
-}
+};
 
 Date.prototype.getWeek = function()
 {
@@ -6564,7 +6508,7 @@ Date.prototype.getWeek = function()
 	dt.setTime(dt.getTime()+(4-d)*86400000);// shift day to Thurs of same week to calculate weekNo
 	var n = Math.floor((dt.getTime()-new Date(dt.getFullYear(),0,1)+3600000)/86400000); 
 	return Math.floor(n/7)+1;
-}
+};
 
 Date.prototype.getYearForWeekNo = function()
 {
@@ -6573,56 +6517,55 @@ Date.prototype.getYearForWeekNo = function()
 	if (d==0) d=7;// JavaScript Sun=0, ISO Sun=7
 	dt.setTime(dt.getTime()+(4-d)*86400000);// shift day to Thurs of same week
 	return dt.getFullYear();
-}
+};
 
 Date.prototype.getHours12 = function()
 {
 	var h = this.getHours();
 	return h > 12 ? h-12 : ( h > 0 ? h : 12 );
-}
+};
 
 Date.prototype.getAmPm = function()
 {
 	return this.getHours() >= 12 ? config.messages.dates.pm : config.messages.dates.am;
-}
+};
 
 Date.prototype.daySuffix = function()
 {
 	return config.messages.dates.daySuffixes[this.getDate()-1];
-}
+};
 
 // Convert a date to local YYYYMMDDHHMM string format
 Date.prototype.convertToLocalYYYYMMDDHHMM = function()
 {
-	return(String.zeroPad(this.getFullYear(),4) + String.zeroPad(this.getMonth()+1,2) + String.zeroPad(this.getDate(),2) + String.zeroPad(this.getHours(),2) + String.zeroPad(this.getMinutes(),2));
-}
+	return String.zeroPad(this.getFullYear(),4) + String.zeroPad(this.getMonth()+1,2) + String.zeroPad(this.getDate(),2) + String.zeroPad(this.getHours(),2) + String.zeroPad(this.getMinutes(),2);
+};
 
 // Convert a date to UTC YYYYMMDDHHMM string format
 Date.prototype.convertToYYYYMMDDHHMM = function()
 {
-	return(String.zeroPad(this.getUTCFullYear(),4) + String.zeroPad(this.getUTCMonth()+1,2) + String.zeroPad(this.getUTCDate(),2) + String.zeroPad(this.getUTCHours(),2) + String.zeroPad(this.getUTCMinutes(),2));
-}
+	return String.zeroPad(this.getUTCFullYear(),4) + String.zeroPad(this.getUTCMonth()+1,2) + String.zeroPad(this.getUTCDate(),2) + String.zeroPad(this.getUTCHours(),2) + String.zeroPad(this.getUTCMinutes(),2);
+};
 
 // Convert a date to UTC YYYYMMDD.HHMMSSMMM string format
 Date.prototype.convertToYYYYMMDDHHMMSSMMM = function()
 {
-	return(String.zeroPad(this.getUTCFullYear(),4) + String.zeroPad(this.getUTCMonth()+1,2) + String.zeroPad(this.getUTCDate(),2) + "." + String.zeroPad(this.getUTCHours(),2) + String.zeroPad(this.getUTCMinutes(),2) + String.zeroPad(this.getUTCSeconds(),2) + String.zeroPad(this.getUTCMilliseconds(),4));
-}
+	return String.zeroPad(this.getUTCFullYear(),4) + String.zeroPad(this.getUTCMonth()+1,2) + String.zeroPad(this.getUTCDate(),2) + "." + String.zeroPad(this.getUTCHours(),2) + String.zeroPad(this.getUTCMinutes(),2) + String.zeroPad(this.getUTCSeconds(),2) + String.zeroPad(this.getUTCMilliseconds(),4);
+};
 
 // Static method to create a date from a UTC YYYYMMDDHHMM format string
 Date.convertFromYYYYMMDDHHMM = function(d)
 {
-	var theDate = new Date(Date.UTC(parseInt(d.substr(0,4),10),
-							parseInt(d.substr(4,2),10)-1,
-							parseInt(d.substr(6,2),10),
-							parseInt(d.substr(8,2),10),
-							parseInt(d.substr(10,2),10),0,0));
-	return(theDate);
-}
+	return new Date(Date.UTC(parseInt(d.substr(0,4),10),
+			parseInt(d.substr(4,2),10)-1,
+			parseInt(d.substr(6,2),10),
+			parseInt(d.substr(8,2),10),
+			parseInt(d.substr(10,2),10),0,0));
+};
 
-// ---------------------------------------------------------------------------------
-// Crypto functions and associated conversion routines
-// ---------------------------------------------------------------------------------
+//--
+//-- Crypto functions and associated conversion routines
+//--
 
 // Crypto "namespace"
 function Crypto() {}
@@ -6633,17 +6576,15 @@ Crypto.strToBe32s = function(str)
 	var be = Array();
 	var len = Math.floor(str.length/4);
 	var i, j;
-	for(i=0, j=0; i<len; i++, j+=4)
-		{
+	for(i=0, j=0; i<len; i++, j+=4) {
 		be[i] = ((str.charCodeAt(j)&0xff) << 24)|((str.charCodeAt(j+1)&0xff) << 16)|((str.charCodeAt(j+2)&0xff) << 8)|(str.charCodeAt(j+3)&0xff);
-		}
-	while (j<str.length)
-		{
+	}
+	while (j<str.length) {
 		be[j>>2] |= (str.charCodeAt(j)&0xff)<<(24-(j*8)%32);
 		j++;
-		}
+	}
 	return be;
-}
+};
 
 // Convert an array of big-endian 32-bit words to a string
 Crypto.be32sToStr = function(be)
@@ -6652,7 +6593,7 @@ Crypto.be32sToStr = function(be)
 	for(var i=0;i<be.length*32;i+=8)
 		str += String.fromCharCode((be[i>>5]>>>(24-i%32)) & 0xff);
 	return str;
-}
+};
 
 // Convert an array of big-endian 32-bit words to a hex string
 Crypto.be32sToHex = function(be)
@@ -6662,19 +6603,19 @@ Crypto.be32sToHex = function(be)
 	for(var i=0;i<be.length*4;i++)
 		str += hex.charAt((be[i>>2]>>((3-i%4)*8+4))&0xF) + hex.charAt((be[i>>2]>>((3-i%4)*8))&0xF);
 	return str;
-}
+};
 
 // Return, in hex, the SHA-1 hash of a string
 Crypto.hexSha1Str = function(str)
 {
 	return Crypto.be32sToHex(Crypto.sha1Str(str));
-}
+};
 
 // Return the SHA-1 hash of a string
 Crypto.sha1Str = function(str)
 {
 	return Crypto.sha1(Crypto.strToBe32s(str),str.length);
-}
+};
 
 // Calculate the SHA-1 hash of an array of blen bytes of big-endian 32-bit words
 Crypto.sha1 = function(x,blen)
@@ -6717,53 +6658,47 @@ Crypto.sha1 = function(x,blen)
 	var h3 = 0x10325476;
 	var h4 = 0xC3D2E1F0;
 
-	for(var i=0;i<x.length;i+=16)
-		{
+	for(var i=0;i<x.length;i+=16) {
 		var j,t;
 		var a = h0;
 		var b = h1;
 		var c = h2;
 		var d = h3;
 		var e = h4;
-		for(j = 0;j<16;j++)
-			{
+		for(j = 0;j<16;j++) {
 			w[j] = x[i+j];
 			t = add32x5(e,(a>>>27)|(a<<5),d^(b&(c^d)),w[j],k1);
 			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-			}
-		for(j=16;j<20;j++)
-			{
+		}
+		for(j=16;j<20;j++) {
 			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
 			t = add32x5(e,(a>>>27)|(a<<5),d^(b&(c^d)),w[j],k1);
 			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-			}
-		for(j=20;j<40;j++)
-			{
+		}
+		for(j=20;j<40;j++) {
 			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
 			t = add32x5(e,(a>>>27)|(a<<5),b^c^d,w[j],k2);
 			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-			}
-		for(j=40;j<60;j++)
-			{
+		}
+		for(j=40;j<60;j++) {
 			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
 			t = add32x5(e,(a>>>27)|(a<<5),(b&c)|(d&(b|c)),w[j],k3);
 			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-			}
-		for(j=60;j<80;j++)
-			{
+		}
+		for(j=60;j<80;j++) {
 			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
 			t = add32x5(e,(a>>>27)|(a<<5),b^c^d,w[j],k4);
 			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-			}
+		}
 
 		h0 = add32(h0,a);
 		h1 = add32(h1,b);
 		h2 = add32(h2,c);
 		h3 = add32(h3,d);
 		h4 = add32(h4,e);
-		}
+	}
 	return Array(h0,h1,h2,h3,h4);
-}
+};
 
 // ---------------------------------------------------------------------------------
 // RGB colour object
