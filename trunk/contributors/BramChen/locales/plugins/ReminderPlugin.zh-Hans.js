@@ -1,5 +1,11 @@
 /***
-!ReminderPlugin.zh-Hans
+|''Name:''|ReminderPlugin.zh-Hans|
+|''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/plugins/|
+|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
+|''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
+|''~CoreVersion:''|2.0.11|
+|''Required:''|ReminderPlugin|
+!!!!!Code
 ***/
 //{{{
 if (typeof config.macros.reminders != "undefined"){
