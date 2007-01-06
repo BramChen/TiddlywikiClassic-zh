@@ -3,11 +3,11 @@
 <head>
 <script type="text/javascript">
 //<![CDATA[
-var version = {major: 2, minor: 2, revision: 0, beta: 1, date: new Date("Dec 29, 2006"), extensions: {}};
+var version = {major: 2, minor: 2, revision: 0, beta: 2, date: new Date("Dec 29, 2006"), extensions: {}};
 //]]>
 </script>
 <!--
-TiddlyWiki 2.2.0 beta 1 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
+TiddlyWiki 2.2.0 beta 2 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
 
 Copyright (c) Osmosoft Limited 2004-2006
 
@@ -437,6 +437,41 @@ noscript {display:none;}
 &lt;div class='editor' macro='edit tags'&gt;&lt;/div&gt;&lt;div class='editorFooter'&gt;&lt;span macro='message views.editor.tagPrompt'&gt;&lt;/span&gt;&lt;span macro='tagChooser'&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
+<div title="StyleSheet" modifier="BramChen" tags="excludeLists">
+<pre>[[StyleSheetAdjust]]</pre>
+</div>
+<div title="StyleSheetAdjust" modifier="BramChen" tags="excludeLists">
+<pre>/***
+	Title: StyleSheetAdjust
+	Usage: Add {{{[[StyleSheetAdjust]]}}} to StyleSheet
+***/
+/*{{{*/
+body {
+	font-size: .8em;
+}
+#sidebarOptions {
+	font-size: 1.05em;
+}
+#sidebarOptions a {
+	font-style: normal;
+}
+#sidebarOptions .sliderPanel {
+	font-size: .95em;
+}
+.subtitle {
+	font-size: .8em;
+}
+.viewer table.listView {
+font-size: .95em;
+}
+.htmlarea .toolbarHA table {
+	border: 1px solid ButtonFace;
+	margin: 0em 0em;
+}
+/*}}}*/</pre>
+</div>
+</div>
+<div id="storeArea">
 <div title="GettingStarted" modifier="BramChen" tags="excludeLists">
 <pre>使用此 TiddlyWiki 的空白范本之前，请先修改以下默认文章：
 * SiteTitle 及 SiteSubtitle：网站的标题和副标题，显示于页面上方&lt;br&gt;（在保存变更后，将显示于浏览器视窗的标题列）。
@@ -476,54 +511,10 @@ noscript {display:none;}
 可支援储存文件于非 ASCII 路径及文件名。^^
 &lt;&lt;&lt;</pre>
 </div>
-<div title="SideBarOptions" modifier="BramChen" tags="excludeLists">
-<pre>&lt;&lt;search&gt;&gt;&lt;&lt;closeAll&gt;&gt;&lt;&lt;permaview&gt;&gt;&lt;&lt;newTiddler&gt;&gt;&lt;&lt;newJournal ' YYYY年0MM月0DD日'&gt;&gt;&lt;&lt;saveChanges&gt;&gt;&lt;&lt;slider chkSliderOptionsPanel OptionsPanel  '偏好设置 »' '变更 TiddlyWiki 选项'&gt;&gt;</pre>
-</div>
-<div title="SideBarTabs" modifier="BramChen" tags="excludeLists">
-<pre>&lt;&lt;tabs txtMainTab 最近更新 '依更新日期排序' TabTimeline 全部 '所有文章' TabAll 分类 '所有标签' TabTags 更多 '其他' TabMore&gt;&gt;</pre>
-</div>
-<div title="TabMore" modifier="BramChen" tags="excludeLists">
-<pre>&lt;&lt;tabs txtMoreTab 未完成 '内容空白的文章' TabMoreMissing 未引用 '未被引用的文章' TabMoreOrphans 默认文章 '默认的影子文章' TabMoreShadowed&gt;&gt;</pre>
-</div>
-<div title="StyleSheet" modifier="BramChen" tags="excludeLists">
-<pre>[[StyleSheetAdjust]]</pre>
-</div>
-<div title="StyleSheetAdjust" modifier="BramChen" tags="excludeLists">
-<pre>/***
-	Title: StyleSheetAdjust
-	Usage: Add {{{[[StyleSheetAdjust]]}}} to StyleSheet
-***/
-/*{{{*/
-body {
-	font-size: .8em;
-}
-#sidebarOptions {
-	font-size: 1.05em;
-}
-#sidebarOptions a {
-	font-style: normal;
-}
-#sidebarOptions .sliderPanel {
-	font-size: .95em;
-}
-.subtitle {
-	font-size: .8em;
-}
-.viewer table.listView {
-font-size: .95em;
-}
-.htmlarea .toolbarHA table {
-	border: 1px solid ButtonFace;
-	margin: 0em 0em;
-}
-/*}}}*/</pre>
-</div>
 <div title="DateFormat" modifier="BramChen" tags="excludeLists">
 <pre>DateFormat: [[YYYY年0MM月0DD日 am hh12:0mm]]
 shortDateFormat: [[YYYY年0MM月0DD日]]</pre>
 </div>
-</div>
-<div id="storeArea">
 </div>
 <!--POST-BODY-START-->
 <!--POST-BODY-END-->
