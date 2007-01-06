@@ -1,6 +1,6 @@
 /*
 <!--
-TiddlyWiki 2.2.0 beta 1 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
+TiddlyWiki 2.2.0 beta 2 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
 
 Copyright (c) Osmosoft Limited 2004-2006
 
@@ -30,7 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF S
 DAMAGE.
 -->
 */
-var version = {major: 2, minor: 2, revision: 0, beta: 1, date: new Date("Dec 29, 2006"), extensions: {}};
+var version = {major: 2, minor: 2, revision: 0, beta: 2, date: new Date("Dec 29, 2006"), extensions: {}};
 
 //
 // 
@@ -526,9 +526,9 @@ merge(config.shadowTiddlers,{
 	TabMoreShadowed: '<<list shadowed>>',
 	PluginManager: '<<plugins>>',
 	ImportTiddlers: '<<importTiddlers>>'});
-// ---------------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------------
+//--
+//-- Main
+//--
 
 var params = null; // Command line parameters
 var store = null; // TiddlyWiki storage
@@ -581,26 +581,25 @@ function main()
 	t7 = new Date();
 	restart();
 	t8 = new Date();
-	if(pluginProblem)
-		{
+	if(pluginProblem) {
 		story.displayTiddler(null,"PluginManager");
 		displayMessage(config.messages.customConfigError);
-		}
-	for(var m in config.macros)
+	}
+	for(var m in config.macros) {
 		if(config.macros[m].init)
 			config.macros[m].init();
+	}
 	if(!readOnly)
 		backstage.init();
 	t9 = new Date();
-	if(config.displayStartupTime)
-		{
+	if(config.displayStartupTime) {
 		displayMessage("Load in " + (t2-t1) + " ms");
 		displayMessage("Loadshadows in " + (t3-t2) + " ms");
 		displayMessage("Loadplugins in " + (t5-t4) + " ms");
 		displayMessage("Notify in " + (t7-t6) + " ms");
 		displayMessage("Restart in " + (t8-t7) + " ms");
 		displayMessage("Total startup in " + (t9-t0) + " ms");
-		}
+	}
 	startingUp = false;
 }
 
@@ -608,11 +607,10 @@ function main()
 function restart()
 {
 	invokeParamifier(params,"onstart");
-	if(story.isEmpty())
-		{
+	if(story.isEmpty()) {
 		var defaultParams = store.getTiddlerText("DefaultTiddlers").parseParams("open",null,false);
 		invokeParamifierAsync(defaultParams,"onstart");
-		}
+	}
 	window.scrollTo(0,0);
 }
 
@@ -639,30 +637,25 @@ function loadPlugins()
 	var configTiddlers = store.getTaggedTiddlers("systemConfig");
 	installedPlugins = [];
 	var hadProblem = false;
-	for(var t=0; t<configTiddlers.length; t++)
-		{
+	for(var t=0; t<configTiddlers.length; t++) {
 		tiddler = configTiddlers[t];
 		pluginInfo = getPluginInfo(tiddler);
-		if(isPluginExecutable(pluginInfo))
-			{
+		if(isPluginExecutable(pluginInfo)) {
 			pluginInfo.executed = true;
 			pluginInfo.error = false;
-			try
-				{
+			try {
 				if(tiddler.text && tiddler.text != "")
 					window.eval(tiddler.text);
-				}
-			catch(e)
-				{
-				pluginInfo.log.push(config.messages.pluginError.format([exceptionText(e)]));
+			} catch(ex) {
+				pluginInfo.log.push(config.messages.pluginError.format([exceptionText(ex)]));
 				pluginInfo.error = true;
 				hadProblem = true;
-				}
 			}
-		else
+		} else {
 			pluginInfo.warning = true;
-		installedPlugins.push(pluginInfo);
 		}
+		installedPlugins.push(pluginInfo);
+	}
 	return hadProblem;
 }
 
@@ -682,8 +675,7 @@ function isPluginExecutable(plugin)
 		return verifyTail(plugin,false,config.messages.pluginDisabled);
 	if(plugin.tiddler.isTagged("systemConfigForce"))
 		return verifyTail(plugin,true,config.messages.pluginForced);
-	if(plugin["CoreVersion"])
-		{
+	if(plugin["CoreVersion"]) {
 		var coreVersion = plugin["CoreVersion"].split(".");
 		var w = parseInt(coreVersion[0]) - version.major;
 		if(w == 0 && coreVersion[1])
@@ -704,33 +696,29 @@ function verifyTail(plugin,result,message)
 
 function invokeMacro(place,macro,params,wikifier,tiddler)
 {
-	try
-		{
+	try {
 		var m = config.macros[macro];
 		if(m && m.handler)
 			m.handler(place,macro,params.readMacroParams(),wikifier,params,tiddler);
 		else
 			createTiddlyError(place,config.messages.macroError.format([macro]),config.messages.macroErrorDetails.format([macro,config.messages.missingMacro]));
-		}
-	catch(ex)
-		{
+	} catch(ex) {
 		createTiddlyError(place,config.messages.macroError.format([macro]),config.messages.macroErrorDetails.format([macro,ex.toString()]));
-		}
+	}
 }
 
-// ---------------------------------------------------------------------------------
-// Paramifiers
-// ---------------------------------------------------------------------------------
+//--
+//-- Paramifiers
+//--
 
 function getParameters()
 {
 	var p = null;
-	if(window.location.hash)
-		{
+	if(window.location.hash) {
 		p = decodeURI(window.location.hash.substr(1));
 		if(config.browser.firefoxDate != null && config.browser.firefoxDate[1] < "20051111")
 			p = convertUTF8ToUnicode(p);
-		}
+	}
 	return p;
 }
 
@@ -738,12 +726,11 @@ function invokeParamifier(params,handler)
 {
 	if(!params || params.length == undefined || params.length <= 1)
 		return;
-	for(var t=1; t<params.length; t++)
-		{
+	for(var t=1; t<params.length; t++) {
 		var p = config.paramifiers[params[t].name];
 		if(p && p[handler] instanceof Function)
 			p[handler](params[t].value);
-		}
+	}
 }
 
 function AsyncParamifier(p,h)
@@ -758,14 +745,13 @@ function AsyncParamifier(p,h)
 
 AsyncParamifier.prototype.tick = function()
 {
-	if(this.index<this.params.length)
-		{
+	if(this.index<this.params.length) {
 		var p = config.paramifiers[this.params[this.index].name];
 		if(p && p[this.handler] instanceof Function)
 			p[this.handler](this.params[this.index].value,this.index);
 		this.index++;
 		return true;
-		}
+	}
 	return false;
 };
 
@@ -779,32 +765,32 @@ config.paramifiers = {};
 config.paramifiers.start = {
 	oninit: function(v) {
 		safeMode = v.toLowerCase() == "safe";
-		}
+	}
 };
 
 config.paramifiers.open = {
 	onstart: function(v,i) {
 		story.displayTiddler(i == 1 ? null : "bottom",v,null,false,false);
-		}
+	}
 };
 
 config.paramifiers.story = {
 	onstart: function(v) {
 		var list = store.getTiddlerText(v,"").parseParams("open",null,false);
 		invokeParamifier(list,"onstart");
-		}
+	}
 };
 
 config.paramifiers.search = {
 	onstart: function(v) {
 		story.search(v,false,false);
-		}
+	}
 };
 
 config.paramifiers.searchRegExp = {
 	onstart: function(v) {
 		story.prototype.search(v,false,true);
-		}
+	}
 };
 
 config.paramifiers.tag = {
@@ -812,36 +798,34 @@ config.paramifiers.tag = {
 		var tagged = store.getTaggedTiddlers(v,"title");
 		for(var t=0; t<tagged.length; t++)
 			story.displayTiddler("bottom",tagged[t].title,null,false,false);
-		}
+	}
 };
 
 config.paramifiers.newTiddler = {
 	onstart: function(v) {
-		if(!readOnly)
-			{
+		if(!readOnly) {
 			story.displayTiddler(null,v,DEFAULT_EDIT_TEMPLATE);
 			story.focusTiddler(v,"text");
-			}
 		}
+	}
 };
 
 config.paramifiers.newJournal = {
 	onstart: function(v) {
-		if(!readOnly)
-			{
+		if(!readOnly) {
 			var now = new Date();
 			var title = now.formatString(v.trim());
 			story.displayTiddler(null,title,DEFAULT_EDIT_TEMPLATE);
 			story.focusTiddler(title,"text");
-			}
 		}
+	}
 };
 
 config.paramifiers.readOnly = {
 	onconfig: function(v) {
 		var p = v.toLowerCase();
 		readOnly = p == "yes" ? true : (p == "no" ? false : readOnly);
-		}
+	}
 };
 //--
 //-- Formatter helpers
@@ -1496,26 +1480,22 @@ config.formatters = [
 
 function getParser(tiddler)
 {
-	if(tiddler!=null)
-		{
-		for(var i in config.parsers)
-			{
-			if(tiddler.isTagged(config.parsers[i].formatTag)||(tiddler.fields&&config.parsers[i].format&&tiddler.fields["wikiformat"]==config.parsers[i].format))
-				{
+	if(tiddler!=null) {
+		for(var i in config.parsers) {
+			if(tiddler.isTagged(config.parsers[i].formatTag)||(tiddler.fields&&config.parsers[i].format&&tiddler.fields["wikiformat"]==config.parsers[i].format)) {
 				return config.parsers[i];
-				}
 			}
 		}
+	}
 	return formatter;
 }
 
 function wikify(source,output,highlightRegExp,tiddler)
 {
-	if(source && source != "")
-		{
+	if(source && source != "") {
 		var wikifier = new Wikifier(source,getParser(tiddler),highlightRegExp,tiddler);
 		wikifier.subWikifyUnterm(output);
-		}
+	}
 }
 
 function wikifyStatic(source,highlightRegExp,tiddler)
@@ -1523,14 +1503,13 @@ function wikifyStatic(source,highlightRegExp,tiddler)
 	var e = createTiddlyElement(document.body,"div");
 	e.style.display = "none";
 	var html = "";
-	if(source && source != "")
-		{
+	if(source && source != "") {
 		var wikifier = new Wikifier(source,getParser(tiddler),highlightRegExp,tiddler);
 		wikifier.isStatic = true;
 		wikifier.subWikifyUnterm(e);
 		html = e.innerHTML;
 		e.parentNode.removeChild(e);
-		}
+	}
 	return html;
 }
 
@@ -1538,25 +1517,23 @@ function wikifyPlain(title,theStore,limit)
 {
 	if(!theStore)
 		theStore = store;
-	if(theStore.tiddlerExists(title) || theStore.isShadowTiddler(title))
-		{
+	if(theStore.tiddlerExists(title) || theStore.isShadowTiddler(title)) {
 		var text = theStore.getTiddlerText(title);
 		if(limit > 0)
 			text = text.substr(0,limit);
 		var wikifier = new Wikifier(text,formatter,null,theStore.getTiddler(title));
 		return wikifier.wikifyPlain();
-		}
-	else
+	} else {
 		return "";
+	}
 }
 
 function highlightify(source,output,highlightRegExp,tiddler)
 {
-	if(source && source != "")
-		{
+	if(source && source != "") {
 		var wikifier = new Wikifier(source,formatter,highlightRegExp,tiddler);
 		wikifier.outputText(output,0,source.length);
-		}
+	}
 }
 
 function Wikifier(source,formatter,highlightRegExp,tiddler)
@@ -1569,11 +1546,10 @@ function Wikifier(source,formatter,highlightRegExp,tiddler)
 	this.highlightRegExp = highlightRegExp;
 	this.highlightMatch = null;
 	this.isStatic = false;
-	if(highlightRegExp)
-		{
+	if(highlightRegExp) {
 		highlightRegExp.lastIndex = 0;
 		this.highlightMatch = highlightRegExp.exec(source);
-		}
+	}
 	this.tiddler = tiddler;
 }
 
@@ -1585,15 +1561,15 @@ Wikifier.prototype.wikifyPlain = function()
 	var text = getPlainText(e);
 	e.parentNode.removeChild(e);
 	return text;
-}
+};
 
 Wikifier.prototype.subWikify = function(output,terminator)
 {
-	if (terminator)
+	if(terminator)
 		this.subWikifyTerm(output,new RegExp("(" + terminator + ")","mg"));
 	else
 		this.subWikifyUnterm(output);
-}
+};
 
 Wikifier.prototype.subWikifyUnterm = function(output)
 {
@@ -1602,8 +1578,7 @@ Wikifier.prototype.subWikifyUnterm = function(output)
 	this.output = output;
 	this.formatter.formatterRegExp.lastIndex = this.nextMatch;
 	var formatterMatch = this.formatter.formatterRegExp.exec(this.source);
-	while(formatterMatch)
-		{
+	while(formatterMatch) {
 		// Output any text before the match
 		if(formatterMatch.index > this.nextMatch)
 			this.outputText(this.output,this.nextMatch,formatterMatch.index);
@@ -1612,24 +1587,21 @@ Wikifier.prototype.subWikifyUnterm = function(output)
 		this.matchLength = formatterMatch[0].length;
 		this.matchText = formatterMatch[0];
 		this.nextMatch = this.formatter.formatterRegExp.lastIndex;
-		for(var t=1; t<formatterMatch.length; t++)
-			{
-			if(formatterMatch[t])
-				{
+		for(var t=1; t<formatterMatch.length; t++) {
+			if(formatterMatch[t]) {
 				this.formatter.formatters[t-1].handler(this);
 				this.formatter.formatterRegExp.lastIndex = this.nextMatch;
 				break;
-				}
 			}
-		formatterMatch = this.formatter.formatterRegExp.exec(this.source);
 		}
-	if(this.nextMatch < this.source.length)
-		{
+		formatterMatch = this.formatter.formatterRegExp.exec(this.source);
+	}
+	if(this.nextMatch < this.source.length) {
 		this.outputText(this.output,this.nextMatch,this.source.length);
 		this.nextMatch = this.source.length;
-		}
+	}
 	this.output = oldOutput;
-}
+};
 
 Wikifier.prototype.subWikifyTerm = function(output,terminatorRegExp)
 {
@@ -1641,10 +1613,8 @@ Wikifier.prototype.subWikifyTerm = function(output,terminatorRegExp)
 	var terminatorMatch = terminatorRegExp.exec(this.source);
 	this.formatter.formatterRegExp.lastIndex = this.nextMatch;
 	var formatterMatch = this.formatter.formatterRegExp.exec(terminatorMatch ? this.source.substr(0,terminatorMatch.index) : this.source);
-	while(terminatorMatch || formatterMatch)
-		{
-		if(terminatorMatch && (!formatterMatch || terminatorMatch.index <= formatterMatch.index))
-			{
+	while(terminatorMatch || formatterMatch) {
+		if(terminatorMatch && (!formatterMatch || terminatorMatch.index <= formatterMatch.index)) {
 			if(terminatorMatch.index > this.nextMatch)
 				this.outputText(this.output,this.nextMatch,terminatorMatch.index);
 			this.matchText = terminatorMatch[1];
@@ -1653,58 +1623,52 @@ Wikifier.prototype.subWikifyTerm = function(output,terminatorRegExp)
 			this.nextMatch = this.matchStart + this.matchLength;
 			this.output = oldOutput;
 			return;
-			}
+		}
 		if(formatterMatch.index > this.nextMatch)
 			this.outputText(this.output,this.nextMatch,formatterMatch.index);
 		this.matchStart = formatterMatch.index;
 		this.matchLength = formatterMatch[0].length;
 		this.matchText = formatterMatch[0];
 		this.nextMatch = this.formatter.formatterRegExp.lastIndex;
-		for(var t=1; t<formatterMatch.length; t++)
-			{
-			if(formatterMatch[t])
-				{
+		for(var t=1; t<formatterMatch.length; t++) {
+			if(formatterMatch[t]) {
 				this.formatter.formatters[t-1].handler(this);
 				this.formatter.formatterRegExp.lastIndex = this.nextMatch;
 				break;
-				}
 			}
+		}
 		terminatorRegExp.lastIndex = this.nextMatch;
 		terminatorMatch = terminatorRegExp.exec(this.source);
 		formatterMatch = this.formatter.formatterRegExp.exec(terminatorMatch ? this.source.substr(0,terminatorMatch.index) : this.source);
-		}
-	if(this.nextMatch < this.source.length)
-		{
+	}
+	if(this.nextMatch < this.source.length) {
 		this.outputText(this.output,this.nextMatch,this.source.length);
 		this.nextMatch = this.source.length;
-		}
+	}
 	this.output = oldOutput;
-}
+};
 
 Wikifier.prototype.outputText = function(place,startPos,endPos)
 {
-	while(this.highlightMatch && (this.highlightRegExp.lastIndex > startPos) && (this.highlightMatch.index < endPos) && (startPos < endPos))
-		{
-		if(this.highlightMatch.index > startPos)
-			{
+	while(this.highlightMatch && (this.highlightRegExp.lastIndex > startPos) && (this.highlightMatch.index < endPos) && (startPos < endPos)) {
+		if(this.highlightMatch.index > startPos) {
 			createTiddlyText(place,this.source.substring(startPos,this.highlightMatch.index));
 			startPos = this.highlightMatch.index;
-			}
+		}
 		var highlightEnd = Math.min(this.highlightRegExp.lastIndex,endPos);
 		var theHighlight = createTiddlyElement(place,"span",null,"highlight",this.source.substring(startPos,highlightEnd));
 		startPos = highlightEnd;
 		if(startPos >= this.highlightRegExp.lastIndex)
 			this.highlightMatch = this.highlightRegExp.exec(this.source);
-		}
-	if(startPos < endPos)
-		{
+	}
+	if(startPos < endPos) {
 		createTiddlyText(place,this.source.substring(startPos,endPos));
-		}
-}
+	}
+};
 
-// ---------------------------------------------------------------------------------
-// Macro definitions
-// ---------------------------------------------------------------------------------
+//--
+//-- Macro definitions
+//--
 
 config.macros.today.handler = function(place,macroName,params)
 {
@@ -1715,12 +1679,12 @@ config.macros.today.handler = function(place,macroName,params)
 	else
 		text = now.toLocaleString();
 	createTiddlyElement(place,"span",null,null,text);
-}
+};
 
 config.macros.version.handler = function(place)
 {
 	createTiddlyElement(place,"span",null,null,version.major + "." + version.minor + "." + version.revision + (version.beta ? " (beta " + version.beta + ")" : ""));
-}
+};
 
 config.macros.list.handler = function(place,macroName,params)
 {
@@ -1732,36 +1696,35 @@ config.macros.list.handler = function(place,macroName,params)
 	var results;
 	if(this[type].handler)
 		results = this[type].handler(params);
-	for(var t = 0; t < results.length; t++)
-		{
-		var theListItem = document.createElement("li")
+	for(var t = 0; t < results.length; t++) {
+		var theListItem = document.createElement("li");
 		theList.appendChild(theListItem);
 		if(typeof results[t] == "string")
 			createTiddlyLink(theListItem,results[t],true);
 		else
 			createTiddlyLink(theListItem,results[t].title,true);
-		}
-}
+	}
+};
 
 config.macros.list.all.handler = function(params)
 {
 	return store.reverseLookup("tags","excludeLists",false,"title");
-}
+};
 
 config.macros.list.missing.handler = function(params)
 {
 	return store.getMissingLinks();
-}
+};
 
 config.macros.list.orphans.handler = function(params)
 {
 	return store.getOrphans();
-}
+};
 
 config.macros.list.shadowed.handler = function(params)
 {
 	return store.getShadowed();
-}
+};
 
 config.macros.allTags.handler = function(place,macroName,params)
 {
@@ -1769,17 +1732,16 @@ config.macros.allTags.handler = function(place,macroName,params)
 	var ul = createTiddlyElement(place,"ul");
 	if(tags.length == 0)
 		createTiddlyElement(ul,"li",null,"listTitle",this.noTags);
-	for(var t=0; t<tags.length; t++)
-		{
+	for(var t=0; t<tags.length; t++) {
 		var title = tags[t][0];
-		var info = getTiddlyLinkInfo(title)
+		var info = getTiddlyLinkInfo(title);
 		var li =createTiddlyElement(ul,"li");
 		var btn = createTiddlyButton(li,title + " (" + tags[t][1] + ")",this.tooltip.format([title]),onClickTag,info.classes);
 		btn.setAttribute("tag",title);
 		btn.setAttribute("refresh","link");
 		btn.setAttribute("tiddlyLink",title);
-		}
-}
+	}
+};
 
 config.macros.timeline.handler = function(place,macroName,params)
 {
@@ -1787,21 +1749,19 @@ config.macros.timeline.handler = function(place,macroName,params)
 	var tiddlers = store.reverseLookup("tags","excludeLists",false,field);
 	var lastDay = "";
 	var last = params[1] ? tiddlers.length-Math.min(tiddlers.length,parseInt(params[1])) : 0;
-	for(var t=tiddlers.length-1; t>=last; t--)
-		{
+	for(var t=tiddlers.length-1; t>=last; t--) {
 		var tiddler = tiddlers[t];
 		var theDay = tiddler[field].convertToLocalYYYYMMDDHHMM().substr(0,8);
-		if(theDay != lastDay)
-			{
+		if(theDay != lastDay) {
 			var theDateList = document.createElement("ul");
 			place.appendChild(theDateList);
 			createTiddlyElement(theDateList,"li",null,"listTitle",tiddler[field].formatString(this.dateFormat));
 			lastDay = theDay;
-			}
+		}
 		var theDateListItem = createTiddlyElement(theDateList,"li",null,"listLink");
 		theDateListItem.appendChild(createTiddlyLink(place,tiddler.title,true));
-		}
-}
+	}
+};
 
 config.macros.search.handler = function(place,macroName,params)
 {
@@ -1816,38 +1776,35 @@ config.macros.search.handler = function(place,macroName,params)
 	txt.setAttribute("accessKey",this.accessKey);
 	txt.setAttribute("autocomplete","off");
 	txt.setAttribute("lastSearchText","");
-	if(config.browser.isSafari)
-		{
+	if(config.browser.isSafari) {
 		txt.setAttribute("type","search");
 		txt.setAttribute("results","5");
-		}
-	else
+	} else {
 		txt.setAttribute("type","text");
-}
+	}
+};
 
 // Global because there's only ever one outstanding incremental search timer
 config.macros.search.timeout = null;
 
 config.macros.search.doSearch = function(txt)
 {
-	if(txt.value.length > 0)
-		{
+	if(txt.value.length > 0) {
 		story.search(txt.value,config.options.chkCaseSensitiveSearch,config.options.chkRegExpSearch);
 		txt.setAttribute("lastSearchText",txt.value);
-		}
-}
+	}
+};
 
 config.macros.search.onClick = function(e)
 {
 	config.macros.search.doSearch(this.nextSibling);
 	return false;
-}
+};
 
 config.macros.search.onKeyPress = function(e)
 {
 	if(!e) var e = window.event;
-	switch(e.keyCode)
-		{
+	switch(e.keyCode) {
 		case 13: // Ctrl-Enter
 		case 10: // Ctrl-Enter on IE PC
 			config.macros.search.doSearch(this);
@@ -1856,28 +1813,24 @@ config.macros.search.onKeyPress = function(e)
 			this.value = "";
 			clearMessage();
 			break;
-		}
-	if(this.value.length > 2)
-		{
-		if(this.value != this.getAttribute("lastSearchText"))
-			{
+	}
+	if(this.value.length > 2) {
+		if(this.value != this.getAttribute("lastSearchText")) {
 			if(config.macros.search.timeout)
 				clearTimeout(config.macros.search.timeout);
 			var txt = this;
 			config.macros.search.timeout = setTimeout(function() {config.macros.search.doSearch(txt);},500);
-			}
 		}
-	else
-		{
+	} else {
 		if(config.macros.search.timeout)
 			clearTimeout(config.macros.search.timeout);
-		}
-}
+	}
+};
 
 config.macros.search.onFocus = function(e)
 {
 	this.select();
-}
+};
 
 config.macros.tiddler.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
@@ -1887,46 +1840,40 @@ config.macros.tiddler.handler = function(place,macroName,params,wikifier,paramSt
 	var className = names[1] ? names[1] : null;
 	var args = params[0]["with"];
 	var wrapper = createTiddlyElement(place,"span",null,className);
-	if(!args)
-		{
+	if(!args) {
 		wrapper.setAttribute("refresh","content");
 		wrapper.setAttribute("tiddler",tiddlerName);
-		}
+	}
 	var text = store.getTiddlerText(tiddlerName);
-	if(text)
-		{
+	if(text) {
 		var stack = config.macros.tiddler.tiddlerStack;
 		if(stack.indexOf(tiddlerName) !== -1)
 			return;
 		stack.push(tiddlerName);
-		try
-			{
+		try {
 			var n = args ? Math.min(args.length,9) : 0;
-			for(var i=0; i<n; i++) 
-				{
+			for(var i=0; i<n; i++) {
 				var placeholderRE = new RegExp("\\$" + (i + 1),"mg");
 				text = text.replace(placeholderRE,args[i]);
-				}
+			}
 			config.macros.tiddler.renderText(wrapper,text,tiddlerName,params);
-			}
-		finally
-			{
+		} finally {
 			stack.pop();
-			}
 		}
-}
+	}
+};
 
 config.macros.tiddler.renderText = function(place,text,tiddlerName,params) 
 {
 	wikify(text,place,null,store.getTiddler(tiddlerName));
-}
+};
 
 config.macros.tiddler.tiddlerStack = [];
 
 config.macros.tag.handler = function(place,macroName,params)
 {
 	createTagButton(place,params[0]);
-}
+};
 
 config.macros.tags.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
@@ -1939,13 +1886,12 @@ config.macros.tags.handler = function(place,macroName,params,wikifier,paramStrin
 	var lingo = config.views.wikified.tag;
 	var prompt = tiddler.tags.length == 0 ? lingo.labelNoTags : lingo.labelTags;
 	createTiddlyElement(theList,"li",null,"listTitle",prompt.format([tiddler.title]));
-	for(var t=0; t<tiddler.tags.length; t++)
-		{
+	for(var t=0; t<tiddler.tags.length; t++) {
 		createTagButton(createTiddlyElement(theList,"li"),tiddler.tags[t],tiddler.title);
 		if(t<tiddler.tags.length-1)
 			createTiddlyText(theList,sep);
-		}
-}
+	}
+};
 
 config.macros.tagging.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
@@ -1959,47 +1905,46 @@ config.macros.tagging.handler = function(place,macroName,params,wikifier,paramSt
 	var tagged = store.getTaggedTiddlers(title);
 	var prompt = tagged.length == 0 ? this.labelNotTag : this.label;
 	createTiddlyElement(theList,"li",null,"listTitle",prompt.format([title,tagged.length]));
-	for(var t=0; t<tagged.length; t++)
-		{
+	for(var t=0; t<tagged.length; t++) {
 		createTiddlyLink(createTiddlyElement(theList,"li"),tagged[t].title,true);
 		if(t<tagged.length-1)
 			createTiddlyText(theList,sep);
-		}
-}
+	}
+};
 
 config.macros.closeAll.handler = function(place)
 {
 	createTiddlyButton(place,this.label,this.prompt,this.onClick);
-}
+};
 
 config.macros.closeAll.onClick = function(e)
 {
 	story.closeAllTiddlers();
 	return false;
-}
+};
 
 config.macros.permaview.handler = function(place)
 {
 	createTiddlyButton(place,this.label,this.prompt,this.onClick);
-}
+};
 
 config.macros.permaview.onClick = function(e)
 {
 	story.permaView();
 	return false;
-}
+};
 
 config.macros.saveChanges.handler = function(place)
 {
 	if(!readOnly)
 		createTiddlyButton(place,this.label,this.prompt,this.onClick,null,null,this.accessKey);
-}
+};
 
 config.macros.saveChanges.onClick = function(e)
 {
 	saveChanges();
 	return false;
-}
+};
 
 config.macros.slider.onClickSlider = function(e)
 {
@@ -2014,7 +1959,7 @@ config.macros.slider.onClickSlider = function(e)
 	config.options[cookie] = !isOpen;
 	saveOptionCookie(cookie);
 	return false;
-}
+};
 
 config.macros.slider.createSlider = function(place,cookie,title,tooltip)
 {
@@ -2025,26 +1970,24 @@ config.macros.slider.createSlider = function(place,cookie,title,tooltip)
 	panel.style.display = config.options[cookie] ? "block" : "none";
 	place.appendChild(panel);
 	return panel;
-}
+};
 
 config.macros.slider.handler = function(place,macroName,params)
 {
 	var panel = this.createSlider(place,params[0],params[2],params[3]);
 	var text = store.getTiddlerText(params[1]);
-	panel.setAttribute("refresh", "content");
-	panel.setAttribute("tiddler", params[1]);
+	panel.setAttribute("refresh","content");
+	panel.setAttribute("tiddler",params[1]);
 	if(text)
 		wikify(text,panel,null,store.getTiddler(params[1]));
-}
+};
 
 config.macros.option.onChangeOption = function(e)
 {
 	var opt = this.getAttribute("option");
 	var elementType,valueField;
-	if(opt)
-		{
-		switch(opt.substr(0,3))
-			{
+	if(opt) {
+		switch(opt.substr(0,3)) {
 			case "txt":
 				elementType = "input";
 				valueField = "value";
@@ -2053,19 +1996,18 @@ config.macros.option.onChangeOption = function(e)
 				elementType = "input";
 				valueField = "checked";
 				break;
-			}
+		}
 		config.options[opt] = this[valueField];
 		saveOptionCookie(opt);
 		var nodes = document.getElementsByTagName(elementType);
-		for(var t=0; t<nodes.length; t++)
-			{
+		for(var t=0; t<nodes.length; t++) {
 			var optNode = nodes[t].getAttribute("option");
 			if(opt == optNode)
 				nodes[t][valueField] = this[valueField];
-			}
 		}
-	return(true);
-}
+	}
+	return true;
+};
 
 config.macros.option.handler = function(place,macroName,params)
 {
@@ -2073,8 +2015,7 @@ config.macros.option.handler = function(place,macroName,params)
 	if(config.options[opt] == undefined)
 		return;
 	var c;
-	switch(opt.substr(0,3))
-		{
+	switch(opt.substr(0,3)) {
 		case "txt":
 			c = document.createElement("input");
 			c.onkeyup = this.onChangeOption;
@@ -2092,15 +2033,16 @@ config.macros.option.handler = function(place,macroName,params)
 			place.appendChild(c);
 			c.checked = config.options[opt];
 			break;
-		}
-}
+	}
+};
 
 config.macros.newTiddler.createNewTiddlerButton = function(place,title,params,label,prompt,accessKey,newFocus,isJournal)
 {
 	var tags = [];
-	for(var t=1; t<params.length; t++)
+	for(var t=1; t<params.length; t++) {
 		if((params[t].name == "anon" && t != 1) || (params[t].name == "tag"))
 			tags.push(params[t].value);
+	}
 	label = getParam(params,"label",label);
 	prompt = getParam(params,"prompt",prompt);
 	accessKey = getParam(params,"accessKey",accessKey);
@@ -2117,16 +2059,15 @@ config.macros.newTiddler.createNewTiddlerButton = function(place,title,params,la
 	if(text !== undefined) 
 		btn.setAttribute("newText",text);
 	return btn;
-}
+};
 
 config.macros.newTiddler.onClickNewTiddler = function()
 {
 	var title = this.getAttribute("newTitle");
-	if(this.getAttribute("isJournal"))
-		{
+	if(this.getAttribute("isJournal")) {
 		var now = new Date();
 		title = now.formatString(title.trim());
-		}
+	}
 	var params = this.getAttribute("params").split("|");
 	var focus = this.getAttribute("newFocus");
 	var template = this.getAttribute("newTemplate");
@@ -2139,44 +2080,41 @@ config.macros.newTiddler.onClickNewTiddler = function()
 		story.setTiddlerTag(title,params[t],+1);
 	story.focusTiddler(title,focus);
 	return false;
-}
+};
 
 config.macros.newTiddler.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
-	if(!readOnly)
-		{
+	if(!readOnly) {
 		params = paramString.parseParams("anon",null,true,false,false);
 		var title = params[1] && params[1].name == "anon" ? params[1].value : this.title;
 		title = getParam(params,"title",title);
 		this.createNewTiddlerButton(place,title,params,this.label,this.prompt,this.accessKey,"title",false);
-		}
-}
+	}
+};
 
 config.macros.newJournal.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
-	if(!readOnly)
-		{
+	if(!readOnly) {
 		params = paramString.parseParams("anon",null,true,false,false);
 		var title = params[1] && params[1].name == "anon" ? params[1].value : "";
 		title = getParam(params,"title",title);
 		config.macros.newTiddler.createNewTiddlerButton(place,title,params,this.label,this.prompt,this.accessKey,"text",true);
-		}
-}
+	}
+};
 
 config.macros.sparkline.handler = function(place,macroName,params)
 {
 	var data = [];
 	var min = 0;
 	var max = 0;
-	for(var t=0; t<params.length; t++)
-		{
+	for(var t=0; t<params.length; t++) {
 		var v = parseInt(params[t]);
 		if(v < min)
 			min = v;
 		if(v > max)
 			max = v;
 		data.push(v);
-		}
+	}
 	if(data.length < 1)
 		return;
 	var box = createTiddlyElement(place,"span",null,"sparkline",String.fromCharCode(160));
@@ -2185,8 +2123,7 @@ config.macros.sparkline.handler = function(place,macroName,params)
 	var h = box.offsetHeight;
 	box.style.paddingRight = (data.length * 2 - w) + "px";
 	box.style.position = "relative";
-	for(var d=0; d<data.length; d++)
-		{
+	for(var d=0; d<data.length; d++) {
 		var tick = document.createElement("img");
 		tick.border = 0;
 		tick.className = "sparktick";
@@ -2198,8 +2135,8 @@ config.macros.sparkline.handler = function(place,macroName,params)
 		tick.style.top = (h-v) + "px";
 		tick.style.height = v + "px";
 		box.appendChild(tick);
-		}
-}
+	}
+};
 
 config.macros.tabs.handler = function(place,macroName,params)
 {
@@ -2209,8 +2146,7 @@ config.macros.tabs.handler = function(place,macroName,params)
 	var tabset = createTiddlyElement(wrapper,"div",null,"tabset");
 	tabset.setAttribute("cookie",cookie);
 	var validTab = false;
-	for(var t=0; t<numTabs; t++)
-		{
+	for(var t=0; t<numTabs; t++) {
 		var label = params[t*3+1];
 		var prompt = params[t*3+2];
 		var content = params[t*3+3];
@@ -2220,47 +2156,45 @@ config.macros.tabs.handler = function(place,macroName,params)
 		tab.title = prompt;
 		if(config.options[cookie] == label)
 			validTab = true;
-		}
+	}
 	if(!validTab)
 		config.options[cookie] = params[1];
 	place.appendChild(wrapper);
 	this.switchTab(tabset,config.options[cookie]);
-}
+};
 
 config.macros.tabs.onClickTab = function(e)
 {
 	config.macros.tabs.switchTab(this.parentNode,this.getAttribute("tab"));
 	return false;
-}
+};
 
 config.macros.tabs.switchTab = function(tabset,tab)
 {
 	var cookie = tabset.getAttribute("cookie");
-	var theTab = null
+	var theTab = null;
 	var nodes = tabset.childNodes;
-	for(var t=0; t<nodes.length; t++)
-		if(nodes[t].getAttribute && nodes[t].getAttribute("tab") == tab)
-			{
+	for(var t=0; t<nodes.length; t++) {
+		if(nodes[t].getAttribute && nodes[t].getAttribute("tab") == tab) {
 			theTab = nodes[t];
 			theTab.className = "tab tabSelected";
-			}
-		else
-			nodes[t].className = "tab tabUnselected"
-	if(theTab)
-		{
+		} else {
+			nodes[t].className = "tab tabUnselected";
+		}
+	}
+	if(theTab) {
 		if(tabset.nextSibling && tabset.nextSibling.className == "tabContents")
 			tabset.parentNode.removeChild(tabset.nextSibling);
 		var tabContent = createTiddlyElement(null,"div",null,"tabContents");
 		tabset.parentNode.insertBefore(tabContent,tabset.nextSibling);
 		var contentTitle = theTab.getAttribute("content");
 		wikify(store.getTiddlerText(contentTitle),tabContent,null,store.getTiddler(contentTitle));
-		if(cookie)
-			{
+		if(cookie) {
 			config.options[cookie] = tab;
 			saveOptionCookie(cookie);
-			}
 		}
-}
+	}
+};
 
 // <<gradient [[tiddler name]] vert|horiz rgb rgb rgb rgb... >>
 config.macros.gradient.handler = function(place,macroName,params,wikifier)
@@ -2275,53 +2209,46 @@ config.macros.gradient.handler = function(place,macroName,params,wikifier)
 	panel.style.overflow = "hidden";
 	panel.style.zIndex = "0";
 	var t;
-	if(wikifier)
-		{
+	if(wikifier) {
 		var styles = config.formatterHelpers.inlineCssHelper(wikifier);
 		config.formatterHelpers.applyCssHelper(panel,styles);
-		}
+	}
 	var colours = [];
-	for(t=1; t<params.length; t++)
-		{
+	for(t=1; t<params.length; t++) {
 		var c = new RGB(params[t]);
 		if(c)
 			colours.push(c);
-		}
+	}
 	drawGradient(panel,params[0] != "vert",colours);
 	if(wikifier)
 		wikifier.subWikify(panel,terminator);
-	if(document.all)
-		{
+	if(document.all) {
 		panel.style.height = "100%";
 		panel.style.width = "100%";
-		}
-}
+	}
+};
 
 config.macros.message.handler = function(place,macroName,params)
 {
-	if(params[0])
-		{
+	if(params[0]) {
 		var m = config;
 		var p = params[0].split(".");
-		for(var t=0; t<p.length; t++)
-			{
+		for(var t=0; t<p.length; t++) {
 			if(p[t] in m)
 				m = m[p[t]];
 			else
 				break;
-			}
-		createTiddlyText(place,m.toString().format(params.splice(1)));
 		}
-}
+		createTiddlyText(place,m.toString().format(params.splice(1)));
+	}
+};
 
 config.macros.view.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
-	if((tiddler instanceof Tiddler) && params[0])
-		{
+	if((tiddler instanceof Tiddler) && params[0]) {
 		var value = store.getValue(tiddler,params[0]);
-		if(value != undefined)
-			switch(params[1])
-				{
+		if(value != undefined) {
+			switch(params[1]) {
 				case undefined:
 					highlightify(value,place,highlightHack,tiddler);
 					break;
@@ -2335,54 +2262,51 @@ config.macros.view.handler = function(place,macroName,params,wikifier,paramStrin
 					value = Date.convertFromYYYYMMDDHHMM(value);
 					createTiddlyText(place,value.formatString(params[2] ? params[2] : config.views.wikified.dateFormat));
 					break;
-				}
+			}
 		}
-}
+	}
+};
 
 config.macros.edit.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
 	var field = params[0];
-	if((tiddler instanceof Tiddler) && field)
-		{
+	if((tiddler instanceof Tiddler) && field) {
 		story.setDirty(tiddler.title,true);
-		if(field != "text")
-			{
-				var e = createTiddlyElement(null,"input");
-				if(tiddler.isReadOnly())
-					e.setAttribute("readOnly","readOnly");
-				e.setAttribute("edit",field);
-				e.setAttribute("type","text");
-				var v = store.getValue(tiddler,field);
-				if(!v) 
-					v = "";
-				e.value = v;
-				e.setAttribute("size","40");
-				e.setAttribute("autocomplete","off");
-				place.appendChild(e);
-			}
-		else
-			{
-				var wrapper1 = createTiddlyElement(null,"fieldset",null,"fieldsetFix");
-				var wrapper2 = createTiddlyElement(wrapper1,"div");
-				var e = createTiddlyElement(wrapper2,"textarea");
-				if(tiddler.isReadOnly())
-					e.setAttribute("readOnly","readOnly");
-				var v = store.getValue(tiddler,field);
-				if(!v) 
-					v = "";
-				e.value = v;
-				var rows = 10;
-				var lines = v.match(/\n/mg);
-				var maxLines = Math.max(parseInt(config.options.txtMaxEditRows),5);
-				if(lines != null && lines.length > rows)
-					rows = lines.length + 5;
-				rows = Math.min(rows,maxLines);
-				e.setAttribute("rows",rows);
-				e.setAttribute("edit",field);
-				place.appendChild(wrapper1);
-			}
+		if(field != "text") {
+			var e = createTiddlyElement(null,"input");
+			if(tiddler.isReadOnly())
+				e.setAttribute("readOnly","readOnly");
+			e.setAttribute("edit",field);
+			e.setAttribute("type","text");
+			var v = store.getValue(tiddler,field);
+			if(!v) 
+				v = "";
+			e.value = v;
+			e.setAttribute("size","40");
+			e.setAttribute("autocomplete","off");
+			place.appendChild(e);
+		} else {
+			var wrapper1 = createTiddlyElement(null,"fieldset",null,"fieldsetFix");
+			var wrapper2 = createTiddlyElement(wrapper1,"div");
+			var e = createTiddlyElement(wrapper2,"textarea");
+			if(tiddler.isReadOnly())
+				e.setAttribute("readOnly","readOnly");
+			var v = store.getValue(tiddler,field);
+			if(!v) 
+				v = "";
+			e.value = v;
+			var rows = 10;
+			var lines = v.match(/\n/mg);
+			var maxLines = Math.max(parseInt(config.options.txtMaxEditRows),5);
+			if(lines != null && lines.length > rows)
+				rows = lines.length + 5;
+			rows = Math.min(rows,maxLines);
+			e.setAttribute("rows",rows);
+			e.setAttribute("edit",field);
+			place.appendChild(wrapper1);
 		}
-}
+	}
+};
 
 config.macros.tagChooser.onClick = function(e)
 {
@@ -2392,17 +2316,16 @@ config.macros.tagChooser.onClick = function(e)
 	var tags = store.getTags();
 	if(tags.length == 0)
 		createTiddlyText(createTiddlyElement(popup,"li"),lingo.popupNone);
-	for(var t=0; t<tags.length; t++)
-		{
+	for(var t=0; t<tags.length; t++) {
 		var theTag = createTiddlyButton(createTiddlyElement(popup,"li"),tags[t][0],lingo.tagTooltip.format([tags[t][0]]),config.macros.tagChooser.onTagClick);
 		theTag.setAttribute("tag",tags[t][0]);
-		theTag.setAttribute("tiddler", this.getAttribute("tiddler"));
-		}
+		theTag.setAttribute("tiddler",this.getAttribute("tiddler"));
+	}
 	Popup.show(popup,false);
 	e.cancelBubble = true;
 	if(e.stopPropagation) e.stopPropagation();
-	return(false);
-}
+	return false;
+};
 
 config.macros.tagChooser.onTagClick = function(e)
 {
@@ -2411,19 +2334,18 @@ config.macros.tagChooser.onTagClick = function(e)
 	var title = this.getAttribute("tiddler");
 	if(!readOnly)
 		story.setTiddlerTag(title,tag,0);
-	return(false);
-}
+	return false;
+};
 
 config.macros.tagChooser.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
-	if(tiddler instanceof Tiddler)
-		{
+	if(tiddler instanceof Tiddler) {
 		var title = tiddler.title;
 		var lingo = config.views.editor.tagChooser;
 		var btn = createTiddlyButton(place,lingo.text,lingo.tooltip,this.onClick);
-		btn.setAttribute("tiddler", title);
-		}
-}
+		btn.setAttribute("tiddler",title);
+	}
+};
 
 // Create a toolbar command button
 // place - parent DOM element
@@ -2432,77 +2354,74 @@ config.macros.tagChooser.handler = function(place,macroName,params,wikifier,para
 // theClass - the class to give the button
 config.macros.toolbar.createCommand = function(place,commandName,tiddler,theClass)
 {
-	if(typeof commandName != "string")
-		{
+	if(typeof commandName != "string") {
 		var c = null;
-		for(var t in config.commands)
+		for(var t in config.commands) {
 			if(config.commands[t] == commandName)
 				c = t;
-		commandName = c;
 		}
-	if((tiddler instanceof Tiddler) && (typeof commandName == "string"))
-		{
+		commandName = c;
+	}
+	if((tiddler instanceof Tiddler) && (typeof commandName == "string")) {
 		var command = config.commands[commandName];
-		if(command.isEnabled ? command.isEnabled(tiddler) : this.isCommandEnabled(command,tiddler))
-			{
+		if(command.isEnabled ? command.isEnabled(tiddler) : this.isCommandEnabled(command,tiddler)) {
 			var text = command.getText ? command.getText(tiddler) : this.getCommandText(command,tiddler);
 			var tooltip = command.getTooltip ? command.getTooltip(tiddler) : this.getCommandTooltip(command,tiddler);
 			var btn = createTiddlyButton(null,text,tooltip,this.onClickCommand);
-			btn.setAttribute("commandName", commandName);
-			btn.setAttribute("tiddler", tiddler.title);
+			btn.setAttribute("commandName",commandName);
+			btn.setAttribute("tiddler",tiddler.title);
 			if(theClass)
 				addClass(btn,theClass);
 			place.appendChild(btn);
-			}
 		}
-}
+	}
+};
 
-config.macros.toolbar.isCommandEnabled = function(command, tiddler) {
+config.macros.toolbar.isCommandEnabled = function(command,tiddler)
+{
 	var title = tiddler.title;
 	var ro = tiddler.isReadOnly();
 	var shadow = store.isShadowTiddler(title) && !store.tiddlerExists(title);
 	return (!ro || (ro && !command.hideReadOnly)) && !(shadow && command.hideShadow);
-}
+};
 
-config.macros.toolbar.getCommandText = function(command, tiddler) {
+config.macros.toolbar.getCommandText = function(command,tiddler)
+{
 	return tiddler.isReadOnly() && command.readOnlyText ? command.readOnlyText : command.text;
-}
+};
 
-config.macros.toolbar.getCommandTooltip = function(command, tiddler) {
+config.macros.toolbar.getCommandTooltip = function(command,tiddler)
+{
 	return tiddler.isReadOnly() && command.readOnlyTooltip ? command.readOnlyTooltip : command.tooltip;
-}
+};
 
 config.macros.toolbar.onClickCommand = function(e)
 {
 	if(!e) var e = window.event;
 	var command = config.commands[this.getAttribute("commandName")];
 	return command.handler(e,this,this.getAttribute("tiddler"));
-}
+};
 
 // Invoke the first command encountered from a given place that is tagged with a specified class
 config.macros.toolbar.invokeCommand = function(place,theClass,event)
 {
-	var children = place.getElementsByTagName("a")
-	for(var t=0; t<children.length; t++)
-		{
+	var children = place.getElementsByTagName("a");
+	for(var t=0; t<children.length; t++) {
 		var c = children[t];
-		if(hasClass(c,theClass) && c.getAttribute && c.getAttribute("commandName"))
-			{
+		if(hasClass(c,theClass) && c.getAttribute && c.getAttribute("commandName")) {
 			if(c.onclick instanceof Function)
 				c.onclick.call(c,event);
 			break;
-			}
 		}
-}
+	}
+};
 
 config.macros.toolbar.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
-	for(var t=0; t<params.length; t++)
-		{
+	for(var t=0; t<params.length; t++) {
 		var c = params[t];
 		var theClass = "";
-		switch(c.substr(0,1))
-			{
+		switch(c.substr(0,1)) {
 			case "+":
 				theClass = "defaultCommand";
 				c = c.substr(1);
@@ -2511,22 +2430,22 @@ config.macros.toolbar.handler = function(place,macroName,params,wikifier,paramSt
 				theClass = "cancelCommand";
 				c = c.substr(1);
 				break;
-			}
+		}
 		if(c in config.commands)
 			this.createCommand(place,c,tiddler,theClass);
-		}
-}
+	}
+};
 
 config.macros.refreshDisplay.handler = function(place)
 {
 	createTiddlyButton(place,this.label,this.prompt,this.onClick);
-}
+};
 
 config.macros.refreshDisplay.onClick = function(e)
 {
 	refreshAll();
 	return false;
-}
+};
 //--
 //-- Menu and toolbar commands
 //--
@@ -2628,9 +2547,9 @@ config.commands.jump.handler = function(event,src,title)
 	return false;
 };
 
-// ---------------------------------------------------------------------------------
-// Tiddler() object
-// ---------------------------------------------------------------------------------
+//--
+//-- Tiddler() object
+//--
 
 function Tiddler()
 {
@@ -2650,7 +2569,7 @@ Tiddler.prototype.getLinks = function()
 	if(this.linksUpdated==false)
 		this.changed();
 	return this.links;
-}
+};
 
 // Format the text for storage in an RSS item
 Tiddler.prototype.saveToRss = function(url)
@@ -2665,7 +2584,7 @@ Tiddler.prototype.saveToRss = function(url)
 	s.push("<pubDate>" + this.modified.toGMTString() + "</pubDate>");
 	s.push("</item>");
 	return(s.join("\n"));
-}
+};
 
 // Change the text and other attributes of a tiddler
 Tiddler.prototype.set = function(title,text,modifier,modified,tags,created,fields)
@@ -2673,7 +2592,7 @@ Tiddler.prototype.set = function(title,text,modifier,modified,tags,created,field
 	this.assign(title,text,modifier,modified,tags,created,fields);
 	this.changed();
 	return this;
-}
+};
 
 // Change the text and other attributes of a tiddler without triggered a tiddler.changed() call
 Tiddler.prototype.assign = function(title,text,modifier,modified,tags,created,fields)
@@ -2695,31 +2614,31 @@ Tiddler.prototype.assign = function(title,text,modifier,modified,tags,created,fi
 	else if(this.tags == undefined)
 		this.tags = [];
 	return this;
-}
+};
 
 // Get the tags for a tiddler as a string (space delimited, using [[brackets]] for tags containing spaces)
 Tiddler.prototype.getTags = function()
 {
 	return String.encodeTiddlyLinkList(this.tags);
-}
+};
 
 // Test if a tiddler carries a tag
 Tiddler.prototype.isTagged = function(tag)
 {
 	return this.tags.indexOf(tag) != -1;
-}
+};
 
 // Static method to convert "\n" to newlines, "\s" to "\"
 Tiddler.unescapeLineBreaks = function(text)
 {
 	return text ? text.unescapeLineBreaks() : "";
-}
+};
 
 // Convert newlines to "\n", "\" to "\s"
 Tiddler.prototype.escapeLineBreaks = function()
 {
 	return this.text.escapeLineBreaks();
-}
+};
 
 // Updates the secondary information (like links[] array) after a change to a tiddler
 Tiddler.prototype.changed = function()
@@ -2729,33 +2648,29 @@ Tiddler.prototype.changed = function()
 	var tiddlerLinkRegExp = t==0 ? config.textPrimitives.tiddlerAnyLinkRegExp : config.textPrimitives.tiddlerForcedLinkRegExp;
 	tiddlerLinkRegExp.lastIndex = 0;
 	var formatMatch = tiddlerLinkRegExp.exec(this.text);
-	while(formatMatch)
-		{
+	while(formatMatch) {
 		var lastIndex = tiddlerLinkRegExp.lastIndex;
-		if(t==0 && formatMatch[1] && formatMatch[1] != this.title) // wikiWordLink
-			{
-			if(formatMatch.index > 0)
-				{
+		if(t==0 && formatMatch[1] && formatMatch[1] != this.title) {
+			// wikiWordLink
+			if(formatMatch.index > 0) {
 				var preRegExp = new RegExp(config.textPrimitives.unWikiLink+"|"+config.textPrimitives.anyLetter,"mg");
 				preRegExp.lastIndex = formatMatch.index-1;
 				var preMatch = preRegExp.exec(this.text);
 				if(preMatch.index != formatMatch.index-1)
 					this.links.pushUnique(formatMatch[1]);
-				}
-			else
+			} else {
 				this.links.pushUnique(formatMatch[1]);
 			}
+		}
 		else if(formatMatch[2-t] && (store.tiddlerExists(formatMatch[3-t]) || store.isShadowTiddler(formatMatch[3-t]))) // titledBrackettedLink
 			this.links.pushUnique(formatMatch[3-t]);
 		else if(formatMatch[4-t] && formatMatch[4-t] != this.title) // brackettedLink
 			this.links.pushUnique(formatMatch[4-t]);
-		// Do not add link if match urlPattern (formatMatch[5-t])
 		tiddlerLinkRegExp.lastIndex = lastIndex;
 		formatMatch = tiddlerLinkRegExp.exec(this.text);
-		}
+	}
 	this.linksUpdated = true;
-	return;
-}
+};
 
 Tiddler.prototype.getSubtitle = function()
 {
@@ -2767,23 +2682,23 @@ Tiddler.prototype.getSubtitle = function()
 		theModified = theModified.toLocaleString();
 	else
 		theModified = config.messages.subtitleUnknown;
-	return(config.messages.tiddlerLinkTooltip.format([this.title,theModifier,theModified]));
-}
+	return config.messages.tiddlerLinkTooltip.format([this.title,theModifier,theModified]);
+};
 
 Tiddler.prototype.isReadOnly = function()
 {
 	return readOnly;
-}
+};
 
 Tiddler.prototype.autoLinkWikiWords = function()
 {
 	return !(this.isTagged("systemConfig") || this.isTagged("excludeMissing"));
-}
+};
 
 Tiddler.prototype.generateFingerprint = function()
 {
 	return "0x" + Crypto.hexSha1Str(this.text);
-}
+};
 
 // ---------------------------------------------------------------------------------
 // TiddlyWiki() object contains Tiddler()s
@@ -5248,18 +5163,17 @@ function doHttp(type,url,data,contentType,username,password,callback,params,head
 	}
 	return x;
 }
-// ---------------------------------------------------------------------------------
-// TiddlyWiki-specific utility functions
-// ---------------------------------------------------------------------------------
+//--
+//-- TiddlyWiki-specific utility functions
+//--
 
 function createTiddlyButton(theParent,theText,theTooltip,theAction,theClass,theId,theAccessKey)
 {
 	var theButton = document.createElement("a");
-	if(theAction)
-		{
+	if(theAction) {
 		theButton.onclick = theAction;
 		theButton.setAttribute("href","javascript:;");
-		}
+	}
 	if(theTooltip)
 		theButton.setAttribute("title",theTooltip);
 	if(theText)
@@ -5274,13 +5188,13 @@ function createTiddlyButton(theParent,theText,theTooltip,theAction,theClass,theI
 		theParent.appendChild(theButton);
 	if(theAccessKey)
 		theButton.setAttribute("accessKey",theAccessKey);
-	return(theButton);
+	return theButton;
 }
 
 function createTiddlyLink(place,title,includeText,theClass,isStatic)
 {
 	var text = includeText ? title : null;
-	var i = getTiddlyLinkInfo(title,theClass)
+	var i = getTiddlyLinkInfo(title,theClass);
 	var btn;
 	if(isStatic)
 		btn = createExternalLink(place,"#" + title);
@@ -5288,7 +5202,7 @@ function createTiddlyLink(place,title,includeText,theClass,isStatic)
 		btn = createTiddlyButton(place,text,i.subTitle,onClickTiddlerLink,i.classes);
 	btn.setAttribute("refresh","link");
 	btn.setAttribute("tiddlyLink",title);
-	return(btn);
+	return btn;
 }
 
 function refreshTiddlyLink(e,title)
@@ -5304,29 +5218,23 @@ function getTiddlyLinkInfo(title,currClasses)
 	classes.pushUnique("tiddlyLink");
 	var tiddler = store.fetchTiddler(title);
 	var subTitle;
-	if(tiddler)
-		{
+	if(tiddler) {
 		subTitle = tiddler.getSubtitle();
 		classes.pushUnique("tiddlyLinkExisting");
 		classes.remove("tiddlyLinkNonExisting");
 		classes.remove("shadow");
-		}
-	else
-		{
+	} else {
 		classes.remove("tiddlyLinkExisting");
 		classes.pushUnique("tiddlyLinkNonExisting");
-		if(store.isShadowTiddler(title))
-			{
+		if(store.isShadowTiddler(title)) {
 			subTitle = config.messages.shadowedTiddlerToolTip.format([title]);
 			classes.pushUnique("shadow");
-			}
-		else
-			{
+		} else {
 			subTitle = config.messages.undefinedTiddlerToolTip.format([title]);
 			classes.remove("shadow");
-			}
 		}
-	return {classes: classes.join(" "), subTitle: subTitle};
+	}
+	return {classes: classes.join(" "),subTitle: subTitle};
 }
 
 function createExternalLink(place,url)
@@ -5338,13 +5246,13 @@ function createExternalLink(place,url)
 	if(config.options.chkOpenInNewWindow)
 		theLink.target = "_blank";
 	place.appendChild(theLink);
-	return(theLink);
+	return theLink;
 }
 
 // Event handler for clicking on a tiddly link
 function onClickTiddlerLink(e)
 {
-	if (!e) var e = window.event;
+	if(!e) var e = window.event;
 	var theTarget = resolveTarget(e);
 	var theLink = theTarget;
 	var title = null;
@@ -5352,8 +5260,7 @@ function onClickTiddlerLink(e)
 		title = theLink.getAttribute("tiddlyLink");
 		theLink = theLink.parentNode;
 	} while(title == null && theLink != null);
-	if(title)
-		{
+	if(title) {
 		var toggling = e.metaKey || e.ctrlKey;
 		if(config.options.chkToggleLinks)
 			toggling = !toggling;
@@ -5362,9 +5269,9 @@ function onClickTiddlerLink(e)
 			story.closeTiddler(title,true,e.shiftKey || e.altKey);
 		else
 			story.displayTiddler(theTarget,title,null,true,e.shiftKey || e.altKey);
-		}
+	}
 	clearMessage();
-	return(false);
+	return false;
 }
 
 // Create a button for a tag with a popup listing all the tiddlers that it tags
@@ -5374,71 +5281,69 @@ function createTagButton(place,tag,excludeTiddler)
 	theTag.setAttribute("tag",tag);
 	if(excludeTiddler)
 		theTag.setAttribute("tiddler",excludeTiddler);
-	return(theTag);
+	return theTag;
 }
 
 // Event handler for clicking on a tiddler tag
 function onClickTag(e)
 {
-	if (!e) var e = window.event;
+	if(!e) var e = window.event;
 	var theTarget = resolveTarget(e);
 	var popup = Popup.create(this);
 	var tag = this.getAttribute("tag");
 	var title = this.getAttribute("tiddler");
-	if(popup && tag)
-		{
+	if(popup && tag) {
 		var tagged = store.getTaggedTiddlers(tag);
 		var titles = [];
 		var li,r;
-		for(r=0;r<tagged.length;r++)
+		for(r=0;r<tagged.length;r++) {
 			if(tagged[r].title != title)
 				titles.push(tagged[r].title);
+		}
 		var lingo = config.views.wikified.tag;
-		if(titles.length > 0)
-			{
+		if(titles.length > 0) {
 			var openAll = createTiddlyButton(createTiddlyElement(popup,"li"),lingo.openAllText.format([tag]),lingo.openAllTooltip,onClickTagOpenAll);
 			openAll.setAttribute("tag",tag);
 			createTiddlyElement(createTiddlyElement(popup,"li",null,"listBreak"),"div");
-			for(r=0; r<titles.length; r++)
-				{
+			for(r=0; r<titles.length; r++) {
 				createTiddlyLink(createTiddlyElement(popup,"li"),titles[r],true);
-				}
 			}
-		else
+		} else {
 			createTiddlyText(createTiddlyElement(popup,"li",null,"disabled"),lingo.popupNone.format([tag]));
+		}
 		createTiddlyElement(createTiddlyElement(popup,"li",null,"listBreak"),"div");
 		var h = createTiddlyLink(createTiddlyElement(popup,"li"),tag,false);
 		createTiddlyText(h,lingo.openTag.format([tag]));
-		}
+	}
 	Popup.show(popup,false);
 	e.cancelBubble = true;
-	if (e.stopPropagation) e.stopPropagation();
-	return(false);
+	if(e.stopPropagation) e.stopPropagation();
+	return false;
 }
 
 // Event handler for 'open all' on a tiddler popup
 function onClickTagOpenAll(e)
 {
-	if (!e) var e = window.event;
+	if(!e) var e = window.event;
 	var tag = this.getAttribute("tag");
 	var tagged = store.getTaggedTiddlers(tag);
 	var titles = [];
 	for(var t=0; t<tagged.length; t++)
 		titles.push(tagged[t].title);
 	story.displayTiddlers(this,titles);
-	return(false);
+	return false;
 }
 
 function onClickError(e)
 {
-	if (!e) var e = window.event;
+	if(!e) var e = window.event;
 	var popup = Popup.create(this);
 	var lines = this.getAttribute("errorText").split("\n");
 	for(var t=0; t<lines.length; t++)
 		createTiddlyElement(popup,"li",null,null,lines[t]);
 	Popup.show(popup,false);
 	e.cancelBubble = true;
-	if (e.stopPropagation) e.stopPropagation();
+	if(e.stopPropagation) e.stopPropagation();
 	return false;
 }
 
@@ -5446,38 +5351,38 @@ function createTiddlyDropDown(place,onchange,options)
 {
 	var sel = createTiddlyElement(place,"select");
 	sel.onchange = onchange;
-	for(var t=0; t<options.length; t++)
-		{
+	for(var t=0; t<options.length; t++) {
 		var e = createTiddlyElement(sel,"option",null,null,options[t].caption);
 		e.value = options[t].name;
-		}
+	}
 }
 
 function createTiddlyError(place,title,text)
 {
 	var btn = createTiddlyButton(place,title,null,onClickError,"errorButton");
-	if (text) btn.setAttribute("errorText",text);
+	if(text) btn.setAttribute("errorText",text);
 }
 
 function merge(dst,src,preserveExisting)
 {
-	for (p in src)
-		if (!preserveExisting || dst[p] === undefined)
+	for(p in src) {
+		if(!preserveExisting || dst[p] === undefined)
 			dst[p] = src[p];
+	}
 	return dst;
 }
 
 // Returns a string containing the description of an exception, optionally prepended by a message
-function exceptionText(e, message)
+function exceptionText(e,message)
 {
 	var s = e.description ? e.description : e.toString();
-	return message ? "%0:\n%1".format([message, s]) : s;
+	return message ? "%0:\n%1".format([message,s]) : s;
 }
 
 // Displays an alert of an exception description with optional message
-function showException(e, message)
+function showException(e,message)
 {
-	alert(exceptionText(e, message));
+	alert(exceptionText(e,message));
 }
 
 function alertAndThrow(m)
@@ -6674,9 +6579,9 @@ Crypto.sha1 = function(x,blen)
 	return Array(h0,h1,h2,h3,h4);
 };
 
-// ---------------------------------------------------------------------------------
-// RGB colour object
-// ---------------------------------------------------------------------------------
+//--
+//-- RGB colour object
+//--
 
 // Construct an RGB colour object from a '#rrggbb', '#rgb' or 'rgb(n,n,n)' string or from separate r,g,b values
 function RGB(r,g,b)
@@ -6684,41 +6589,31 @@ function RGB(r,g,b)
 	this.r = 0;
 	this.g = 0;
 	this.b = 0;
-	if(typeof r == "string")
-		{
-		if(r.substr(0,1) == "#")
-			{
-			if(r.length == 7)
-				{
+	if(typeof r == "string") {
+		if(r.substr(0,1) == "#") {
+			if(r.length == 7) {
 				this.r = parseInt(r.substr(1,2),16)/255;
 				this.g = parseInt(r.substr(3,2),16)/255;
 				this.b = parseInt(r.substr(5,2),16)/255;
-				}
-			else
-				{
+			} else {
 				this.r = parseInt(r.substr(1,1),16)/15;
 				this.g = parseInt(r.substr(2,1),16)/15;
 				this.b = parseInt(r.substr(3,1),16)/15;
-				}
 			}
-		else
-			{
-			var rgbPattern = /rgb\s*\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/ ;
+		} else {
+			var rgbPattern = /rgb\s*\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)/;
 			var c = r.match(rgbPattern);
-			if (c)
-				{
+			if(c) {
 				this.r = parseInt(c[1],10)/255;
 				this.g = parseInt(c[2],10)/255;
 				this.b = parseInt(c[3],10)/255;
-				}
 			}
 		}
-	else
-		{
+	} else {
 		this.r = r;
 		this.g = g;
 		this.b = b;
-		}
+	}
 	return this;
 }
 
@@ -6729,18 +6624,15 @@ function RGB(r,g,b)
 RGB.prototype.mix = function(c,f)
 {
 	return new RGB(this.r + (c.r-this.r) * f,this.g + (c.g-this.g) * f,this.b + (c.b-this.b) * f);
-}
+};
 
 // Return an rgb colour as a #rrggbb format hex string
 RGB.prototype.toString = function()
 {
-	var r = this.r.clamp(0,1);
-	var g = this.g.clamp(0,1);
-	var b = this.b.clamp(0,1);
-	return("#" + ("0" + Math.floor(r * 255).toString(16)).right(2) +
-				 ("0" + Math.floor(g * 255).toString(16)).right(2) +
-				 ("0" + Math.floor(b * 255).toString(16)).right(2));
-}
+	return "#" + ("0" + Math.floor(this.r.clamp(0,1) * 255).toString(16)).right(2) +
+				 ("0" + Math.floor(this.g.clamp(0,1) * 255).toString(16)).right(2) +
+				 ("0" + Math.floor(this.b.clamp(0,1) * 255).toString(16)).right(2);
+};
 
 // ---------------------------------------------------------------------------------
 // DOM utilities - many derived from www.quirksmode.org
@@ -7059,80 +6951,75 @@ function getNodeText(e)
 		}
 	return t;
 }
+//--
+//-- LoaderBase and SaverBase
+//--
 
-function LoaderBase()
-{
-}
+function LoaderBase() {}
 
-LoaderBase.prototype.loadTiddler = function(store,e,tiddlers)
+LoaderBase.prototype.loadTiddler = function(store,node,tiddlers)
 {
-	var title = this.getTitle(store, e);
-	if (title)
-		{
+	var title = this.getTitle(store,node);
+	if(title) {
 		var tiddler = store.createTiddler(title);
-		this.internalizeTiddler(store, tiddler, title, e);
+		this.internalizeTiddler(store,tiddler,title,node);
 		tiddlers.push(tiddler);
-		}
-}
+	}
+};
 
 LoaderBase.prototype.loadTiddlers = function(store,nodes)
 {
 	var tiddlers = [];
-	for (var t = 0; t < nodes.length; t++)
-		{
-		try
-			{
-			this.loadTiddler(store, nodes[t], tiddlers);
-			}
-		catch(e)
-			{
-			showException(e, config.messages.tiddlerLoadError.format([this.getTitle(store, nodes[t])]));
-			}
+	for(var t = 0; t < nodes.length; t++) {
+		try {
+			this.loadTiddler(store,nodes[t],tiddlers);
+		} catch(ex) {
+			showException(ex,config.messages.tiddlerLoadError.format([this.getTitle(store,nodes[t])]));
 		}
+	}
 	return tiddlers;
-}
-	
+};
 
-function SaverBase()
-{
-}
 
-SaverBase.prototype.externalize = function(store) 
+function SaverBase() {}
+
+SaverBase.prototype.externalize = function(store)
 {
 	var results = [];
 	var tiddlers = store.getTiddlers("title");
-	for (var t = 0; t < tiddlers.length; t++)
-		results.push(this.externalizeTiddler(store, tiddlers[t]));
+	for(var t = 0; t < tiddlers.length; t++)
+		results.push(this.externalizeTiddler(store,tiddlers[t]));
 	return results.join("\n");
-}
-//--------------------------------
-// TW21Loader (inherits from LoaderBase)
+};
+//--
+//-- TW21Loader (inherits from LoaderBase)
+//--
 
 function TW21Loader() {}
 
 TW21Loader.prototype = new LoaderBase();
 
-TW21Loader.prototype.getTitle = function(store,e)
+TW21Loader.prototype.getTitle = function(store,node)
 {
 	var title = null;
-	if(e.getAttribute) {
-		title = e.getAttribute("title");
+	if(node.getAttribute) {
+		title = node.getAttribute("title");
 		if(!title)
-			title = e.getAttribute("tiddler");
+			title = node.getAttribute("tiddler");
 	}
-	if(!title && e.id) {
+	if(!title && node.id) {
 		var lenPrefix = store.idPrefix.length;
-		if (e.id.substr(0,lenPrefix) == store.idPrefix)
-			title = e.id.substr(lenPrefix);
+		if (node.id.substr(0,lenPrefix) == store.idPrefix)
+			title = node.id.substr(lenPrefix);
 	}
 	return title;
 };
 
-TW21Loader.prototype.internalizeTiddler = function(store,tiddler,title,data)
+TW21Loader.prototype.internalizeTiddler = function(store,tiddler,title,node)
 {
-	var e = data.firstChild;
+	var e = node.firstChild;
 	var text = null;
-	if(data.getAttribute("tiddler")) {
+	if(node.getAttribute("tiddler")) {
 		text = getNodeText(e).unescapeLineBreaks();
 	} else {
 		while(e.nodeName!="PRE" && e.nodeName!="pre") {
@@ -7140,14 +7027,14 @@ TW21Loader.prototype.internalizeTiddler = function(store,tiddler,title,data)
 		}
 		text = e.innerHTML.replace(/\r/mg,"").htmlDecode();
 	}
-	var modifier = data.getAttribute("modifier");
-	var c = data.getAttribute("created");
-	var m = data.getAttribute("modified");
+	var modifier = node.getAttribute("modifier");
+	var c = node.getAttribute("created");
+	var m = node.getAttribute("modified");
 	var created = c ? Date.convertFromYYYYMMDDHHMM(c) : version.date;
 	var modified = m ? Date.convertFromYYYYMMDDHHMM(m) : created;
-	var tags = data.getAttribute("tags");
+	var tags = node.getAttribute("tags");
 	var fields = {};
-	var attrs = data.attributes;
+	var attrs = node.attributes;
 	for(var i = attrs.length-1; i >= 0; i--) {
 		var name = attrs[i].name;
 		if (attrs[i].specified && !TiddlyWiki.isStandardField(name)) {
@@ -7158,14 +7045,15 @@ TW21Loader.prototype.internalizeTiddler = function(store,tiddler,title,data)
 	return tiddler;
 };
 
-//--------------------------------
-// TW21Saver (inherits from SaverBase)
+//--
+//-- TW21Saver (inherits from SaverBase)
+//--
 
 function TW21Saver() {}
 
 TW21Saver.prototype = new SaverBase();
 
-TW21Saver.prototype.externalizeTiddler = function(store,tiddler) 
+TW21Saver.prototype.externalizeTiddler = function(store,tiddler)
 {
 	try {
 		var extendedAttributes = "";
@@ -7193,9 +7081,9 @@ TW21Saver.prototype.externalizeTiddler = function(store,tiddler)
 				usePre ? "\n<pre>" + tiddler.text.htmlEncode() + "</pre>\n" : tiddler.escapeLineBreaks().htmlEncode()
 			]);
 	} catch (ex) {
-		throw exceptionText(ex, config.messages.tiddlerSaveError.format([tiddler.title]));
+		throw exceptionText(ex,config.messages.tiddlerSaveError.format([tiddler.title]));
 	}
-}
+};
 
 // ---------------------------------------------------------------------------------
 // Deprecated code
