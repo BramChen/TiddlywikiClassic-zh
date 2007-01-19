@@ -1,0 +1,33 @@
+<div title="日期格式.zh-Hant">
+許多 [[Macros]] 包含 TodayMacro 使用日期格式字串作為選擇性參數。This string can be a combination of ordinary text, with some special characters that get substituted by parts of the date:
+* {{{DDD}}} - day of week in full (例如："一")
+* {{{ddd}}} - 簡短星期格式 (例如："Mon")
+* {{{DD}}} - 日
+* {{{0DD}}} - 日，小於10則補前置0（例如：07）
+* {{{DDth}}} - 一個月裡的第幾天
+* {{{WW}}} - ISO-8601 一年裡的第幾個星期
+* {{{0WW}}} - ISO-8601 一年裡的第幾個星期，小於10則補前置0（例如：07）
+* {{{MMM}}} - 月份 (eg, "六")
+* {{{mmm}}} - 簡短月份格式 (eg, "Jul")
+* {{{MM}}} - 月
+* {{{0MM}}} - 月，小於10則補前置0（例如：07）。
+* {{{YYYY}}} - 四位數的西元年（例如：2007）。
+* {{{YY}}} - 兩位數的西元年（例如：07）。
+* {{{wYYYY}}} - full year with respect to week number
+* {{{wYY}}} two digit year with respect to week number
+* {{{hh}}} - 時
+* {{{0hh}}} - 時，小於10則補前置0（例如：07）。
+* {{{hh12}}} - 12 時制，例如：14顯示為 2
+* {{{0hh12}}} - 12 時制，小於10則補前置0（例如：07）。
+* {{{mm}}} - 分
+* {{{0mm}}} -  分，小於10則補前置0（例如：07）。
+* {{{ss}}} - 秒
+* {{{0ss}}} - 秒，小於10則補前置0（例如：07）。
+* {{{am}}} or {{{pm}}} - 上午/下午
+* {{{AM}}} or {{{PM}}} - 上午/下午</pre>
+
+使用範例：
+{{{YYYY年0MM月0DD日 星期DDD am hh12時0mm分0ss秒}}}
+顯示結果：
+{{{2007年01月13日 星期六 上(or下)午 7時50分20秒}}}。
+</div>
