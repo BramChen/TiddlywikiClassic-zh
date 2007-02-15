@@ -3,13 +3,13 @@
 <head>
 <script type="text/javascript">
 //<![CDATA[
-var version = {major: 2, minor: 2, revision: 0, beta: 2, date: new Date("Dec 29, 2006"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 3, date: new Date("Jan 8, 2007"), extensions: {}};
 //]]>
 </script>
 <!--
-TiddlyWiki 2.2.0 beta 2 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
+TiddlyWiki 2.2.0 beta 3 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
 
-Copyright (c) Osmosoft Limited 2004-2006
+Copyright (c) Osmosoft Limited 2004-2007
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -44,7 +44,7 @@ DAMAGE.
 <!--}}}-->
 <!--PRE-HEAD-END-->
 <title> TiddlyWiki - a reusable non-linear personal web notebook </title>
-<script type="text/javascript" src="TiddlyWiki_zh-Hans.js"></script>
+<script type="text/javascript" src="TiddlyWiki.zh-Hans.js"></script>
 <style type="text/css">
 
 #saveTest {display:none;}
@@ -79,7 +79,7 @@ if (useJavaSaver)
 //]]>
 </script>
 <div id="copyright">
-Welcome to TiddlyWiki by Jeremy Ruston, Copyright &copy; 2006 Osmosoft Limited
+Welcome to TiddlyWiki by Jeremy Ruston, Copyright &copy; 2007 Osmosoft Limited
 </div>
 <noscript>
 	<div id="javascriptWarning">This page requires JavaScript to function properly.<br><br>If you are using Microsoft Internet Explorer you may need to click on the yellow bar above and select 'Allow Blocked Content'. You must then click 'Yes' on the following security warning.</div>
@@ -321,6 +321,9 @@ a.tiddlyLinkNonExisting.shadow {font-weight:bold;}
 .txtMainTab .tabContents li {list-style:none;}
 .tabContents li.listLink { margin-left:.75em;}
 
+#contentWrapper {display:block;}
+#splashScreen {display:none;}
+
 #displayArea {margin:1em 17em 0em 14em;}
 
 .toolbar {text-align:right; font-size:.9em; visibility:hidden;}
@@ -384,6 +387,28 @@ table.listView th, table.listView td, table.listView tr {padding:0px 3px 0px 3px
 #backstageCloak {display:none; z-index:50; position:absolute; width:100%; height:100px;}
 /*}}}*/</pre>
 </div>
+<div title="StyleSheetLocale">
+<pre>/***
+StyleSheet for use when a translation requires any css style changes.
+This StyleSheet can be used directly by languages such as Chinese, Japanese and Korean which use a logographic writing system and need larger font sizes.
+***/
+
+/*{{{*/
+body {font-size:0.8em;}
+.headerShadow {position:relative; padding:3.5em 0em 1em 1em; left:-1px; top:-1px;}
+.headerForeground {position:absolute; padding:3.5em 0em 1em 1em; left:0px; top:0px;}
+
+#sidebarOptions {font-size:1.05em;}
+#sidebarOptions a {font-style:normal;}
+#sidebarOptions .sliderPanel {font-size:0.95em;}
+
+.subtitle {font-size:0.8em;}
+
+.viewer table.listView {font-size:0.95em;}
+
+.htmlarea .toolbarHA table {border:1px solid ButtonFace; margin:0em 0em;}
+/*}}}*/</pre>
+</div>
 <div title="StyleSheetPrint">
 <pre>/*{{{*/
 @media print {
@@ -413,7 +438,7 @@ noscript {display:none;}
 &lt;/div&gt;
 &lt;div id='displayArea'&gt;
 &lt;div id='messageArea'&gt;&lt;/div&gt;
-&lt;div id='tiddlerDisplay'&gt;&lt;/div&gt;
+&lt;div id='storyDisplay'&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
@@ -437,44 +462,9 @@ noscript {display:none;}
 &lt;div class='editor' macro='edit tags'&gt;&lt;/div&gt;&lt;div class='editorFooter'&gt;&lt;span macro='message views.editor.tagPrompt'&gt;&lt;/span&gt;&lt;span macro='tagChooser'&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
-<div title="StyleSheet" modifier="BramChen" tags="excludeLists">
-<pre>[[StyleSheetAdjust]]</pre>
-</div>
-<div title="StyleSheetAdjust" modifier="BramChen" tags="excludeLists">
-<pre>/***
-	Title: StyleSheetAdjust
-	Usage: Add {{{[[StyleSheetAdjust]]}}} to StyleSheet
-***/
-/*{{{*/
-body {
-	font-size: .8em;
-}
-#sidebarOptions {
-	font-size: 1.05em;
-}
-#sidebarOptions a {
-	font-style: normal;
-}
-#sidebarOptions .sliderPanel {
-	font-size: .95em;
-}
-.subtitle {
-	font-size: .8em;
-}
-.viewer table.listView {
-font-size: .95em;
-}
-.htmlarea .toolbarHA table {
-	border: 1px solid ButtonFace;
-	margin: 0em 0em;
-}
-/*}}}*/</pre>
-</div>
-</div>
-<div id="storeArea">
 <div title="GettingStarted" modifier="BramChen" tags="excludeLists">
 <pre>使用此 TiddlyWiki 的空白范本之前，请先修改以下默认文章：
-* SiteTitle 及 SiteSubtitle：网站的标题和副标题，显示于页面上方&lt;br&gt;（在保存变更后，将显示于浏览器视窗的标题列）。
+* SiteTitle 及 SiteSubtitle：网站的标题和副标题，显示于页面上方&lt;br /&gt;（在保存变更后，将显示于浏览器视窗的标题列）。
 * MainMenu：主菜单（通常在页面左测）。
 * DefaultTiddlers：包含一些文章的标题，可于进入TiddlyWiki 后开启。
 请输入您的大名，作为所创建/ 编辑文章的署名：&lt;&lt;option txtUserName&gt;&gt;</pre>
@@ -511,10 +501,15 @@ font-size: .95em;
 可支援储存文件于非 ASCII 路径及文件名。^^
 &lt;&lt;&lt;</pre>
 </div>
+<div title="StyleSheet" modifier="BramChen" tags="excludeLists">
+<pre>[[StyleSheetLocale]]</pre>
+</div>
 <div title="DateFormat" modifier="BramChen" tags="excludeLists">
 <pre>DateFormat: [[YYYY年0MM月0DD日 am hh12:0mm]]
 shortDateFormat: [[YYYY年0MM月0DD日]]</pre>
 </div>
+</div>
+<div id="storeArea">
 </div>
 <!--POST-BODY-START-->
 <!--POST-BODY-END-->
