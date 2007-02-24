@@ -242,76 +242,97 @@ config.shadowTiddlers = {
 	MarkupPostBody: ""
 };
 
-//--
-//-- Translateable strings
-//--
+// zh-Hant ConfigTweaks 
+/*{{{*/
+config.options.txtFileSystemCharSet = "BIG5";
+/*}}}*/
+// -End of ConfigTweak
+/***
+|''Name:''|zh-HantTranslationPlugin|
+|''Description:''|Translation of TiddlyWiki into Traditional Chinese|
+|''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
+|''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
+|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
+|''Version:''|1.1.0.2|
+|''Date:''|Jan 13, 2007|
+|''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
+|''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
+|''~CoreVersion:''|2.2.0|
+***/
+
+/*{{{*/
+// --
+// -- Translateable strings
+// --
 
 // Strings in "double quotes" should be translated; strings in 'single quotes' should be left alone
 
+config.locale = "zh-Hant"; // W3C language tag
 merge(config.options,{
 	txtUserName: "YourName"});
 
 config.tasks = {
-	save: {text: "save", tooltip: "Save your changes to this TiddlyWiki", action: saveChanges},
-	tidy: {text: "tidy up", tooltip: "Make bulk changes across groups of tiddlers", content: 'Coming soon...\n\nThis tab will allow bulk operations on tiddlers, and tags. It will be a generalised, extensible version of the plugins tab'},
-	sync: {text: "sync", tooltip: "Synchronise changes with other TiddlyWiki files and servers", content: '<<sync>>'},
-	importTask: {text: "import", tooltip: "Import tiddlers and plugins from other TiddlyWiki files and servers", content: '<<importTiddlers>>'},
-	copy: {text: "copy", tooltip: "Copy tiddlers to other TiddlyWiki files and servers", content: 'Coming soon...\n\nThis tab will allow tiddlers to be copied to remote servers'},
-	tweak: {text: "tweak", tooltip: "Tweak the appearance and behaviour of TiddlyWiki", content: '<<options>>'},
-	plugins: {text: "plugins", tooltip: "Manage installed plugins", content: '<<plugins>>'}
+		save: {text: "储存", tooltip: "储存变更至此 TiddlyWiki", action: saveChanges},
+		tidy: {text: "整理", tooltip: "对群组文章作大量更新", content: 'Coming soon...\n\nThis tab will allow bulk operations on tiddlers, and tags. It will be a generalised, extensible version of the plugins tab'},
+		sync: {text: "同步", tooltip: "将你的资料内容与外部伺服器与档案同步", content: '<<sync>>'},
+		importTask: {text: "汇入", tooltip: "自其他档案或伺服器汇入文章或套件", content: '<<importTiddlers>>'},
+		copy: {text: "复制", tooltip: "复制文章至别的 TiddlyWiki 文件及伺服器", content: 'Coming soon...\n\nThis tab will allow tiddlers to be copied to remote servers'},
+		tweak: {text: "选项", tooltip: "改变此 TiddlyWiki 的显示与行为的设定", content: '<<options>>'},
+		plugins: {text: "套件管理", tooltip: "管理已安装的套件", content: '<<plugins>>'}
 };
 
+// Messages
 merge(config.messages,{
-	customConfigError: "Problems were encountered loading plugins. See PluginManager for details",
-	pluginError: "Error: %0",
-	pluginDisabled: "Not executed because disabled via 'systemConfigDisable' tag",
-	pluginForced: "Executed because forced via 'systemConfigForce' tag",
-	pluginVersionError: "Not executed because this plugin needs a newer version of TiddlyWiki",
-	nothingSelected: "Nothing is selected. You must select one or more items first",
-	savedSnapshotError: "It appears that this TiddlyWiki has been incorrectly saved. Please see http://www.tiddlywiki.com/#DownloadSoftware for details",
-	subtitleUnknown: "(unknown)",
-	undefinedTiddlerToolTip: "The tiddler '%0' doesn't yet exist",
-	shadowedTiddlerToolTip: "The tiddler '%0' doesn't yet exist, but has a pre-defined shadow value",
+	customConfigError: "套件载入发生错误，详细请参考 PluginManager",
+	pluginError: "发生错误: %0",
+	pluginDisabled: "未执行，因标签设为 'systemConfigDisable'",
+	pluginForced: "已执行，因标签设为 'systemConfigForce'",
+	pluginVersionError: "未执行，套件需较新版本的 TiddlyWiki",
+	nothingSelected: "尚未作任何选择，至少需选择一项",
+	savedSnapshotError: "此 TiddlyWiki 未正确存档，详见 http://www.tiddlywiki.com/#DownloadSoftware",
+	subtitleUnknown: "(未知)",
+	undefinedTiddlerToolTip: "'%0' 尚无内容",
+	shadowedTiddlerToolTip: "'%0' 尚无内容, 但已定义隐藏的预设值",
 	tiddlerLinkTooltip: "%0 - %1, %2",
-	externalLinkTooltip: "External link to %0",
-	noTags: "There are no tagged tiddlers",
-	notFileUrlError: "You need to save this TiddlyWiki to a file before you can save changes",
-	cantSaveError: "It's not possible to save changes. Possible reasons include:\n- your browser doesn't support saving (Firefox, Internet Explorer, Safari and Opera all work if properly configured)\n- the pathname to your TiddlyWiki file contains illegal characters\n- the TiddlyWiki HTML file has been moved or renamed",
-	invalidFileError: "The original file '%0' does not appear to be a valid TiddlyWiki",
-	backupSaved: "Backup saved",
-	backupFailed: "Failed to save backup file",
-	rssSaved: "RSS feed saved",
-	rssFailed: "Failed to save RSS feed file",
-	emptySaved: "Empty template saved",
-	emptyFailed: "Failed to save empty template file",
-	mainSaved: "Main TiddlyWiki file saved",
-	mainFailed: "Failed to save main TiddlyWiki file. Your changes have not been saved",
-	macroError: "Error in macro <<%0>>",
-	macroErrorDetails: "Error while executing macro <<%0>>:\n%1",
-	missingMacro: "No such macro",
-	overwriteWarning: "A tiddler named '%0' already exists. Choose OK to overwrite it",
-	unsavedChangesWarning: "WARNING! There are unsaved changes in TiddlyWiki\n\nChoose OK to save\nChoose CANCEL to discard",
-	confirmExit: "--------------------------------\n\nThere are unsaved changes in TiddlyWiki. If you continue you will lose those changes\n\n--------------------------------",
+	externalLinkTooltip: "外部连结至 %0",
+	noTags: "未设定标签的文章",
+	notFileUrlError: "须先将此 TiddlyWiki 存至档案，才可储存变更",
+	cantSaveError: "无法储存变更。可能的原因有：\n- 你的浏览器不支援此储存功能（Firefox, Internet Explorer, Safari and Opera 经适当设定后可储存变更）\n- 也可能是你的 TiddlyWiki 档名包含不合法的字元所致。\n- 或是 TiddlyWiki 文件被改名或搬移。",
+	invalidFileError: " '%0' 非有效之 TiddlyWiki 文件",
+	backupSaved: "已储存备份",
+	backupFailed: "无法储存备份",
+	rssSaved: "RSS feed 已储存",
+	rssFailed: "无法储存 RSS feed ",
+	emptySaved: "已储存范本",
+	emptyFailed: "无法储存范本",
+	mainSaved: "主要的TiddlyWiki已储存",
+	mainFailed: "无法储存主要 TiddlyWiki，所作的改变未储存",
+	macroError: "巨集 <<%0>> 执行错误",
+	macroErrorDetails: "执行巨集 <<%0>> 时，发生错误 :\n%1",
+	missingMacro: "无此巨集",
+	overwriteWarning: "'%0' 已存在，[确定]覆写之",
+	unsavedChangesWarning: "注意！ 尚未储存变更\n\n[确定]存档，或[取消]放弃存档？",
+	confirmExit: "--------------------------------\n\nTiddlyWiki 以更改内容尚未储存，继续的话将遗失这些更动\n\n--------------------------------",
 	saveInstructions: "SaveChanges",
-	unsupportedTWFormat: "Unsupported TiddlyWiki format '%0'",
-	tiddlerSaveError: "Error when saving tiddler '%0'",
-	tiddlerLoadError: "Error when loading tiddler '%0'",
-	wrongSaveFormat: "Cannot save with storage format '%0'. Using standard format for save.",
-	invalidFieldName: "Invalid field name %0",
-	fieldCannotBeChanged: "Field '%0' cannot be changed"});
+	unsupportedTWFormat: "未支援此 TiddlyWiki 格式：'%0'",
+	tiddlerSaveError: "储存文章 '%0' 时，发生错误。",
+	tiddlerLoadError: "载入文章 '%0' 时，发生错误。",
+	wrongSaveFormat: "无法使用格式 '%0' 储存，请使用标准格式存放",
+	invalidFieldName: "无效的栏位名称：%0",
+	fieldCannotBeChanged: "无法变更栏位：'%0'"});
 
 merge(config.messages.messageClose,{
-	text: "close",
-	tooltip: "close this message area"});
+	text: "关闭",
+	tooltip: "关闭此讯息"});
 
 config.messages.backstage = {
-	open: {text: "backstage", icon: "↩", iconIE: "←", tooltip: "Open the backstage area to perform authoring and editing tasks"},
-	close: {text: "close", icon: "↪", iconIE: "→", tooltip: "Close the backstage area"},
-	prompt: "backstage: "
+	open: {text: "控制台", icon: "↩", iconIE: "←", tooltip: "开启控制台执行编写工作"},
+	close: {text: "关闭", icon: "↪", iconIE: "→", tooltip: "关闭控制台"},
+	prompt: "控制台："
 }
 
-config.messages.dates.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November","December"];
-config.messages.dates.days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+config.messages.dates.months = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
+config.messages.dates.days = ["日", "一","二", "三", "四", "五", "六"];
 config.messages.dates.shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 config.messages.dates.shortDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 // suffixes for dates, eg "1st","2nd","3rd"..."30th","31st"
@@ -319,34 +340,34 @@ config.messages.dates.daySuffixes = ["st","nd","rd","th","th","th","th","th","th
 		"th","th","th","th","th","th","th","th","th","th",
 		"st","nd","rd","th","th","th","th","th","th","th",
 		"st"];
-config.messages.dates.am = "am";
-config.messages.dates.pm = "pm";
+config.messages.dates.am = "上午";
+config.messages.dates.pm = "下午";
 
 merge(config.views.wikified.tag,{
-	labelNoTags: "no tags",
-	labelTags: "tags: ",
-	openTag: "Open tag '%0'",
-	tooltip: "Show tiddlers tagged with '%0'",
-	openAllText: "Open all",
-	openAllTooltip: "Open all of these tiddlers",
-	popupNone: "No other tiddlers tagged with '%0'"});
+	labelNoTags: "未设标签",
+	labelTags: "标签: ",
+	openTag: "开启标签 '%0'",
+	tooltip: "显示标签为 '%0' 的文章",
+	openAllText: "开启以下所有文章",
+	openAllTooltip: "开启以下所有文章",
+	popupNone: "仅此文标签为 '%0'"});
 
 merge(config.views.wikified,{
-	defaultText: "The tiddler '%0' doesn't yet exist. Double-click to create it",
-	defaultModifier: "(missing)",
-	shadowModifier: "(built-in shadow tiddler)",
-	dateFormat: "DD MMM YYYY",
-	createdPrompt: "created"});
+	defaultText: "",
+	defaultModifier: "(未完成)",
+	shadowModifier: "(预设)",
+	dateFormat: "YYYY年0MM月0DD日",
+	createdPrompt: "建立于"});
 
 merge(config.views.editor,{
-	tagPrompt: "Type tags separated with spaces, [[use double square brackets]] if necessary, or add existing",
-	defaultText: "Type the text for '%0'"});
+	tagPrompt: "设定标签之间以空白区隔，[[标签含空白时请使用双中括弧]]，或点选现有之标签加入",
+	defaultText: ""});
 
 merge(config.views.editor.tagChooser,{
-	text: "tags",
-	tooltip: "Choose existing tags to add to this tiddler",
-	popupNone: "There are no tags defined",
-	tagTooltip: "Add the tag '%0'"});
+	text: "标签",
+	tooltip: "点选现有之标签加至本文章",
+	popupNone: "未设定标签",
+	tagTooltip: "加入标签 '%0'"});
 
 merge(config.messages,{
 	sizeTemplates:
@@ -358,75 +379,76 @@ merge(config.messages,{
 		]});
 
 merge(config.macros.search,{
-	label: "search",
-	prompt: "Search this TiddlyWiki",
+	label: " 寻找",
+	prompt: "搜寻本 Wiki",
 	accessKey: "F",
-	successMsg: "%0 tiddlers found matching %1",
-	failureMsg: "No tiddlers found matching %0"});
+	successMsg: " %0 篇符合条件: %1",
+	failureMsg: " 无符合条件: %0"});
 
 merge(config.macros.tagging,{
-	label: "tagging: ",
-	labelNotTag: "not tagging",
-	tooltip: "List of tiddlers tagged with '%0'"});
+	label: "引用标签:",
+	labelNotTag: "无引用标签",
+	tooltip: "列出标签为 '%0' 的文章"});
 
 merge(config.macros.timeline,{
-	dateFormat: "DD MMM YYYY"});
+	dateFormat: "YYYY年0MM月0DD日"});
 
 merge(config.macros.allTags,{
-	tooltip: "Show tiddlers tagged with '%0'",
-	noTags: "There are no tagged tiddlers"});
+	tooltip: "显示文章- 标签为'%0'",
+	noTags: "没有标签"});
 
-config.macros.list.all.prompt = "All tiddlers in alphabetical order";
-config.macros.list.missing.prompt = "Tiddlers that have links to them but are not defined";
-config.macros.list.orphans.prompt = "Tiddlers that are not linked to from any other tiddlers";
-config.macros.list.shadowed.prompt = "Tiddlers shadowed with default contents";
-config.macros.list.touched.prompt = "Tiddlers that have been modified locally";
+config.macros.list.all.prompt = "依字母排序";
+config.macros.list.missing.prompt = "被引用且内容空白的文章";
+config.macros.list.orphans.prompt = "未被引用的文章";
+config.macros.list.shadowed.prompt = "这些隐藏的文章已预设内容";
+config.macros.list.touched.prompt = "自下载或新增后被修改过的文章"; 
 
 merge(config.macros.closeAll,{
-	label: "close all",
-	prompt: "Close all displayed tiddlers (except any that are being edited)"});
+	label: "全部关闭",
+	prompt: "关闭所有开启中的 tiddler (编辑中除外)"});
 
 merge(config.macros.permaview,{
-	label: "permaview",
-	prompt: "Link to an URL that retrieves all the currently displayed tiddlers"});
+	label: "引用连结",
+	prompt: "可存取现有开启之文章的连结位址"});
 
 merge(config.macros.saveChanges,{
-	label: "save changes",
-	prompt: "Save all tiddlers to create a new TiddlyWiki",
+	label: "储存变更",
+	prompt: "储存所有文章，产生新的版本",
 	accessKey: "S"});
 
 merge(config.macros.newTiddler,{
-	label: "new tiddler",
-	prompt: "Create a new tiddler",
-	title: "New Tiddler",
+	label: "新增文章",
+	prompt: "新增 tiddler",
+	title: "新增文章",
 	accessKey: "N"});
 
 merge(config.macros.newJournal,{
-	label: "new journal",
-	prompt: "Create a new tiddler from the current date and time",
+	label: "新增日志",
+	prompt: "新增 jounal",
 	accessKey: "J"});
 
 merge(config.macros.plugins,{
-	wizardTitle: "Manage plugins",
-	step1Title: "Currently loaded plugins",
+	wizardTitle: "扩充套件管理",
+	step1Title: "- 已载入之套件",
 	step1Html: "<input type='hidden' name='markList'></input>",
-	skippedText: "(This plugin has not been executed because it was added since startup)",
-	noPluginText: "There are no plugins installed",
-	confirmDeleteText: "Are you sure you want to delete these plugins:\n\n%0",
-	removeLabel: "remove systemConfig tag",
-	removePrompt: "Remove systemConfig tag",
-	deleteLabel: "delete",
-	deletePrompt: "Delete these tiddlers forever",
+	skippedText: "(此套件因刚加入，故尚未执行)",
+	noPluginText: "未安装套件",
+	confirmDeleteText: "确认是否删除此文章:\n\n%0",
+	removeLabel: "移除 systemConfig 标签",
+	removePrompt: "移除 systemConfig 标签",
+	deleteLabel: "删除",
+	deletePrompt: "永远删除所选",
+
 	listViewTemplate : {
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
-			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "Title", type: 'TiddlerLink'},
-			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "Size", type: 'Size'},
-			{name: 'Forced', field: 'forced', title: "Forced", tag: 'systemConfigForce', type: 'TagCheckbox'},
-			{name: 'Disabled', field: 'disabled', title: "Disabled", tag: 'systemConfigDisable', type: 'TagCheckbox'},
-			{name: 'Executed', field: 'executed', title: "Loaded", type: 'Boolean', trueText: "Yes", falseText: "No"},
-			{name: 'Error', field: 'error', title: "Status", type: 'Boolean', trueText: "Error", falseText: "OK"},
-			{name: 'Log', field: 'log', title: "Log", type: 'StringList'}
+			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "标题", type: 'TiddlerLink'},
+			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "大小", type: 'Size'},
+			{name: 'Executed', field: 'executed', title: "已载入", type: "Boolean", trueText: "是", falseText: "否"},
+			{name: 'Error', field: 'error', title: "载入状态", type: 'Boolean', trueText: "错误", falseText: "正常"},
+			{name: 'Forced', field: 'forced', title: "强制执行", tag: 'systemConfigForce', type: 'TagCheckbox'},
+			{name: 'Disabled', field: 'disabled', title: "停用", tag: 'systemConfigDisable', type: 'TagCheckbox'},
+			{name: 'Log', field: 'log', title: "纪录", type: 'StringList'}
 			],
 		rowClasses: [
 			{className: 'error', field: 'error'},
@@ -435,44 +457,45 @@ merge(config.macros.plugins,{
 	});
 
 merge(config.macros.refreshDisplay,{
-	label: "refresh",
-	prompt: "Redraw the entire TiddlyWiki display"
+	label: "刷新",
+	prompt: "刷新此 TiddlyWiki 显示"
 	});
-
+	
 merge(config.macros.importTiddlers,{
-	readOnlyWarning: "You cannot import into a read-only TiddlyWiki file. Try opening it from a file:// URL",
-	wizardTitle: "Import tiddlers from another file or server",
-	step1Title: "Step 1: Locate the server or TiddlyWiki file",
-	step1Html: "Specify the type of the server: <select name='selTypes'><option value=''>Choose...</option></select><br>Enter the URL or pathname here: <input type='text' size=50 name='txtPath'><br>...or browse for a file: <input type='file' size=50 name='txtBrowse'><br><hr>...or select a pre-defined feed: <select name='selFeeds'><option value=''>Choose...</option></select>",
-	openLabel: "open",
-	openPrompt: "Open the connection to this file or server",
-	openError: "There were problems fetching the tiddlywiki file",
-	statusOpenHost: "Opening the host",
-	statusGetWorkspaceList: "Getting the list of available workspaces",
-	step2Title: "Step 2: Choose the workspace",
-	step2Html: "Enter a workspace name: <input type='text' size=50 name='txtWorkspace'><br>...or select a workspace: <select name='selWorkspace'><option value=''>Choose...</option></select>",
-	cancelLabel: "cancel",
-	cancelPrompt: "Cancel this import",
-	statusOpenWorkspace: "Opening the workspace",
-	statusGetTiddlerList: "Getting the list of available tiddlers",
-	step3Title: "Step 3: Choose the tiddlers to import",
-	step3Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='true' name='chkSync'>Keep these tiddlers linked to this server so that you can synchronise subsequent changes</input>",
-	importLabel: "import",
-	importPrompt: "Import these tiddlers",
-	confirmOverwriteText: "Are you sure you want to overwrite these tiddlers:\n\n%0",
-	step4Title: "Step 4: Importing %0 tiddler(s)",
+	readOnlyWarning: "TiddlyWiki 于唯读模式下，不支援汇入文章。请由本机（file://）开启 TiddlyWiki 文件",
+	wizardTitle: "自其他档案或伺服器汇入文章",
+	step1Title: "步骤一：指定伺服器或来源文件",
+	step1Html: "指定伺服器类型：<select name='selTypes'><option value=''>选取...</option></select><br>请输入网址或路径：<input type='text' size=50 name='txtPath'><br>...或选择来源文件：<input type='file' size=50 name='txtBrowse'><br><hr>...或选择指定的馈入来源：<select name='selFeeds'><option value=''>选取...</option></select>",
+	openLabel: "开启",
+	openPrompt: "开启档案或",
+	openError: "读取来源文件时发生错误",
+	statusOpenHost: "正与伺服器建立连线",
+	statusGetWorkspaceList: "正在取得可用之文章清单",
+	step2Title: "步骤二：选择工作区",
+	step2Html: "输入工作区名称：<input type='text' size=50 name='txtWorkspace'><br>...或选择工作区：<select name='selWorkspace'><option value=''>选取...</option></select>",
+	cancelLabel: "取消",
+	cancelPrompt: "取消本次汇入动作",
+	statusOpenWorkspace: "正在开启工作区",
+	statusGetTiddlerList: "正在取得可用之文章清单",
+	step3Title: "步骤三：选择欲汇入之文章",
+	step3Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='true' name='chkSync'>保持这些文章与伺服器连线，让变更持续同步。</input>",
+	importLabel: "汇入",
+	importPrompt: "汇入所选文章",
+	confirmOverwriteText: "确定要覆写这些文章：\n\n%0",
+	step4Title: "步骤四：正在汇入%0 篇文章",
 	step4Html: "<input type='hidden' name='markReport'></input>",
-	step5Title: "Step 5: Completed",
-	step5Html: "All tiddlers were imported",
-	doneLabel: "done",
-	donePrompt: "Close this wizard",
+	step5Title: "步骤五：汇入完成",
+	step5Html: "所选文章已汇入",
+	doneLabel: "完成",
+	donePrompt: "关闭",
+
 	listViewTemplate: {
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
-			{name: 'Title', field: 'title', title: "Title", type: 'String'},
-			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "Size", type: 'Size'},
-			{name: 'Snippet', field: 'text', title: "Snippet", type: 'String'},
-			{name: 'Tags', field: 'tags', title: "Tags", type: 'Tags'}
+			{name: 'Title', field: 'title', title: "标题", type: 'String'},
+			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "大小", type: 'Size'},
+			{name: 'Snippet', field: 'text', title: "文章摘要", type: 'String'},
+			{name: 'Tags', field: 'tags', title: "标签", type: 'Tags'}
 			],
 		rowClasses: [
 			]}
@@ -482,96 +505,97 @@ merge(config.macros.sync,{
 	listViewTemplate: {
 		columns: [
 			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},
-			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "Title", type: 'TiddlerLink'},
-			{name: 'Server Type', field: 'serverType', title: "Server type", type: 'String'},
-			{name: 'Server Host', field: 'serverHost', title: "Server host", type: 'String'},
-			{name: 'Server Workspace', field: 'serverWorkspace', title: "Server workspace", type: 'String'},
-			{name: 'Status', field: 'status', title: "Synchronisation status", type: 'String'},
-			{name: 'Server URL', field: 'serverUrl', title: "Server URL", text: "View", type: 'Link'}
+			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "文章标题", type: 'TiddlerLink'},
+			{name: 'Server Type', field: 'serverType', title: "伺服器类型", type: 'String'},
+			{name: 'Server Host', field: 'serverHost', title: "伺服器主机", type: 'String'},
+			{name: 'Server Workspace', field: 'serverWorkspace', title: "伺服器工作区", type: 'String'},
+			{name: 'Status', field: 'status', title: "同步情形", type: 'String'},
+			{name: 'Server URL', field: 'serverUrl', title: "伺服器网址", text: "View", type: 'Link'}
 			],
 		rowClasses: [
 			],
 		buttons: [
-			{caption: "Sync these tiddlers", name: 'sync'}
+			{caption: "同步更新这些文章", name: 'sync'}
 			]},
-	wizardTitle: "Synchronize with external servers and files",
-	step1Title: "Choose the tiddlers you want to synchronize",
+	wizardTitle: "将你的资料内容与外部伺服器与档案同步",
+	step1Title: "选择欲同步的文章",
 	step1Html: '<input type="hidden" name="markList"></input>',
-	syncLabel: "sync",
-	syncPrompt: "Sync these tiddlers",
-	hasChanged:	"Changed while unplugged",
-	hasNotChanged: "Unchanged while unplugged",
+	syncLabel: "同步",
+	syncPrompt: "同步更新这些文章",
+	hasChanged: "已更动",
+	hasNotChanged: "未更动",
 	syncStatusList: {
 		none: {text: "...", color: "none"},
-		changedServer: {text: "Changed on server", color: "#80ff80"},
-		changedLocally: {text: "Changed while unplugged", color: "#80ff80"},
-		changedBoth: {text: "Changed while unplugged and on server", color: "#ff8080"},
-		notFound: {text: "Not found on server", color: "#ffff80"},
-		putToServer: {text: "Saved update on server", color: "#ff80ff"},
-		gotFromServer: {text: "Retrieved update from server", color: "#80ffff"}
+		changedServer: {text: "已更新伺服器上资料", color: "#80ff80"},
+		changedLocally: {text: "本机资料已更动", color: "#80ff80"},
+		changedBoth: {text: "已同时更新本机与伺服器上的资料", color: "#ff8080"},
+		notFound: {text: "伺服器无此资料", color: "#ffff80"},
+		putToServer: {text: "已储存更新资料至伺服器", color: "#ff80ff"},
+		gotFromServer: {text: "已从伺服器撷取更新资料", color: "#80ffff"}
 		}
 	});
 
 merge(config.commands.closeTiddler,{
-	text: "close",
-	tooltip: "Close this tiddler"});
+	text: "关闭",
+	tooltip: "关闭本文"});
 
 merge(config.commands.closeOthers,{
-	text: "close others",
-	tooltip: "Close all other tiddlers"});
+	text: "关闭其他",
+	tooltip: "关闭其他文章"});
 
 merge(config.commands.editTiddler,{
-	text: "edit",
-	tooltip: "Edit this tiddler",
-	readOnlyText: "view",
-	readOnlyTooltip: "View the source of this tiddler"});
+	text: "编辑",
+	tooltip: "编辑本文",
+	readOnlyText: "检视",
+	readOnlyTooltip: "检视本文之原始内容"});
 
 merge(config.commands.saveTiddler,{
-	text: "done",
-	tooltip: "Save changes to this tiddler"});
+	text: "完成",
+	tooltip: "确定修改"});
 
 merge(config.commands.cancelTiddler,{
-	text: "cancel",
-	tooltip: "Undo changes to this tiddler",
-	warning: "Are you sure you want to abandon your changes to '%0'?",
-	readOnlyText: "done",
-	readOnlyTooltip: "View this tiddler normally"});
+	text: "取消",
+	tooltip: "取消修改",
+	warning: "确定取消对 '%0' 的修改吗?",
+	readOnlyText: "完成",
+	readOnlyTooltip: "返回正常显示模式"});
 
 merge(config.commands.deleteTiddler,{
-	text: "delete",
-	tooltip: "Delete this tiddler",
-	warning: "Are you sure you want to delete '%0'?"});
+	text: "删除",
+	tooltip: "删除文章",
+	warning: "确定删除 '%0'?"});
 
 merge(config.commands.permalink,{
-	text: "permalink",
-	tooltip: "Permalink for this tiddler"});
+	text: "引用连结",
+	tooltip: "本文引用连结"});
 
 merge(config.commands.references,{
-	text: "references",
-	tooltip: "Show tiddlers that link to this one",
-	popupNone: "No references"});
+	text: "引用",
+	tooltip: "引用本文的文章",
+	popupNone: "本文未被引用"});
 
 merge(config.commands.jump,{
-	text: "jump",
-	tooltip: "Jump to another open tiddler"});
+	text: "卷页",
+	tooltip: "卷页至其他已开启的文章"});
 
 merge(config.shadowTiddlers,{
 	DefaultTiddlers: "GettingStarted",
-	MainMenu: "GettingStarted",
-	SiteTitle: "My TiddlyWiki",
-	SiteSubtitle: "a reusable non-linear personal web notebook",
-	SiteUrl: "http://www.tiddlywiki.com/",
-	SideBarOptions: '<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal "DD MMM YYYY">><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel "options »" "Change TiddlyWiki advanced options">>',
-	SideBarTabs: '<<tabs txtMainTab "Timeline" "Timeline" TabTimeline "All" "All tiddlers" TabAll "Tags" "All tags" TabTags "More" "More lists" TabMore>>',
+	MainMenu: "[[使用说明|GettingStarted]]",
+	SiteTitle: "我的 TiddlyWiki",
+	SiteSubtitle: "一个可重复使用的个人网页式笔记本",
+	SiteUrl: 'http://www.tiddlywiki.com/',
+	SideBarOptions: '<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal " YYYY年0MM月0DD日">><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  "偏好设定 »" "变更 TiddlyWiki 选项">>',
+	SideBarTabs: '<<tabs txtMainTab "最近更新" "依更新日期排序" TabTimeline "全部" "所有文章" TabAll "分类" "所有标签" TabTags "更多" "其他" TabMore>>',
 	TabTimeline: '<<timeline>>',
 	TabAll: '<<list all>>',
 	TabTags: '<<allTags excludeLists>>',
-	TabMore: '<<tabs txtMoreTab "Missing" "Missing tiddlers" TabMoreMissing "Orphans" "Orphaned tiddlers" TabMoreOrphans "Shadowed" "Shadowed tiddlers" TabMoreShadowed>>',
+	TabMore: '<<tabs txtMoreTab "未完成" "内容空白的文章" TabMoreMissing "未引用" "未被引用的文章" TabMoreOrphans "预设文章" "已预设内容的隐藏文章" TabMoreShadowed>>',
 	TabMoreMissing: '<<list missing>>',
 	TabMoreOrphans: '<<list orphans>>',
 	TabMoreShadowed: '<<list shadowed>>',
-	PluginManager: '<<plugins>>',
+	PluginManager: '<<plugins>>', 
 	ImportTiddlers: '<<importTiddlers>>'});
+/*}}}*/
 //--
 //-- Main
 //--

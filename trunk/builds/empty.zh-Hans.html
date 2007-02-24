@@ -3,7 +3,7 @@
 <head>
 <script type="text/javascript">
 //<![CDATA[
-var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 3, date: new Date("Jan 8, 2007"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 3, date: new Date("Feb 22, 2007"), extensions: {}};
 //]]>
 </script>
 <!--
@@ -85,10 +85,11 @@ Welcome to TiddlyWiki by Jeremy Ruston, Copyright &copy; 2007 Osmosoft Limited
 	<div id="javascriptWarning">This page requires JavaScript to function properly.<br><br>If you are using Microsoft Internet Explorer you may need to click on the yellow bar above and select 'Allow Blocked Content'. You must then click 'Yes' on the following security warning.</div>
 </noscript>
 <div id="saveTest"></div>
-<div id="backstageCloak"></div>
+<div id="backstageButton"></div>
+<div id="backstageArea"><div id="backstageToolbar"></div></div>
 <div id="backstage">
-	<div id="backstageTabs"></div>
 	<div id="backstagePanel"></div>
+	<div id="backstageCloak"></div>
 </div>
 <div id="contentWrapper"></div>
 <div id="contentStash"></div>
@@ -218,11 +219,16 @@ td, tr {border:1px solid [[ColorPalette::TertiaryDark]];}
 .editor textarea {border:1px solid [[ColorPalette::PrimaryMid]]; width:100%;}
 .editorFooter {color:[[ColorPalette::TertiaryMid]];}
 
-.backstageSelTab {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]];}
-#backstagePanel {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]];}
+#backstageArea {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::TertiaryDark]];}
+#backstageArea a {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]]; border:none;}
+#backstageArea a:hover {background:[[ColorPalette::SecondaryMid]]; color:[[ColorPalette::Foreground]]; }
+#backstageArea a.backstageSelTab {background:[[ColorPalette::Background]]; color:[[ColorPalette::Foreground]];}
+#backstageButton {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]];}
+#backstageButton .button {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]]; border:none;}
+#backstagePanel {background:[[ColorPalette::Background]];}
 .backstagePanelFooter .button {border:none; color:[[ColorPalette::Background]];}
 .backstagePanelFooter .button:hover {color:[[ColorPalette::Foreground]];}
-#backstageCloak {background:[[ColorPalette::Background]]; opacity:0.5; filter:'alpha(opacity:50)';}
+#backstageCloak {background:[[ColorPalette::Foreground]]; opacity:0.6; filter:'alpha(opacity:60)';}
 /*}}}*/</pre>
 </div>
 <div title="StyleSheetLayout">
@@ -378,10 +384,12 @@ table.listView th, table.listView td, table.listView tr {padding:0px 3px 0px 3px
 
 .cascade {font-size:1.1em; position:absolute; overflow:hidden;}
 
-#backstage {position:absolute; z-index:100; width:100%;}
-#backstageTabs {visibility:hidden; position:relative; margin:0.5em 3em 0.2em 3em; font-size:1.1em; background:none; text-align:right;}
-#backstageTabs a {font-weight:bold; padding:0.2em 0.5em 0.2em 0.5em;}
-#backstagePanel {display:none; position:relative; margin:0em 3em 0em 3em; padding:1em 1em 1em 1em;}
+#backstageArea {display:none; position:relative; overflow: hidden; z-index:150; padding:0.2em 0.5em 0.2em 0.5em;}
+#backstageToolbar {position:relative;}
+#backstageArea a {font-weight:bold; margin-left:0.5em; padding:0.2em 0.5em 0.2em 0.5em;}
+#backstageButton {display:none; position:absolute; z-index:175; top:0em; right:0em; padding:0.2em 0.5em 0.2em 0.5em;}
+#backstage {position:relative; width:100%;}
+#backstagePanel {display:none; z-index:100; position:absolute; margin:0em 3em 0em 3em; padding:1em 1em 1em 1em;}
 .backstagePanelFooter {padding-top:0.2em; float:right;}
 .backstagePanelFooter a {padding:0.2em 0.4em 0.2em 0.4em;}
 #backstageCloak {display:none; z-index:50; position:absolute; width:100%; height:100px;}
