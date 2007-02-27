@@ -1,0 +1,17 @@
+<div title="CustomCssClass.zh-Hant">
+<pre>
+將任意文字包裹於 HTML {{{<span>}}} or {{{<div>}}} 並指定 CSS class， 如此便能模組化自訂 CSS 樣式。 先於 StyleSheet tiddler 加入 CSS 規則，例如：{{{.wrappingClass{color: #666; background: #bbb} }}}，如此及可於 tiddler 中使用，像這樣：
+{{{
+{{wrappingClass{Text that is now accentuated}}}
+}}}
+{{wrappingClass{Text that is now accentuated}}}
+
+此文字預設是放置於 {{{<span>}}}，也可改放於 {{{<div>}}}，只需換行放置文字：
+{{{
+{{wrappingClass{
+Text that is now accentuated}}}
+}}}
+{{wrappingClass{
+Text that is now accentuated}}}
+</pre>
+</div>
