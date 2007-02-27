@@ -2,8 +2,8 @@
 !Metadata:
 |''Name:''|ManageTiddlersPlugin|
 |''Description:''|List tiddlers with specific tag and let you manage the multiple selected tiddlers.|
-|''Version:''|1.0.0|
-|''Date:''|Nov 23, 2006|
+|''Version:''|1.1.0|
+|''Date:''|Feb 27, 2007|
 |''Source:''|http://www.sourceforge.net/projects/ptw/|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License]]|
@@ -20,12 +20,13 @@
 }}}
 !Revision History:
 |''Version''|''Date''|''Note''|
+|1.1.0|Feb 27, 2007|Added feature Tags:"*" managing all tiddlers|
 |1.0.0|Nov 23, 2006|Initial release|
 !Code section:
 ***/
 //{{{
-version.extensions.manageTiddlers = {major: 1, minor: 0, revision: 0,
- date: new Date("Nov 23, 2006"),
+version.extensions.manageTiddlers = {major: 1, minor: 1, revision: 0,
+ date: new Date("Feb 27, 2007"),
  name: "manageTiddlers",
  type: "Plugin",
  author: "BramChen",
@@ -69,7 +70,7 @@ config.macros.manageTiddlers.refresh = function(place,params){
 	var tagged = (typeof params[0] == "undefined")?" ":params[0]["tags"];
 	var sortField = params[0]["sortField"];
 	var sortReverse = params[0]["sortReverse"];
-	var tiddlers = (tagged == " ")?store.getNoTaggedTiddlers():store.getTaggedTiddlers(tagged,sortField);
+	var tiddlers = (tagged == " ")?store.getNoTaggedTiddlers():(tagged == "*")?store.reverseLookup("tags","excludeLists",false,"title"):store.getTaggedTiddlers(tagged,sortField);
 	if (sortReverse == "yes") {
 			tiddlers.sort(function(a,b) {return a[sortField] > b[sortField] ? -1 : (a[sortField] == b[sortField] ? 0 : +1);});
 	}
