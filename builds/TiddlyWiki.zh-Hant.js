@@ -1,6 +1,6 @@
 /*
 <!--
-TiddlyWiki 2.2.0 beta 3 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
+TiddlyWiki 2.2.0 beta 4 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
 
 Copyright (c) Osmosoft Limited 2004-2007
 
@@ -30,7 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF S
 DAMAGE.
 -->
 */
-var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 3, date: new Date("Jan 8, 2007"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 4, date: new Date("Feb 28, 2007"), extensions: {}};
 //
 // Please note:
 // 
@@ -272,62 +272,62 @@ merge(config.options,{
 	txtUserName: "YourName"});
 
 config.tasks = {
-		save: {text: "储存", tooltip: "储存变更至此 TiddlyWiki", action: saveChanges},
-		tidy: {text: "整理", tooltip: "对群组文章作大量更新", content: 'Coming soon...\n\nThis tab will allow bulk operations on tiddlers, and tags. It will be a generalised, extensible version of the plugins tab'},
-		sync: {text: "同步", tooltip: "将你的资料内容与外部伺服器与档案同步", content: '<<sync>>'},
-		importTask: {text: "汇入", tooltip: "自其他档案或伺服器汇入文章或套件", content: '<<importTiddlers>>'},
-		copy: {text: "复制", tooltip: "复制文章至别的 TiddlyWiki 文件及伺服器", content: 'Coming soon...\n\nThis tab will allow tiddlers to be copied to remote servers'},
-		tweak: {text: "选项", tooltip: "改变此 TiddlyWiki 的显示与行为的设定", content: '<<options>>'},
-		plugins: {text: "套件管理", tooltip: "管理已安装的套件", content: '<<plugins>>'}
+		save: {text: "儲存", tooltip: "儲存變更至此 TiddlyWiki", action: saveChanges},
+		tidy: {text: "整理", tooltip: "對群組文章作大量更新", content: 'Coming soon...\n\nThis tab will allow bulk operations on tiddlers, and tags. It will be a generalised, extensible version of the plugins tab'},
+		sync: {text: "同步", tooltip: "將你的資料內容與外部伺服器與檔案同步", content: '<<sync>>'},
+		importTask: {text: "導入", tooltip: "自其他檔案或伺服器導入文章或套件", content: '<<importTiddlers>>'},
+		copy: {text: "複製", tooltip: "複製文章至別的 TiddlyWiki 文件及伺服器", content: 'Coming soon...\n\nThis tab will allow tiddlers to be copied to remote servers'},
+		tweak: {text: "選項", tooltip: "改變此 TiddlyWiki 的顯示與行為的設定", content: '<<options>>'},
+		plugins: {text: "套件管理", tooltip: "管理已安裝的套件", content: '<<plugins>>'}
 };
 
 // Messages
 merge(config.messages,{
-	customConfigError: "套件载入发生错误，详细请参考 PluginManager",
-	pluginError: "发生错误: %0",
-	pluginDisabled: "未执行，因标签设为 'systemConfigDisable'",
-	pluginForced: "已执行，因标签设为 'systemConfigForce'",
-	pluginVersionError: "未执行，套件需较新版本的 TiddlyWiki",
-	nothingSelected: "尚未作任何选择，至少需选择一项",
-	savedSnapshotError: "此 TiddlyWiki 未正确存档，详见 http://www.tiddlywiki.com/#DownloadSoftware",
+	customConfigError: "套件載入發生錯誤，詳細請參考 PluginManager",
+	pluginError: "發生錯誤: %0",
+	pluginDisabled: "未執行，因標籤設為 'systemConfigDisable'",
+	pluginForced: "已執行，因標籤設為 'systemConfigForce'",
+	pluginVersionError: "未執行，套件需較新版本的 TiddlyWiki",
+	nothingSelected: "尚未作任何選擇，至少需選擇一項",
+	savedSnapshotError: "此 TiddlyWiki 未正確存檔，詳見 http://www.tiddlywiki.com/#DownloadSoftware",
 	subtitleUnknown: "(未知)",
-	undefinedTiddlerToolTip: "'%0' 尚无内容",
-	shadowedTiddlerToolTip: "'%0' 尚无内容, 但已定义隐藏的预设值",
+	undefinedTiddlerToolTip: "'%0' 尚無內容",
+	shadowedTiddlerToolTip: "'%0' 尚無內容, 但已定義隱藏的預設值",
 	tiddlerLinkTooltip: "%0 - %1, %2",
-	externalLinkTooltip: "外部连结至 %0",
-	noTags: "未设定标签的文章",
-	notFileUrlError: "须先将此 TiddlyWiki 存至档案，才可储存变更",
-	cantSaveError: "无法储存变更。可能的原因有：\n- 你的浏览器不支援此储存功能（Firefox, Internet Explorer, Safari and Opera 经适当设定后可储存变更）\n- 也可能是你的 TiddlyWiki 档名包含不合法的字元所致。\n- 或是 TiddlyWiki 文件被改名或搬移。",
+	externalLinkTooltip: "外部連結至 %0",
+	noTags: "未設定標籤的文章",
+	notFileUrlError: "須先將此 TiddlyWiki 存至檔案，才可儲存變更",
+	cantSaveError: "無法儲存變更。可能的原因有：\n- 你的瀏覽器不支援此儲存功能（Firefox, Internet Explorer, Safari and Opera 經適當設定後可儲存變更）\n- 也可能是你的 TiddlyWiki 檔名包含不合法的字元所致。\n- 或是 TiddlyWiki 文件被改名或搬移。",
 	invalidFileError: " '%0' 非有效之 TiddlyWiki 文件",
-	backupSaved: "已储存备份",
-	backupFailed: "无法储存备份",
-	rssSaved: "RSS feed 已储存",
-	rssFailed: "无法储存 RSS feed ",
-	emptySaved: "已储存范本",
-	emptyFailed: "无法储存范本",
-	mainSaved: "主要的TiddlyWiki已储存",
-	mainFailed: "无法储存主要 TiddlyWiki，所作的改变未储存",
-	macroError: "巨集 <<%0>> 执行错误",
-	macroErrorDetails: "执行巨集 <<%0>> 时，发生错误 :\n%1",
-	missingMacro: "无此巨集",
-	overwriteWarning: "'%0' 已存在，[确定]覆写之",
-	unsavedChangesWarning: "注意！ 尚未储存变更\n\n[确定]存档，或[取消]放弃存档？",
-	confirmExit: "--------------------------------\n\nTiddlyWiki 以更改内容尚未储存，继续的话将遗失这些更动\n\n--------------------------------",
+	backupSaved: "已儲存備份",
+	backupFailed: "無法儲存備份",
+	rssSaved: "RSS feed 已儲存",
+	rssFailed: "無法儲存 RSS feed ",
+	emptySaved: "已儲存範本",
+	emptyFailed: "無法儲存範本",
+	mainSaved: "主要的TiddlyWiki已儲存",
+	mainFailed: "無法儲存主要 TiddlyWiki，所作的改變未儲存",
+	macroError: "巨集 <<%0>> 執行錯誤",
+	macroErrorDetails: "執行巨集 <<%0>> 時，發生錯誤 :\n%1",
+	missingMacro: "無此巨集",
+	overwriteWarning: "'%0' 已存在，[確定]覆寫之",
+	unsavedChangesWarning: "注意！ 尚未儲存變更\n\n[確定]存檔，或[取消]放棄存檔？",
+	confirmExit: "--------------------------------\n\nTiddlyWiki 以更改內容尚未儲存，繼續的話將遺失這些更動\n\n--------------------------------",
 	saveInstructions: "SaveChanges",
 	unsupportedTWFormat: "未支援此 TiddlyWiki 格式：'%0'",
-	tiddlerSaveError: "储存文章 '%0' 时，发生错误。",
-	tiddlerLoadError: "载入文章 '%0' 时，发生错误。",
-	wrongSaveFormat: "无法使用格式 '%0' 储存，请使用标准格式存放",
-	invalidFieldName: "无效的栏位名称：%0",
-	fieldCannotBeChanged: "无法变更栏位：'%0'"});
+	tiddlerSaveError: "儲存文章 '%0' 時，發生錯誤。",
+	tiddlerLoadError: "載入文章 '%0' 時，發生錯誤。",
+	wrongSaveFormat: "無法使用格式 '%0' 儲存，請使用標准格式存放",
+	invalidFieldName: "無效的欄位名稱：%0",
+	fieldCannotBeChanged: "無法變更欄位：'%0'"});
 
 merge(config.messages.messageClose,{
-	text: "关闭",
-	tooltip: "关闭此讯息"});
+	text: "關閉",
+	tooltip: "關閉此訊息"});
 
 config.messages.backstage = {
-	open: {text: "控制台", icon: "↩", iconIE: "←", tooltip: "开启控制台执行编写工作"},
-	close: {text: "关闭", icon: "↪", iconIE: "→", tooltip: "关闭控制台"},
+	open: {text: "控制台", icon: "↩", iconIE: "←", tooltip: "開啟控制台執行編寫工作"},
+	close: {text: "關閉", icon: "↪", iconIE: "→", tooltip: "關閉控制台"},
 	prompt: "控制台："
 }
 
@@ -344,30 +344,30 @@ config.messages.dates.am = "上午";
 config.messages.dates.pm = "下午";
 
 merge(config.views.wikified.tag,{
-	labelNoTags: "未设标签",
-	labelTags: "标签: ",
-	openTag: "开启标签 '%0'",
-	tooltip: "显示标签为 '%0' 的文章",
-	openAllText: "开启以下所有文章",
-	openAllTooltip: "开启以下所有文章",
-	popupNone: "仅此文标签为 '%0'"});
+	labelNoTags: "未設標籤",
+	labelTags: "標籤: ",
+	openTag: "開啟標籤 '%0'",
+	tooltip: "顯示標籤為 '%0' 的文章",
+	openAllText: "開啟以下所有文章",
+	openAllTooltip: "開啟以下所有文章",
+	popupNone: "僅此文標籤為 '%0'"});
 
 merge(config.views.wikified,{
 	defaultText: "",
 	defaultModifier: "(未完成)",
-	shadowModifier: "(预设)",
+	shadowModifier: "(預設)",
 	dateFormat: "YYYY年0MM月0DD日",
-	createdPrompt: "建立于"});
+	createdPrompt: "建立於"});
 
 merge(config.views.editor,{
-	tagPrompt: "设定标签之间以空白区隔，[[标签含空白时请使用双中括弧]]，或点选现有之标签加入",
+	tagPrompt: "設定標籤之間以空白區隔，[[標籤含空白時請使用雙中括弧]]，或點選現有之標籤加入",
 	defaultText: ""});
 
 merge(config.views.editor.tagChooser,{
-	text: "标签",
-	tooltip: "点选现有之标签加至本文章",
-	popupNone: "未设定标签",
-	tagTooltip: "加入标签 '%0'"});
+	text: "標籤",
+	tooltip: "點選現有之標籤加至本文章",
+	popupNone: "未設定標籤",
+	tagTooltip: "加入標籤 '%0'"});
 
 merge(config.messages,{
 	sizeTemplates:
@@ -379,41 +379,41 @@ merge(config.messages,{
 		]});
 
 merge(config.macros.search,{
-	label: " 寻找",
-	prompt: "搜寻本 Wiki",
+	label: " 尋找",
+	prompt: "搜尋本 Wiki",
 	accessKey: "F",
-	successMsg: " %0 篇符合条件: %1",
-	failureMsg: " 无符合条件: %0"});
+	successMsg: " %0 篇符合條件: %1",
+	failureMsg: " 無符合條件: %0"});
 
 merge(config.macros.tagging,{
-	label: "引用标签:",
-	labelNotTag: "无引用标签",
-	tooltip: "列出标签为 '%0' 的文章"});
+	label: "引用標籤:",
+	labelNotTag: "無引用標籤",
+	tooltip: "列出標籤為 '%0' 的文章"});
 
 merge(config.macros.timeline,{
 	dateFormat: "YYYY年0MM月0DD日"});
 
 merge(config.macros.allTags,{
-	tooltip: "显示文章- 标签为'%0'",
-	noTags: "没有标签"});
+	tooltip: "顯示文章- 標籤為'%0'",
+	noTags: "沒有標籤"});
 
 config.macros.list.all.prompt = "依字母排序";
-config.macros.list.missing.prompt = "被引用且内容空白的文章";
+config.macros.list.missing.prompt = "被引用且內容空白的文章";
 config.macros.list.orphans.prompt = "未被引用的文章";
-config.macros.list.shadowed.prompt = "这些隐藏的文章已预设内容";
-config.macros.list.touched.prompt = "自下载或新增后被修改过的文章"; 
+config.macros.list.shadowed.prompt = "這些隱藏的文章已預設內容";
+config.macros.list.touched.prompt = "自下載或新增後被修改過的文章"; 
 
 merge(config.macros.closeAll,{
-	label: "全部关闭",
-	prompt: "关闭所有开启中的 tiddler (编辑中除外)"});
+	label: "全部關閉",
+	prompt: "關閉所有開啟中的 tiddler (編輯中除外)"});
 
 merge(config.macros.permaview,{
-	label: "引用连结",
-	prompt: "可存取现有开启之文章的连结位址"});
+	label: "引用連結",
+	prompt: "可存取現有開啟之文章的連結位址"});
 
 merge(config.macros.saveChanges,{
-	label: "储存变更",
-	prompt: "储存所有文章，产生新的版本",
+	label: "儲存變更",
+	prompt: "儲存所有文章，產生新的版本",
 	accessKey: "S"});
 
 merge(config.macros.newTiddler,{
@@ -423,32 +423,32 @@ merge(config.macros.newTiddler,{
 	accessKey: "N"});
 
 merge(config.macros.newJournal,{
-	label: "新增日志",
+	label: "新增日誌",
 	prompt: "新增 jounal",
 	accessKey: "J"});
 
 merge(config.macros.plugins,{
-	wizardTitle: "扩充套件管理",
-	step1Title: "- 已载入之套件",
+	wizardTitle: "擴充套件管理",
+	step1Title: "- 已載入之套件",
 	step1Html: "<input type='hidden' name='markList'></input>",
-	skippedText: "(此套件因刚加入，故尚未执行)",
-	noPluginText: "未安装套件",
-	confirmDeleteText: "确认是否删除此文章:\n\n%0",
-	removeLabel: "移除 systemConfig 标签",
-	removePrompt: "移除 systemConfig 标签",
-	deleteLabel: "删除",
-	deletePrompt: "永远删除所选",
+	skippedText: "(此套件因剛加入，故尚未執行)",
+	noPluginText: "未安裝套件",
+	confirmDeleteText: "確認是否刪除此文章:\n\n%0",
+	removeLabel: "移除 systemConfig 標籤",
+	removePrompt: "移除 systemConfig 標籤",
+	deleteLabel: "刪除",
+	deletePrompt: "永遠刪除所選",
 
 	listViewTemplate : {
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
-			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "标题", type: 'TiddlerLink'},
+			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "標題", type: 'TiddlerLink'},
 			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "大小", type: 'Size'},
-			{name: 'Executed', field: 'executed', title: "已载入", type: "Boolean", trueText: "是", falseText: "否"},
-			{name: 'Error', field: 'error', title: "载入状态", type: 'Boolean', trueText: "错误", falseText: "正常"},
-			{name: 'Forced', field: 'forced', title: "强制执行", tag: 'systemConfigForce', type: 'TagCheckbox'},
+			{name: 'Executed', field: 'executed', title: "已載入", type: "Boolean", trueText: "是", falseText: "否"},
+			{name: 'Error', field: 'error', title: "載入狀態", type: 'Boolean', trueText: "錯誤", falseText: "正常"},
+			{name: 'Forced', field: 'forced', title: "強制執行", tag: 'systemConfigForce', type: 'TagCheckbox'},
 			{name: 'Disabled', field: 'disabled', title: "停用", tag: 'systemConfigDisable', type: 'TagCheckbox'},
-			{name: 'Log', field: 'log', title: "纪录", type: 'StringList'}
+			{name: 'Log', field: 'log', title: "紀錄", type: 'StringList'}
 			],
 		rowClasses: [
 			{className: 'error', field: 'error'},
@@ -458,44 +458,44 @@ merge(config.macros.plugins,{
 
 merge(config.macros.refreshDisplay,{
 	label: "刷新",
-	prompt: "刷新此 TiddlyWiki 显示"
+	prompt: "刷新此 TiddlyWiki 顯示"
 	});
 	
 merge(config.macros.importTiddlers,{
-	readOnlyWarning: "TiddlyWiki 于唯读模式下，不支援汇入文章。请由本机（file://）开启 TiddlyWiki 文件",
-	wizardTitle: "自其他档案或伺服器汇入文章",
-	step1Title: "步骤一：指定伺服器或来源文件",
-	step1Html: "指定伺服器类型：<select name='selTypes'><option value=''>选取...</option></select><br>请输入网址或路径：<input type='text' size=50 name='txtPath'><br>...或选择来源文件：<input type='file' size=50 name='txtBrowse'><br><hr>...或选择指定的馈入来源：<select name='selFeeds'><option value=''>选取...</option></select>",
-	openLabel: "开启",
-	openPrompt: "开启档案或",
-	openError: "读取来源文件时发生错误",
-	statusOpenHost: "正与伺服器建立连线",
-	statusGetWorkspaceList: "正在取得可用之文章清单",
-	step2Title: "步骤二：选择工作区",
-	step2Html: "输入工作区名称：<input type='text' size=50 name='txtWorkspace'><br>...或选择工作区：<select name='selWorkspace'><option value=''>选取...</option></select>",
+	readOnlyWarning: "TiddlyWiki 於唯讀模式下，不支援導入文章。請由本機（file://）開啟 TiddlyWiki 文件",
+	wizardTitle: "自其他檔案或伺服器導入文章",
+	step1Title: "步驟一：指定伺服器或來源文件",
+	step1Html: "指定伺服器類型：<select name='selTypes'><option value=''>選取...</option></select><br>請輸入網址或路徑：<input type='text' size=50 name='txtPath'><br>...或選擇來源文件：<input type='file' size=50 name='txtBrowse'><br><hr>...或選擇指定的饋入來源：<select name='selFeeds'><option value=''>選取...</option></select>",
+	openLabel: "開啟",
+	openPrompt: "開啟檔案或",
+	openError: "讀取來源文件時發生錯誤",
+	statusOpenHost: "正與伺服器建立連線",
+	statusGetWorkspaceList: "正在取得可用之文章清單",
+	step2Title: "步驟二：選擇工作區",
+	step2Html: "輸入工作區名稱：<input type='text' size=50 name='txtWorkspace'><br>...或選擇工作區：<select name='selWorkspace'><option value=''>選取...</option></select>",
 	cancelLabel: "取消",
-	cancelPrompt: "取消本次汇入动作",
-	statusOpenWorkspace: "正在开启工作区",
-	statusGetTiddlerList: "正在取得可用之文章清单",
-	step3Title: "步骤三：选择欲汇入之文章",
-	step3Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='true' name='chkSync'>保持这些文章与伺服器连线，让变更持续同步。</input>",
-	importLabel: "汇入",
-	importPrompt: "汇入所选文章",
-	confirmOverwriteText: "确定要覆写这些文章：\n\n%0",
-	step4Title: "步骤四：正在汇入%0 篇文章",
+	cancelPrompt: "取消本次導入動作",
+	statusOpenWorkspace: "正在開啟工作區",
+	statusGetTiddlerList: "正在取得可用之文章清單",
+	step3Title: "步驟三：選擇欲導入之文章",
+	step3Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='true' name='chkSync'>保持這些文章與伺服器連線，讓變更持續同步。</input>",
+	importLabel: "導入",
+	importPrompt: "導入所選文章",
+	confirmOverwriteText: "確定要覆寫這些文章：\n\n%0",
+	step4Title: "步驟四：正在導入%0 篇文章",
 	step4Html: "<input type='hidden' name='markReport'></input>",
-	step5Title: "步骤五：汇入完成",
-	step5Html: "所选文章已汇入",
+	step5Title: "步驟五：導入完成",
+	step5Html: "所選文章已導入",
 	doneLabel: "完成",
-	donePrompt: "关闭",
+	donePrompt: "關閉",
 
 	listViewTemplate: {
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
-			{name: 'Title', field: 'title', title: "标题", type: 'String'},
+			{name: 'Title', field: 'title', title: "標題", type: 'String'},
 			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "大小", type: 'Size'},
 			{name: 'Snippet', field: 'text', title: "文章摘要", type: 'String'},
-			{name: 'Tags', field: 'tags', title: "标签", type: 'Tags'}
+			{name: 'Tags', field: 'tags', title: "標籤", type: 'Tags'}
 			],
 		rowClasses: [
 			]}
@@ -505,69 +505,69 @@ merge(config.macros.sync,{
 	listViewTemplate: {
 		columns: [
 			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},
-			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "文章标题", type: 'TiddlerLink'},
-			{name: 'Server Type', field: 'serverType', title: "伺服器类型", type: 'String'},
-			{name: 'Server Host', field: 'serverHost', title: "伺服器主机", type: 'String'},
-			{name: 'Server Workspace', field: 'serverWorkspace', title: "伺服器工作区", type: 'String'},
+			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "文章標題", type: 'TiddlerLink'},
+			{name: 'Server Type', field: 'serverType', title: "伺服器類型", type: 'String'},
+			{name: 'Server Host', field: 'serverHost', title: "伺服器主機", type: 'String'},
+			{name: 'Server Workspace', field: 'serverWorkspace', title: "伺服器工作區", type: 'String'},
 			{name: 'Status', field: 'status', title: "同步情形", type: 'String'},
-			{name: 'Server URL', field: 'serverUrl', title: "伺服器网址", text: "View", type: 'Link'}
+			{name: 'Server URL', field: 'serverUrl', title: "伺服器網址", text: "View", type: 'Link'}
 			],
 		rowClasses: [
 			],
 		buttons: [
-			{caption: "同步更新这些文章", name: 'sync'}
+			{caption: "同步更新這些文章", name: 'sync'}
 			]},
-	wizardTitle: "将你的资料内容与外部伺服器与档案同步",
-	step1Title: "选择欲同步的文章",
+	wizardTitle: "將你的資料內容與外部伺服器與檔案同步",
+	step1Title: "選擇欲同步的文章",
 	step1Html: '<input type="hidden" name="markList"></input>',
 	syncLabel: "同步",
-	syncPrompt: "同步更新这些文章",
-	hasChanged: "已更动",
-	hasNotChanged: "未更动",
+	syncPrompt: "同步更新這些文章",
+	hasChanged: "已更動",
+	hasNotChanged: "未更動",
 	syncStatusList: {
 		none: {text: "...", color: "none"},
-		changedServer: {text: "已更新伺服器上资料", color: "#80ff80"},
-		changedLocally: {text: "本机资料已更动", color: "#80ff80"},
-		changedBoth: {text: "已同时更新本机与伺服器上的资料", color: "#ff8080"},
-		notFound: {text: "伺服器无此资料", color: "#ffff80"},
-		putToServer: {text: "已储存更新资料至伺服器", color: "#ff80ff"},
-		gotFromServer: {text: "已从伺服器撷取更新资料", color: "#80ffff"}
+		changedServer: {text: "已更新伺服器上資料", color: "#80ff80"},
+		changedLocally: {text: "本機資料已更動", color: "#80ff80"},
+		changedBoth: {text: "已同時更新本機與伺服器上的資料", color: "#ff8080"},
+		notFound: {text: "伺服器無此資料", color: "#ffff80"},
+		putToServer: {text: "已儲存更新資料至伺服器", color: "#ff80ff"},
+		gotFromServer: {text: "已從伺服器擷取更新資料", color: "#80ffff"}
 		}
 	});
 
 merge(config.commands.closeTiddler,{
-	text: "关闭",
-	tooltip: "关闭本文"});
+	text: "關閉",
+	tooltip: "關閉本文"});
 
 merge(config.commands.closeOthers,{
-	text: "关闭其他",
-	tooltip: "关闭其他文章"});
+	text: "關閉其他",
+	tooltip: "關閉其他文章"});
 
 merge(config.commands.editTiddler,{
-	text: "编辑",
-	tooltip: "编辑本文",
-	readOnlyText: "检视",
-	readOnlyTooltip: "检视本文之原始内容"});
+	text: "編輯",
+	tooltip: "編輯本文",
+	readOnlyText: "檢視",
+	readOnlyTooltip: "檢視本文之原始內容"});
 
 merge(config.commands.saveTiddler,{
 	text: "完成",
-	tooltip: "确定修改"});
+	tooltip: "確定修改"});
 
 merge(config.commands.cancelTiddler,{
 	text: "取消",
 	tooltip: "取消修改",
-	warning: "确定取消对 '%0' 的修改吗?",
+	warning: "確定取消對 '%0' 的修改嗎?",
 	readOnlyText: "完成",
-	readOnlyTooltip: "返回正常显示模式"});
+	readOnlyTooltip: "返回正常顯示模式"});
 
 merge(config.commands.deleteTiddler,{
-	text: "删除",
-	tooltip: "删除文章",
-	warning: "确定删除 '%0'?"});
+	text: "刪除",
+	tooltip: "刪除文章",
+	warning: "確定刪除 '%0'?"});
 
 merge(config.commands.permalink,{
-	text: "引用连结",
-	tooltip: "本文引用连结"});
+	text: "引用連結",
+	tooltip: "本文引用連結"});
 
 merge(config.commands.references,{
 	text: "引用",
@@ -575,21 +575,21 @@ merge(config.commands.references,{
 	popupNone: "本文未被引用"});
 
 merge(config.commands.jump,{
-	text: "卷页",
-	tooltip: "卷页至其他已开启的文章"});
+	text: "捲頁",
+	tooltip: "捲頁至其他已開啟的文章"});
 
 merge(config.shadowTiddlers,{
 	DefaultTiddlers: "GettingStarted",
-	MainMenu: "[[使用说明|GettingStarted]]",
+	MainMenu: "[[使用說明|GettingStarted]]",
 	SiteTitle: "我的 TiddlyWiki",
-	SiteSubtitle: "一个可重复使用的个人网页式笔记本",
+	SiteSubtitle: "一個可重複使用的個人網頁式筆記本",
 	SiteUrl: 'http://www.tiddlywiki.com/',
-	SideBarOptions: '<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal " YYYY年0MM月0DD日">><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  "偏好设定 »" "变更 TiddlyWiki 选项">>',
-	SideBarTabs: '<<tabs txtMainTab "最近更新" "依更新日期排序" TabTimeline "全部" "所有文章" TabAll "分类" "所有标签" TabTags "更多" "其他" TabMore>>',
+	SideBarOptions: '<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal " YYYY年0MM月0DD日">><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel  "偏好設定 »" "變更 TiddlyWiki 選項">>',
+	SideBarTabs: '<<tabs txtMainTab "最近更新" "依更新日期排序" TabTimeline "全部" "所有文章" TabAll "分類" "所有標籤" TabTags "更多" "其他" TabMore>>',
 	TabTimeline: '<<timeline>>',
 	TabAll: '<<list all>>',
 	TabTags: '<<allTags excludeLists>>',
-	TabMore: '<<tabs txtMoreTab "未完成" "内容空白的文章" TabMoreMissing "未引用" "未被引用的文章" TabMoreOrphans "预设文章" "已预设内容的隐藏文章" TabMoreShadowed>>',
+	TabMore: '<<tabs txtMoreTab "未完成" "內容空白的文章" TabMoreMissing "未引用" "未被引用的文章" TabMoreOrphans "預設文章" "已預設內容的隱藏文章" TabMoreShadowed>>',
 	TabMoreMissing: '<<list missing>>',
 	TabMoreOrphans: '<<list orphans>>',
 	TabMoreShadowed: '<<list shadowed>>',
@@ -3542,8 +3542,8 @@ Story.prototype.displayTiddler = function(srcElement,title,template,animate,slow
 		tiddlerElem = this.createTiddler(place,before,title,template,customFields);
 	}
 	if(srcElement && typeof srcElement !== "string") {
-		if(config.options.chkAnimate && (animate == undefined || animate == true) && anim && typeof Cascade == "function" && typeof Scroller == "function")
-			anim.startAnimating(new Cascade(title,srcElement,tiddlerElem,slowly),new Scroller(tiddlerElem,slowly));
+		if(config.options.chkAnimate && (animate == undefined || animate == true) && anim && typeof Zoomer == "function" && typeof Scroller == "function")
+			anim.startAnimating(new Zoomer(title,srcElement,tiddlerElem,slowly),new Scroller(tiddlerElem,slowly));
 		else
 			window.scrollTo(0,ensureVisible(tiddlerElem));
 	}
@@ -4047,7 +4047,7 @@ var backstage = {
 	},
 	
 	isVisible: function () {
-		return this.area.style.display == "block";
+		return this.area ? this.area.style.display == "block" : false;
 	},
 	
 	show: function() {
@@ -4134,7 +4134,7 @@ var backstage = {
 	},
 
 	isPanelVisible: function() {
-		return backstage.panel.style.display == "block";
+		return backstage.panel ? backstage.panel.style.display == "block" : false;
 	},
 
 	preparePanel: function() {
@@ -4575,7 +4575,7 @@ config.macros.sync.syncOnOpenWorkspace = function(context,syncMachine)
 config.macros.sync.syncOnGetTiddlerList = function(context,syncMachine)
 {
 	if(!context.status)
-		displayMessage("Error in sync.syncOnGetTiddlerList: " + context.statusText);
+		displayMessage("Error in sync.syncOnGetTiddlerList: " + context.statusText + " " + syncMachine.serverHost);
 	for(var t=0; t<syncMachine.syncItems.length; t++) {
 		var si = syncMachine.syncItems[t];
 		var f = context.tiddlers.findByField("title",si.title);
@@ -6120,67 +6120,24 @@ Morpher.prototype.tick = function()
 }
 
 //--
-//-- Cascade animation
+//-- Zoomer animation
 //--
 
-function Cascade(text,startElement,targetElement,slowly)
+function Zoomer(text,startElement,targetElement,slowly)
 {
+	var e = createTiddlyElement(document.body,"div",null,"zoomer",text);
 	var winWidth = findWindowWidth();
 	var winHeight = findWindowHeight();
-	this.elements = [];
-	this.startElement = startElement;
-	this.startLeft = findPosX(this.startElement);
-	this.startTop = findPosY(this.startElement);
-	this.startWidth = Math.min(this.startElement.offsetWidth,winWidth);
-	this.startHeight = Math.min(this.startElement.offsetHeight,winHeight);
-	this.targetElement = targetElement;
-	targetElement.style.position = "relative";
-	targetElement.style.zIndex = 2;
-	this.targetLeft = findPosX(this.targetElement);
-	this.targetTop = findPosY(this.targetElement);
-	this.targetWidth = Math.min(this.targetElement.offsetWidth,winWidth);
-	this.targetHeight = Math.min(this.targetElement.offsetHeight,winHeight);
-	this.progress = -1;
-	this.steps = slowly ? config.cascadeSlow : config.cascadeFast;
-	this.text = text;
-	this.tick();
-	return this;
+	var p = [
+		{style: 'left', start: findPosX(startElement), end: findPosX(targetElement), template: '%0px'},
+		{style: 'top', start: findPosY(startElement), end: findPosY(targetElement), template: '%0px'},
+		{style: 'width', start: Math.min(startElement.offsetWidth,winWidth), end: Math.min(targetElement.offsetWidth,winWidth), template: '%0px', atEnd: 'auto'},
+		{style: 'height', start: Math.min(startElement.offsetHeight,winHeight), end: Math.min(targetElement.offsetHeight,winHeight), template: '%0px', atEnd: 'auto'},
+		{style: 'fontSize', start: 8, end: 24, template: '%0pt'}
+	];
+	var c = function(element,properties) {element.parentNode.removeChild(element);};
+	return new Morpher(e,config.animDuration,p,c);
 }
-
-Cascade.prototype.tick = function()
-{
-	this.progress++;
-	if(this.progress >= this.steps) {
-		while(this.elements.length > 0)
-			this.removeTail();
-		this.targetElement.style.position = "static";
-		this.targetElement.style.zIndex = "";
-		return false;
-	} else {
-		if(this.elements.length > 0 && this.progress > config.cascadeDepth)
-			this.removeTail();
-		if(this.progress < (this.steps - config.cascadeDepth)) {
-			var f = Animator.slowInSlowOut(this.progress/(this.steps - config.cascadeDepth - 1));
-			var e = createTiddlyElement(document.body,"div",null,"cascade",this.text);
-			e.style.zIndex = 1;
-			e.style.left = this.startLeft + (this.targetLeft-this.startLeft) * f + "px";
-			e.style.top = this.startTop + (this.targetTop-this.startTop) * f + "px";
-			e.style.width = this.startWidth + (this.targetWidth-this.startWidth) * f + "px";
-			e.style.height = this.startHeight + (this.targetHeight-this.startHeight) * f + "px";
-			e.style.display = "block";
-			this.elements.push(e);
-		}
-		return true;
-	}
-};
-
-Cascade.prototype.removeTail = function()
-{
-	var e = this.elements[0];
-	e.parentNode.removeChild(e);
-	this.elements.shift();
-};
-
 //--
 //-- Scroller animation
 //--
@@ -6215,64 +6172,31 @@ Scroller.prototype.tick = function()
 // deleteMode - "none", "all" [delete target element and it's children], [only] "children" [but not the target element]
 function Slider(element,opening,slowly,deleteMode)
 {
-	this.element = element;
-	element.style.display = "block";
-	this.deleteMode = deleteMode;
-	this.element.style.height = "auto";
-	this.realHeight = element.offsetHeight;
-	this.opening = opening;
-	this.step = slowly ? config.animSlow : config.animFast;
+	element.style.display = 'block';
+	element.style.overflow = 'hidden';
+	element.style.height = 'auto';
+	var p = [];
+	var c = null;
 	if(opening) {
-		this.progress = 0;
-		element.style.height = "0px";
-		element.style.display = "block";
+		p.push({style: 'height', start: 0, end: element.offsetHeight, template: '%0px', atEnd: 'auto'});
+		p.push({style: 'opacity', start: 0, end: 1, template: '%0'});
+		p.push({style: 'filter', start: 0, end: 100, template: 'alpha(opacity:%0)'});
 	} else {
-		this.progress = 1;
-		this.step = -this.step;
-	}
-	element.style.overflow = "hidden";
-	return this;
-}
-
-Slider.prototype.stop = function()
-{
-	if(this.opening) {
-		this.element.style.height = "auto";
-		this.element.style.opacity = 1;
-		this.element.style.filter = "alpha(opacity:100)";
-	} else {
-		switch(this.deleteMode) {
-			case "none":
-				this.element.style.display = "none";
-				this.element.style.opacity = 1;
-				this.element.style.filter = "alpha(opacity:100)";
-				break;
+		p.push({style: 'height', start: element.offsetHeight, end: 0, template: '%0px'});
+		p.push({style: 'display', atEnd: 'none'});
+		p.push({style: 'opacity', start: 1, end: 0, template: '%0'});
+		p.push({style: 'filter', start: 100, end: 0, template: 'alpha(opacity:%0)'});
+		switch(deleteMode) {
 			case "all":
-				this.element.parentNode.removeChild(this.element);
+				c = function(element,properties) {element.parentNode.removeChild(element);};
 				break;
 			case "children":
-				removeChildren(this.element);
+				c = function(element,properties) {removeChildren(element);};
 				break;
 		}
 	}
-};
-
-Slider.prototype.tick = function()
-{
-	this.progress += this.step;
-	if(this.progress < 0 || this.progress > 1) {
-		this.stop();
-		return false;
-	} else {
-		var f = Animator.slowInSlowOut(this.progress);
-		var h = this.realHeight * f;
-		this.element.style.height = h + "px";
-		this.element.style.opacity = f;
-		this.element.style.filter = "alpha(opacity:" + f * 100 +")";
-		return true;
-	}
-};
-
+	return new Morpher(element,config.animDuration,p,c);
+}
 //--
 //-- Popup menu
 //--

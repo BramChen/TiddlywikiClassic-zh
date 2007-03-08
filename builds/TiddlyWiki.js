@@ -1,6 +1,6 @@
 /*
 <!--
-TiddlyWiki 2.2.0 beta 3 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
+TiddlyWiki 2.2.0 beta 4 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
 
 Copyright (c) Osmosoft Limited 2004-2007
 
@@ -30,7 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF S
 DAMAGE.
 -->
 */
-var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 3, date: new Date("Jan 8, 2007"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 4, date: new Date("Feb 28, 2007"), extensions: {}};
 //
 // Please note:
 // 
@@ -3518,8 +3518,8 @@ Story.prototype.displayTiddler = function(srcElement,title,template,animate,slow
 		tiddlerElem = this.createTiddler(place,before,title,template,customFields);
 	}
 	if(srcElement && typeof srcElement !== "string") {
-		if(config.options.chkAnimate && (animate == undefined || animate == true) && anim && typeof Cascade == "function" && typeof Scroller == "function")
-			anim.startAnimating(new Cascade(title,srcElement,tiddlerElem,slowly),new Scroller(tiddlerElem,slowly));
+		if(config.options.chkAnimate && (animate == undefined || animate == true) && anim && typeof Zoomer == "function" && typeof Scroller == "function")
+			anim.startAnimating(new Zoomer(title,srcElement,tiddlerElem,slowly),new Scroller(tiddlerElem,slowly));
 		else
 			window.scrollTo(0,ensureVisible(tiddlerElem));
 	}
@@ -4023,7 +4023,7 @@ var backstage = {
 	},
 	
 	isVisible: function () {
-		return this.area.style.display == "block";
+		return this.area ? this.area.style.display == "block" : false;
 	},
 	
 	show: function() {
@@ -4110,7 +4110,7 @@ var backstage = {
 	},
 
 	isPanelVisible: function() {
-		return backstage.panel.style.display == "block";
+		return backstage.panel ? backstage.panel.style.display == "block" : false;
 	},
 
 	preparePanel: function() {
@@ -4551,7 +4551,7 @@ config.macros.sync.syncOnOpenWorkspace = function(context,syncMachine)
 config.macros.sync.syncOnGetTiddlerList = function(context,syncMachine)
 {
 	if(!context.status)
-		displayMessage("Error in sync.syncOnGetTiddlerList: " + context.statusText);
+		displayMessage("Error in sync.syncOnGetTiddlerList: " + context.statusText + " " + syncMachine.serverHost);
 	for(var t=0; t<syncMachine.syncItems.length; t++) {
 		var si = syncMachine.syncItems[t];
 		var f = context.tiddlers.findByField("title",si.title);
@@ -6096,67 +6096,24 @@ Morpher.prototype.tick = function()
 }
 
 //--
-//-- Cascade animation
+//-- Zoomer animation
 //--
 
-function Cascade(text,startElement,targetElement,slowly)
+function Zoomer(text,startElement,targetElement,slowly)
 {
+	var e = createTiddlyElement(document.body,"div",null,"zoomer",text);
 	var winWidth = findWindowWidth();
 	var winHeight = findWindowHeight();
-	this.elements = [];
-	this.startElement = startElement;
-	this.startLeft = findPosX(this.startElement);
-	this.startTop = findPosY(this.startElement);
-	this.startWidth = Math.min(this.startElement.offsetWidth,winWidth);
-	this.startHeight = Math.min(this.startElement.offsetHeight,winHeight);
-	this.targetElement = targetElement;
-	targetElement.style.position = "relative";
-	targetElement.style.zIndex = 2;
-	this.targetLeft = findPosX(this.targetElement);
-	this.targetTop = findPosY(this.targetElement);
-	this.targetWidth = Math.min(this.targetElement.offsetWidth,winWidth);
-	this.targetHeight = Math.min(this.targetElement.offsetHeight,winHeight);
-	this.progress = -1;
-	this.steps = slowly ? config.cascadeSlow : config.cascadeFast;
-	this.text = text;
-	this.tick();
-	return this;
+	var p = [
+		{style: 'left', start: findPosX(startElement), end: findPosX(targetElement), template: '%0px'},
+		{style: 'top', start: findPosY(startElement), end: findPosY(targetElement), template: '%0px'},
+		{style: 'width', start: Math.min(startElement.offsetWidth,winWidth), end: Math.min(targetElement.offsetWidth,winWidth), template: '%0px', atEnd: 'auto'},
+		{style: 'height', start: Math.min(startElement.offsetHeight,winHeight), end: Math.min(targetElement.offsetHeight,winHeight), template: '%0px', atEnd: 'auto'},
+		{style: 'fontSize', start: 8, end: 24, template: '%0pt'}
+	];
+	var c = function(element,properties) {element.parentNode.removeChild(element);};
+	return new Morpher(e,config.animDuration,p,c);
 }
-
-Cascade.prototype.tick = function()
-{
-	this.progress++;
-	if(this.progress >= this.steps) {
-		while(this.elements.length > 0)
-			this.removeTail();
-		this.targetElement.style.position = "static";
-		this.targetElement.style.zIndex = "";
-		return false;
-	} else {
-		if(this.elements.length > 0 && this.progress > config.cascadeDepth)
-			this.removeTail();
-		if(this.progress < (this.steps - config.cascadeDepth)) {
-			var f = Animator.slowInSlowOut(this.progress/(this.steps - config.cascadeDepth - 1));
-			var e = createTiddlyElement(document.body,"div",null,"cascade",this.text);
-			e.style.zIndex = 1;
-			e.style.left = this.startLeft + (this.targetLeft-this.startLeft) * f + "px";
-			e.style.top = this.startTop + (this.targetTop-this.startTop) * f + "px";
-			e.style.width = this.startWidth + (this.targetWidth-this.startWidth) * f + "px";
-			e.style.height = this.startHeight + (this.targetHeight-this.startHeight) * f + "px";
-			e.style.display = "block";
-			this.elements.push(e);
-		}
-		return true;
-	}
-};
-
-Cascade.prototype.removeTail = function()
-{
-	var e = this.elements[0];
-	e.parentNode.removeChild(e);
-	this.elements.shift();
-};
-
 //--
 //-- Scroller animation
 //--
@@ -6191,64 +6148,31 @@ Scroller.prototype.tick = function()
 // deleteMode - "none", "all" [delete target element and it's children], [only] "children" [but not the target element]
 function Slider(element,opening,slowly,deleteMode)
 {
-	this.element = element;
-	element.style.display = "block";
-	this.deleteMode = deleteMode;
-	this.element.style.height = "auto";
-	this.realHeight = element.offsetHeight;
-	this.opening = opening;
-	this.step = slowly ? config.animSlow : config.animFast;
+	element.style.display = 'block';
+	element.style.overflow = 'hidden';
+	element.style.height = 'auto';
+	var p = [];
+	var c = null;
 	if(opening) {
-		this.progress = 0;
-		element.style.height = "0px";
-		element.style.display = "block";
+		p.push({style: 'height', start: 0, end: element.offsetHeight, template: '%0px', atEnd: 'auto'});
+		p.push({style: 'opacity', start: 0, end: 1, template: '%0'});
+		p.push({style: 'filter', start: 0, end: 100, template: 'alpha(opacity:%0)'});
 	} else {
-		this.progress = 1;
-		this.step = -this.step;
-	}
-	element.style.overflow = "hidden";
-	return this;
-}
-
-Slider.prototype.stop = function()
-{
-	if(this.opening) {
-		this.element.style.height = "auto";
-		this.element.style.opacity = 1;
-		this.element.style.filter = "alpha(opacity:100)";
-	} else {
-		switch(this.deleteMode) {
-			case "none":
-				this.element.style.display = "none";
-				this.element.style.opacity = 1;
-				this.element.style.filter = "alpha(opacity:100)";
-				break;
+		p.push({style: 'height', start: element.offsetHeight, end: 0, template: '%0px'});
+		p.push({style: 'display', atEnd: 'none'});
+		p.push({style: 'opacity', start: 1, end: 0, template: '%0'});
+		p.push({style: 'filter', start: 100, end: 0, template: 'alpha(opacity:%0)'});
+		switch(deleteMode) {
 			case "all":
-				this.element.parentNode.removeChild(this.element);
+				c = function(element,properties) {element.parentNode.removeChild(element);};
 				break;
 			case "children":
-				removeChildren(this.element);
+				c = function(element,properties) {removeChildren(element);};
 				break;
 		}
 	}
-};
-
-Slider.prototype.tick = function()
-{
-	this.progress += this.step;
-	if(this.progress < 0 || this.progress > 1) {
-		this.stop();
-		return false;
-	} else {
-		var f = Animator.slowInSlowOut(this.progress);
-		var h = this.realHeight * f;
-		this.element.style.height = h + "px";
-		this.element.style.opacity = f;
-		this.element.style.filter = "alpha(opacity:" + f * 100 +")";
-		return true;
-	}
-};
-
+	return new Morpher(element,config.animDuration,p,c);
+}
 //--
 //-- Popup menu
 //--

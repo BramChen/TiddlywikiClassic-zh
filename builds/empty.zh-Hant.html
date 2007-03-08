@@ -3,11 +3,11 @@
 <head>
 <script type="text/javascript">
 //<![CDATA[
-var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 3, date: new Date("Feb 22, 2007"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 4, date: new Date("Feb 28, 2007"), extensions: {}};
 //]]>
 </script>
 <!--
-TiddlyWiki 2.2.0 beta 3 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
+TiddlyWiki 2.2.0 beta 4 by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
 
 Copyright (c) Osmosoft Limited 2004-2007
 
@@ -49,8 +49,6 @@ DAMAGE.
 <style type="text/css">
 
 #saveTest {display:none;}
-
-.zoomer {display:none;}
 
 #messageArea {display:none;}
 
@@ -149,22 +147,22 @@ h1,h2,h3,h4,h5 {color:[[ColorPalette::SecondaryDark]]; background:[[ColorPalette
 #sidebarOptions .sliderPanel a:hover {color:[[ColorPalette::Background]]; background:[[ColorPalette::PrimaryMid]];}
 #sidebarOptions .sliderPanel a:active {color:[[ColorPalette::PrimaryMid]]; background:[[ColorPalette::Background]];}
 
-.wizard {background:[[ColorPalette::TertiaryDark]]; border-top:1px solid [[ColorPalette::Foreground]];
-	border-bottom:1px solid [[ColorPalette::Foreground]]; border-left:1px solid [[ColorPalette::Foreground]];}
-.wizard h1 {color:[[ColorPalette::Foreground]];}
-.wizard h2 {color:[[ColorPalette::Background]];}
-.wizardStep {background:[[ColorPalette::TertiaryLight]]; color:[[ColorPalette::Foreground]];
-	border-top:1px solid [[ColorPalette::Foreground]];
-	border-bottom:1px solid [[ColorPalette::Foreground]]; border-left:1px solid [[ColorPalette::Foreground]];}
-.wizardFooter {background:[[ColorPalette::TertiaryDark]];}
-.wizard .button {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::SecondaryMid]]; border: 1px solid;
-	border-color:[[ColorPalette::SecondaryLight]] [[ColorPalette::SecondaryDark]] [[ColorPalette::SecondaryDark]] [[ColorPalette::SecondaryLight]];}
-.wizard .button:hover {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::SecondaryLight]];}
-.wizard .button:active {color:[[ColorPalette::Background]]; background:[[ColorPalette::SecondaryMid]]; border: 1px solid;
-	border-color:[[ColorPalette::SecondaryDark]] [[ColorPalette::SecondaryLight]] [[ColorPalette::SecondaryLight]] [[ColorPalette::SecondaryDark]];}
+.wizard {background:[[ColorPalette::PrimaryPale]]; border:1px solid [[ColorPalette::PrimaryMid]];}
+.wizard h1 {color:[[ColorPalette::PrimaryDark]];}
+.wizard h2 {color:[[ColorPalette::Foreground]];}
+.wizardStep {background:[[ColorPalette::Background]]; color:[[ColorPalette::Foreground]];
+	border:1px solid [[ColorPalette::PrimaryMid]];}
+.wizardStep.wizardStepDone {background::[[ColorPalette::TertiaryLight]];}
+.wizardFooter {background:[[ColorPalette::PrimaryPale]];}
+.wizardFooter .status {background:[[ColorPalette::PrimaryDark]]; color:[[ColorPalette::Background]];}
+.wizard .button {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::SecondaryLight]]; border: 1px solid;
+	border-color:[[ColorPalette::SecondaryPale]] [[ColorPalette::SecondaryDark]] [[ColorPalette::SecondaryDark]] [[ColorPalette::SecondaryPale]];}
+.wizard .button:hover {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::Background]];}
+.wizard .button:active {color:[[ColorPalette::Background]]; background:[[ColorPalette::Foreground]]; border: 1px solid;
+	border-color:[[ColorPalette::PrimaryDark]] [[ColorPalette::PrimaryPale]] [[ColorPalette::PrimaryPale]] [[ColorPalette::PrimaryDark]];}
 
-#messageArea {border:1px solid [[ColorPalette::SecondaryDark]]; background:[[ColorPalette::SecondaryMid]]; color:[[ColorPalette::PrimaryDark]];}
-#messageArea .button {padding:0.2em 0.2em 0.2em 0.2em; color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::Background]];}
+#messageArea {border:1px solid [[ColorPalette::SecondaryMid]]; background:[[ColorPalette::SecondaryLight]]; color:[[ColorPalette::Foreground]];}
+#messageArea .button {color:[[ColorPalette::PrimaryMid]]; background:[[ColorPalette::SecondaryPale]]; border:none;}
 
 .popup {background:[[ColorPalette::PrimaryLight]]; border:1px solid [[ColorPalette::PrimaryMid]];}
 .popup hr {color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::PrimaryDark]]; border-bottom:1px;}
@@ -198,7 +196,7 @@ h1,h2,h3,h4,h5 {color:[[ColorPalette::SecondaryDark]]; background:[[ColorPalette
 .error, .errorButton {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::Error]];}
 .warning {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::SecondaryPale]];}
 
-.cascade {background:[[ColorPalette::TertiaryPale]]; color:[[ColorPalette::TertiaryMid]]; border:1px solid [[ColorPalette::TertiaryMid]];}
+.zoomer {background:none; color:[[ColorPalette::TertiaryMid]]; border:3px solid [[ColorPalette::TertiaryMid]];}
 
 .imageLink, #displayArea .imageLink {background:transparent;}
 
@@ -220,13 +218,14 @@ td, tr {border:1px solid [[ColorPalette::TertiaryDark]];}
 .editor textarea {border:1px solid [[ColorPalette::PrimaryMid]]; width:100%;}
 .editorFooter {color:[[ColorPalette::TertiaryMid]];}
 
-#backstageArea {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::TertiaryDark]];}
+#backstageArea {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::TertiaryMid]];}
 #backstageArea a {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]]; border:none;}
-#backstageArea a:hover {background:[[ColorPalette::SecondaryMid]]; color:[[ColorPalette::Foreground]]; }
+#backstageArea a:hover {background:[[ColorPalette::SecondaryLight]]; color:[[ColorPalette::Foreground]]; }
 #backstageArea a.backstageSelTab {background:[[ColorPalette::Background]]; color:[[ColorPalette::Foreground]];}
 #backstageButton {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]];}
-#backstageButton .button {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::Background]]; border:none;}
-#backstagePanel {background:[[ColorPalette::Background]];}
+#backstageButton a {background:[[ColorPalette::Foreground]]; color:[[ColorPalette::TertiaryMid]]; border:none;}
+#backstageButton a:hover {color:[[ColorPalette::Background]]; border:none;}
+#backstagePanel {background:[[ColorPalette::Background]]; border-color: [[ColorPalette::Background]] [[ColorPalette::TertiaryDark]] [[ColorPalette::TertiaryDark]] [[ColorPalette::TertiaryDark]];}
 .backstagePanelFooter .button {border:none; color:[[ColorPalette::Background]];}
 .backstagePanelFooter .button:hover {color:[[ColorPalette::Foreground]];}
 #backstageCloak {background:[[ColorPalette::Foreground]]; opacity:0.6; filter:'alpha(opacity:60)';}
@@ -299,17 +298,18 @@ a.tiddlyLinkNonExisting.shadow {font-weight:bold;}
 #sidebarOptions .sliderPanel input {margin:0 0 .3em 0;}
 #sidebarTabs .tabContents {width:15em; overflow:hidden;}
 
-.wizard {padding:0.1em 0em 0em 2em;}
+.wizard {padding:0.1em 1em 0em 2em;}
 .wizard h1 {font-size:2em; font-weight:bold; background:none; padding:0em 0em 0em 0em; margin:0.4em 0em 0.2em 0em;}
 .wizard h2 {font-size:1.2em; font-weight:bold; background:none; padding:0em 0em 0em 0em; margin:0.4em 0em 0.2em 0em;}
 .wizardStep {padding:1em 1em 1em 1em;}
 .wizard .button {margin:0.5em 0em 0em 0em; font-size:1.2em;}
 .wizardFooter {padding:0.8em 0.4em 0.8em 0em;}
+.wizardFooter .status {padding:0em 0.4em 0em 0.4em; margin-left:1em;}
 .wizard .button {padding:0.1em 0.2em 0.1em 0.2em;}
 
-#messageArea {position:absolute; top:2em; right:0; margin:0.5em; padding:0.5em; z-index:200;}
+#messageArea {position:absolute; top:2em; right:0em; margin:0.5em; padding:0.5em; z-index:200;}
 *[id='messageArea'] {position:fixed !important; z-index:200;}
-.messageToolbar {display:block; text-align:right;}
+.messageToolbar {display:block; text-align:right; padding:0.2em 0.2em 0.2em 0.2em;}
 #messageArea a {text-decoration:underline;}
 
 .popup {z-index:100; font-size:.9em; padding:0.2em; list-style:none; margin:0;}
@@ -381,9 +381,7 @@ table.listView th, table.listView td, table.listView tr {padding:0px 3px 0px 3px
 .sparkline {line-height:1em;}
 .sparktick {outline:0;}
 
-.zoomer {font-size:1.1em; position:absolute; padding:1em;}
-
-.cascade {font-size:1.1em; position:absolute; overflow:hidden;}
+.zoomer {font-size:1.1em; position:absolute; overflow:hidden; padding:1em;}
 
 #backstageArea {display:none; position:relative; overflow: hidden; z-index:150; padding:0.2em 0.5em 0.2em 0.5em;}
 #backstageToolbar {position:relative;}
