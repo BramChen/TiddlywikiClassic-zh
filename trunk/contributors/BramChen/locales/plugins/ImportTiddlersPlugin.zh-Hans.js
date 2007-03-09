@@ -5,6 +5,8 @@
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.0.10|
 |''Required:''|ImportTiddlersPlugin 3.0.4+|
+!!!!!History
+* Mar 09, 2007 Updated for ImportTiddlersPlugin 3.2.1
 !!!!!Code
 ***/
 //{{{
@@ -21,13 +23,14 @@ if (config.macros.importTiddlers){
 	config.macros.loadTiddlers.openErrMsg= "无法开启文件：%0 (发生错误原因：%1)";
 	config.macros.loadTiddlers.readMsg= "自 %1 读取 %0 bytes";
 	config.macros.loadTiddlers.foundMsg= "文件 %1 总计有 %0 篇文章";
+	config.macros.loadTiddlers.nochangeMsg = "'%0' 已为最新资料，略过不作更动",
 	config.macros.loadTiddlers.loadedMsg= "自 %2 导入 %0 / %1 篇文章";
 
 	config.macros.importTiddlers.rp={};
 	config.macros.importTiddlers.rp.title="导入文章";
 	config.macros.importTiddlers.rp.header = "%1 于 %0，自 \n[[%2|%2]] 导入文章：\n";
 	config.macros.importTiddlers.rp.summary = {};
-	config.macros.importTiddlers.rp.summary.added = "创建";
+	config.macros.importTiddlers.rp.summary.added = "添加";
 	config.macros.importTiddlers.rp.summary.renamed = "更改文章标题 - "; 
 	config.macros.importTiddlers.rp.summary.merged = "合并文章 - "; 
 	config.macros.importTiddlers.rp.summary.replaces = "文章被取代 - "; 
@@ -45,22 +48,23 @@ if (config.macros.importTiddlers){
 		{en_US:'use a proxy script', zh_Hans:'使用代理程式'},
 		{en_US:'select:', zh_Hans:'选项:'},
 		{en_US:'&nbsp;all&nbsp;', zh_Hans: ' 全选 '},
-		{en_US:'&nbsp;added&nbsp;',zh_Hans: ' 新增 '},
+		{en_US:'&nbsp;added&nbsp;',zh_Hans: ' 添加 '},
 		{en_US:'&nbsp;changes&nbsp;',zh_Hans: ' 修改 '},
 		{en_US:'&nbsp;differences&nbsp;',zh_Hans: ' 差异 '},
 		{en_US:'&nbsp;filter&nbsp;',zh_Hans: '筛选'},
 		{en_US:'select all tiddlers', zh_Hans:'选择所有文章'},
 		{en_US:'select tiddlers not already in destination document', zh_Hans:'选择目前文件中未存在之文章'},
 		{en_US:'select tiddlers that have been updated in source document', zh_Hans:'选择来源文件中已更新之文章'},
-		{en_US:'select tiddlers that have been added or are different from existing tiddlers', zh_Hans:'选择新增或与现有文件不同之文章'},
+		{en_US:'select tiddlers that have been added or are different from existing tiddlers', zh_Hans:'选择添加或与现有文件不同之文章'},
 		{en_US:'show/hide selection filter', zh_Hans:'显示/ 隐藏 所筛选'},
 		{en_US:'reduce list size', zh_Hans:'减少列表长度'},
 		{en_US:'increase list size', zh_Hans:'增加列表长度'},
 		{en_US:'maximize/restore list size', zh_Hans:'最大化/还原列表长度'},
-		{en_US:'add new tags &nbsp;', zh_Hans:'新增标签 &nbsp;'},
+		{en_US:'add new tags &nbsp;', zh_Hans:'添加标签 &nbsp;'},
 		{en_US:'import source tags &nbsp;', zh_Hans:'导入来源文件之标签 &nbsp;'},
 		{en_US:'keep existing tags', zh_Hans:'保留现有标签'},
-		{en_US:'value="open"',zh_Hans:'value="开启"'},
+		{en_US:'value="open"',zh_Hant:'value="开启"'},/*compatiabl with <3.2.1*/
+		{en_US:'value="load"',zh_Hant:'value="载入文件"'},
 		{en_US:'value="import"', zh_Hans:'value="导入"'},
 		{en_US:'value="close"', zh_Hans:'value="关闭"'},
 		{en_US:'tiddler already exists:', zh_Hans:'文章已存在:'},
