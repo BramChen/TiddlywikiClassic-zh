@@ -5,6 +5,8 @@
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.0.10|
 |''Required:''|ImportTiddlersPlugin 3.0.4+|
+!!!!!History
+* Mar 09, 2007 Updated for ImportTiddlersPlugin 3.2.1
 !!!!!Code
 ***/
 //{{{
@@ -22,6 +24,7 @@ if (config.macros.importTiddlers){
 	config.macros.loadTiddlers.openErrMsg= "無法開啟文件：%0 (發生錯誤原因：%1)";
 	config.macros.loadTiddlers.readMsg= "自 %1 讀取 %0 bytes";
 	config.macros.loadTiddlers.foundMsg= "文件 %1 總計有 %0 篇文章";
+	config.macros.loadTiddlers.nochangeMsg = "'%0' 已為最新資料，略過不作更動",
 	config.macros.loadTiddlers.loadedMsg= "自 %2 匯入 %0 / %1 篇文章";
 
 	config.macros.importTiddlers.rp={};
@@ -49,7 +52,7 @@ if (config.macros.importTiddlers){
 		{en_US:'&nbsp;added&nbsp;',zh_Hant: ' 新增 '},
 		{en_US:'&nbsp;changes&nbsp;',zh_Hant: ' 修改 '},
 		{en_US:'&nbsp;differences&nbsp;',zh_Hant: ' 差異 '},
-		{en_US:'&nbsp;filter&nbsp;',zh_Hant: '篩選'},
+		{en_US:'&nbsp;filter&nbsp;',zh_Hant: ' 篩選 '},
 		{en_US:'select all tiddlers', zh_Hant:'選擇所有文章'},
 		{en_US:'select tiddlers not already in destination document', zh_Hant:'選擇目前文件中未存在之文章'},
 		{en_US:'select tiddlers that have been updated in source document', zh_Hant:'選擇來源文件中已更新之文章'},
@@ -61,7 +64,8 @@ if (config.macros.importTiddlers){
 		{en_US:'add new tags &nbsp;', zh_Hant:'新增標籤 &nbsp;'},
 		{en_US:'import source tags &nbsp;', zh_Hant:'匯入來源文件之標籤 &nbsp;'},
 		{en_US:'keep existing tags', zh_Hant:'保留現有標籤'},
-		{en_US:'value="open"',zh_Hant:'value="開啟"'},
+		{en_US:'value="open"',zh_Hant:'value="開啟"'},/*compatiabl with <3.2.1*/
+		{en_US:'value="load"',zh_Hant:'value="載入文件"'},
 		{en_US:'value="import"', zh_Hant:'value="匯入"'},
 		{en_US:'value="close"', zh_Hant:'value="關閉"'},
 		{en_US:'tiddler already exists:', zh_Hant:'文章已存在:'},
