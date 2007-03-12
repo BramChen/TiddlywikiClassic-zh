@@ -1,9 +1,9 @@
 <div title="AdvancedOptions" modifier="BramChen" tags="excludeLists">
 <pre>&lt;&lt;option chkGenerateAnRssFeed&gt;&gt; 產生 RssFeed
-&lt;&lt;option chkOpenInNewWindow&gt;&gt; 連結開啟於新視窗
+&lt;&lt;option chkOpenInNewWindow&gt;&gt; 於新視窗開啟連結
 &lt;&lt;option chkSaveEmptyTemplate&gt;&gt; 儲存範本
 &lt;&lt;option chkToggleLinks&gt;&gt; 點擊文章使已開啟者關閉
-&lt;&lt;option chkHttpReadOnly&gt;&gt; 隱藏編輯功能 ({{{http:}}})
+&lt;&lt;option chkHttpReadOnly&gt;&gt; 非本機瀏覽文件時，隱藏編輯功能
 &lt;&lt;option chkForceMinorUpdate&gt;&gt; 修改文章不變更日期時間
 ^^(確認修改同時按 Shift 鍵，或只按 Ctrl-Shift-Enter)^^
 &lt;&lt;option chkConfirmDelete&gt;&gt; 刪除文章前確認

@@ -53,7 +53,8 @@ var config = {
 	cascadeFast: 20, // Speed for cascade animations (higher == slower)
 	cascadeSlow: 60, // Speed for EasterEgg cascade animations
 	cascadeDepth: 5, // Depth of cascade animation
-	displayStartupTime: false // Whether to display startup time
+	displayStartupTime: false, // Whether to display startup time
+	usePreForStorage: true // Whether to use <pre> format for storage
 };
 
 // Adaptors
@@ -147,6 +148,7 @@ config.macros = {
 	saveChanges: {},
 	slider: {},
 	option: {},
+	options: {},
 	newTiddler: {},
 	newJournal: {},
 	sparkline: {},
@@ -281,6 +283,26 @@ config.tasks = {
 		plugins: {text: "套件管理", tooltip: "管理已安裝的套件", content: '<<plugins>>'}
 };
 
+config.optionsDesc = {
+	txtUserName: "編輯文章所使用之作者署名",
+	chkRegExpSearch: "啟用正規式搜尋",
+	chkCaseSensitiveSearch: "搜尋時，區分大小寫",
+	chkAnimate: "使用動畫顯示",
+	chkSaveBackups: "儲存變更前，保留備份檔案",
+	chkAutoSave: "自動儲存變更",
+	chkGenerateAnRssFeed: "儲存變更時，也儲存 RSS feed",
+	chkSaveEmptyTemplate: "儲存變更時，也儲存空白範本",
+	chkOpenInNewWindow: "於新視窗開啟連結",
+	chkToggleLinks: "點擊已開啟文章將其關閉",
+	chkHttpReadOnly: "非本機瀏覽文件時，隱藏編輯功能",
+	chkForceMinorUpdate: "修改文章時，不變更作者名稱與日期時間",
+	chkConfirmDelete: "刪除文章前須確認",
+	chkInsertTabs: "使用 tab 鍵插入定位字元，而非跳至下一個欄位",
+	txtBackupFolder: "存放備份檔案的資料夾",
+	txtMaxEditRows: "編輯模式中顯示列數",
+	txtFileSystemCharSet: "指定儲存文件所在之檔案系統之字集"
+};
+
 // Messages
 merge(config.messages,{
 	customConfigError: "套件載入發生錯誤，詳細請參考 PluginManager",
@@ -307,8 +329,8 @@ merge(config.messages,{
 	emptyFailed: "無法儲存範本",
 	mainSaved: "主要的TiddlyWiki已儲存",
 	mainFailed: "無法儲存主要 TiddlyWiki，所作的改變未儲存",
-	macroError: "巨集 <<%0>> 執行錯誤",
-	macroErrorDetails: "執行巨集 <<%0>> 時，發生錯誤 :\n%1",
+	macroError: "巨集 <<\%0>> 執行錯誤",
+	macroErrorDetails: "執行巨集 <<\%0>> 時，發生錯誤 :\n%1",
 	missingMacro: "無此巨集",
 	overwriteWarning: "'%0' 已存在，[確定]覆寫之",
 	unsavedChangesWarning: "注意！ 尚未儲存變更\n\n[確定]存檔，或[取消]放棄存檔？",
@@ -329,6 +351,11 @@ config.messages.backstage = {
 	open: {text: "控制台", icon: "↩", iconIE: "←", tooltip: "開啟控制台執行編寫工作"},
 	close: {text: "關閉", icon: "↪", iconIE: "→", tooltip: "關閉控制台"},
 	prompt: "控制台："
+}
+
+config.messages.listView = {
+	tiddlerTooltip: "檢視全文",
+	previewUnavailable: "(無法預覽)"
 }
 
 config.messages.dates.months = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
@@ -427,6 +454,18 @@ merge(config.macros.newJournal,{
 	prompt: "新增 jounal",
 	accessKey: "J"});
 
+merge(config.macros.options,{
+	listViewTemplate: {
+		columns: [
+			{name: 'Option', field: 'option', title: "選項", type: 'String'},
+			{name: 'Description', field: 'description', title: "說明", type: 'WikiText'},
+			{name: 'Name', field: 'name', title: "名稱", type: 'String'}
+			],
+		rowClasses: [
+			{className: 'lowlight', field: 'lowlight'} 
+			]}
+	});
+
 merge(config.macros.plugins,{
 	wizardTitle: "擴充套件管理",
 	step1Title: "- 已載入之套件",
@@ -442,7 +481,7 @@ merge(config.macros.plugins,{
 	listViewTemplate : {
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
-			{name: 'Title', field: 'title', tiddlerLink: 'title', title: "標題", type: 'TiddlerLink'},
+			{name: 'Tiddler', field: 'tiddler', title: "套件", type: 'Tiddler'},
 			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "大小", type: 'Size'},
 			{name: 'Executed', field: 'executed', title: "已載入", type: "Boolean", trueText: "是", falseText: "否"},
 			{name: 'Error', field: 'error', title: "載入狀態", type: 'Boolean', trueText: "錯誤", falseText: "正常"},
@@ -492,7 +531,7 @@ merge(config.macros.importTiddlers,{
 	listViewTemplate: {
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
-			{name: 'Title', field: 'title', title: "標題", type: 'String'},
+			{name: 'Tiddler', field: 'tiddler', title: "文章", type: 'Tiddler'},
 			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "大小", type: 'Size'},
 			{name: 'Snippet', field: 'text', title: "文章摘要", type: 'String'},
 			{name: 'Tags', field: 'tags', title: "標籤", type: 'Tags'}
@@ -1351,7 +1390,7 @@ config.formatters = [
 {
 	name: "image",
 	match: "\\[[<>]?[Ii][Mm][Gg]\\[",
-	lookaheadRegExp: /\[(<?)(>?)[Ii][Mm][Gg]\[(?:([^\|\]]+)\|)?([^\[\]\|]+)\](?:\[([^\]]*)\])?\]/mg,
+	lookaheadRegExp: /\[([<]?)(>?)[Ii][Mm][Gg]\[(?:([^\|\]]+)\|)?([^\[\]\|]+)\](?:\[([^\]]*)\])?\]/mg,
 	handler: function(w)
 	{
 		this.lookaheadRegExp.lastIndex = w.matchStart;
@@ -2057,13 +2096,47 @@ config.macros.slider.handler = function(place,macroName,params)
 		wikify(text,panel,null,store.getTiddler(params[1]));
 };
 
+config.macros.option.genericCreate = function(place,type,opt,className,desc)
+{
+	var typeInfo = config.macros.option.types[type];
+    var c = document.createElement(typeInfo.elementType);
+    if(typeInfo.typeValue)
+        c.setAttribute("type",typeInfo.typeValue);
+    c[typeInfo.eventName] = typeInfo.onChange;
+    c.setAttribute("option",opt);
+	if(className)
+		c.className = className;
+	else
+    	c.className = typeInfo.className;
+	if(config.optionsDesc[opt])
+		c.setAttribute("title",config.optionsDesc[opt]);
+    place.appendChild(c);
+	if(desc != "no")
+		createTiddlyText(place,config.optionsDesc[opt] ? config.optionsDesc[opt] : opt);
+    c[typeInfo.valueField] = config.options[opt];
+    return c;
+};
+
+config.macros.option.genericOnChange = function(e)
+{
+	var opt = this.getAttribute("option");
+	if(opt) {
+		var optType = opt.substr(0,3);
+		var handler = config.macros.option.types[optType];
+		if (handler.elementType && handler.valueField)
+			config.macros.option.propagateOption(opt,handler.valueField,this[handler.valueField],handler.elementType)
+		}
+	return true;
+};
+
 config.macros.option.types = {
 	'txt': {
 		elementType: "input",
 		valueField: "value",
 		eventName: "onkeyup",
 		className: "txtOptionInput",
-		create: function(opt,place,params) { config.macros.option.createHelper(opt,place,params,this);}
+		create: config.macros.option.genericCreate,
+		onChange: config.macros.option.genericOnChange
 	},
 	'chk': {
 		elementType: "input",
@@ -2071,40 +2144,12 @@ config.macros.option.types = {
 		eventName: "onclick",
 		className: "chkOptionInput",
 		typeValue: "checkbox",
-		create: function(opt,place,params) { config.macros.option.createHelper(opt,place,params,this);}
+		create: config.macros.option.genericCreate,
+		onChange: config.macros.option.genericOnChange
 	}
 };
 
-// @param def {elementType:, valueField:, eventName:, className:, typeValue: /*optional*/}
-config.macros.option.createHelper = function(opt,place,params,def)
-{
-    var c = document.createElement(def.elementType);
-    if (def.typeValue)
-        c.setAttribute("type",def.typeValue);
-    c[def.eventName] = config.macros.option.onChangeOption;
-    c.setAttribute("option",opt);
-	if (params[1])
-		c.className = params[1];
-	else
-    	c.className = def.className;
-    place.appendChild(c);
-    c[def.valueField] = config.options[opt];
-    return c;
-};
-
-config.macros.option.onChangeOption = function(e)
-{
-	var opt = this.getAttribute("option");
-	if(opt) {
-		var optType = opt.substr(0,3);
-		var handler = config.macros.option.types[optType];
-		if (handler.elementType && handler.valueField)
-			config.macros.option.propagateOption(opt,handler.valueField, this[handler.valueField], handler.elementType)
-		}
-	return true;
-};
-
-config.macros.option.propagateOption = function(opt, valueField, value, elementType)
+config.macros.option.propagateOption = function(opt,valueField,value,elementType)
 {
 	config.options[opt] = value;
 	saveOptionCookie(opt);
@@ -2116,15 +2161,41 @@ config.macros.option.propagateOption = function(opt, valueField, value, elementT
 		}
 };
 
-config.macros.option.handler = function(place,macroName,params)
+config.macros.option.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
-	var opt = params[0];
-	if(config.options[opt] == undefined)
-		return;
-	var optType = opt.substr(0,3);
-	var h = config.macros.option.types[optType];
-	if (h && h.create) 
-			h.create(opt,place,params);
+	params = paramString.parseParams("anon",null,true,false,false);
+	var opt = (params[1] && params[1].name == "anon") ? params[1].value : getParam(params,"name",null);
+	var className = (params[2] && params[2].name == "anon") ? params[2].value : getParam(params,"class",null);
+	var desc = getParam(params,"desc","no");
+	var type = opt.substr(0,3);
+	var h = config.macros.option.types[type];
+	if (h && h.create)
+		h.create(place,type,opt,className,desc);
+};
+
+config.macros.options.handler = function(place,macroName,params,wikifier,paramString,tiddler)
+{
+	params = paramString.parseParams("anon",null,true,false,false);
+	var showUnknown = getParam(params,"showUnknown","yes");
+	var opts = [];
+	for(var n in config.options) {
+		var opt = {};
+		opt.option = "";
+		opt.name = n;
+		opt.lowlight = !config.optionsDesc[n];
+		opt.description = opt.lowlight ? "//(Unknown)//" : config.optionsDesc[n];
+		if(!opt.lowlight || showUnknown == "yes")
+			opts.push(opt);
+	}
+	opts.sort(function(a,b) {return a.name.substr(3) < b.name.substr(3) ? -1 : (a.name.substr(3) == b.name.substr(3) ? 0 : +1);});
+	var listview = ListView.create(place,opts,config.macros.options.listViewTemplate)
+	for(n=0; n<opts.length; n++) {
+		var type = opts[n].name.substr(0,3);
+		var h = config.macros.option.types[type];
+		if (h && h.create) {
+			h.create(opts[n].colElements['option'],type,opts[n].name,null,"no");
+		}
+	}
 };
 
 config.macros.newTiddler.createNewTiddlerButton = function(place,title,params,label,prompt,accessKey,newFocus,isJournal)
@@ -4038,6 +4109,7 @@ var backstage = {
 			var handler = task.action ? this.onClickCommand : this.onClickTab;
 			var btn = createTiddlyButton(this.toolbar,task.text,task.tooltip,handler,"backstageTab");
 			btn.setAttribute("task",taskName);
+			addClass(btn,task.action ? "backstageAction" : "backstageTask");
 			}
 		this.content = document.getElementById("contentWrapper");
 		if(config.options.chkBackstage)
@@ -4065,7 +4137,7 @@ var backstage = {
 		this.hideButton.style.display = "block";
 		config.options.chkBackstage = true;
 		saveOptionCookie("chkBackstage");
-		addClass(this.content,"backstage");
+		addClass(this.content,"backstageVisible");
 	},
 
 	hide: function() {
@@ -4086,7 +4158,7 @@ var backstage = {
 			this.hideButton.style.display = "none";
 			config.options.chkBackstage = false;
 			saveOptionCookie("chkBackstage");
-			removeClass(this.content,"backstage");
+			removeClass(this.content,"backstageVisible");
 		}
 	},
 
@@ -4363,7 +4435,8 @@ config.macros.importTiddlers.onGetTiddlerList = function(context,wizard)
 				modifier: tiddler.modifier,
 				text: tiddler.text ? wikifyPlainText(tiddler.text,100) : "",
 				tags: tiddler.tags,
-				size: tiddler.text ? tiddler.text.length : 0
+				size: tiddler.text ? tiddler.text.length : 0,
+				tiddler: tiddler
 			});
 		}
 	listedTiddlers.sort(function(a,b) {return a.title < b.title ? -1 : (a.title == b.title ? 0 : +1);});
@@ -5039,11 +5112,10 @@ function confirmExit()
 // Give the user a chance to save changes before exitting
 function checkUnsavedChanges()
 {
-	if(store && store.isDirty && store.isDirty() && window.hadConfirmExit === false)
-		{
+	if(store && store.isDirty && store.isDirty() && window.hadConfirmExit === false){
 		if(confirm(config.messages.unsavedChangesWarning))
 			saveChanges();
-		}
+	}
 }
 
 function updateMarkupBlock(s,blockName,tiddlerName)
@@ -5056,16 +5128,16 @@ function updateMarkupBlock(s,blockName,tiddlerName)
 
 function updateOriginal(original, posDiv)
 {
-	if (!posDiv)
+	if(!posDiv)
 		posDiv = locateStoreArea(original);
 	if((posDiv[0] == -1) || (posDiv[1] == -1)) {
 		alert(config.messages.invalidFileError.format([localPath]));
-		return;
+		return null;
 	}
 	var	posShadowDiv = locateShadowArea(original);
 	if((posShadowDiv[0] == -1) || (posShadowDiv[1] == -1)) {
 		alert(config.messages.invalidFileError.format([localPath]));
-		return;
+		return null;
 	}
 	var revised = original.substr(0,posShadowDiv[0] + startShadowArea.length) + "\n" +
 				convertUnicodeToUTF8(shadows.allShadowsAsHtml()) + "\n" +
@@ -5112,35 +5184,33 @@ function saveChanges(onlyIfDirty,tiddlers)
 	// Get the URL of the document
 	var originalPath = document.location.toString();
 	// Check we were loaded from a file URL
-	if(originalPath.substr(0,5) != "file:")
-		{
+	if(originalPath.substr(0,5) != "file:"){
 		alert(config.messages.notFileUrlError);
 		if(store.tiddlerExists(config.messages.saveInstructions))
 			story.displayTiddler(null,config.messages.saveInstructions);
 		return;
-		}
+	}
 	var localPath = getLocalPath(originalPath);
 	// Load the original file
 	var original = loadFile(localPath);
-	if(original == null)
-		{
+	if(original == null){
 		alert(config.messages.cantSaveError);
 		if(store.tiddlerExists(config.messages.saveInstructions))
 			story.displayTiddler(null,config.messages.saveInstructions);
 		return;
-		}
+	}
 	// Locate the storeArea div's
 	var posDiv = locateStoreArea(original);
-	if((posDiv[0] == -1) || (posDiv[1] == -1)) {
+	if((posDiv[0] == -1) || (posDiv[1] == -1)){
 		alert(config.messages.invalidFileError.format([localPath]));
 		return;
-		}
+	}
 	// Locate the shadowArea div's
 	var	posShadowDiv = locateShadowArea(original);
-	if((posShadowDiv[0] == -1) || (posShadowDiv[1] == -1)) {
+	if((posShadowDiv[0] == -1) || (posShadowDiv[1] == -1)){
 		alert(config.messages.invalidFileError.format([localPath]));
 		return;
-		}
+	}
 	saveBackup(localPath,original);
 	saveRss(localPath);
 	saveEmpty(localPath,original,posDiv,posShadowDiv);
@@ -5150,15 +5220,14 @@ function saveChanges(onlyIfDirty,tiddlers)
 function saveBackup(localPath,original)
 {
 	// Save the backup
-	if(config.options.chkSaveBackups)
-		{
+	if(config.options.chkSaveBackups){
 		var backupPath = getBackupPath(localPath);
 		var backup = config.browser.isIE ? ieCopyFile(backupPath,localPath) : saveFile(backupPath,original);
 		if(backup)
 			displayMessage(config.messages.backupSaved,"file://" + backupPath);
 		else
 			alert(config.messages.backupFailed);
-		}
+	}
 }
 
 function saveRss(localPath)
@@ -5178,8 +5247,7 @@ function saveRss(localPath)
 function saveEmpty(localPath,original,posDiv)
 {
 	// Save empty template
-	if(config.options.chkSaveEmptyTemplate)
-		{
+	if(config.options.chkSaveEmptyTemplate){
 		var emptyPath,p;
 		if((p = localPath.lastIndexOf("/")) != -1)
 			emptyPath = localPath.substr(0,p) + "/empty.html";
@@ -5198,28 +5266,23 @@ function saveEmpty(localPath,original,posDiv)
 			displayMessage(config.messages.emptySaved,"file://" + emptyPath);
 		else
 			alert(config.messages.emptyFailed);
-		}
+	}
 }
 
 function saveMain(localPath,original,posDiv)
 {
 	var save;
-	try 
-		{
+	try{
 		// Save new file
 		var revised = updateOriginal(original, posDiv);
 		save = saveFile(localPath,revised);
-		}
-	catch (e) 
-		{
-		showException(e);
-		}
-	if(save)
-		{
+	}catch (ex){
+		showException(ex);
+	}
+	if(save){
 		displayMessage(config.messages.mainSaved,"file://" + localPath);
 		store.setDirty(false);
-		}
-	else
+	}else
 		alert(config.messages.mainFailed);
 }
 
@@ -5255,11 +5318,10 @@ function getBackupPath(localPath)
 {
 	var backSlash = true;
 	var dirPathPos = localPath.lastIndexOf("\\");
-	if(dirPathPos == -1)
-		{
+	if(dirPathPos == -1){
 		dirPathPos = localPath.lastIndexOf("/");
 		backSlash = false;
-		}
+	}
 	var backupFolder = config.options.txtBackupFolder;
 	if(!backupFolder || backupFolder == "")
 		backupFolder = ".";
@@ -5320,40 +5382,33 @@ function manualConvertUTF8ToUnicode(utf)
 	var dst = 0;
 	var b1, b2, b3;
 	var c;
-	while(src < utf.length)
-		{
+	while(src < utf.length) {
 		b1 = utf.charCodeAt(src++);
-		if(b1 < 0x80)
+		if(b1 < 0x80) {
 			dst++;
-		else if(b1 < 0xE0)
-			{
+		} else if(b1 < 0xE0) {
 			b2 = utf.charCodeAt(src++);
 			c = String.fromCharCode(((b1 & 0x1F) << 6) | (b2 & 0x3F));
 			uni = uni.substring(0,dst++).concat(c,utf.substr(src));
-			}
-		else
-			{
+		} else {
 			b2 = utf.charCodeAt(src++);
 			b3 = utf.charCodeAt(src++);
 			c = String.fromCharCode(((b1 & 0xF) << 12) | ((b2 & 0x3F) << 6) | (b3 & 0x3F));
 			uni = uni.substring(0,dst++).concat(c,utf.substr(src));
-			}
+		}
 	}
-	return(uni);
+	return uni;
 }
 
 function mozConvertUTF8ToUnicode(u)
 {
-	try
-		{
+	try {
 		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 		var converter = Components.classes["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Components.interfaces.nsIScriptableUnicodeConverter);
 		converter.charset = "UTF-8";
-		}
-	catch(e)
-		{
+	} catch(ex) {
 		return manualConvertUTF8ToUnicode(u);
-		} // fallback
+	} // fallback
 	var s = converter.ConvertToUnicode(u);
 	var fin = converter.Finish();
 	return (fin.length > 0) ? s+fin : s;
@@ -5370,21 +5425,18 @@ function convertUnicodeToUTF8(s)
 function manualConvertUnicodeToUTF8(s)
 {
 	var re = /[^\u0000-\u007F]/g ;
-	return s.replace(re, function($0) {return("&#" + $0.charCodeAt(0).toString() + ";");})
+	return s.replace(re,function($0) {return "&#" + $0.charCodeAt(0).toString() + ";";})
 }
 
 function mozConvertUnicodeToUTF8(s)
 {
-	try
-		{
+	try {
 		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 		var converter = Components.classes["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Components.interfaces.nsIScriptableUnicodeConverter);
 		converter.charset = "UTF-8";
-		}
-	catch(e)
-		{
+	} catch(ex) {
 		return manualConvertUnicodeToUTF8(s);
-		} // fallback
+	} // fallback
 	var u = converter.ConvertFromUnicode(s);
 	var fin = converter.Finish();
 	if(fin.length > 0)
@@ -5406,16 +5458,16 @@ function convertUriToUTF8(uri,charSet)
 	return converter.convertURISpecToUTF8(uri,charSet);
 }
 
-function saveFile(fileUrl, content)
+function saveFile(fileUrl,content)
 {
 	var r = null;
 	if((r == null) || (r == false))
-		r = mozillaSaveFile(fileUrl, content);
+		r = mozillaSaveFile(fileUrl,content);
 	if((r == null) || (r == false))
-		r = ieSaveFile(fileUrl, content);
+		r = ieSaveFile(fileUrl,content);
 	if((r == null) || (r == false))
-		r = javaSaveFile(fileUrl, content);
-	return(r);
+		r = javaSaveFile(fileUrl,content);
+	return r;
 }
 
 function loadFile(fileUrl)
@@ -5427,43 +5479,35 @@ function loadFile(fileUrl)
 		r = ieLoadFile(fileUrl);
 	if((r == null) || (r == false))
 		r = javaLoadFile(fileUrl);
-	return(r);
+	return r;
 }
 
 // Returns null if it can't do it, false if there's an error, true if it saved OK
-function ieSaveFile(filePath, content)
+function ieSaveFile(filePath,content)
 {
-	try
-		{
+	try {
 		var fso = new ActiveXObject("Scripting.FileSystemObject");
-		}
-	catch(e)
-		{
-		//alert("Exception while attempting to save\n\n" + e.toString());
-		return(null);
-		}
+	} catch(ex) {
+		return null;
+	}
 	var file = fso.OpenTextFile(filePath,2,-1,0);
 	file.Write(content);
 	file.Close();
-	return(true);
+	return true;
 }
 
 // Returns null if it can't do it, false if there's an error, or a string of the content if successful
 function ieLoadFile(filePath)
 {
-	try
-		{
+	try {
 		var fso = new ActiveXObject("Scripting.FileSystemObject");
 		var file = fso.OpenTextFile(filePath,1);
 		var content = file.ReadAll();
 		file.Close();
-		}
-	catch(e)
-		{
-		//alert("Exception while attempting to load\n\n" + e.toString());
-		return(null);
-		}
-	return(content);
+	} catch(ex) {
+		return null;
+	}
+	return content;
 }
 
 function ieCopyFile(dest,source)
@@ -5478,54 +5522,48 @@ function ieCopyFile(dest,source)
 }
 
 // Returns null if it can't do it, false if there's an error, true if it saved OK
-function mozillaSaveFile(filePath, content)
+function mozillaSaveFile(filePath,content)
 {
-	if(window.Components)
-		try
-			{
+	if(window.Components) {
+		try {
 			netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 			var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
 			file.initWithPath(filePath);
-			if (!file.exists())
-				file.create(0, 0664);
+			if(!file.exists())
+				file.create(0,0664);
 			var out = Components.classes["@mozilla.org/network/file-output-stream;1"].createInstance(Components.interfaces.nsIFileOutputStream);
-			out.init(file, 0x20 | 0x02, 00004,null);
-			out.write(content, content.length);
+			out.init(file,0x20|0x02,00004,null);
+			out.write(content,content.length);
 			out.flush();
 			out.close();
-			return(true);
-			}
-		catch(e)
-			{
-			//alert("Exception while attempting to save\n\n" + e);
-			return(false);
-			}
-	return(null);
+			return true;
+		} catch(ex) {
+			return false;
+		}
+	}
+	return null;
 }
 
 // Returns null if it can't do it, false if there's an error, or a string of the content if successful
 function mozillaLoadFile(filePath)
 {
-	if(window.Components)
-		try
-			{
+	if(window.Components) {
+		try {
 			netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
 			var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
 			file.initWithPath(filePath);
-			if (!file.exists())
-				return(null);
+			if(!file.exists())
+				return null;
 			var inputStream = Components.classes["@mozilla.org/network/file-input-stream;1"].createInstance(Components.interfaces.nsIFileInputStream);
-			inputStream.init(file, 0x01, 00004, null);
+			inputStream.init(file,0x01,00004,null);
 			var sInputStream = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance(Components.interfaces.nsIScriptableInputStream);
 			sInputStream.init(inputStream);
-			return(sInputStream.read(sInputStream.available()));
-			}
-		catch(e)
-			{
-			//alert("Exception while attempting to load\n\n" + e);
-			return(false);
-			}
-	return(null);
+			return sInputStream.read(sInputStream.available());
+		} catch(ex) {
+			return false;
+		}
+	}
+	return null;
 }
 
 function javaUrlToFilename(url)
@@ -5539,52 +5577,40 @@ function javaUrlToFilename(url)
 	return url;
 }
 
-function javaSaveFile(filePath, content)
+function javaSaveFile(filePath,content)
 {
-	try
-		{
+	try {
 		if(document.applets["TiddlySaver"])
 			return document.applets["TiddlySaver"].saveFile(javaUrlToFilename(filePath),"UTF-8",content);
-		}
-	catch(e)
-		{
-		}
-	try
-		{
+	} catch(ex) {
+	}
+	try {
 		var s = new java.io.PrintStream(new java.io.FileOutputStream(javaUrlToFilename(filePath)));
 		s.print(content);
 		s.close();
-		}
-	catch(e)
-		{
+	} catch(ex) {
 		return null;
-		}
+	}
 	return true;
 }
 
 function javaLoadFile(filePath)
 {
-	try
-		{
-	if(document.applets["TiddlySaver"])
-		return String(document.applets["TiddlySaver"].loadFile(javaUrlToFilename(filePath),"UTF-8"));
-		}
-	catch(e)
-		{
-		}
+	try {
+		if(document.applets["TiddlySaver"])
+			return String(document.applets["TiddlySaver"].loadFile(javaUrlToFilename(filePath),"UTF-8"));
+	} catch(ex) {
+	}
 	var content = [];
-	try
-		{
+	try {
 		var r = new java.io.BufferedReader(new java.io.FileReader(javaUrlToFilename(filePath)));
 		var line;
-		while ((line = r.readLine()) != null)
+		while((line = r.readLine()) != null)
 			content.push(new String(line));
 		r.close();
-		}
-	catch(e)
-		{
+	} catch(ex) {
 		return null;
-		}
+	}
 	return content.join("\n");
 }
 
@@ -6028,7 +6054,7 @@ Animator.prototype.startAnimating = function() // Variable number of arguments
 		this.animations.push(arguments[t]);
 	if(this.running == 0) {
 		var me = this;
-		this.timerID = window.setInterval(function() {me.doAnimate(me);},5);
+		this.timerID = window.setInterval(function() {me.doAnimate(me);},10);
 	}
 	this.running += arguments.length;
 };
@@ -6078,6 +6104,7 @@ function Morpher(element,duration,properties,callback)
 	this.startTime = new Date();
 	this.endTime = Number(this.startTime) + duration;
 	this.callback = callback;
+	this.tick();
 	return this;
 }
 
@@ -6232,8 +6259,10 @@ Popup.show = function(unused,slowly)
 	var rootHeight = curr.root.offsetHeight;
 	var popupLeft = rootLeft;
 	var popupTop = rootTop + rootHeight;
-	var popupWidth = curr.popup.offsetWidth;
 	var winWidth = findWindowWidth();
+	if(curr.popup.offsetWidth > winWidth*0.75)
+		curr.popup.style.width = winWidth*0.75 + "px";
+	var popupWidth = curr.popup.offsetWidth;
 	if(popupLeft + popupWidth > winWidth)
 		popupLeft = winWidth - popupWidth;
 	curr.popup.style.left = popupLeft + "px";
@@ -6458,6 +6487,41 @@ ListView.columnTypes.String = {
 			var v = listObject[field];
 			if(v != undefined)
 				createTiddlyText(place,v);
+		}
+};
+
+ListView.columnTypes.WikiText = {
+	createHeader: ListView.columnTypes.String.createHeader,
+	createItem: function(place,listObject,field,columnTemplate,col,row)
+		{
+			var v = listObject[field];
+			if(v != undefined)
+				wikify(v,place,null,null);
+		}
+};
+
+ListView.columnTypes.Tiddler = {
+	createHeader: ListView.columnTypes.String.createHeader,
+	createItem: function(place,listObject,field,columnTemplate,col,row)
+		{
+			var v = listObject[field];
+			if(v != undefined && v.title && v.text) {
+				var btn = createTiddlyButton(place,v.title,config.messages.listView.tiddlerTooltip,ListView.columnTypes.Tiddler.onClick,"tiddlerPopupButton");
+				btn.tiddler = v;
+			}
+		},
+	onClick: function(e)
+		{
+			var popup = Popup.create(this,"div","popupTiddler");
+			var tiddler = this.tiddler;
+			if(tiddler.text)
+				wikify(tiddler.text,popup,null,tiddler);
+			else
+				createTiddlyText(popup,config.messages.listView.previewUnavailable);
+			Popup.show(popup,false);
+			if(e) e.cancelBubble = true;
+			if(e && e.stopPropagation) e.stopPropagation();
+			return false;
 		}
 };
 
