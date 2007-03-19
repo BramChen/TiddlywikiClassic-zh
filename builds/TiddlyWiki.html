@@ -189,9 +189,9 @@ config.commands = {
 	cancelTiddler: {},
 	deleteTiddler: {hideReadOnly: true},
 	permalink: {},
-	references: {},
-	jump: {},
-	send: {}
+	references: {type: "popup"},
+	jump: {type: "popup"},
+	syncing: {type: "popup"}
 };
 
 // Browser detection... In a very few places, there's nothing else for it but to know what browser we're using.
@@ -451,6 +451,10 @@ merge(config.macros.newJournal,{
 	accessKey: "J"});
 
 merge(config.macros.options,{
+	wizardTitle: "Tweak advanced options",
+	step1Title: "These options are saved in cookies in your browser",
+	step1Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='false' name='chkHidden'>Show hidden options</input>",
+	unknownDescription: "//(hidden)//",
 	listViewTemplate: {
 		columns: [
 			{name: 'Option', field: 'option', title: "Option", type: 'String'},
@@ -632,6 +636,13 @@ merge(config.commands.references,{
 merge(config.commands.jump,{
 	text: "jump",
 	tooltip: "Jump to another open tiddler"});
+	
+merge(config.commands.syncing,{
+	text: "syncing",
+	tooltip: "Control synchronisation of this tiddler with a server or external file",
+	currentlySyncing: "<div>Currently syncing via <span class='popupHighlight'>'%0'</span> to:</div><div>host: <span class='popupHighlight'>%1</span></div><div>workspace: <span class='popupHighlight'>%2</span></div>",
+	notCurrentlySyncing: "Not currently syncing",
+	chooseServer: "Synchronise this tiddler with another server:"});
 
 merge(config.shadowTiddlers,{
 	DefaultTiddlers: "GettingStarted",
@@ -2193,19 +2204,34 @@ config.macros.option.handler = function(place,macroName,params,wikifier,paramStr
 config.macros.options.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
 	params = paramString.parseParams("anon",null,true,false,false);
-	var showUnknown = getParam(params,"showUnknown","yes");
+	var showHidden = getParam(params,"showHidden","no");
+	var wizard = new Wizard();
+	wizard.createWizard(place,this.wizardTitle);
+	wizard.addStep(this.step1Title,this.step1Html);
+	var markList = wizard.getElement("markList");
+	var chkHidden = wizard.getElement("chkHidden");
+	chkHidden.checked = showHidden == "yes";
+	chkHidden.onchange = this.onChangeHidden;
+	var listWrapper = document.createElement("div");
+	markList.parentNode.insertBefore(listWrapper,markList);
+	wizard.setValue("listWrapper",listWrapper);
+	this.refreshOptions(listWrapper,showHidden == "yes");
+}
+
+config.macros.options.refreshOptions = function(listWrapper,showHidden)
+{	
 	var opts = [];
 	for(var n in config.options) {
 		var opt = {};
 		opt.option = "";
 		opt.name = n;
 		opt.lowlight = !config.optionsDesc[n];
-		opt.description = opt.lowlight ? "//(Unknown)//" : config.optionsDesc[n];
-		if(!opt.lowlight || showUnknown == "yes")
+		opt.description = opt.lowlight ? this.unknownDescription : config.optionsDesc[n];
+		if(!opt.lowlight || showHidden)
 			opts.push(opt);
 	}
 	opts.sort(function(a,b) {return a.name.substr(3) < b.name.substr(3) ? -1 : (a.name.substr(3) == b.name.substr(3) ? 0 : +1);});
-	var listview = ListView.create(place,opts,config.macros.options.listViewTemplate)
+	var listview = ListView.create(listWrapper,opts,config.macros.options.listViewTemplate);
 	for(n=0; n<opts.length; n++) {
 		var type = opts[n].name.substr(0,3);
 		var h = config.macros.option.types[type];
@@ -2213,6 +2239,15 @@ config.macros.options.handler = function(place,macroName,params,wikifier,paramSt
 			h.create(opts[n].colElements['option'],type,opts[n].name,null,"no");
 		}
 	}
+};
+
+config.macros.options.onChangeHidden = function(e)
+{
+	var wizard = new Wizard(this);
+	var listWrapper = wizard.getValue("listWrapper");
+	removeChildren(listWrapper);
+	config.macros.options.refreshOptions(listWrapper,this.checked);
+	return false;
 };
 
 config.macros.newTiddler.createNewTiddlerButton = function(place,title,params,label,prompt,accessKey,newFocus,isJournal)
@@ -2548,7 +2583,17 @@ config.macros.toolbar.createCommand = function(place,commandName,tiddler,theClas
 		if(command.isEnabled ? command.isEnabled(tiddler) : this.isCommandEnabled(command,tiddler)) {
 			var text = command.getText ? command.getText(tiddler) : this.getCommandText(command,tiddler);
 			var tooltip = command.getTooltip ? command.getTooltip(tiddler) : this.getCommandTooltip(command,tiddler);
-			var btn = createTiddlyButton(null,text,tooltip,this.onClickCommand);
+			var cmd;
+			switch(command.type) {
+				case "command":
+				default:
+					cmd = this.onClickCommand;
+					break;
+				case "popup":
+					cmd = this.onClickPopup;
+					break;
+			}
+			var btn = createTiddlyButton(null,text,tooltip,cmd);
 			btn.setAttribute("commandName",commandName);
 			btn.setAttribute("tiddler",tiddler.title);
 			if(theClass)
@@ -2581,6 +2626,21 @@ config.macros.toolbar.onClickCommand = function(e)
 	if(!e) var e = window.event;
 	var command = config.commands[this.getAttribute("commandName")];
 	return command.handler(e,this,this.getAttribute("tiddler"));
+};
+
+config.macros.toolbar.onClickPopup = function(e)
+{
+	if(!e) var e = window.event;
+	var popup = Popup.create(this);
+	var command = config.commands[this.getAttribute("commandName")];
+	var title = this.getAttribute("tiddler");
+	var tiddler = store.fetchTiddler(title);
+	popup.setAttribute("tiddler",title);
+	command.handlePopup(popup,title);
+	Popup.show(popup,false);
+	e.cancelBubble = true;
+	if (e.stopPropagation) e.stopPropagation();
+	return false;
 };
 
 // Invoke the first command encountered from a given place that is tagged with a specified class
@@ -2792,40 +2852,73 @@ config.commands.permalink.handler = function(event,src,title)
 	return false;
 };
 
-config.commands.references.handler = function(event,src,title)
+config.commands.references.handlePopup = function(popup,title)
 {
-	var popup = Popup.create(src);
-	if(popup) {
-		var references = store.getReferringTiddlers(title);
-		var c = false;
-		for(var r=0; r<references.length; r++) {
-			if(references[r].title != title && !references[r].isTagged("excludeLists")) {
-				createTiddlyLink(createTiddlyElement(popup,"li"),references[r].title,true);
-				c = true;
-			}
+	var references = store.getReferringTiddlers(title);
+	var c = false;
+	for(var r=0; r<references.length; r++) {
+		if(references[r].title != title && !references[r].isTagged("excludeLists")) {
+			createTiddlyLink(createTiddlyElement(popup,"li"),references[r].title,true);
+			c = true;
 		}
-		if(!c)
-			createTiddlyText(createTiddlyElement(popup,"li",null,"disabled"),this.popupNone);
 	}
-	Popup.show(popup,false);
-	event.cancelBubble = true;
-	if (event.stopPropagation) event.stopPropagation();
-	return false;
+	if(!c)
+		createTiddlyText(createTiddlyElement(popup,"li",null,"disabled"),this.popupNone);
 };
 
-config.commands.jump.handler = function(event,src,title)
+config.commands.jump.handlePopup = function(popup,title)
 {
-	var popup = Popup.create(src);
-	if(popup) {
-		story.forEachTiddler(function(title,element) {
-			createTiddlyLink(createTiddlyElement(popup,"li"),title,true,null,false,null,true);
-			});
+	story.forEachTiddler(function(title,element) {
+		createTiddlyLink(createTiddlyElement(popup,"li"),title,true,null,false,null,true);
+		});
+};
+
+config.commands.syncing.handlePopup = function(popup,title)
+{
+	var tiddler = store.fetchTiddler(title);
+	if(!tiddler)
+		return;
+	var serverType = tiddler.getServerType();
+	var serverHost = tiddler.fields['server.host'];
+	var serverWorkspace = tiddler.fields['server.workspace'];
+	if(!serverWorkspace)
+		serverWorkspace = "(none)";
+	if(serverType) {
+		var e = createTiddlyElement(popup,"li",null,"popupMessage");
+		e.innerHTML = config.commands.syncing.currentlySyncing.format([serverType,serverHost,serverWorkspace]);
+	} else {
+		createTiddlyElement(popup,"li",null,"popupMessage",config.commands.syncing.notCurrentlySyncing);
 	}
-	Popup.show(popup,false);
-	event.cancelBubble = true;
-	if (event.stopPropagation)
-		event.stopPropagation();
-	return false;
+	createTiddlyElement(createTiddlyElement(popup,"li",null,"listBreak"),"div");
+	createTiddlyElement(popup,"li",null,"popupMessage",config.commands.syncing.chooseServer);
+	var feeds = store.getTaggedTiddlers("systemServer","title");
+	for(var t=0; t<feeds.length; t++) {
+		var f = feeds[t];
+		var btn = createTiddlyButton(createTiddlyElement(popup,"li"),f.title,null,config.commands.syncing.onChooseServer);
+		btn.setAttribute("tiddler",title);
+		var serverType = store.getTiddlerSlice(f.title,"Type");
+		if(!serverType)
+			serverType = "file";
+		btn.setAttribute("server.type",serverType);
+		var serverHost = store.getTiddlerSlice(f.title,"URL");
+		if(!serverHost)
+			serverHost = "";
+		btn.setAttribute("server.host",serverHost);
+		var serverWorkspace = store.getTiddlerSlice(f.title,"Workspace");
+		if(!serverWorkspace)
+			serverWorkspace = "";
+		btn.setAttribute("server.workspace",serverWorkspace);
+	}
+};
+
+config.commands.syncing.onChooseServer = function(e)
+{
+	var tiddler = this.getAttribute("tiddler");
+	store.addTiddlerFields(tiddler,{
+		'server.type': this.getAttribute("server.type"),
+		'server.host': this.getAttribute("server.host"),
+		'server.workspace': this.getAttribute("server.workspace")
+		});
 };
 
 //--
@@ -2869,8 +2962,7 @@ Tiddler.prototype.getInheritedFields = function()
 Tiddler.prototype.incChangeCount = function()
 {
 	var c = this.fields['changecount'];
-	if(!c)
-		c = 0;
+	c = c ? parseInt(c) : 0;
 	this.fields['changecount'] = String(c+1);
 };
 
@@ -3255,6 +3347,18 @@ TiddlyWiki.prototype.setTiddlerTag = function(title,status,tag)
 		this.notify(title,true);
 		this.setDirty(true);
 	}
+};
+
+TiddlyWiki.prototype.addTiddlerFields = function(title,fields)
+{
+	var tiddler = this.fetchTiddler(title);
+	if(!tiddler)
+		return;
+	merge(tiddler.fields,fields);
+	tiddler.changed();
+	this.incChangeCount(title);
+	this.notify(title,true);
+	this.setDirty(true);
 };
 
 TiddlyWiki.prototype.saveTiddler = function(title,newTitle,newBody,modifier,modified,tags,fields)
@@ -3766,7 +3870,8 @@ Story.prototype.createTiddler = function(place,before,title,template,customField
 {
 	var tiddlerElem = createTiddlyElement(null,"div",this.idPrefix + title,"tiddler");
 	tiddlerElem.setAttribute("refresh","tiddler");
-	tiddlerElem.setAttribute("tiddlyFields",customFields);
+	if(customFields)
+		tiddlerElem.setAttribute("tiddlyFields",customFields);
 	place.insertBefore(tiddlerElem,before);
 	this.refreshTiddler(title,template,false,customFields);
 	if(!store.tiddlerExists(title) && !store.isShadowTiddler(title))
@@ -5033,7 +5138,7 @@ config.refreshers = {
 		var force = e.getAttribute("force");
 		if(force != null || changeList == null || changeList.indexOf(title) != -1) {
 			removeChildren(e);
-			wikify(store.getTiddlerText(title,title),e,null,store.fetchTiddler(title));
+			wikify(store.getTiddlerText(title,title),e,null);
 			return true;
 		} else
 			return false;
@@ -8088,7 +8193,9 @@ a {color:[[ColorPalette::PrimaryMid]];}
 a:hover {background-color:[[ColorPalette::PrimaryMid]]; color:[[ColorPalette::Background]];}
 a img {border:0;}
 
-h1,h2,h3,h4,h5 {color:[[ColorPalette::SecondaryDark]]; background:[[ColorPalette::PrimaryPale]];}
+h1,h2,h3,h4,h5,h6 {color:[[ColorPalette::SecondaryDark]]; background:transparent;}
+h1 {border-bottom:2px solid [[ColorPalette::TertiaryLight]];}
+h2,h3 {border-bottom:1px solid [[ColorPalette::TertiaryLight]];}
 
 .button {color:[[ColorPalette::PrimaryDark]]; border:1px solid [[ColorPalette::Background]];}
 .button:hover {color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::SecondaryLight]]; border-color:[[ColorPalette::SecondaryMid]];}
@@ -8118,8 +8225,8 @@ h1,h2,h3,h4,h5 {color:[[ColorPalette::SecondaryDark]]; background:[[ColorPalette
 #sidebarOptions .sliderPanel a:active {color:[[ColorPalette::PrimaryMid]]; background:[[ColorPalette::Background]];}
 
 .wizard {background:[[ColorPalette::PrimaryPale]]; border:1px solid [[ColorPalette::PrimaryMid]];}
-.wizard h1 {color:[[ColorPalette::PrimaryDark]];}
-.wizard h2 {color:[[ColorPalette::Foreground]];}
+.wizard h1 {color:[[ColorPalette::PrimaryDark]]; border:none;}
+.wizard h2 {color:[[ColorPalette::Foreground]]; border:none;}
 .wizardStep {background:[[ColorPalette::Background]]; color:[[ColorPalette::Foreground]];
 	border:1px solid [[ColorPalette::PrimaryMid]];}
 .wizardStep.wizardStepDone {background::[[ColorPalette::TertiaryLight]];}
@@ -8138,16 +8245,16 @@ h1,h2,h3,h4,h5 {color:[[ColorPalette::SecondaryDark]]; background:[[ColorPalette
 .tiddlerPopupButton:hover {color:[[ColorPalette::Background]]; background:[[ColorPalette::PrimaryMid]];}
 .tiddlerPopupButton:active {color:[[ColorPalette::Background]]; background:[[ColorPalette::Foreground]];}
 .tiddlerPopupButton.highlight {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::Background]];}
-
-.popup {background:[[ColorPalette::PrimaryLight]]; border:1px solid [[ColorPalette::PrimaryMid]];}
 .popupTiddler {background:[[ColorPalette::TertiaryPale]]; border:2px solid [[ColorPalette::TertiaryMid]];}
+
+.popup {background:[[ColorPalette::TertiaryPale]]; color:[[ColorPalette::TertiaryDark]]; border-left:1px solid [[ColorPalette::TertiaryMid]]; border-top:1px solid [[ColorPalette::TertiaryMid]]; border-right:2px solid [[ColorPalette::TertiaryDark]]; border-bottom:2px solid [[ColorPalette::TertiaryDark]];}
 .popup hr {color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::PrimaryDark]]; border-bottom:1px;}
-
-.listBreak div {border-bottom:1px solid [[ColorPalette::PrimaryDark]];}
-
-.popup li.disabled {color:[[ColorPalette::PrimaryMid]];}
-.popup li a, .popup li a:visited {color:[[ColorPalette::TertiaryPale]]; border:none;}
-.popup li a:hover {background:[[ColorPalette::PrimaryDark]]; color:[[ColorPalette::Background]]; border:none;}
+.popup li.disabled {color:[[ColorPalette::TertiaryMid]];}
+.popup li a, .popup li a:visited {color:[[ColorPalette::Foreground]]; border: none;}
+.popup li a:hover {background:[[ColorPalette::SecondaryLight]]; color:[[ColorPalette::Foreground]]; border: none;}
+.popup li a:active {background:[[ColorPalette::SecondaryPale]]; color:[[ColorPalette::Foreground]]; border: none;}
+.popupHighlight {background:[[ColorPalette::Background]]; color:[[ColorPalette::Foreground]];}
+.listBreak div {border-bottom:1px solid [[ColorPalette::TertiaryDark]];}
 
 .tiddler .defaultCommand {font-weight:bold;}
 
@@ -8219,7 +8326,9 @@ td, tr {border:1px solid [[ColorPalette::TertiaryDark]];}
 
 body {font-size:.75em; font-family:arial,helvetica; margin:0; padding:0;}
 
-h1,h2,h3,h4,h5 {font-weight:bold; text-decoration:none; padding-left:0.4em;}
+h1,h2,h3,h4,h5,h6 {font-weight:bold; text-decoration:none;}
+h1,h2,h3 {padding-bottom:1px; margin-top:1.2em;margin-bottom:0.3em;}
+h4,h5,h6 {margin-top:1em;}
 h1 {font-size:1.35em;}
 h2 {font-size:1.25em;}
 h3 {font-size:1.1em;}
@@ -8297,16 +8406,15 @@ a.tiddlyLinkNonExisting.shadow {font-weight:bold;}
 
 .tiddlerPopupButton {padding:0.2em 0.2em 0.2em 0.2em;}
 .tiddlerPopupButton:after {content:&quot; ↓&quot;;}
-
-.popup {z-index:300; font-size:.9em; padding:0.2em; list-style:none; margin:0;}
 .popupTiddler {position: absolute; z-index:300; padding:1em 1em 1em 1em; margin:0;}
-.popup hr {display:block; height:1px; width:auto; padding:0; margin:0.2em 0em;}
 
+.popup {position:absolute; z-index:300; font-size:.9em; padding:0; list-style:none; margin:0;}
+.popup .popupMessage {padding:0.4em;}
+.popup hr {display:block; height:1px; width:auto; padding:0; margin:0.2em 0em;}
+.popup li.disabled {padding:0.4em;}
+.popup li a {display:block; padding:0.4em; font-weight:normal; cursor:pointer;}
 .listBreak {font-size:1px; line-height:1px;}
 .listBreak div {margin:2px 0;}
-
-.popup li.disabled {padding:0.2em;}
-.popup li a {display:block; padding:0.2em;}
 
 .tabset {padding:1em 0em 0em 0.5em;}
 .tab {margin:0em 0em 0em 0.25em; padding:2px;}
@@ -8407,6 +8515,9 @@ body {font-size:0.8em;}
 
 .viewer table.listView {font-size:0.95em;}
 
+.viewDetails {padding:0.5em 0em 0.5em 0em;}
+.viewDetails {font-size:1.1em;}
+
 .htmlarea .toolbarHA table {border:1px solid ButtonFace; margin:0em 0em;}
 /*}}}*/</pre>
 </div>
@@ -8445,7 +8556,7 @@ noscript {display:none;}
 </div>
 <div title="ViewTemplate">
 <pre>&lt;!--{{{--&gt;
-&lt;div class='toolbar' macro='toolbar closeTiddler closeOthers +editTiddler &gt; permalink references jump'&gt;&lt;/div&gt;
+&lt;div class='toolbar' macro='toolbar closeTiddler closeOthers +editTiddler &gt; syncing permalink references jump'&gt;&lt;/div&gt;
 &lt;div class='title' macro='view title'&gt;&lt;/div&gt;
 &lt;div class='subtitle'&gt;&lt;span macro='view modifier link'&gt;&lt;/span&gt;, &lt;span macro='view modified date'&gt;&lt;/span&gt; (&lt;span macro='message views.wikified.createdPrompt'&gt;&lt;/span&gt; &lt;span macro='view created date'&gt;&lt;/span&gt;) &lt;span macro='viewDetails'&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;div class='tagging' macro='tagging'&gt;&lt;/div&gt;

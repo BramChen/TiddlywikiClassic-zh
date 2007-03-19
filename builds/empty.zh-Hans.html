@@ -117,7 +117,9 @@ a {color:[[ColorPalette::PrimaryMid]];}
 a:hover {background-color:[[ColorPalette::PrimaryMid]]; color:[[ColorPalette::Background]];}
 a img {border:0;}
 
-h1,h2,h3,h4,h5 {color:[[ColorPalette::SecondaryDark]]; background:[[ColorPalette::PrimaryPale]];}
+h1,h2,h3,h4,h5,h6 {color:[[ColorPalette::SecondaryDark]]; background:transparent;}
+h1 {border-bottom:2px solid [[ColorPalette::TertiaryLight]];}
+h2,h3 {border-bottom:1px solid [[ColorPalette::TertiaryLight]];}
 
 .button {color:[[ColorPalette::PrimaryDark]]; border:1px solid [[ColorPalette::Background]];}
 .button:hover {color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::SecondaryLight]]; border-color:[[ColorPalette::SecondaryMid]];}
@@ -147,8 +149,8 @@ h1,h2,h3,h4,h5 {color:[[ColorPalette::SecondaryDark]]; background:[[ColorPalette
 #sidebarOptions .sliderPanel a:active {color:[[ColorPalette::PrimaryMid]]; background:[[ColorPalette::Background]];}
 
 .wizard {background:[[ColorPalette::PrimaryPale]]; border:1px solid [[ColorPalette::PrimaryMid]];}
-.wizard h1 {color:[[ColorPalette::PrimaryDark]];}
-.wizard h2 {color:[[ColorPalette::Foreground]];}
+.wizard h1 {color:[[ColorPalette::PrimaryDark]]; border:none;}
+.wizard h2 {color:[[ColorPalette::Foreground]]; border:none;}
 .wizardStep {background:[[ColorPalette::Background]]; color:[[ColorPalette::Foreground]];
 	border:1px solid [[ColorPalette::PrimaryMid]];}
 .wizardStep.wizardStepDone {background::[[ColorPalette::TertiaryLight]];}
@@ -167,16 +169,16 @@ h1,h2,h3,h4,h5 {color:[[ColorPalette::SecondaryDark]]; background:[[ColorPalette
 .tiddlerPopupButton:hover {color:[[ColorPalette::Background]]; background:[[ColorPalette::PrimaryMid]];}
 .tiddlerPopupButton:active {color:[[ColorPalette::Background]]; background:[[ColorPalette::Foreground]];}
 .tiddlerPopupButton.highlight {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::Background]];}
-
-.popup {background:[[ColorPalette::PrimaryLight]]; border:1px solid [[ColorPalette::PrimaryMid]];}
 .popupTiddler {background:[[ColorPalette::TertiaryPale]]; border:2px solid [[ColorPalette::TertiaryMid]];}
+
+.popup {background:[[ColorPalette::TertiaryPale]]; color:[[ColorPalette::TertiaryDark]]; border-left:1px solid [[ColorPalette::TertiaryMid]]; border-top:1px solid [[ColorPalette::TertiaryMid]]; border-right:2px solid [[ColorPalette::TertiaryDark]]; border-bottom:2px solid [[ColorPalette::TertiaryDark]];}
 .popup hr {color:[[ColorPalette::PrimaryDark]]; background:[[ColorPalette::PrimaryDark]]; border-bottom:1px;}
-
-.listBreak div {border-bottom:1px solid [[ColorPalette::PrimaryDark]];}
-
-.popup li.disabled {color:[[ColorPalette::PrimaryMid]];}
-.popup li a, .popup li a:visited {color:[[ColorPalette::TertiaryPale]]; border:none;}
-.popup li a:hover {background:[[ColorPalette::PrimaryDark]]; color:[[ColorPalette::Background]]; border:none;}
+.popup li.disabled {color:[[ColorPalette::TertiaryMid]];}
+.popup li a, .popup li a:visited {color:[[ColorPalette::Foreground]]; border: none;}
+.popup li a:hover {background:[[ColorPalette::SecondaryLight]]; color:[[ColorPalette::Foreground]]; border: none;}
+.popup li a:active {background:[[ColorPalette::SecondaryPale]]; color:[[ColorPalette::Foreground]]; border: none;}
+.popupHighlight {background:[[ColorPalette::Background]]; color:[[ColorPalette::Foreground]];}
+.listBreak div {border-bottom:1px solid [[ColorPalette::TertiaryDark]];}
 
 .tiddler .defaultCommand {font-weight:bold;}
 
@@ -248,7 +250,9 @@ td, tr {border:1px solid [[ColorPalette::TertiaryDark]];}
 
 body {font-size:.75em; font-family:arial,helvetica; margin:0; padding:0;}
 
-h1,h2,h3,h4,h5 {font-weight:bold; text-decoration:none; padding-left:0.4em;}
+h1,h2,h3,h4,h5,h6 {font-weight:bold; text-decoration:none;}
+h1,h2,h3 {padding-bottom:1px; margin-top:1.2em;margin-bottom:0.3em;}
+h4,h5,h6 {margin-top:1em;}
 h1 {font-size:1.35em;}
 h2 {font-size:1.25em;}
 h3 {font-size:1.1em;}
@@ -326,16 +330,15 @@ a.tiddlyLinkNonExisting.shadow {font-weight:bold;}
 
 .tiddlerPopupButton {padding:0.2em 0.2em 0.2em 0.2em;}
 .tiddlerPopupButton:after {content:&quot; ↓&quot;;}
-
-.popup {z-index:300; font-size:.9em; padding:0.2em; list-style:none; margin:0;}
 .popupTiddler {position: absolute; z-index:300; padding:1em 1em 1em 1em; margin:0;}
-.popup hr {display:block; height:1px; width:auto; padding:0; margin:0.2em 0em;}
 
+.popup {position:absolute; z-index:300; font-size:.9em; padding:0; list-style:none; margin:0;}
+.popup .popupMessage {padding:0.4em;}
+.popup hr {display:block; height:1px; width:auto; padding:0; margin:0.2em 0em;}
+.popup li.disabled {padding:0.4em;}
+.popup li a {display:block; padding:0.4em; font-weight:normal; cursor:pointer;}
 .listBreak {font-size:1px; line-height:1px;}
 .listBreak div {margin:2px 0;}
-
-.popup li.disabled {padding:0.2em;}
-.popup li a {display:block; padding:0.2em;}
 
 .tabset {padding:1em 0em 0em 0.5em;}
 .tab {margin:0em 0em 0em 0.25em; padding:2px;}
@@ -436,6 +439,9 @@ body {font-size:0.8em;}
 
 .viewer table.listView {font-size:0.95em;}
 
+.viewDetails {padding:0.5em 0em 0.5em 0em;}
+.viewDetails {font-size:1.1em;}
+
 .htmlarea .toolbarHA table {border:1px solid ButtonFace; margin:0em 0em;}
 /*}}}*/</pre>
 </div>
@@ -474,9 +480,9 @@ noscript {display:none;}
 </div>
 <div title="ViewTemplate" modifier="BramChen" tags="excludeLists">
 <pre>&lt;!--{{{--&gt;
-&lt;div class='toolbar' macro='toolbar closeTiddler closeOthers +editTiddler permalink references jump'&gt;&lt;/div&gt;
+&lt;div class='toolbar' macro='toolbar closeTiddler closeOthers +editTiddler &gt; syncing permalink references jump'&gt;&lt;/div&gt;
 &lt;div class='title' macro='view title'&gt;&lt;/div&gt;
-&lt;div class='subtitle'&gt;&lt;span macro='view modifier link'&gt;&lt;/span&gt;, &lt;span macro='view modified date [[DateFormat::DateFormat]]'&gt;&lt;/span&gt; (&lt;span macro='message views.wikified.createdPrompt'&gt;&lt;/span&gt; &lt;span macro='view created date [[DateFormat::shortDateFormat]]'&gt;&lt;/span&gt;)&lt;/div&gt;
+&lt;div class='subtitle'&gt;&lt;span macro='view modifier link'&gt;&lt;/span&gt;, &lt;span macro='view modified date [[DateFormat::DateFormat]]'&gt;&lt;/span&gt; (&lt;span macro='message views.wikified.createdPrompt'&gt;&lt;/span&gt; &lt;span macro='view created date [[DateFormat::shortDateFormat]]'&gt;&lt;/span&gt;) &lt;span macro='viewDetails'&gt;&lt;/span&gt;&lt;/div&gt;
 &lt;div class='tagging' macro='tagging'&gt;&lt;/div&gt;
 &lt;div class='tagged' macro='tags'&gt;&lt;/div&gt;
 &lt;div class='viewer' macro='view text wikified'&gt;&lt;/div&gt;
