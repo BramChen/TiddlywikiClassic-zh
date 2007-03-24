@@ -53,8 +53,6 @@ DAMAGE.
 
 #copyright {display:none;}
 
-.popup {position:absolute;}
-
 #storeArea {display:none; margin:4em 10em 3em;}
 
 #storeArea div {padding:0.5em; margin:1em 0em 0em 0em; border-color:#fff #666 #444 #ddd; border-style:solid; border-width:2px; overflow:auto;}
@@ -188,6 +186,9 @@ h2,h3 {border-bottom:1px solid [[ColorPalette::TertiaryLight]];}
 .subtitle {color:[[ColorPalette::TertiaryDark]];}
 
 .toolbar {color:[[ColorPalette::PrimaryMid]];}
+.toolbar a {color:[[ColorPalette::TertiaryLight]];}
+.selected .toolbar a {color:[[ColorPalette::TertiaryMid]];}
+.selected .toolbar a:hover {color:[[ColorPalette::Foreground]];}
 
 .viewDetails {border-left:2px solid [[ColorPalette::TertiaryPale]];}
 .viewDetails table {border:none;}
@@ -352,8 +353,7 @@ a.tiddlyLinkNonExisting.shadow {font-weight:bold;}
 
 #displayArea {margin:1em 17em 0em 14em;}
 
-.toolbar {text-align:right; font-size:.9em; visibility:hidden;}
-.selected .toolbar {visibility:visible;}
+.toolbar {text-align:right; font-size:.9em;}
 
 .viewDetails {padding:0.5em 0em 0.5em 0em;}
 .viewDetails {font-size:0.9em;}
