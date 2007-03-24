@@ -47,9 +47,7 @@ var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 4, da
 // Miscellaneous options
 var config = {
 	numRssItems: 20, // Number of items in the RSS feed
-	animDuration: 400, // Duration of UI animations
-	animFast: 0.12, // Speed for animations (lower == slower)
-	animSlow: 0.01, // Speed for EasterEgg animations
+	animDuration: 400, // Duration of UI animations in milliseconds
 	cascadeFast: 20, // Speed for cascade animations (higher == slower)
 	cascadeSlow: 60, // Speed for EasterEgg cascade animations
 	cascadeDepth: 5, // Depth of cascade animation
@@ -59,6 +57,9 @@ var config = {
 
 // Adaptors
 config.adaptors = {};
+
+// Backstage tasks
+config.tasks = {};
 
 // Custom fields to be automatically added to new tiddlers
 config.defaultCustomFields = {};
@@ -124,7 +125,7 @@ config.views = {
 };
 
 // Backstage tasks
-config.backstageTasks = ["save", "tidy","sync","importTask","copy","tweak","plugins"];
+config.backstageTasks = ["save","sync","importTask","tweak","plugins"];
 
 // Macros; each has a 'handler' member that is inserted later
 config.macros = {
@@ -273,19 +274,17 @@ config.options.txtFileSystemCharSet = "BIG5";
 // Strings in "double quotes" should be translated; strings in 'single quotes' should be left alone
 
 config.locale = "zh-Hant"; // W3C language tag
-/*
-merge(config.options,{
-	txtUserName: "YourName"});
-*/
-config.tasks = {
-		save: {text: "儲存", tooltip: "儲存變更至此 TiddlyWiki", action: saveChanges},
-		tidy: {text: "整理", tooltip: "對群組文章作大量更新", content: 'Coming soon...\n\nThis tab will allow bulk operations on tiddlers, and tags. It will be a generalised, extensible version of the plugins tab'},
-		sync: {text: "同步", tooltip: "將你的資料內容與外部伺服器與檔案同步", content: '<<sync>>'},
-		importTask: {text: "導入", tooltip: "自其他檔案或伺服器導入文章或套件", content: '<<importTiddlers>>'},
-		copy: {text: "複製", tooltip: "複製文章至別的 TiddlyWiki 文件及伺服器", content: 'Coming soon...\n\nThis tab will allow tiddlers to be copied to remote servers'},
-		tweak: {text: "選項", tooltip: "改變此 TiddlyWiki 的顯示與行為的設定", content: '<<options>>'},
-		plugins: {text: "套件管理", tooltip: "管理已安裝的套件", content: '<<plugins>>'}
-};
+
+if (!config.options.txtUserName)
+	config.options.txtUserName = "YourName";
+
+merge(config.tasks,{
+	save: {text: "儲存", tooltip: "儲存變更至此 TiddlyWiki", action: saveChanges},
+	sync: {text: "同步", tooltip: "將你的資料內容與外部伺服器與檔案同步", content: '<<sync>>'},
+	importTask: {text: "導入", tooltip: "自其他檔案或伺服器導入文章或套件", content: '<<importTiddlers>>'},
+	tweak: {text: "選項", tooltip: "改變此 TiddlyWiki 的顯示與行為的設定", content: '<<options>>'},
+	plugins: {text: "套件管理", tooltip: "管理已安裝的套件", content: '<<plugins>>'}
+});
 
 config.optionsDesc = {
 	txtUserName: "編輯文章所使用之作者署名",
@@ -356,12 +355,12 @@ config.messages.backstage = {
 	open: {text: "控制台", icon: "↩", iconIE: "←", tooltip: "開啟控制台執行編寫工作"},
 	close: {text: "關閉", icon: "↪", iconIE: "→", tooltip: "關閉控制台"},
 	prompt: "控制台："
-}
+};
 
 config.messages.listView = {
 	tiddlerTooltip: "檢視全文",
 	previewUnavailable: "(無法預覽)"
-}
+};
 
 config.messages.dates.months = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
 config.messages.dates.days = ["日", "一","二", "三", "四", "五", "六"];
@@ -478,7 +477,7 @@ merge(config.macros.options,{
 merge(config.macros.plugins,{
 	wizardTitle: "擴充套件管理",
 	step1Title: "- 已載入之套件",
-	step1Html: "<input type='hidden' name='markList'></input>",
+	step1Html: "<input type='hidden' name='markList'></input>", // DO NOT TRANSLATE
 	skippedText: "(此套件因剛加入，故尚未執行)",
 	noPluginText: "未安裝套件",
 	confirmDeleteText: "確認是否刪除此文章:\n\n%0",
@@ -531,16 +530,21 @@ merge(config.macros.importTiddlers,{
 	statusOpenWorkspace: "正在開啟工作區",
 	statusGetTiddlerList: "正在取得可用之文章清單",
 	step3Title: "步驟三：選擇欲導入之文章",
-	step3Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='true' name='chkSync'>保持這些文章與伺服器連線，讓變更持續同步。</input>",
+	step3Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='true' name='chkSync'>保持這些文章與伺服器的連結，便於同步後續的變更。</input><br><input type='checkbox' checked='false' name='chkSave'>儲存此伺服器的詳細資訊於標籤為 'systemServer' 的文章名為：</input> <input type='text' size=25 name='txtSaveTiddler'>", 
 	importLabel: "導入",
 	importPrompt: "導入所選文章",
 	confirmOverwriteText: "確定要覆寫這些文章：\n\n%0",
 	step4Title: "步驟四：正在導入%0 篇文章",
-	step4Html: "<input type='hidden' name='markReport'></input>",
+	step4Html: "<input type='hidden' name='markReport'></input>", // DO NOT TRANSLATE
 	step5Title: "步驟五：導入完成",
 	step5Html: "所選文章已導入",
 	doneLabel: "完成",
 	donePrompt: "關閉",
+	systemServerNamePattern: "%2 位於 %1",
+	systemServerNamePatternNoWorkspace: "%1",
+	confirmOverwriteSaveTiddler: "此 tiddler '%0' 已經存在。點擊「確定」以伺服器上料覆寫之，或「取消」不變更後離開",
+	serverSaveTemplate: "|''Type:''|%0|\n|''網址：''|%1|\n|''工作區：''|%2|\n\n此文為自動產生紀錄伺服器之相關資訊。",
+	serverSaveModifier: "（系統）",
 
 	listViewTemplate: {
 		columns: [
@@ -571,7 +575,7 @@ merge(config.macros.sync,{
 			]},
 	wizardTitle: "將你的資料內容與外部伺服器與檔案同步",
 	step1Title: "選擇欲同步的文章",
-	step1Html: '<input type="hidden" name="markList"></input>',
+	step1Html: '<input type="hidden" name="markList"></input>', // DO NOT TRANSLATE
 	syncLabel: "同步",
 	syncPrompt: "同步更新這些文章",
 	hasChanged: "已更動",
@@ -652,7 +656,10 @@ merge(config.commands.syncing,{
 	tooltip: "本文章與伺服器或其他外部檔案的同步資訊",
 	currentlySyncing: "<div>同步類型：<span class='popupHighlight'>'%0'</span></div><div>伺服器：<span class='popupHighlight'>%1</span></div><div>工作區：<span class='popupHighlight'>%2</span></div>",
 	notCurrentlySyncing: "無進行中的同步動作",
-	chooseServer: "與其他伺服器同步此文章:"});
+	captionUnSync: "停止同步此文章",
+	chooseServer: "與其他伺服器同步此文章:",
+	currServerMarker: "● ",
+	notCurrServerMarker: "  "});
 
 merge(config.shadowTiddlers,{
 	DefaultTiddlers: "GettingStarted",
@@ -918,7 +925,7 @@ config.paramifiers.start = {
 
 config.paramifiers.open = {
 	onstart: function(v,i) {
-		story.displayTiddler(i == 1 ? null : "bottom",v,null,false,false);
+		story.displayTiddler(i == 1 ? null : "bottom",v,null,false,null);
 	}
 };
 
@@ -945,7 +952,7 @@ config.paramifiers.tag = {
 	onstart: function(v) {
 		var tagged = store.getTaggedTiddlers(v,"title");
 		for(var t=0; t<tagged.length; t++)
-			story.displayTiddler("bottom",tagged[t].title,null,false,false);
+			story.displayTiddler("bottom",tagged[t].title,null,false,null);
 	}
 };
 
@@ -2106,7 +2113,7 @@ config.macros.slider.onClickSlider = function(e)
 	var cookie = n.getAttribute("cookie");
 	var isOpen = n.style.display != "none";
 	if(config.options.chkAnimate && anim && typeof Slider == "function")
-		anim.startAnimating(new Slider(n,!isOpen,e.shiftKey || e.altKey,"none"));
+		anim.startAnimating(new Slider(n,!isOpen,null,"none"));
 	else
 		n.style.display = isOpen ? "none" : "block";
 	config.options[cookie] = !isOpen;
@@ -2299,7 +2306,7 @@ config.macros.newTiddler.onClickNewTiddler = function()
 	var focus = this.getAttribute("newFocus");
 	var template = this.getAttribute("newTemplate");
 	var customFields = this.getAttribute("customFields");
-	story.displayTiddler(null,title,template,false,false,customFields);
+	story.displayTiddler(null,title,template,false,null,customFields);
 	var text = this.getAttribute("newText");
 	if(typeof text == "string")
 		story.getTiddlerField(title,"text").value = text.format([title]);
@@ -2548,7 +2555,7 @@ config.macros.tagChooser.onClick = function(e)
 		theTag.setAttribute("tag",tags[t][0]);
 		theTag.setAttribute("tiddler",this.getAttribute("tiddler"));
 	}
-	Popup.show(popup,false);
+	Popup.show();
 	e.cancelBubble = true;
 	if(e.stopPropagation) e.stopPropagation();
 	return false;
@@ -2648,7 +2655,7 @@ config.macros.toolbar.onClickPopup = function(e)
 	var tiddler = store.fetchTiddler(title);
 	popup.setAttribute("tiddler",title);
 	command.handlePopup(popup,title);
-	Popup.show(popup,false);
+	Popup.show();
 	e.cancelBubble = true;
 	if (e.stopPropagation) e.stopPropagation();
 	return false;
@@ -2673,6 +2680,7 @@ config.macros.toolbar.onClickMore = function(e)
 	var e = this.nextSibling;
 	e.style.display = "inline";
 	this.parentNode.removeChild(this);
+	return false;
 };
 
 config.macros.toolbar.handler = function(place,macroName,params,wikifier,paramString,tiddler)
@@ -2803,7 +2811,7 @@ config.macros.viewDetails.onClickShow = function(e)
 
 config.commands.closeTiddler.handler = function(event,src,title)
 {
-	story.closeTiddler(title,true,event.shiftKey || event.altKey);
+	story.closeTiddler(title,true);
 	return false;
 };
 
@@ -2818,7 +2826,7 @@ config.commands.editTiddler.handler = function(event,src,title)
 	clearMessage();
 	var tiddlerElem = document.getElementById(story.idPrefix + title);
 	var fields = tiddlerElem.getAttribute("tiddlyFields");
-	story.displayTiddler(null,title,DEFAULT_EDIT_TEMPLATE,null,null,fields);
+	story.displayTiddler(null,title,DEFAULT_EDIT_TEMPLATE,false,null,fields);
 	story.focusTiddler(title,"text");
 	return false;
 };
@@ -2849,7 +2857,7 @@ config.commands.deleteTiddler.handler = function(event,src,title)
 		deleteIt = confirm(this.warning.format([title]));
 	if (deleteIt) {
 		store.removeTiddler(title);
-		story.closeTiddler(title,true,event.shiftKey || event.altKey);
+		story.closeTiddler(title,true);
 		autoSaveChanges();
 	}
 	return false;
@@ -2893,43 +2901,61 @@ config.commands.syncing.handlePopup = function(popup,title)
 	var serverHost = tiddler.fields['server.host'];
 	var serverWorkspace = tiddler.fields['server.workspace'];
 	if(!serverWorkspace)
-		serverWorkspace = "(none)";
+		serverWorkspace = "";
 	if(serverType) {
 		var e = createTiddlyElement(popup,"li",null,"popupMessage");
 		e.innerHTML = config.commands.syncing.currentlySyncing.format([serverType,serverHost,serverWorkspace]);
 	} else {
 		createTiddlyElement(popup,"li",null,"popupMessage",config.commands.syncing.notCurrentlySyncing);
 	}
+	if(serverType) {
+		createTiddlyElement(createTiddlyElement(popup,"li",null,"listBreak"),"div");
+		var btn = createTiddlyButton(createTiddlyElement(popup,"li"),this.captionUnSync,null,config.commands.syncing.onChooseServer);
+		btn.setAttribute("tiddler",title);
+		btn.setAttribute("server.type","");
+	}
 	createTiddlyElement(createTiddlyElement(popup,"li",null,"listBreak"),"div");
 	createTiddlyElement(popup,"li",null,"popupMessage",config.commands.syncing.chooseServer);
 	var feeds = store.getTaggedTiddlers("systemServer","title");
 	for(var t=0; t<feeds.length; t++) {
 		var f = feeds[t];
-		var btn = createTiddlyButton(createTiddlyElement(popup,"li"),f.title,null,config.commands.syncing.onChooseServer);
+		var feedServerType = store.getTiddlerSlice(f.title,"Type");
+		if(!feedServerType)
+			feedServerType = "file";
+		var feedServerHost = store.getTiddlerSlice(f.title,"URL");
+		if(!feedServerHost)
+			feedServerHost = "";
+		var feedServerWorkspace = store.getTiddlerSlice(f.title,"Workspace");
+		if(!feedServerWorkspace)
+			feedServerWorkspace = "";
+		var caption = f.title;
+		if(serverType == feedServerType && serverHost == feedServerHost && serverWorkspace == feedServerWorkspace) {
+			caption = config.commands.syncing.currServerMarker + caption;
+		} else {
+			caption = config.commands.syncing.notCurrServerMarker + caption;
+		}
+		var btn = createTiddlyButton(createTiddlyElement(popup,"li"),caption,null,config.commands.syncing.onChooseServer);
 		btn.setAttribute("tiddler",title);
-		var serverType = store.getTiddlerSlice(f.title,"Type");
-		if(!serverType)
-			serverType = "file";
-		btn.setAttribute("server.type",serverType);
-		var serverHost = store.getTiddlerSlice(f.title,"URL");
-		if(!serverHost)
-			serverHost = "";
-		btn.setAttribute("server.host",serverHost);
-		var serverWorkspace = store.getTiddlerSlice(f.title,"Workspace");
-		if(!serverWorkspace)
-			serverWorkspace = "";
-		btn.setAttribute("server.workspace",serverWorkspace);
+		btn.setAttribute("server.type",feedServerType);
+		btn.setAttribute("server.host",feedServerHost);
+		btn.setAttribute("server.workspace",feedServerWorkspace);
 	}
 };
 
 config.commands.syncing.onChooseServer = function(e)
 {
 	var tiddler = this.getAttribute("tiddler");
-	store.addTiddlerFields(tiddler,{
-		'server.type': this.getAttribute("server.type"),
-		'server.host': this.getAttribute("server.host"),
-		'server.workspace': this.getAttribute("server.workspace")
-		});
+	var serverType = this.getAttribute("server.type");
+	if(serverType) {
+		store.addTiddlerFields(tiddler,{
+			'server.type': serverType,
+			'server.host': this.getAttribute("server.host"),
+			'server.workspace': this.getAttribute("server.workspace")
+			});
+	} else {
+		store.setValue(tiddler,'server',null);
+	}
+	return false;
 };
 
 //--
@@ -3077,7 +3103,7 @@ Tiddler.prototype.changed = function()
 				this.links.pushUnique(formatMatch[1]);
 			}
 		}
-		else if(formatMatch[2-t] && (store.tiddlerExists(formatMatch[3-t]) || store.isShadowTiddler(formatMatch[3-t]))) // titledBrackettedLink
+		else if(formatMatch[2-t] && !config.formatterHelpers.isExternalLink(formatMatch[3-t])) // titledBrackettedLink
 			this.links.pushUnique(formatMatch[3-t]);
 		else if(formatMatch[4-t] && formatMatch[4-t] != this.title) // brackettedLink
 			this.links.pushUnique(formatMatch[4-t]);
@@ -3824,19 +3850,19 @@ Story.prototype.forEachTiddler = function(fn)
 	}
 };
 
-Story.prototype.displayTiddlers = function(srcElement,titles,template,animate,slowly,customFields,toggle)
+Story.prototype.displayTiddlers = function(srcElement,titles,template,animate,unused,customFields,toggle)
 {
 	for(var t = titles.length-1;t>=0;t--)
-		this.displayTiddler(srcElement,titles[t],template,animate,slowly,customFields);
+		this.displayTiddler(srcElement,titles[t],template,animate,unused,customFields);
 };
 
-Story.prototype.displayTiddler = function(srcElement,title,template,animate,slowly,customFields,toggle)
+Story.prototype.displayTiddler = function(srcElement,title,template,animate,unused,customFields,toggle)
 {
 	var place = document.getElementById(this.container);
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
 	if(tiddlerElem) {
 		if(toggle)
-			this.closeTiddler(title,true,slowly);
+			this.closeTiddler(title,true);
 		else
 			this.refreshTiddler(title,template,false,customFields);
 	} else {
@@ -3845,7 +3871,7 @@ Story.prototype.displayTiddler = function(srcElement,title,template,animate,slow
 	}
 	if(srcElement && typeof srcElement !== "string") {
 		if(config.options.chkAnimate && (animate == undefined || animate == true) && anim && typeof Zoomer == "function" && typeof Scroller == "function")
-			anim.startAnimating(new Zoomer(title,srcElement,tiddlerElem,slowly),new Scroller(tiddlerElem,slowly));
+			anim.startAnimating(new Zoomer(title,srcElement,tiddlerElem),new Scroller(tiddlerElem));
 		else
 			window.scrollTo(0,ensureVisible(tiddlerElem));
 	}
@@ -4138,14 +4164,14 @@ Story.prototype.setTiddlerTag = function(title,tag,mode)
 	Story.prototype.setTiddlerField(title,tag,mode,"tags");
 };
 
-Story.prototype.closeTiddler = function(title,animate,slowly)
+Story.prototype.closeTiddler = function(title,animate,unused)
 {
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
 	if(tiddlerElem != null) {
 		clearMessage();
 		this.scrubTiddler(tiddlerElem);
 		if(config.options.chkAnimate && animate && anim && typeof Slider == "function")
-			anim.startAnimating(new Slider(tiddlerElem,false,slowly,"all"));
+			anim.startAnimating(new Slider(tiddlerElem,false,null,"all"));
 		else
 			tiddlerElem.parentNode.removeChild(tiddlerElem);
 	}
@@ -4264,7 +4290,7 @@ Story.prototype.saveTiddler = function(title,minorUpdate)
 				return null;
 		}
 		if(newTitle != title)
-			this.closeTiddler(newTitle,false,false);
+			this.closeTiddler(newTitle,false);
 		tiddlerElem.id = this.idPrefix + newTitle;
 		tiddlerElem.setAttribute("tiddler",newTitle);
 		tiddlerElem.setAttribute("template",DEFAULT_VIEW_TEMPLATE);
@@ -4297,9 +4323,9 @@ Story.prototype.permaView = function()
 		window.location.hash = t;
 };
 
-// ---------------------------------------------------------------------------------
-// Backstage
-// ---------------------------------------------------------------------------------
+//--
+//-- Backstage
+//--
 
 var backstage = {
 	area: null,
@@ -4324,7 +4350,7 @@ var backstage = {
 		var t = cmb.open.text + " " + cmb.open[config.browser.isIE ? "iconIE" : "icon"];
 		this.showButton = createTiddlyButton(this.button,t,cmb.open.tooltip,
 						function (e) {backstage.show(); return false;},null,"backstageShow");
-		var t = cmb.close[config.browser.isIE ? "iconIE" : "icon"] + " " + cmb.close.text;
+		t = cmb.close[config.browser.isIE ? "iconIE" : "icon"] + " " + cmb.close.text;
 		this.hideButton = createTiddlyButton(this.button,t,cmb.close.tooltip,
 						function (e) {backstage.hide(); return false;},null,"backstageHide");
 		this.cloak = document.getElementById("backstageCloak");
@@ -4335,7 +4361,7 @@ var backstage = {
 			backstage.switchTab(null);
 		};
 		createTiddlyText(this.toolbar,cmb.prompt);
-		for(var t=0; t<config.backstageTasks.length; t++) {
+		for(t=0; t<config.backstageTasks.length; t++) {
 			var taskName = config.backstageTasks[t];
 			var task = config.tasks[taskName];
 			var handler = task.action ? this.onClickCommand : this.onClickTab;
@@ -4417,18 +4443,18 @@ var backstage = {
 			{
 			if(e.getAttribute && e.getAttribute("task") == tabName)
 				tabElem = e;
-			e = e.nextSibling
+			e = e.nextSibling;
 			}
 		if(tabName == backstage.currTabName)
 			return;
 		if(backstage.currTabElem) {
 			removeClass(this.currTabElem,"backstageSelTab");
-			}
+		}
 		if(tabElem && tabName) {
 			backstage.preparePanel();
 			addClass(tabElem,"backstageSelTab");
 			var task = config.tasks[tabName];
-			wikify(task.content,backstage.panelBody,null,null)
+			wikify(task.content,backstage.panelBody,null,null);
 			backstage.showPanel();
 		} else if(backstage.currTabElem) {
 			backstage.hidePanel();
@@ -4485,23 +4511,23 @@ config.macros.backstage.handler = function(place,macroName,params,wikifier,param
 {
 	var backstageTask = config.tasks[params[0]];
 	if(backstageTask)
-		createTiddlyButton(place,backstageTask.text,backstageTask.tooltip,function(e) {backstage.switchTab(params[0]); return false;})
-}
-// ---------------------------------------------------------------------------------
-// ImportTiddlers macro
-// ---------------------------------------------------------------------------------
+		createTiddlyButton(place,backstageTask.text,backstageTask.tooltip,function(e) {backstage.switchTab(params[0]); return false;});
+};
+
+//--
+//-- ImportTiddlers macro
+//--
 
 config.macros.importTiddlers.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
-	if(readOnly)
-		{
+	if(readOnly) {
 		createTiddlyElement(place,"div",null,"marked",this.readOnlyWarning);
 		return;
-		}
+	}
 	var w = new Wizard();
 	w.createWizard(place,this.wizardTitle);
 	this.restart(w);
-}
+};
 
 config.macros.importTiddlers.onCancel = function(e)
 {
@@ -4509,38 +4535,35 @@ config.macros.importTiddlers.onCancel = function(e)
 	var place = wizard.clear();
 	config.macros.importTiddlers.restart(wizard);
 	return false;
-}
+};
 
 config.macros.importTiddlers.restart = function(wizard)
 {
 	wizard.addStep(this.step1Title,this.step1Html);
 	var s = wizard.getElement("selTypes");
-	for(var t in config.adaptors)
-		{
+	for(var t in config.adaptors) {
 		var e = createTiddlyElement(s,"option",null,null,t);
 		e.value = t;
-		}
+	}
 	s = wizard.getElement("selFeeds");
 	var feeds = this.getFeeds();
-	for(t in feeds)
-		{
+	for(t in feeds) {
 		e = createTiddlyElement(s,"option",null,null,t);
 		e.value = t;
-		}
+	}
 	wizard.setValue("feeds",feeds);
 	s.onchange = config.macros.importTiddlers.onFeedChange;
 	var fileInput = wizard.getElement("txtBrowse");
 	fileInput.onchange = config.macros.importTiddlers.onBrowseChange;
 	fileInput.onkeyup = config.macros.importTiddlers.onBrowseChange;
 	wizard.setButtons([{caption: this.openLabel, tooltip: this.openPrompt, onClick: config.macros.importTiddlers.onOpen}]);
-}
+};
 
 config.macros.importTiddlers.getFeeds = function()
 {
 	var feeds = {};
 	var tagged = store.getTaggedTiddlers("systemServer","title");
-	for(var t=0; t<tagged.length; t++)
-		{
+	for(var t=0; t<tagged.length; t++) {
 		var title = tagged[t].title;
 		var serverType = store.getTiddlerSlice(title,"Type");
 		if(!serverType)
@@ -4549,11 +4572,12 @@ config.macros.importTiddlers.getFeeds = function()
 						url: store.getTiddlerSlice(title,"URL"),
 						workspace: store.getTiddlerSlice(title,"Workspace"),
 						workspaceList: store.getTiddlerSlice(title,"WorkspaceList"),
+						tiddlerFilter: store.getTiddlerSlice(title,"TiddlerFilter"),
 						serverType: serverType,
 						description: store.getTiddlerSlice(title,"Description")};
-		}
+	}
 	return feeds;
-}
+};
 
 config.macros.importTiddlers.onFeedChange = function(e)
 {
@@ -4562,16 +4586,18 @@ config.macros.importTiddlers.onFeedChange = function(e)
 	var fileInput = wizard.getElement("txtPath");
 	var feeds = wizard.getValue("feeds");
 	var f = feeds[this.value];
-	if(f)
-		{
+	if(f) {
 		selTypes.value = f.serverType;
 		fileInput.value = f.url;
-		wizard.setValue("defaultWorkspace",f.workspace);
-		wizard.setValue("workspaceList",f.workspaceList);
 		this.selectedIndex = 0;
-		}
+		wizard.setValue("feedName",f.serverType);
+		wizard.setValue("feedHost",f.url);
+		wizard.setValue("feedWorkspace",f.workspace);
+		wizard.setValue("feedWorkspaceList",f.workspaceList);
+		wizard.setValue("feedTiddlerFilter",f.tiddlerFilter);
+	}
 	return false;
-}
+};
 
 config.macros.importTiddlers.onBrowseChange = function(e)
 {
@@ -4579,34 +4605,36 @@ config.macros.importTiddlers.onBrowseChange = function(e)
 	var fileInput = wizard.getElement("txtPath");
 	fileInput.value = "file://" + this.value;
 	return false;
-}
+};
 
 config.macros.importTiddlers.onOpen = function(e)
 {
 	var wizard = new Wizard(this);
 	var fileInput = wizard.getElement("txtPath");
 	var url = fileInput.value;
-	var s = wizard.getElement("selTypes");
-	var adaptor = new config.adaptors[s.value];
+	var serverType = wizard.getElement("selTypes").value;
+	var adaptor = new config.adaptors[serverType];
 	wizard.setValue("adaptor",adaptor);
+	wizard.setValue("serverType",serverType);
+	wizard.setValue("host",url);
 	var context = {};
 	var ret = adaptor.openHost(url,context,wizard,config.macros.importTiddlers.onOpenHost);
 	if(ret !== true)
 		displayMessage(ret);
 	wizard.setButtons([{caption: config.macros.importTiddlers.cancelLabel, tooltip: config.macros.importTiddlers.cancelPrompt, onClick: config.macros.importTiddlers.onCancel}],config.macros.importTiddlers.statusOpenHost);
 	return false;
-}
+};
 
 config.macros.importTiddlers.onOpenHost = function(context,wizard)
 {
 	var adaptor = wizard.getValue("adaptor");
 	if(context.status !== true)
 		displayMessage("Error in importTiddlers.onOpenHost: " + context.statusText);
-	var ret = adaptor.getWorkspaceList(context,wizard,config.macros.importTiddlers.onGetWorkspaceList)
+	var ret = adaptor.getWorkspaceList(context,wizard,config.macros.importTiddlers.onGetWorkspaceList);
 	if(ret !== true)
 		displayMessage(ret);
 	wizard.setButtons([{caption: config.macros.importTiddlers.cancelLabel, tooltip: config.macros.importTiddlers.cancelPrompt, onClick: config.macros.importTiddlers.onCancel}],config.macros.importTiddlers.statusGetWorkspaceList);
-}
+};
 
 config.macros.importTiddlers.onGetWorkspaceList = function(context,wizard)
 {
@@ -4615,28 +4643,27 @@ config.macros.importTiddlers.onGetWorkspaceList = function(context,wizard)
 	wizard.addStep(config.macros.importTiddlers.step2Title,config.macros.importTiddlers.step2Html);
 	var s = wizard.getElement("selWorkspace");
 	s.onchange = config.macros.importTiddlers.onWorkspaceChange;
-	for(var t=0; t<context.workspaces.length; t++)
-		{
+	for(var t=0; t<context.workspaces.length; t++) {
 		var e = createTiddlyElement(s,"option",null,null,context.workspaces[t].title);
 		e.value = context.workspaces[t].title;
-		}
-	var workspaceList = wizard.getValue("workspaceList");
+	}
+	var workspaceList = wizard.getValue("feedWorkspaceList");
 	if(workspaceList) {
 		var list = workspaceList.parseParams("workspace",null,false,true);
 		for(var n=1; n<list.length; n++) {
 			if(context.workspaces.findByField("title",list[n].value) == null) {
-				var e = createTiddlyElement(s,"option",null,null,list[n].value);
+				e = createTiddlyElement(s,"option",null,null,list[n].value);
 				e.value = list[n].value;
 			}
 		}
 	}
-	var workspace = wizard.getValue("defaultWorkspace");
+	var workspace = wizard.getValue("feedWorkspace");
 	if(workspace) {
 		t = wizard.getElement("txtWorkspace");
 		t.value = workspace;
 	}
 	wizard.setButtons([{caption: config.macros.importTiddlers.openLabel, tooltip: config.macros.importTiddlers.openPrompt, onClick: config.macros.importTiddlers.onChooseWorkspace}]);
-}
+};
 
 config.macros.importTiddlers.onWorkspaceChange = function(e)
 {
@@ -4645,31 +4672,32 @@ config.macros.importTiddlers.onWorkspaceChange = function(e)
 	t.value  = this.value;
 	this.selectedIndex = 0;
 	return false;
-}
+};
 
 config.macros.importTiddlers.onChooseWorkspace = function(e)
 {
 	var wizard = new Wizard(this);
 	var adaptor = wizard.getValue("adaptor");
-	var t = wizard.getElement("txtWorkspace");
+	var workspace = wizard.getElement("txtWorkspace").value;
+	wizard.setValue("workspace",workspace);
 	var context = {};
-	var ret = adaptor.openWorkspace(t.value,context,wizard,config.macros.importTiddlers.onOpenWorkspace);
+	var ret = adaptor.openWorkspace(workspace,context,wizard,config.macros.importTiddlers.onOpenWorkspace);
 	if(ret !== true)
 		displayMessage(ret);
 	wizard.setButtons([{caption: config.macros.importTiddlers.cancelLabel, tooltip: config.macros.importTiddlers.cancelPrompt, onClick: config.macros.importTiddlers.onCancel}],config.macros.importTiddlers.statusOpenWorkspace);
 	return false;
-}
+};
 
 config.macros.importTiddlers.onOpenWorkspace = function(context,wizard)
 {
 	if(context.status !== true)
 		displayMessage("Error in importTiddlers.onOpenWorkspace: " + context.statusText);
 	var adaptor = wizard.getValue("adaptor");
-	var ret = adaptor.getTiddlerList(context,wizard,config.macros.importTiddlers.onGetTiddlerList);
+	var ret = adaptor.getTiddlerList(context,wizard,config.macros.importTiddlers.onGetTiddlerList,wizard.getValue("feedTiddlerFilter"));
 	if(ret !== true)
 		displayMessage(ret);
 	wizard.setButtons([{caption: config.macros.importTiddlers.cancelLabel, tooltip: config.macros.importTiddlers.cancelPrompt, onClick: config.macros.importTiddlers.onCancel}],config.macros.importTiddlers.statusGetTiddlerList);
-}
+};
 
 config.macros.importTiddlers.onGetTiddlerList = function(context,wizard)
 {
@@ -4677,7 +4705,7 @@ config.macros.importTiddlers.onGetTiddlerList = function(context,wizard)
 		displayMessage("Error in importTiddlers.onGetTiddlerList: " + context.statusText);
 	// Extract data for the listview
 	var listedTiddlers = [];
-	if(context.tiddlers)
+	if(context.tiddlers) {
 		for(var n=0; n<context.tiddlers.length; n++) {
 			var tiddler = context.tiddlers[n];
 			listedTiddlers.push({
@@ -4690,6 +4718,7 @@ config.macros.importTiddlers.onGetTiddlerList = function(context,wizard)
 				tiddler: tiddler
 			});
 		}
+	}
 	listedTiddlers.sort(function(a,b) {return a.title < b.title ? -1 : (a.title == b.title ? 0 : +1);});
 	// Display the listview
 	wizard.addStep(config.macros.importTiddlers.step3Title,config.macros.importTiddlers.step3Html);
@@ -4698,15 +4727,45 @@ config.macros.importTiddlers.onGetTiddlerList = function(context,wizard)
 	markList.parentNode.insertBefore(listWrapper,markList);
 	var listView = ListView.create(listWrapper,listedTiddlers,config.macros.importTiddlers.listViewTemplate);
 	wizard.setValue("listView",listView);
+	var txtSaveTiddler = wizard.getElement("txtSaveTiddler");
+	txtSaveTiddler.value = config.macros.importTiddlers.generateSystemServerName(wizard);
 	wizard.setButtons([
 			{caption: config.macros.importTiddlers.cancelLabel, tooltip: config.macros.importTiddlers.cancelPrompt, onClick: config.macros.importTiddlers.onCancel},
 			{caption: config.macros.importTiddlers.importLabel, tooltip: config.macros.importTiddlers.importPrompt, onClick:  config.macros.importTiddlers.doImport}
 		]);
-}
+};
+
+config.macros.importTiddlers.generateSystemServerName = function(wizard)
+{
+	var serverType = wizard.getValue("serverType");
+	var host = wizard.getValue("host");
+	var workspace = wizard.getValue("workspace");
+	var pattern = config.macros.importTiddlers[workspace ? "systemServerNamePattern" : "systemServerNamePatternNoWorkspace"];
+	return pattern.format([serverType,host,workspace]);
+};
+
+config.macros.importTiddlers.saveServerTiddler = function(wizard)
+{
+	var txtSaveTiddler = wizard.getElement("txtSaveTiddler").value;
+	if(store.tiddlerExists(txtSaveTiddler)) {
+		if(!confirm(config.macros.importTiddlers.confirmOverwriteSaveTiddler.format([txtSaveTiddler])))
+			return;
+		store.suspendNotifications();
+		store.removeTiddler(txtSaveTiddler);
+		store.resumeNotifications();
+	}
+	var serverType = wizard.getValue("serverType");
+	var host = wizard.getValue("host");
+	var workspace = wizard.getValue("workspace");
+	var text = config.macros.importTiddlers.serverSaveTemplate.format([serverType,host,workspace]);
+	store.saveTiddler(txtSaveTiddler,txtSaveTiddler,text,config.macros.importTiddlers.serverSaveModifier,new Date(),["systemServer"]);
+};
 
 config.macros.importTiddlers.doImport = function(e)
 {
 	var wizard = new Wizard(this);
+	if(wizard.getElement("chkSave").checked)
+		config.macros.importTiddlers.saveServerTiddler(wizard);
 	var chkSync = wizard.getElement("chkSync").checked;
 	wizard.setValue("sync",chkSync);
 	var listView = wizard.getValue("listView");
@@ -4718,27 +4777,27 @@ config.macros.importTiddlers.doImport = function(e)
 		if(store.tiddlerExists(rowNames[t]))
 			overwrite.push(rowNames[t]);
 	}
-	if(overwrite.length > 0)
+	if(overwrite.length > 0) {
 		if(!confirm(config.macros.importTiddlers.confirmOverwriteText.format([overwrite.join(", ")])))
-			return;
+			return false;
+	}
 	wizard.addStep(config.macros.importTiddlers.step4Title.format([rowNames.length]),config.macros.importTiddlers.step4Html);
 	for(t=0; t<rowNames.length; t++) {
 		var link = document.createElement("div");
 		createTiddlyLink(link,rowNames[t],true);
 		var place = wizard.getElement("markReport");
 		place.parentNode.insertBefore(link,place);
-		}
+	}
 	wizard.setValue("remainingImports",rowNames.length);
 	wizard.setButtons([
 			{caption: config.macros.importTiddlers.doneLabel, tooltip: config.macros.importTiddlers.donePrompt, onClick: config.macros.importTiddlers.onCancel}
 		]);
-	for(t=0; t<rowNames.length; t++)
-		{
+	for(t=0; t<rowNames.length; t++) {
 		var context = {};
 		var inbound = adaptor.getTiddler(rowNames[t],context,wizard,config.macros.importTiddlers.onGetTiddler);
-		}
+	}
 	return false;
-}
+};
 
 config.macros.importTiddlers.onGetTiddler = function(context,wizard)
 {
@@ -4747,8 +4806,7 @@ config.macros.importTiddlers.onGetTiddler = function(context,wizard)
 	var tiddler = context.tiddler;
 	store.saveTiddler(tiddler.title, tiddler.title, tiddler.text, tiddler.modifier, tiddler.modified, tiddler.tags, tiddler.fields);
 	if(!wizard.getValue("sync")) {
-		store.setValue(tiddler.title,'server.type',null);
-		store.setValue(tiddler.title,'server.host',null);
+		store.setValue(tiddler.title,'server',null);
 	}
 	store.setValue(tiddler.title,'changecount',null);
 	var remainingImports = wizard.getValue("remainingImports")-1;
@@ -4757,20 +4815,16 @@ config.macros.importTiddlers.onGetTiddler = function(context,wizard)
 		wizard.addStep(config.macros.importTiddlers.step5Title,config.macros.importTiddlers.step5Html);
 		autoSaveChanges();
 	}
-}
+};
 
-// ---------------------------------------------------------------------------------
-// Sync macro
-// ---------------------------------------------------------------------------------
+//--
+//-- Sync macro
+//--
 
 // Synchronisation handlers
 config.syncers = {};
 
-// Sync state. Members:
-//	syncList - List of sync objects (title, tiddler, server, workspace, page, version)
-//	wizard - reference to wizard object
-//	listView - DOM element of the listView table
-//	syncMachines - array of syncMachines
+// Sync state.
 var currSync = null;
 
 // sync macro
@@ -4778,7 +4832,7 @@ config.macros.sync.handler = function(place,macroName,params,wikifier,paramStrin
 {
 	if(!wikifier.isStatic)
 		config.macros.sync.startSync(place);
-}
+};
 
 config.macros.sync.startSync = function(place)
 {
@@ -4802,7 +4856,7 @@ config.macros.sync.startSync = function(place)
 	wizard.setButtons([
 			{caption: config.macros.sync.syncLabel, tooltip: config.macros.sync.syncPrompt, onClick: config.macros.sync.doSync}
 		]);
-}
+};
 
 config.macros.sync.getSyncableTiddlers = function ()
 {
@@ -4816,14 +4870,14 @@ config.macros.sync.getSyncableTiddlers = function ()
 		syncItem.title = tiddler.title;
 		syncItem.isTouched = tiddler.isTouched();
 		syncItem.selected = syncItem.isTouched;
-		syncItem.syncStatus = config.macros.sync.syncStatusList[syncItem.isTouched ? "changedLocally" : "none"]
+		syncItem.syncStatus = config.macros.sync.syncStatusList[syncItem.isTouched ? "changedLocally" : "none"];
 		syncItem.status = syncItem.syncStatus.text;
 		if(syncItem.serverType && syncItem.serverHost)
 			list.push(syncItem);
 		});
 	list.sort(function(a,b) {return a.title < b.title ? -1 : (a.title == b.title ? 0 : +1);});
 	return list;
-}
+};
 
 config.macros.sync.preProcessSyncableTiddlers = function()
 {
@@ -4832,7 +4886,7 @@ config.macros.sync.preProcessSyncableTiddlers = function()
 		var ti = si.syncMachine.adaptor.generateTiddlerInfo(si.tiddler);
 		si.serverUrl = ti.uri;
 	}
-}
+};
 
 config.macros.sync.processSyncableTiddlers = function()
 {
@@ -4840,7 +4894,7 @@ config.macros.sync.processSyncableTiddlers = function()
 		si = currSync.syncList[t];
 		si.rowElement.style.backgroundColor = si.syncStatus.color;
 	}
-}
+};
 
 config.macros.sync.createSyncMachines = function()
 {
@@ -4861,7 +4915,7 @@ config.macros.sync.createSyncMachines = function()
 			r.syncItems.push(si);
 		}
 	}
-}
+};
 
 config.macros.sync.createSyncMachine = function(syncItem)
 {
@@ -4876,7 +4930,7 @@ config.macros.sync.createSyncMachine = function(syncItem)
 	if(r !== true)
 		displayMessage("Error from openHost: " + r);
 	return sm;
-}
+};
 
 config.macros.sync.syncOnOpenHost = function(context,syncMachine)
 {
@@ -4885,7 +4939,7 @@ config.macros.sync.syncOnOpenHost = function(context,syncMachine)
 	var r = syncMachine.adaptor.openWorkspace(syncMachine.serverWorkspace,context,syncMachine,config.macros.sync.syncOnOpenWorkspace);
 	if(r !== true)
 		displayMessage("Error from openWorkspace: " + r);
-}
+};
 
 config.macros.sync.syncOnOpenWorkspace = function(context,syncMachine)
 {
@@ -4894,7 +4948,7 @@ config.macros.sync.syncOnOpenWorkspace = function(context,syncMachine)
 	var r = syncMachine.adaptor.getTiddlerList(context,syncMachine,config.macros.sync.syncOnGetTiddlerList);
 	if(r !== true)
 		displayMessage("Error from getTiddlerList: " + r);
-}
+};
 
 config.macros.sync.syncOnGetTiddlerList = function(context,syncMachine)
 {
@@ -4904,7 +4958,7 @@ config.macros.sync.syncOnGetTiddlerList = function(context,syncMachine)
 		var si = syncMachine.syncItems[t];
 		var f = context.tiddlers.findByField("title",si.title);
 		if(f !== null) {
-			if(context.tiddlers[f].fields['server.page.version'] > si.tiddler.fields['server.page.version']) {
+			if(context.tiddlers[f].fields['server.page.revision'] > si.tiddler.fields['server.page.revision']) {
 				si.syncStatus = config.macros.sync.syncStatusList[si.isTouched ? 'changedBoth' : 'changedServer'];
 			}
 		} else {
@@ -4912,7 +4966,7 @@ config.macros.sync.syncOnGetTiddlerList = function(context,syncMachine)
 		}
 		config.macros.sync.updateSyncStatus(si);
 	}
-}
+};
 
 config.macros.sync.updateSyncStatus = function(syncItem)
 {
@@ -4920,7 +4974,7 @@ config.macros.sync.updateSyncStatus = function(syncItem)
 	removeChildren(e);
 	createTiddlyText(e,syncItem.syncStatus.text);
 	syncItem.rowElement.style.backgroundColor = syncItem.syncStatus.color;
-}
+};
 
 config.macros.sync.doSync = function(e)
 {
@@ -4932,7 +4986,7 @@ config.macros.sync.doSync = function(e)
 		}
 	}
 	return false;
-}
+};
 
 config.macros.sync.doSyncItem = function(syncItem)
 {
@@ -4950,10 +5004,12 @@ config.macros.sync.doSyncItem = function(syncItem)
 			if(syncItem.syncMachine.adaptor.putTiddler)
 				r = syncItem.syncMachine.adaptor.putTiddler(syncItem.tiddler,context,requestState,config.macros.sync.syncOnPutTiddler);
 			break;
+		default:
+			break;
 	}
 	if(r !== true)
 		displayMessage("Error in doSyncItem: " + r);
-}
+};
 
 config.macros.sync.syncOnGetTiddler = function(context,requestState)
 {
@@ -4969,7 +5025,7 @@ config.macros.sync.syncOnGetTiddler = function(context,requestState)
 	config.macros.sync.updateSyncStatus(syncItem);
 	if(!context.status)
 		displayMessage("Error in sync.syncOnGetTiddler: " + context.statusText);
-}
+};
 
 config.macros.sync.syncOnPutTiddler = function(context,requestState)
 {
@@ -4980,12 +5036,13 @@ config.macros.sync.syncOnPutTiddler = function(context,requestState)
 	config.macros.sync.updateSyncStatus(syncItem);
 	if(!context.status)
 		displayMessage("Error in sync.syncOnPutTiddler: " + context.statusText);
-}
+};
 
 config.macros.sync.cancelSync = function()
 {
 	currSync = null;
-}
+};
+
 //--
 //-- Manager UI for groups of tiddlers
 //--
@@ -5070,7 +5127,7 @@ config.macros.plugins.doDelete = function(e)
 		if(confirm(config.macros.plugins.confirmDeleteText.format([rowNames.join(", ")]))) {
 			for(t=0; t<rowNames.length; t++) {
 				store.removeTiddler(rowNames[t]);
-				story.closeTiddler(rowNames[t],true,false);
+				story.closeTiddler(rowNames[t],true);
 			}
 		}
 	}
@@ -5936,7 +5993,7 @@ FileAdaptor.prototype.getTiddlerList = function(context,userParams,callback)
 		t.text = tiddler.text;
 		t.modified = tiddler.modified;
 		t.modifier = tiddler.modifier;
-		t.fields['server.page.version'] = tiddler.modified.convertToYYYYMMDDHHMM();
+		t.fields['server.page.revision'] = tiddler.modified.convertToYYYYMMDDHHMM();
 		t.tags = tiddler.tags;
 		context.tiddlers.push(t);
 		});
@@ -5962,7 +6019,7 @@ FileAdaptor.prototype.getTiddler = function(title,context,userParams,callback)
 	context.tiddler = this.store.fetchTiddler(title);
 	context.tiddler.fields['server.type'] = FileAdaptor.serverType;
 	context.tiddler.fields['server.host'] = this.host;
-	context.tiddler.fields['server.page.version'] = context.tiddler.modified.convertToYYYYMMDDHHMM();
+	context.tiddler.fields['server.page.revision'] = context.tiddler.modified.convertToYYYYMMDDHHMM();
 	context.status = true;
 	window.setTimeout(function() {callback(context,userParams);},10);
 	return true;
@@ -6160,7 +6217,7 @@ function onClickTiddlerLink(e)
 			toggling = !toggling;
 		if(noToggle)
 			toggling = false;
-		story.displayTiddler(theTarget,title,null,true,e.shiftKey || e.altKey,fields,toggling);
+		story.displayTiddler(theTarget,title,null,true,null,fields,toggling);
 	}
 	clearMessage();
 	return false;
@@ -6207,7 +6264,7 @@ function onClickTag(e)
 		var h = createTiddlyLink(createTiddlyElement(popup,"li"),tag,false);
 		createTiddlyText(h,lingo.openTag.format([tag]));
 	}
-	Popup.show(popup,false);
+	Popup.show();
 	e.cancelBubble = true;
 	if(e.stopPropagation) e.stopPropagation();
 	return false;
@@ -6233,7 +6290,7 @@ function onClickError(e)
 	var lines = this.getAttribute("errorText").split("\n");
 	for(var t=0; t<lines.length; t++)
 		createTiddlyElement(popup,"li",null,null,lines[t]);
-	Popup.show(popup,false);
+	Popup.show();
 	e.cancelBubble = true;
 	if(e.stopPropagation) e.stopPropagation();
 	return false;
@@ -6250,6 +6307,29 @@ function createTiddlyDropDown(place,onchange,options,defaultValue)
 			e.selected = true;
 	}
 	return sel;
+}
+
+function createTiddlyPopup(place,caption,tooltip,tiddler)
+{
+	if(tiddler.text) {
+		var btn = createTiddlyButton(place,caption,tooltip,onClickTiddlyPopup,"tiddlerPopupButton");
+		btn.tiddler = tiddler;
+	} else {
+		createTiddlyText(place,caption);
+	}
+}
+
+function onClickTiddlyPopup(e)
+{
+	var tiddler = this.tiddler;
+	if(tiddler.text) {
+		var popup = Popup.create(this,"div","popupTiddler");
+		wikify(tiddler.text,popup,null,tiddler);
+		Popup.show();
+	}
+	if(e) e.cancelBubble = true;
+	if(e && e.stopPropagation) e.stopPropagation();
+	return false;
 }
 
 function createTiddlyError(place,title,text)
@@ -6336,14 +6416,18 @@ Animator.slowInSlowOut = function(progress)
 //--
 
 // Animate a set of properties of an element
-//   element - the element to be moved
+//   element - the element to be moved (optional
 //   duration - duration of animation
 //   properties - an array of objects describing each property that is to be modified:
-//       style - name of the style being animated
+//       format - one of:
+//         "style" for numeric styles (default)
+//         "color" for #RRGGBB format colour styles
+//       style - name of the style being animated. Includes pseudo-styles:
+//         "-tw-scrollVert" - controls vertical scrolling
+//         "-tw-scrollHoriz" - controls horizontal scrolling
 //       start - starting value to animate from
 //       end - ending value to animation from
 //       atEnd - final value (taking priority over the end value) (eg, for switching style.display)
-//       format - "scalar" for numeric quantities, "color" for #RRGGBB format colours
 //       template - template for formatString() for setting the property (eg "%0em", or "#%0")
 //       callback - function to call when the animation has completed as callback(element,properties);
 function Morpher(element,duration,properties,callback)
@@ -6356,19 +6440,34 @@ function Morpher(element,duration,properties,callback)
 	this.callback = callback;
 	this.tick();
 	return this;
-}
+};
+
+Morpher.prototype.assignStyle = function(element,style,value)
+{
+	switch(style) {
+		case "-tw-vertScroll":
+			window.scrollTo(findScrollX(),value);
+			break;
+		case "-tw-horizScroll":
+			window.scrollTo(value,findScrollY());
+			break;
+		default:
+			element.style[style] = value;
+			break;
+	}
+};
 
 Morpher.prototype.stop = function()
 {
 	for(var t=0; t<this.properties.length; t++) {
 		var p = this.properties[t];
 		if(p.atEnd !== undefined) {
-			this.element.style[p.style] = p.atEnd;
+			this.assignStyle(this.element,p.style,p.atEnd);
 		}
 	}
 	if(this.callback)
 		this.callback(this.element,this.properties);
-}
+};
 
 Morpher.prototype.tick = function()
 {
@@ -6380,9 +6479,9 @@ Morpher.prototype.tick = function()
 			var template = p.template ? p.template : "%0";
 			switch(p.format) {
 				case undefined:
-				case "scalar":
+				case "style":
 					var v = p.start + (p.end-p.start) * progress;
-					this.element.style[p.style] = template.format([v]);
+					this.assignStyle(this.element,p.style,template.format([v]));
 					break;
 				case "color":
 					break;
@@ -6394,13 +6493,13 @@ Morpher.prototype.tick = function()
 		return false;
 	}
 	return true;
-}
+};
 
 //--
 //-- Zoomer animation
 //--
 
-function Zoomer(text,startElement,targetElement,slowly)
+function Zoomer(text,startElement,targetElement,unused)
 {
 	var e = createTiddlyElement(document.body,"div",null,"zoomer");
 	createTiddlyElement(e,"div",null,null,text);
@@ -6420,35 +6519,19 @@ function Zoomer(text,startElement,targetElement,slowly)
 //-- Scroller animation
 //--
 
-function Scroller(targetElement,slowly)
+function Scroller(targetElement,unused)
 {
-	this.targetElement = targetElement;
-	this.startScroll = findScrollY();
-	this.targetScroll = ensureVisible(targetElement);
-	this.progress = 0;
-	this.step = slowly ? config.animSlow : config.animFast;
-	return this;
+	var p = [
+		{style: '-tw-vertScroll', start: findScrollY(), end: ensureVisible(targetElement)}
+	];
+	return new Morpher(targetElement,config.animDuration,p);
 }
-
-Scroller.prototype.tick = function()
-{
-	this.progress += this.step;
-	if(this.progress > 1) {
-		window.scrollTo(0,this.targetScroll);
-		return false;
-	} else {
-		var f = Animator.slowInSlowOut(this.progress);
-		window.scrollTo(0,this.startScroll + (this.targetScroll-this.startScroll) * f);
-		return true;
-	}
-};
-
 //--
 //-- Slider animation
 //--
 
 // deleteMode - "none", "all" [delete target element and it's children], [only] "children" [but not the target element]
-function Slider(element,opening,slowly,deleteMode,flyIn)
+function Slider(element,opening,unused,deleteMode,flyIn)
 {
 	element.style.overflow = 'hidden';
 	if(opening)
@@ -6511,7 +6594,7 @@ Popup.onDocumentClick = function(e)
 	return true;
 };
 
-Popup.show = function(unused,slowly)
+Popup.show = function(unused1,unused2)
 {
 	var curr = Popup.stack[Popup.stack.length-1];
 	var rootLeft = findPosX(curr.root);
@@ -6530,7 +6613,7 @@ Popup.show = function(unused,slowly)
 	curr.popup.style.display = "block";
 	addClass(curr.root,"highlight");
 	if(config.options.chkAnimate && anim && typeof Scroller == "function")
-		anim.startAnimating(new Scroller(curr.popup,slowly));
+		anim.startAnimating(new Scroller(curr.popup));
 	else
 		window.scrollTo(0,ensureVisible(curr.popup));
 };
@@ -6556,7 +6639,8 @@ Popup.removeFrom = function(from)
 //-- Wizard support
 //--
 
-function Wizard(elem) {
+function Wizard(elem)
+{
 	if(elem) {
 		this.formElem = findRelated(elem,"wizard","className");
 		this.bodyElem = findRelated(this.formElem.firstChild,"wizardBody","className","nextSibling");
@@ -6568,28 +6652,32 @@ function Wizard(elem) {
 	}
 }
 
-Wizard.prototype.setValue = function(name,value) {
+Wizard.prototype.setValue = function(name,value)
+{
 	if(this.formElem)
 		this.formElem[name] = value;
-}
+};
 
-Wizard.prototype.getValue = function(name) {
+Wizard.prototype.getValue = function(name)
+{
 	return this.formElem ? this.formElem[name] : null;
-}
+};
 
-Wizard.prototype.createWizard = function(place,title) {
+Wizard.prototype.createWizard = function(place,title)
+{
 	this.formElem = createTiddlyElement(place,"form",null,"wizard");
 	createTiddlyElement(this.formElem,"h1",null,null,title);
 	this.bodyElem = createTiddlyElement(this.formElem,"div",null,"wizardBody");
 	this.footElem = createTiddlyElement(this.formElem,"div",null,"wizardFooter");
 };
 
-Wizard.prototype.clear = function() {
+Wizard.prototype.clear = function()
+{
 	removeChildren(this.bodyElem);
 };
 
-
-Wizard.prototype.setButtons = function(buttonInfo,status) {
+Wizard.prototype.setButtons = function(buttonInfo,status)
+{
 	removeChildren(this.footElem);
 	for(var t=0; t<buttonInfo.length; t++) {
 		createTiddlyButton(this.footElem,buttonInfo[t].caption,buttonInfo[t].tooltip,buttonInfo[t].onClick);
@@ -6600,7 +6688,8 @@ Wizard.prototype.setButtons = function(buttonInfo,status) {
 	}
 };
 
-Wizard.prototype.addStep = function(stepTitle,html) {
+Wizard.prototype.addStep = function(stepTitle,html)
+{
 	var w = createTiddlyElement(this.bodyElem,"div");
 	createTiddlyElement(w,"h2",null,null,stepTitle);
 	var step = createTiddlyElement(w,"div",null,"wizardStep");
@@ -6608,122 +6697,101 @@ Wizard.prototype.addStep = function(stepTitle,html) {
 	applyHtmlMacros(step,tiddler);
 };
 
-Wizard.prototype.getElement = function(name) {
+Wizard.prototype.getElement = function(name)
+{
 	return this.formElem.elements[name];
 };
-// ---------------------------------------------------------------------------------
-// ListView gadget
-// ---------------------------------------------------------------------------------
+
+//--
+//-- ListView gadget
+//--
 
 var ListView = {};
 
 // Create a listview
-//   place - where in the DOM tree to insert the listview
-//   listObject - array of objects to be included in the listview
-//   listTemplate - template for the listview
-//   callback - callback for a command being selected
-//   className - optional classname for the <table> element
 ListView.create = function(place,listObject,listTemplate,callback,className)
 {
 	var table = createTiddlyElement(place,"table",null,className ? className : "listView");
 	var thead = createTiddlyElement(table,"thead");
 	var r = createTiddlyElement(thead,"tr");
-	for(var t=0; t<listTemplate.columns.length; t++)
-		{
+	for(var t=0; t<listTemplate.columns.length; t++) {
 		var columnTemplate = listTemplate.columns[t];
 		var c = createTiddlyElement(r,"th");
 		var colType = ListView.columnTypes[columnTemplate.type];
 		if(colType && colType.createHeader)
 			colType.createHeader(c,columnTemplate,t);
-		}
+	}
 	var tbody = createTiddlyElement(table,"tbody");
-	for(var rc=0; rc<listObject.length; rc++)
-		{
+	for(var rc=0; rc<listObject.length; rc++) {
 		rowObject = listObject[rc];
 		r = createTiddlyElement(tbody,"tr");
-		for(var c=0; c<listTemplate.rowClasses.length; c++)
-			{
+		for(c=0; c<listTemplate.rowClasses.length; c++) {
 			if(rowObject[listTemplate.rowClasses[c].field])
 				addClass(r,listTemplate.rowClasses[c].className);
-			}
+		}
 		rowObject.rowElement = r;
 		rowObject.colElements = {};
-		for(var cc=0; cc<listTemplate.columns.length; cc++)
-			{
-			var c = createTiddlyElement(r,"td");
-			var columnTemplate = listTemplate.columns[cc];
+		for(var cc=0; cc<listTemplate.columns.length; cc++) {
+			c = createTiddlyElement(r,"td");
+			columnTemplate = listTemplate.columns[cc];
 			var field = columnTemplate.field;
-			var colType = ListView.columnTypes[columnTemplate.type];
+			colType = ListView.columnTypes[columnTemplate.type];
 			if(colType && colType.createItem)
 				colType.createItem(c,rowObject,field,columnTemplate,cc,rc);
 			rowObject.colElements[field] = c;
-			}
 		}
+	}
 	if(callback && listTemplate.actions)
 		createTiddlyDropDown(place,ListView.getCommandHandler(callback),listTemplate.actions);
-	if(callback && listTemplate.buttons)
-		{
-		for(t=0; t<listTemplate.buttons.length; t++)
-			{
+	if(callback && listTemplate.buttons) {
+		for(t=0; t<listTemplate.buttons.length; t++) {
 			var a = listTemplate.buttons[t];
 			if(a && a.name != "")
 				createTiddlyButton(place,a.caption,null,ListView.getCommandHandler(callback,a.name,a.allowEmptySelection));
-			}
 		}
+	}
 	return table;
-}
+};
 
 ListView.getCommandHandler = function(callback,name,allowEmptySelection)
 {
-	return function(e)
-		{
+	return function(e) {
 		var view = findRelated(this,"TABLE",null,"previousSibling");
 		var tiddlers = [];
 		ListView.forEachSelector(view,function(e,rowName) {
 					if(e.checked)
 						tiddlers.push(rowName);
 					});
-		if(tiddlers.length == 0 && !allowEmptySelection)
+		if(tiddlers.length == 0 && !allowEmptySelection) {
 			alert(config.messages.nothingSelected);
-		else
-			{
-			if(this.nodeName.toLowerCase() == "select")
-				{
+		} else {
+			if(this.nodeName.toLowerCase() == "select") {
 				callback(view,this.value,tiddlers);
 				this.selectedIndex = 0;
-				}
-			else
+			} else {
 				callback(view,name,tiddlers);
 			}
-		};
-}
+		}
+	};
+};
 
 // Invoke a callback for each selector checkbox in the listview
-//   view - <table> element of listView
-//   callback(checkboxElement,rowName)
-//     where
-//       checkboxElement - DOM element of checkbox
-//       rowName - name of this row as assigned by the column template
-//   result: true if at least one selector was checked
 ListView.forEachSelector = function(view,callback)
 {
 	var checkboxes = view.getElementsByTagName("input");
 	var hadOne = false;
-	for(var t=0; t<checkboxes.length; t++)
-		{
+	for(var t=0; t<checkboxes.length; t++) {
 		var cb = checkboxes[t];
-		if(cb.getAttribute("type") == "checkbox")
-			{
+		if(cb.getAttribute("type") == "checkbox") {
 			var rn = cb.getAttribute("rowName");
-			if(rn)
-				{
+			if(rn) {
 				callback(cb,rn);
 				hadOne = true;
-				}
 			}
 		}
+	}
 	return hadOne;
-}
+};
 
 ListView.getSelectedRows = function(view)
 {
@@ -6733,7 +6801,7 @@ ListView.getSelectedRows = function(view)
 					rowNames.push(rowName);
 				});
 	return rowNames;
-}
+};
 
 ListView.columnTypes = {};
 
@@ -6765,27 +6833,8 @@ ListView.columnTypes.Tiddler = {
 	createItem: function(place,listObject,field,columnTemplate,col,row)
 		{
 			var v = listObject[field];
-			if(v != undefined && v.title) {
-				if(v.text) {
-					var btn = createTiddlyButton(place,v.title,config.messages.listView.tiddlerTooltip,ListView.columnTypes.Tiddler.onClick,"tiddlerPopupButton");
-					btn.tiddler = v;
-				} else {
-					createTiddlyText(place,v.title);
-				}
-			}
-		},
-	onClick: function(e)
-		{
-			var popup = Popup.create(this,"div","popupTiddler");
-			var tiddler = this.tiddler;
-			if(tiddler.text)
-				wikify(tiddler.text,popup,null,tiddler);
-			else
-				createTiddlyText(popup,config.messages.listView.previewUnavailable);
-			Popup.show(popup,false);
-			if(e) e.cancelBubble = true;
-			if(e && e.stopPropagation) e.stopPropagation();
-			return false;
+			if(v != undefined && v.title)
+				createTiddlyPopup(place,v.title,config.messages.listView.tiddlerTooltip,v);
 		}
 };
 
@@ -6829,14 +6878,12 @@ ListView.columnTypes.StringList = {
 	createItem: function(place,listObject,field,columnTemplate,col,row)
 		{
 			var v = listObject[field];
-			if(v != undefined)
-				{
-				for(var t=0; t<v.length; t++)
-					{
+			if(v != undefined) {
+				for(var t=0; t<v.length; t++) {
 					createTiddlyText(place,v[t]);
 					createTiddlyElement(place,"br");
-					}
 				}
+			}
 		}
 };
 
@@ -6903,13 +6950,13 @@ ListView.columnTypes.TiddlerLink = {
 	createItem: function(place,listObject,field,columnTemplate,col,row)
 		{
 			var v = listObject[field];
-			if(v != undefined)
-				{
+			if(v != undefined) {
 				var link = createTiddlyLink(place,listObject[columnTemplate.tiddlerLink],false,null);
 				createTiddlyText(link,listObject[field]);
-				}
+			}
 		}
 };
+
 //--
 //-- Augmented methods for the JavaScript Number(), Array(), String() and Date() objects
 //--
@@ -8105,15 +8152,15 @@ function applyPageTemplate(title)
 }
 
 // @Deprecated: Use story.displayTiddlers instead
-function displayTiddlers(srcElement,titles,template,unused1,unused2,animate,slowly)
+function displayTiddlers(srcElement,titles,template,unused1,unused2,animate,unused3)
 {
-	story.displayTiddlers(srcElement,titles,template,animate,slowly);
+	story.displayTiddlers(srcElement,titles,template,animate);
 }
 
 // @Deprecated: Use story.displayTiddler instead
-function displayTiddler(srcElement,title,template,unused1,unused2,animate,slowly)
+function displayTiddler(srcElement,title,template,unused1,unused2,animate,unused3)
 {
-	story.displayTiddler(srcElement,title,template,animate,slowly);
+	story.displayTiddler(srcElement,title,template,animate);
 }
 
 // @Deprecated: Use functions on right hand side directly instead
