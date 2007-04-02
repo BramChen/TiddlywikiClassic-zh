@@ -101,7 +101,7 @@ config.messages.backstage = {
 	prompt: "控制台：",
 	decal: {
 		edit: {text: "編輯", tooltip: "編輯此文"}
-	},
+	}
 };
 
 config.messages.listView = {
