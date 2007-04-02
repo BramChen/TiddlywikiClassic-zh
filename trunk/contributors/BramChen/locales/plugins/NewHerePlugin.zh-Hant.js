@@ -1,5 +1,7 @@
 /***
-!NewHerePlugin.js.zh-Hant
+|''Name:''|NewHerePlugin.zh-Hant|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Require:''|[[NewHerePlugin|http://mptw.tiddlyspot.com/#NewHerePlugin]]|
 ***/
 //{{{
 merge(config.commands,{

@@ -1,5 +1,7 @@
 /***
-!PresentationPlugin.zh-Hant
+|''Name:''|PresentationPlugin.zh-Hant|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Require:''|[[PresentationPlugin]]|
 ***/
 //{{{
 config.macros.author.refresh = function(place,params){

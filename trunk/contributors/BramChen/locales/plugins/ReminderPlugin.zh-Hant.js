@@ -1,42 +1,48 @@
 /***
-!ReminderPlugin
+|''Name:''|ReminderPlugin.zh-Hant|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
+|''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
+|''~CoreVersion:''|2.0.11|
+|''Require:''|[[ReminderPlugin|http://remindermacros.tiddlyspot.com/#ReminderPlugin]]|
+!!!!!Code
 ***/
 //{{{
 if (typeof config.macros.reminders != "undefined"){
 	merge(config.macros.reminders, {
 		defaultLeadTime: [0,365],
-		defaultReminderMessage: "®É¶¡¡GDIFF¡ADATE ANNIVERSARY ¨Æ¥Ñ¡G¡uTITLE¡v",
-		defaultShowReminderMessage: "®É¶¡¡GDIFF¡A¨Æ¥Ñ¡G¡uTITLE¡v ©ó DATE ANNIVERSARY -- TIDDLER",
+		defaultReminderMessage: "æ™‚é–“ï¼šDIFFï¼ŒDATE ANNIVERSARY äº‹ç”±ï¼šã€ŒTITLEã€",
+		defaultShowReminderMessage: "æ™‚é–“ï¼šDIFFï¼Œäº‹ç”±ï¼šã€ŒTITLEã€ æ–¼ DATE ANNIVERSARY -- TIDDLER",
 		defaultAnniversaryMessage: "(DIFF)",
-		untitledReminder: "µL¼ĞÃDªº¨Æ¥ó",
-		noReminderFound: "¦b©¹«áªº LEADTIMEUPPER ¤Ñ¡AµL¡uTITLE¡v¨Æ¥ó",
-		todayString: "¤µ¤Ñ",
-		tomorrowString: "©ú¤Ñ",
-		ndaysString: "DIFF¤Ñ",
-		emtpyShowRemindersString: "¥¼µo²{¥ô¦ó»İ­n´£¿ô¨ì´Á¤éªº¨Æ¶µ",
-		dateFormat: "YYYY¦~0MM¤ë0DD¤é ¬P´ÁDDD"
+		untitledReminder: "ç„¡æ¨™é¡Œçš„äº‹ä»¶",
+		noReminderFound: "åœ¨å¾€å¾Œçš„ LEADTIMEUPPER å¤©ï¼Œç„¡ã€ŒTITLEã€äº‹ä»¶",
+		todayString: "ä»Šå¤©",
+		tomorrowString: "æ˜å¤©",
+		ndaysString: "DIFFå¤©",
+		emtpyShowRemindersString: "æœªç™¼ç¾ä»»ä½•éœ€è¦æé†’åˆ°æœŸæ—¥çš„äº‹é …",
+		dateFormat: "YYYYå¹´0MMæœˆ0DDæ—¥ æ˜ŸæœŸDDD"
 	});
 
 	config.macros.newReminder.handler = function newReminder(place,macroName,params){
 		var today=new Date().getMidnight();
-		var formstring = '<html><form><select name="year"><option value="">¨C¦~</option>';
+		var formstring = '<html><form><select name="year"><option value="">æ¯å¹´</option>';
 		for (var i = 0; i < 5; i++)
 		{
 			formstring += '<option' + ((i == 0) ? ' selected' : '') + ' value="' + (today.getFullYear() +i) + '">' + (today.getFullYear() + i) + '</option>';
 		}
-		formstring += '</select>¦~&nbsp;&nbsp;<select name="month"><option value="">¨C¤ë</option>';
+		formstring += '</select>å¹´&nbsp;&nbsp;<select name="month"><option value="">æ¯æœˆ</option>';
 		for (i = 0; i < 12; i++){
 			formstring += '<option' + ((i == today.getMonth()) ? ' selected' : '') + ' value="' + (i+1) + '">' + config.messages.dates.months[i] + '</option>';
 		}
-		formstring += '</select>¤ë&nbsp;&nbsp;<select name="day"><option value="">¨C¤é</option>';
+		formstring += '</select>æœˆ&nbsp;&nbsp;<select name="day"><option value="">æ¯æ—¥</option>';
 		for (i = 1; i < 32; i++)
 		{
 			formstring += '<option' + ((i == (today.getDate() )) ? ' selected' : '') + ' value="' + i + '">' + i + '</option>';
 		}
 	
-		formstring += '</select>¤é¡A&nbsp;&nbsp;¨Æ¥ó¼ĞÃD¡G<input type="text" size="40" name="title" value="½Ğ¿é¤J¨Æ¥ó¼ĞÃD" onfocus="this.select();"><input type="button" value="½T©w" onclick="addReminderToTiddler(this.form)"></form></html>';
+		formstring += '</select>æ—¥ï¼Œ&nbsp;&nbsp;äº‹ä»¶æ¨™é¡Œï¼š<input type="text" size="40" name="title" value="è«‹è¼¸å…¥äº‹ä»¶æ¨™é¡Œ" onfocus="this.select();"><input type="button" value="ç¢ºå®š" onclick="addReminderToTiddler(this.form)"></form></html>';
 	
-		var panel = config.macros.slider.createSlider(place,null,"·s¼W¨Æ¥ó","·s¼W¤u§@¶µ¥Øªº©ÒÄİ¨Æ¥ó");
+		var panel = config.macros.slider.createSlider(place,null,"æ–°å¢äº‹ä»¶","æ–°å¢å·¥ä½œé …ç›®çš„æ‰€å±¬äº‹ä»¶");
 		wikify(formstring ,panel,null,store.getTiddler(params[1]));
 	};
 }

@@ -1,5 +1,9 @@
 /***
-!SearchOptionsPlugin.zh-Hant.js
+|''Name:''|SearchOptionsPlugin.zh-Hans|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
+|''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
+|''Require:''|[[SearchOptionsPlugin|http://www.tiddlytools.com/#SearchOptionsPlugin]]|
 ***/
 //{{{
 config.shadowTiddlers.AdvancedOptions += "\n设定查找选项：\n<<<";

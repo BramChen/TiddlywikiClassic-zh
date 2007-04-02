@@ -1,5 +1,7 @@
 /***
-!UploadPlugin.zh-Hant
+|''Name:''|UploadPlugin.zh-Hant|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Require:''|[[UploadPlugin|http://tiddlywiki.bidix.info/#UploadPlugin]]|
 ***/
 //{{{
 if (typeof config.macros.upload != "undefined"){
