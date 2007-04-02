@@ -2,11 +2,11 @@
 !Metadata:
 |''Name:''|TidIDEPlugin.zh-Hant|
 |''Date:''|Nov 18, 2006|
-|''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/plugins/|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License]]|
 |''~CoreVersion:''|2.0.11|
-|''Required:''|[[TidIDEPlugin|http://www.TiddlyTools.com/#TidIDEPlugin]]|
+|''Require:''|[[TidIDEPlugin|http://www.TiddlyTools.com/#TidIDEPlugin]]|
 |''Browser:''|Firefox 1.5+; InternetExplorer 6.0|
 
 !Revision History:

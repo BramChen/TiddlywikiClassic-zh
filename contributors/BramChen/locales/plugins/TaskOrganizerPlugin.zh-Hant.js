@@ -1,5 +1,7 @@
 /***
-!TaskOrganizerPlugin.zh-Hant
+|''Name:''|TaskOrganizerPlugin.zh-Hant|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Require:''|[[TaskOrganizerPlugin|http://www.math.ist.utl.pt/~psoares/addons.html#TaskOrganizerPlugin]]|
 ***/
 //{{{
 if (typeof config.macros.taskOrganizer != "undefined"){

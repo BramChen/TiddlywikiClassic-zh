@@ -1,6 +1,8 @@
 /***
-!CommentPlugin.en
-Note: CommentPlugin modified by BramChen is required.
+|''Name:''|CommentPlugin.en|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Requires:''|[[CommentPlugin|http://sourceforge.net/project/showfiles.php?group_id=150646]]|
+|''Note:''|CommentPlugin 0.7.0+ modified by BramChen is required|
 ***/
 //{{{
 if (typeof config.CommentPlugin != 'undefined'){

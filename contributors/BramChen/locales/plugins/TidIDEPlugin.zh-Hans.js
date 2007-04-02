@@ -2,11 +2,11 @@
 !Metadata:
 |''Name:''|TidIDEPlugin.zh-Hans|
 |''Date:''|Nov 28, 2006|
-|''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/plugins/|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.0.11|
-|''Required:''|[[TidIDEPlugin|http://www.TiddlyTools.com/#TidIDEPlugin]]|
+|''Require:''|[[TidIDEPlugin|http://www.TiddlyTools.com/#TidIDEPlugin]]|
 |''Browser:''|Firefox 1.5+; InternetExplorer 6.0|
 
 !Revision History:
@@ -16,7 +16,6 @@
 !Code section:
 ***/
 //{{{
-
 if (typeof config.macros.tidIDE != "undefined"){
 	merge(config.macros.tidIDE, {
 		versionMsg: "TidIDE v%0.%1.%2: ",

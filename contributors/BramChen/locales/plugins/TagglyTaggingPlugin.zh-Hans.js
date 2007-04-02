@@ -1,5 +1,7 @@
 /***
-!TagglyTaggingPlugin.zh-Hans.js
+|''Name:''|TagglyTaggingPlugin.zh-Hans|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Require:''|[[TagglyTaggingPlugin|http://mptw.tiddlyspot.com/#TagglyTaggingPlugin]]|
 ***/
 //{{{
 merge(config.taggly,{

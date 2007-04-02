@@ -1,5 +1,7 @@
 /***
-!collapseTiddler.zh-Hant
+|''Name:''|CollapseTiddlersPlugin.zh-Hant|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Require:''|[[CollapseTiddlersPlugin|http://www.tiddlytools.com/#CollapseTiddlersPlugin]]|
 ***/
 //{{{
 if (typeof commands.collapseTiddler != "undefined"){
