@@ -5,7 +5,7 @@
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''Version:''|1.1.0.2|
-|''Date:''|Jan 13, 2007|
+|''Date:''|Apr 10, 2007|
 |''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.2.0|
@@ -46,7 +46,6 @@ merge(config.optionsDesc,{
 	chkForceMinorUpdate: "修改文章時，不變更作者名稱與日期時間",
 	chkConfirmDelete: "刪除文章前須確認",
 	chkInsertTabs: "使用 tab 鍵插入定位字元，而非跳至下一個欄位",
-	chkShowTiddlerDetails: "顯示文章詳細資訊",
 	txtBackupFolder: "存放備份檔案的資料夾",
 	txtMaxEditRows: "編輯模式中顯示列數",
 	txtFileSystemCharSet: "指定儲存文件所在之檔案系統之字集"});
@@ -96,11 +95,11 @@ merge(config.messages.messageClose,{
 	tooltip: "關閉此訊息"});
 
 config.messages.backstage = {
-	open: {text: "控制台", icon: "↩", iconIE: "←", tooltip: "開啟控制台執行編寫工作"},
-	close: {text: "關閉", icon: "↪", iconIE: "→", tooltip: "關閉控制台"},
+	open: {text: "控制台", icon: "\u21A9", iconIE: "\u2190", tooltip: "開啟控制台執行編寫工作"},
+	close: {text: "關閉", icon: "\u21AA", iconIE: "\u2192", tooltip: "關閉控制台"},
 	prompt: "控制台：",
 	decal: {
-		edit: {text: "編輯", tooltip: "編輯此文"}
+		edit: {text: "編輯", tooltip: "編輯 '%0'"}
 	}
 };
 
@@ -120,6 +119,11 @@ config.messages.dates.daySuffixes = ["st","nd","rd","th","th","th","th","th","th
 		"st"];
 config.messages.dates.am = "上午";
 config.messages.dates.pm = "下午";
+
+merge(config.messages.tiddlerPopup,{ 
+	icon: "\u2193", 
+	iconIE: "" 
+	});
 
 merge(config.views.wikified.tag,{
 	labelNoTags: "未設標籤",
@@ -340,9 +344,6 @@ merge(config.macros.sync,{
 
 merge(config.macros.viewDetails,{
 	label: "...",
-	prompt: "顯示此文章之詳細資訊",
-	hideLabel: "(隱藏詳細資訊)",
-	hidePrompt: "隱藏此詳細資訊面板",
 	emptyDetailsText: "此文章沒有擴充欄位",
 	listViewTemplate: {
 		columns: [
@@ -437,6 +438,10 @@ merge(config.annotations,{
 	GettingStarted: "此預設文章提供基本的使用說明。",
 	ImportTiddlers: "此預設文章提供存取導入中的文章。",
 	MainMenu: "此預設文章的內容，為於螢幕左側主選單的內容",
+	MarkupPreHead: "此文章的內容將加至 TiddlyWiki HTML 的 <head> 段落的起始",
+	MarkupPostHead: "此文章的內容將加至 TiddlyWiki HTML 的 <head> 段落的最後",
+	MarkupPreBody: "此文章的內容將加至 TiddlyWiki HTML 的 <body> 段落的起始",
+	MarkupPostBody: "此文章的內容將加至 TiddlyWiki HTML 的 <body> 段落的最後",
 	OptionsPanel: "此預設文章的內容，為於螢幕右側副選單中的選項面板裡的內容",
 	PageTemplate: "此預設文章裡的 HTML template 決定的 ~TiddlyWiki 主要的版面配置",
 	PluginManager: "此預設文章提供存取套件管理員",
