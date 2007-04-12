@@ -1,7 +1,7 @@
 /***
 |''Name:''|CommentPlugin.zh-Hans|
 |''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
-|''Require:''|[[CommentPlugin|http://sourceforge.net/project/showfiles.php?group_id=150646]]|
+|''Require:''|[[CommentPlugin]]|
 |''Note:''|CommentPlugin 0.7.0+ modified by BramChen is required|
 ***/
 //{{{

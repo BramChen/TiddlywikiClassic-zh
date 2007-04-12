@@ -1,7 +1,7 @@
 /***
 |''Name:''|ArchivedTimeline.zh-Hant|
 |''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
-|''Require:''|[[ArchivedTimeline|http://sourceforge.net/project/showfiles.php?group_id=150646]]|
+|''Require:''|[[ArchivedTimeline]]|
 ***/
 //{{{
 if (typeof config.macros.archivedTimeline != "undefined"){
