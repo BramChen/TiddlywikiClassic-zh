@@ -1,7 +1,7 @@
 /***
 |''Name:''|CommentTabPlugin.en|
 |''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
-|''Requires:''|[[CommentPlugin|http://sourceforge.net/project/showfiles.php?group_id=150646]], [[CommentTabPlugin|http://sourceforge.net/project/showfiles.php?group_id=150646]]|
+|''Requires:''|CommentPlugin CommentTabPlugin|
 |''Note:''|CommentPlugin and CommentTabPlugin modified by BramChen is required|
 ***/
 //{{{
