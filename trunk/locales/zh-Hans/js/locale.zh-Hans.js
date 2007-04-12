@@ -290,10 +290,10 @@ merge(config.macros.importTiddlers,{
 	confirmOverwriteText: "确定要覆写这些文章：\n\n%0",
 	step4Title: "步骤四：正在导入%0 篇文章",
 	step4Html: "<input type='hidden' name='markReport'></input>", // DO NOT TRANSLATE
-	step5Title: "步骤五：导入完成",
-	step5Html: "所选文章已导入",
 	doneLabel: "完成",
 	donePrompt: "关闭",
+	statusDoingImport: "正在导入文章 ...",
+	statusDoneImport: "所选文章已导入",
 	systemServerNamePattern: "%2 位于 %1",
 	systemServerNamePatternNoWorkspace: "%1",
 	confirmOverwriteSaveTiddler: "此 tiddler '%0' 已经存在。点击“确定”以服务器上料覆写之，或“取消”不变更后离开",
