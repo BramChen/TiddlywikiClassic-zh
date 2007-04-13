@@ -19,7 +19,9 @@ merge(config.taggly,{
 			commas:		"逗點",
 			sitemap:	"導覽",
 			numCols:	"欄數\u00b1", // 加減號
-			label:		"標籤 '%0':"
+			label:		"標籤 '%0':",
+			excerpts:   "顯示摘要",
+			noexcerpts: "隱藏摘要"
 		},
 
 		tooltips: {
