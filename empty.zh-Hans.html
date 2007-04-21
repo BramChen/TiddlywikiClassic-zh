@@ -486,11 +486,11 @@ Welcome to TiddlyWiki by Jeremy Ruston, Copyright &copy; 2007 Osmosoft Limited
 	<div id="javascriptWarning">This page requires JavaScript to function properly.<br /><br />If you are using Microsoft Internet Explorer you may need to click on the yellow bar above and select 'Allow Blocked Content'. You must then click 'Yes' on the following security warning.</div>
 </noscript>
 <div id="saveTest"></div>
-<div id="backstageCloak"></div>
 <div id="backstageButton"></div>
 <div id="backstageArea"><div id="backstageToolbar"></div></div>
 <div id="backstage">
 	<div id="backstagePanel"></div>
+	<div id="backstageCloak"></div>
 </div>
 <div id="contentWrapper"></div>
 <div id="contentStash"></div>
@@ -1342,21 +1342,17 @@ function loadPlugins()
 		pluginInfo = p;
 		tiddler = p.tiddler;
 		if(isPluginExecutable(p)) {
-			if(isPluginEnabled(p)) {
-				p.executed = true;
-				var startTime = new Date();
-				try {
-					if(tiddler.text)
-						window.eval(tiddler.text);
-					nLoaded++;
-				} catch(ex) {
-					p.log.push(config.messages.pluginError.format([exceptionText(ex)]));
-					p.error = true;
-				}
-				pluginInfo.startupTime = String((new Date()) - startTime) + "ms"; 
-			} else {
-				nPlugins--;
+			p.executed = true;
+			var startTime = new Date();
+			try {
+				if(tiddler.text)
+					window.eval(tiddler.text);
+				nLoaded++;
+			} catch(ex) {
+				p.log.push(config.messages.pluginError.format([exceptionText(ex)]));
+				p.error = true;
 			}
+			pluginInfo.startupTime = String((new Date()) - startTime) + "ms"; 
 		} else {
 			p.warning = true;
 		}
@@ -1376,6 +1372,8 @@ function getPluginInfo(tiddler)
 // Check that a particular plugin is valid for execution
 function isPluginExecutable(plugin)
 {
+	if(plugin.tiddler.isTagged("systemConfigDisable"))
+		return verifyTail(plugin,false,config.messages.pluginDisabled);
 	if(plugin.tiddler.isTagged("systemConfigForce"))
 		return verifyTail(plugin,true,config.messages.pluginForced);
 	if(plugin["CoreVersion"]) {
@@ -1388,13 +1386,6 @@ function isPluginExecutable(plugin)
 		if(w > 0)
 			return verifyTail(plugin,false,config.messages.pluginVersionError);
 		}
-	return true;
-}
-
-function isPluginEnabled(plugin)
-{
-	if(plugin.tiddler.isTagged("systemConfigDisable"))
-		return verifyTail(plugin,false,config.messages.pluginDisabled);
 	return true;
 }
 
@@ -3888,15 +3879,16 @@ TiddlyWiki.prototype.addTiddlerFields = function(title,fields)
 	this.setDirty(true);
 };
 
-TiddlyWiki.prototype.saveTiddler = function(title,newTitle,newBody,modifier,modified,tags,fields,clearChangeCount,created)
+TiddlyWiki.prototype.saveTiddler = function(title,newTitle,newBody,modifier,modified,tags,fields,clearChangeCount)
 {
 	var tiddler = this.fetchTiddler(title);
+	var created;
 	if(tiddler) {
-		created = created ? created : tiddler.created; // Preserve created date
+		created = tiddler.created; // Preserve created date
 		this.deleteTiddler(title);
 	} else {
-		created = created ? created : modified;
 		tiddler = new Tiddler();
+		created = modified;
 	}
 	tiddler.set(newTitle,newBody,modifier,modified,tags,created,fields);
 	this.addTiddler(tiddler);
@@ -4444,7 +4436,7 @@ Story.prototype.loadMissingTiddler = function(title,fields,tiddlerElem)
 						tiddler.created = downloaded;
 					if(!tiddler.modified)
 						tiddler.modified = tiddler.created;
-					store.saveTiddler(tiddler.title,tiddler.title,tiddler.text,tiddler.modifier,tiddler.modified,tiddler.tags,tiddler.fields,true,tiddler.created);
+					store.saveTiddler(tiddler.title,tiddler.title,tiddler.text,tiddler.modifier,tiddler.modified,tiddler.tags,tiddler.fields,true);
 					autoSaveChanges();
 				}
 				delete this;
@@ -5315,7 +5307,7 @@ config.macros.importTiddlers.onGetTiddler = function(context,wizard)
 	if(!context.status)
 		displayMessage("Error in importTiddlers.onGetTiddler: " + context.statusText);
 	var tiddler = context.tiddler;
-	store.saveTiddler(tiddler.title, tiddler.title, tiddler.text, tiddler.modifier, tiddler.modified, tiddler.tags, tiddler.fields, true, tiddler.created);
+	store.saveTiddler(tiddler.title, tiddler.title, tiddler.text, tiddler.modifier, tiddler.modified, tiddler.tags, tiddler.fields, true);
 	if(!wizard.getValue("sync")) {
 		store.setValue(tiddler.title,'server',null);
 	}
@@ -5465,7 +5457,7 @@ config.macros.sync.createSyncTask = function(syncItem)
 			var syncItem = st.syncItems.findByField("title",tiddler.title);
 			if(syncItem !== null) {
 				syncItem = st.syncItems[syncItem];
-				store.saveTiddler(tiddler.title, tiddler.title, tiddler.text, tiddler.modifier, tiddler.modified, tiddler.tags, tiddler.fields, true, tiddler.created);
+				store.saveTiddler(tiddler.title, tiddler.title, tiddler.text, tiddler.modifier, tiddler.modified, tiddler.tags, tiddler.fields, true);
 				syncItem.syncStatus = config.macros.sync.syncStatusList.gotFromServer;
 				config.macros.sync.updateSyncStatus(syncItem);
 			}
