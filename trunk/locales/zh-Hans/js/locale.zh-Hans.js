@@ -51,7 +51,7 @@ merge(config.optionsDesc,{
 //#	chkShowTiddlerDetails: "显示文章详细资讯",
 	txtBackupFolder: "存放备份文件的资料夹",
 	txtMaxEditRows: "编辑模式中显示列数",
-	txtFileSystemCharSet: "指定保存文件所在之档案系统之字符集"});
+	txtFileSystemCharSet: "指定保存文件所在之档案系统之字符集 (仅适用于 Firefox/Mozilla only)"});
 
 // Messages
 merge(config.messages,{
@@ -91,7 +91,8 @@ merge(config.messages,{
 	tiddlerLoadError: "载入文章 '%0' 时，发生错误。",
 	wrongSaveFormat: "无法使用格式 '%0' 保存，请使用标准格式存放",
 	invalidFieldName: "无效的栏位名称：%0",
-	fieldCannotBeChanged: "无法变更栏位：'%0'"});
+	fieldCannotBeChanged: "无法变更栏位：'%0'",
+	loadingMissingTiddler: "正从伺服器 '%1' 的：\n\n工作区 '%3' 中的 '%2' 撷取文章 '%0'"});
 
 merge(config.messages.messageClose,{
 	text: "关闭",
@@ -215,8 +216,8 @@ merge(config.macros.newJournal,{
 merge(config.macros.options,{
 	wizardTitle: "增订的进阶选项",
 	step1Title: "增订的选项保存于浏览器的 cookies",
-	step1Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='false' name='chkHidden'>显示被隐藏之选项</input>",
-	unknownDescription: "//(隐藏)//",
+	step1Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='false' name='chkUnknown'>显示未知选项</input>",
+	unknownDescription: "//(未知)//",
 	listViewTemplate: {
 		columns: [
 			{name: 'Option', field: 'option', title: "选项", type: 'String'},
@@ -344,23 +345,6 @@ merge(config.macros.sync,{
 		}
 	});
 
-merge(config.macros.viewDetails,{
-//#	label: "...",
-//#	prompt: "显示此文章之详细资讯",
-//#	hideLabel: "(隐藏详细资讯)",
-//#	hidePrompt: "隐藏此详细资讯面板",
-	emptyDetailsText: "此文章没有扩充栏位",
-	listViewTemplate: {
-		columns: [
-			{name: 'Field', field: 'field', title: "栏位", type: 'String'},
-			{name: 'Value', field: 'value', title: "内容", type: 'String'}
-			],
-		rowClasses: [
-			],
-		buttons: [
-			]}
-	});
-
 merge(config.commands.closeTiddler,{
 	text: "关闭",
 	tooltip: "关闭本文"});
@@ -407,12 +391,26 @@ merge(config.commands.jump,{
 merge(config.commands.syncing,{
 	text: "同步",
 	tooltip: "本文章与服务器或其他外部文件的同步资讯",
-	currentlySyncing: "<div>同步类型：<span class='popupHighlight'>'%0'</span></div><div>服务器：<span class='popupHighlight'>%1</span></div><div>工作区：<span class='popupHighlight'>%2</span></div>",
+	currentlySyncing: "<div>同步类型：<span class='popupHighlight'>'%0'</span></"+"div><div>与服务器：<span class='popupHighlight'>%1 同步</span></"+"div><div>工作区：<span class='popupHighlight'>%2</span></"+"div>", // Note escaping of closing <div> tag
 	notCurrentlySyncing: "无进行中的同步动作",
 	captionUnSync: "停止同步此文章",
 	chooseServer: "与其他服务器同步此文章:",
 	currServerMarker: "● ",
 	notCurrServerMarker: "  "});
+
+merge(config.commands.fields,{
+	text: "栏位",
+	tooltip: "显示此文章的扩充资讯",
+	emptyText: "此文章没有扩充栏位",
+	listViewTemplate: {
+		columns: [
+			{name: 'Field', field: 'field', title: "扩充栏位", type: 'String'},
+			{name: 'Value', field: 'value', title: "内容", type: 'String'}
+			],
+		rowClasses: [
+			],
+		buttons: [
+			]}});
 
 merge(config.shadowTiddlers,{
 	DefaultTiddlers: "GettingStarted",
@@ -429,6 +427,7 @@ merge(config.shadowTiddlers,{
 	TabMoreMissing: '<<list missing>>',
 	TabMoreOrphans: '<<list orphans>>',
 	TabMoreShadowed: '<<list shadowed>>',
+	AdvancedOptions: '<<options>>',
 	PluginManager: '<<plugins>>',
 	ImportTiddlers: '<<importTiddlers>>'});
 
