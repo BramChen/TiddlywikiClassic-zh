@@ -48,7 +48,7 @@ merge(config.optionsDesc,{
 	chkInsertTabs: "使用 tab 鍵插入定位字元，而非跳至下一個欄位",
 	txtBackupFolder: "存放備份檔案的資料夾",
 	txtMaxEditRows: "編輯模式中顯示列數",
-	txtFileSystemCharSet: "指定儲存文件所在之檔案系統之字集"});
+	txtFileSystemCharSet: "指定儲存文件所在之檔案系統之字集 (僅適用於 Firefox/Mozilla only)"});
 
 // Messages
 merge(config.messages,{
@@ -88,7 +88,8 @@ merge(config.messages,{
 	tiddlerLoadError: "載入文章 '%0' 時，發生錯誤。",
 	wrongSaveFormat: "無法使用格式 '%0' 儲存，請使用標准格式存放",
 	invalidFieldName: "無效的欄位名稱：%0",
-	fieldCannotBeChanged: "無法變更欄位：'%0'"});
+	fieldCannotBeChanged: "無法變更欄位：'%0'",
+	loadingMissingTiddler: "正從伺服器 '%1' 的：\n\n工作區 '%3' 中的 '%2' 擷取文章 '%0'"});
 
 merge(config.messages.messageClose,{
 	text: "關閉",
@@ -212,8 +213,8 @@ merge(config.macros.newJournal,{
 merge(config.macros.options,{
 	wizardTitle: "增訂的進階選項",
 	step1Title: "增訂的選項儲存於瀏覽器的 cookies",
-	step1Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='false' name='chkHidden'>顯示被隱藏之選項</input>",
-	unknownDescription: "//(隱藏)//",
+	step1Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='false' name='chkUnknown'>顯示未知選項</input>",
+	unknownDescription: "//(未知)//",
 	listViewTemplate: {
 		columns: [
 			{name: 'Option', field: 'option', title: "選項", type: 'String'},
@@ -342,20 +343,6 @@ merge(config.macros.sync,{
 		}
 	});
 
-merge(config.macros.viewDetails,{
-	label: "...",
-	emptyDetailsText: "此文章沒有擴充欄位",
-	listViewTemplate: {
-		columns: [
-			{name: 'Field', field: 'field', title: "欄位", type: 'String'},
-			{name: 'Value', field: 'value', title: "內容", type: 'String'}
-			],
-		rowClasses: [
-			],
-		buttons: [
-			]}
-	});
-
 merge(config.macros.annotations,{
 	});
 
@@ -405,12 +392,26 @@ merge(config.commands.jump,{
 merge(config.commands.syncing,{
 	text: "同步",
 	tooltip: "本文章與伺服器或其他外部檔案的同步資訊",
-	currentlySyncing: "<div>同步類型：<span class='popupHighlight'>'%0'</span></div><div>伺服器：<span class='popupHighlight'>%1</span></div><div>工作區：<span class='popupHighlight'>%2</span></div>",
+	currentlySyncing: "<div>同步類型：<span class='popupHighlight'>'%0'</span></"+"div><div>與伺服器：<span class='popupHighlight'>%1 同步</span></"+"div><div>工作區：<span class='popupHighlight'>%2</span></"+"div>", // Note escaping of closing <div> tag
 	notCurrentlySyncing: "無進行中的同步動作",
 	captionUnSync: "停止同步此文章",
 	chooseServer: "與其他伺服器同步此文章:",
 	currServerMarker: "● ",
 	notCurrServerMarker: "  "});
+
+merge(config.commands.fields,{
+	text: "欄位",
+	tooltip: "顯示此文章的擴充資訊",
+	emptyText: "此文章沒有擴充欄位",
+	listViewTemplate: {
+		columns: [
+			{name: 'Field', field: 'field', title: "擴充欄位", type: 'String'},
+			{name: 'Value', field: 'value', title: "內容", type: 'String'}
+			],
+		rowClasses: [
+			],
+		buttons: [
+			]}});
 
 merge(config.shadowTiddlers,{
 	DefaultTiddlers: "GettingStarted",
@@ -427,6 +428,7 @@ merge(config.shadowTiddlers,{
 	TabMoreMissing: '<<list missing>>',
 	TabMoreOrphans: '<<list orphans>>',
 	TabMoreShadowed: '<<list shadowed>>',
+	AdvancedOptions: '<<options>>',
 	PluginManager: '<<plugins>>', 
 	ImportTiddlers: '<<importTiddlers>>'});
 
