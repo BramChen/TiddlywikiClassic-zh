@@ -3,7 +3,7 @@
 <head>
 <script type="text/javascript">
 //<![CDATA[
-var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, beta: 5, date: new Date("Apr 18, 2007"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 0, date: new Date("Jun 5, 2007"), extensions: {}};
 //]]>
 </script>
 <!--
@@ -125,10 +125,6 @@ h2,h3 {border-bottom:1px solid [[ColorPalette::TertiaryLight]];}
 #messageArea {border:1px solid [[ColorPalette::SecondaryMid]]; background:[[ColorPalette::SecondaryLight]]; color:[[ColorPalette::Foreground]];}
 #messageArea .button {color:[[ColorPalette::PrimaryMid]]; background:[[ColorPalette::SecondaryPale]]; border:none;}
 
-.tiddlerPopupButton {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::PrimaryPale]]; border: 1px solid [[ColorPalette::PrimaryLight]];}
-.tiddlerPopupButton:hover {color:[[ColorPalette::Background]]; background:[[ColorPalette::PrimaryMid]];}
-.tiddlerPopupButton:active {color:[[ColorPalette::Background]]; background:[[ColorPalette::Foreground]];}
-.tiddlerPopupButton.highlight {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::Background]];}
 .popupTiddler {background:[[ColorPalette::TertiaryPale]]; border:2px solid [[ColorPalette::TertiaryMid]];}
 
 .popup {background:[[ColorPalette::TertiaryPale]]; color:[[ColorPalette::TertiaryDark]]; border-left:1px solid [[ColorPalette::TertiaryMid]]; border-top:1px solid [[ColorPalette::TertiaryMid]]; border-right:2px solid [[ColorPalette::TertiaryDark]]; border-bottom:2px solid [[ColorPalette::TertiaryDark]];}
@@ -427,7 +423,7 @@ noscript {display:none;}
 &lt;/div&gt;
 &lt;div id='displayArea'&gt;
 &lt;div id='messageArea'&gt;&lt;/div&gt;
-&lt;div id='storyDisplay'&gt;&lt;/div&gt;
+&lt;div id='tiddlerDisplay'&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
@@ -1245,7 +1241,7 @@ function main()
 		params = params.parseParams("open",null,false);
 	store = new TiddlyWiki();
 	invokeParamifier(params,"oninit");
-	story = new Story("storyDisplay","tiddler");
+	story = new Story("tiddlerDisplay","tiddler");
 	addEvent(document,"click",Popup.onDocumentClick);
 	saveTest();
 	loadOptionsCookie();
@@ -1258,13 +1254,11 @@ function main()
 	t3 = new Date();
 	invokeParamifier(params,"onload");
 	t4 = new Date();
+	readOnly = (window.location.protocol == "file:") ? false : config.options.chkHttpReadOnly;
 	var pluginProblem = loadPlugins();
 	t5 = new Date();
 	formatter = new Formatter(config.formatters);
-	readOnly = (window.location.protocol == "file:") ? false : config.options.chkHttpReadOnly;
 	invokeParamifier(params,"onconfig");
-	if(!readOnly)
-		backstage.init();
 	t6 = new Date();
 	store.notifyAll();
 	t7 = new Date();
@@ -1278,6 +1272,8 @@ function main()
 		if(config.macros[m].init)
 			config.macros[m].init();
 	}
+	if(!readOnly)
+		backstage.init();
 	t9 = new Date();
 	if(config.options.chkDisplayStartupTime) {
 		displayMessage("Load in " + (t2-t1) + " ms");
@@ -1303,10 +1299,10 @@ function restart()
 
 function saveTest()
 {
-	var saveTest = document.getElementById("saveTest");
-	if(saveTest.hasChildNodes())
+	var s = document.getElementById("saveTest");
+	if(s.hasChildNodes())
 		alert(config.messages.savedSnapshotError);
-	saveTest.appendChild(document.createTextNode("savetest"));
+	s.appendChild(document.createTextNode("savetest"));
 }
 
 function loadShadowTiddlers()
@@ -4829,13 +4825,15 @@ Story.prototype.saveTiddler = function(title,minorUpdate)
 		tiddlerElem.setAttribute("dirty","false");
 		if(config.options.chkForceMinorUpdate)
 			minorUpdate = !minorUpdate;
+		if(!store.tiddlerExists(newTitle))
+			minorUpdate = false;
 		var newDate = new Date();
 		var extendedFields = store.tiddlerExists(newTitle) ? store.fetchTiddler(newTitle).fields : {};
 		for(var n in fields) {
 			if(!TiddlyWiki.isStandardField(n))
 				extendedFields[n] = fields[n];
 			}
-		var tiddler = store.saveTiddler(title,newTitle,fields.text,config.options.txtUserName,minorUpdate ? undefined : newDate,fields.tags,extendedFields);
+		var tiddler = store.saveTiddler(title,newTitle,fields.text,minorUpdate ? undefined : config.options.txtUserName,minorUpdate ? undefined : newDate,fields.tags,extendedFields);
 		autoSaveChanges(null,[tiddler]);
 		return newTitle;
 	}
@@ -5887,7 +5885,7 @@ function refreshPageTemplate(title)
 {
 	var stash = createTiddlyElement(document.body,"div");
 	stash.style.display = "none";
-	var display = document.getElementById("storyDisplay");
+	var display = document.getElementById("tiddlerDisplay");
 	var nodes,t;
 	if(display) {
 		nodes = display.childNodes;
@@ -5898,15 +5896,13 @@ function refreshPageTemplate(title)
 	if(!title)
 		title = "PageTemplate";
 	var html = store.getRecursiveTiddlerText(title,null,10);
-	// Hack due to http://trac.tiddlywiki.org/tiddlywiki/ticket/283
-	html = html.replace(/tiddlerDisplay/,"storyDisplay");
 	wrapper.innerHTML = html;
 	applyHtmlMacros(wrapper);
 	refreshElements(wrapper);
-	display = document.getElementById("storyDisplay");
+	display = document.getElementById("tiddlerDisplay");
 	removeChildren(display);
 	if(!display)
-		display = createTiddlyElement(wrapper,"div","storyDisplay");
+		display = createTiddlyElement(wrapper,"div","tiddlerDisplay");
 	nodes = stash.childNodes;
 	for(t=nodes.length-1; t>=0; t--)
 		display.appendChild(nodes[t]);
@@ -6934,8 +6930,8 @@ function createTiddlyDropDown(place,onchange,options,defaultValue)
 function createTiddlyPopup(place,caption,tooltip,tiddler)
 {
 	if(tiddler.text) {
-		var c = caption + glyph("downArrow");
-		var btn = createTiddlyButton(place,c,tooltip,onClickTiddlyPopup,"tiddlerPopupButton");
+		createTiddlyLink(place,caption,true);
+		var btn = createTiddlyButton(place,glyph("downArrow"),tooltip,onClickTiddlyPopup,"tiddlerPopupButton");
 		btn.tiddler = tiddler;
 	} else {
 		createTiddlyText(place,caption);
