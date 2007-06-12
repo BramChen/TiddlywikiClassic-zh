@@ -397,7 +397,7 @@ body {font-size:0.8em;}
 <div title="StyleSheetPrint">
 <pre>/*{{{*/
 @media print {
-#mainMenu, #sidebar, #messageArea, .toolbar {display: none ! important;}
+#mainMenu, #sidebar, #messageArea, .toolbar, #backstageButton {display: none ! important;}
 #displayArea {margin: 1em 1em 0em 1em;}
 /* Fixes a feature in Firefox 1.5.0.2 where print preview displays the noscript content */
 noscript {display:none;}
@@ -5135,6 +5135,8 @@ config.macros.importTiddlers.onBrowseChange = function(e)
 	var wizard = new Wizard(this);
 	var fileInput = wizard.getElement("txtPath");
 	fileInput.value = "file://" + this.value;
+	var serverType = wizard.getElement("selTypes");
+	serverType.value = "file";
 	return false;
 };
 
@@ -6940,6 +6942,7 @@ function createTiddlyPopup(place,caption,tooltip,tiddler)
 
 function onClickTiddlyPopup(e)
 {
+	if(!e) var e = window.event;
 	var tiddler = this.tiddler;
 	if(tiddler.text) {
 		var popup = Popup.create(this,"div","popupTiddler");
@@ -7750,7 +7753,7 @@ String.prototype.htmlEncode = function()
 // Convert "&amp;" to &, "&lt;" to <, "&gt;" to > and "&quot;" to "
 String.prototype.htmlDecode = function()
 {
-	return this.replace(/&amp;/mg,"&").replace(/&lt;/mg,"<").replace(/&gt;/mg,">").replace(/&quot;/mg,"\"");
+	return this.replace(/&lt;/mg,"<").replace(/&gt;/mg,">").replace(/&quot;/mg,"\"").replace(/&amp;/mg,"&");
 };
 
 // Convert a string to it's JSON representation by encoding control characters, double quotes and backslash. See json.org
