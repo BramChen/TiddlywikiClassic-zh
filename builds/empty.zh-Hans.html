@@ -3,7 +3,7 @@
 <head>
 <script type="text/javascript">
 //<![CDATA[
-var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 3, date: new Date("Jun 17, 2007"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 4, date: new Date("Jun 19, 2007"), extensions: {}};
 //]]>
 </script>
 <!--
@@ -2858,7 +2858,8 @@ config.macros.newTiddler.onClickNewTiddler = function()
 	var customFields = this.getAttribute("customFields");
 	story.displayTiddler(null,title,template,false,null,null);
 	var tiddlerElem = document.getElementById(story.idPrefix + title);
-	story.addCustomFields(tiddlerElem,customFields);
+	if(customFields)
+		story.addCustomFields(tiddlerElem,customFields);
 	var text = this.getAttribute("newText");
 	if(typeof text == "string")
 		story.getTiddlerField(title,"text").value = text.format([title]);
