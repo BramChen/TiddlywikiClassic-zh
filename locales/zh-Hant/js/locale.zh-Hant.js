@@ -4,8 +4,8 @@
 |''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''Version:''|2.2.4|
-|''Date:''|Jul 8, 2007|
+|''Version:''|2.2.5|
+|''Date:''|Aug 26, 2007|
 |''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.2.0|
@@ -21,7 +21,7 @@
 config.locale = 'zh-Hant'; // W3C language tag
 //#config.options.txtFileSystemCharSet = 'BIG5';
 
-if (config.options.txtUserName == 'YourName') // do not translate this line, but do translate the next line
+if (config.options.txtUserName == 'YourName' || !config.options.txtUserName) // do not translate this line, but do translate the next line
 	merge(config.options,{txtUserName: "YourName"});
 
 merge(config.tasks,{
@@ -221,7 +221,7 @@ merge(config.macros.options,{
 			{name: 'Name', field: 'name', title: "名稱", type: 'String'}
 			],
 		rowClasses: [
-			{className: 'lowlight', field: 'lowlight'} 
+			{className: 'lowlight', field: 'lowlight'}
 			]}
 	});
 

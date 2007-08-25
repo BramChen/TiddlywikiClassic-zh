@@ -3,7 +3,7 @@
 <head>
 <script type="text/javascript">
 //<![CDATA[
-var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 4, date: new Date("Jun 19, 2007"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 5, date: new Date("Aug 24, 2007"), extensions: {}};
 //]]>
 </script>
 <!--
@@ -39,6 +39,8 @@ DAMAGE.
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <!--PRE-HEAD-START-->
 <!--PRE-HEAD-END-->
+<title>
+</title>
 <style type="text/css">
 #saveTest {display:none;}
 #messageArea {display:none;}
@@ -131,7 +133,7 @@ h2,h3 {border-bottom:1px solid [[ColorPalette::TertiaryLight]];}
 .wizard h2 {color:[[ColorPalette::Foreground]]; border:none;}
 .wizardStep {background:[[ColorPalette::Background]]; color:[[ColorPalette::Foreground]];
 	border:1px solid [[ColorPalette::PrimaryMid]];}
-.wizardStep.wizardStepDone {background::[[ColorPalette::TertiaryLight]];}
+.wizardStep.wizardStepDone {background:[[ColorPalette::TertiaryLight]];}
 .wizardFooter {background:[[ColorPalette::PrimaryPale]];}
 .wizardFooter .status {background:[[ColorPalette::PrimaryDark]]; color:[[ColorPalette::Background]];}
 .wizard .button {color:[[ColorPalette::Foreground]]; background:[[ColorPalette::SecondaryLight]]; border: 1px solid;
@@ -414,7 +416,7 @@ body {font-size:0.8em;}
 <div title="StyleSheetPrint">
 <pre>/*{{{*/
 @media print {
-#mainMenu, #sidebar, #messageArea, .toolbar, #backstageButton {display: none ! important;}
+#mainMenu, #sidebar, #messageArea, .toolbar, #backstageButton, #backstageArea {display: none ! important;}
 #displayArea {margin: 1em 1em 0em 1em;}
 /* Fixes a feature in Firefox 1.5.0.2 where print preview displays the noscript content */
 noscript {display:none;}
@@ -490,7 +492,468 @@ Also see AdvancedOptions</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div tiddler="locale.zh-Hans" modifier="BramChen" modified="200707081200" created="200611301200" tags="zh-Hans systemConfig excludeLists excludeSearch excludeMissing">/***\n|''Name:''|zh-HansTranslationPlugin|\n|''Description:''|Translation of TiddlyWiki into Simply Chinese|\n|''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|\n|''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hans/locale.zh-Hans.js|\n|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|\n|''Version:''|2.2.4|\n|''Date:''|Jul 8, 2007|\n|''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|\n|''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|\n|''~CoreVersion:''|2.2.0|\n***/\n\n//{{{\n// --\n// -- Translateable strings\n// --\n\n// Strings in &quot;double quotes&quot; should be translated; strings in 'single quotes' should be left alone\n\nconfig.locale = 'zh-Hans'; // W3C language tag\n\nif (config.options.txtUserName == 'YourName' || !config.options.txtUserName) // do not translate this line, but do translate the next line\n	merge(config.options,{txtUserName: &quot;YourName&quot;});\n\nmerge(config.tasks,{\n	save: {text: &quot;保存&quot;, tooltip: &quot;保存变更至此 TiddlyWiki&quot;, action: saveChanges},\n	sync: {text: &quot;同步&quot;, tooltip: &quot;将你的资料内容与外部服务器与文件同步&quot;, content: '&lt;&lt;sync&gt;&gt;'},\n	importTask: {text: &quot;导入&quot;, tooltip: &quot;自其他文件或服务器导入文章或插件&quot;, content: '&lt;&lt;importTiddlers&gt;&gt;'},\n	tweak: {text: &quot;选项&quot;, tooltip: &quot;改变此 TiddlyWiki 显示与行为设置&quot;, content: '&lt;&lt;options&gt;&gt;'},\n	plugins: {text: &quot;套件管理&quot;, tooltip: &quot;管理已安装的套件&quot;, content: '&lt;&lt;plugins&gt;&gt;'}\n});\n\nmerge(config.optionsDesc,{\n	txtUserName: &quot;编辑文章所使用之作者署名&quot;,\n	chkRegExpSearch: &quot;启用正规式查找&quot;,\n	chkCaseSensitiveSearch: &quot;查找时，区分大小写&quot;,\n	chkAnimate: &quot;使用动画显示&quot;,\n	chkSaveBackups: &quot;保存变更前，保留备份文件&quot;,\n	chkAutoSave: &quot;自动保存变更&quot;,\n	chkGenerateAnRssFeed: &quot;保存变更时，也保存 RSS feed&quot;,\n	chkSaveEmptyTemplate: &quot;保存变更时，也保存空白范本&quot;,\n	chkOpenInNewWindow: &quot;于新视窗开启连结&quot;,\n	chkToggleLinks: &quot;点击已开启文章将其关闭&quot;,\n	chkHttpReadOnly: &quot;非本机浏览文件时，隐藏编辑功能&quot;,\n	chkForceMinorUpdate: &quot;修改文章时，不变更作者名称与日期时间&quot;,\n	chkConfirmDelete: &quot;删除文章前须确认&quot;,\n	chkInsertTabs: &quot;使用 tab 键插入定位字符，而非跳至下一个栏位&quot;,\n	txtBackupFolder: &quot;存放备份文件的资料夹&quot;,\n	txtMaxEditRows: &quot;编辑模式中显示列数&quot;,\n	txtFileSystemCharSet: &quot;指定保存文件所在之档案系统之字符集 (仅适用于 Firefox/Mozilla only)&quot;});\n\n// Messages\nmerge(config.messages,{\n	customConfigError: &quot;插件载入发生错误，详细请参考 PluginManager&quot;,\n	pluginError: &quot;发生错误: %0&quot;,\n	pluginDisabled: &quot;未执行，因标签设为 'systemConfigDisable'&quot;,\n	pluginForced: &quot;已执行，因标签设为 'systemConfigForce'&quot;,\n	pluginVersionError: &quot;未执行，插件需较新版本的 TiddlyWiki&quot;,\n	nothingSelected: &quot;尚未作任何选择，至少需选择一项&quot;,\n	savedSnapshotError: &quot;此 TiddlyWiki 未正确保存，详见 http://www.tiddlywiki.com/#DownloadSoftware&quot;,\n	subtitleUnknown: &quot;(未知)&quot;,\n	undefinedTiddlerToolTip: &quot;'%0' 尚无内容&quot;,\n	shadowedTiddlerToolTip: &quot;'%0' 尚无内容, 但已定义隐藏的默认值&quot;,\n	tiddlerLinkTooltip: &quot;%0 - %1, %2&quot;,\n	externalLinkTooltip: &quot;外部链接至 %0&quot;,\n	noTags: &quot;未设置标签的文章&quot;,\n	notFileUrlError: &quot;须先将此 TiddlyWiki 存至本机文件，才可保存变更&quot;,\n	cantSaveError: &quot;无法保存变更。可能的原因有：\sn- 你的浏览器不支援此保存功能（Firefox, Internet Explorer, Safari and Opera 经适当设定后可保存变更）\sn- 也可能是你的 TiddlyWiki 文件名称包含不合法的字符所致。\sn- 或是 TiddlyWiki 文件被改名或搬移。&quot;,\n	invalidFileError: &quot; '%0' 非有效之 TiddlyWiki 文件&quot;,\n	backupSaved: &quot;已保存备份&quot;,\n	backupFailed: &quot;无法保存备份&quot;,\n	rssSaved: &quot;RSS feed 已保存&quot;,\n	rssFailed: &quot;无法保存 RSS feed &quot;,\n	emptySaved: &quot;已保存范本&quot;,\n	emptyFailed: &quot;无法保存范本&quot;,\n	mainSaved: &quot;主要的TiddlyWiki已保存&quot;,\n	mainFailed: &quot;无法保存主要 TiddlyWiki，所作的改变未保存&quot;,\n	macroError: &quot;宏 &lt;&lt;\s%0&gt;&gt; 执行错误&quot;,\n	macroErrorDetails: &quot;执行宏 &lt;&lt;\s%0&gt;&gt; 时，发生错误 :\sn%1&quot;,\n	missingMacro: &quot;无此宏&quot;,\n	overwriteWarning: &quot;'%0' 已存在，[确定]覆盖之&quot;,\n	unsavedChangesWarning: &quot;注意！ 尚未保存变更\sn\sn[确定]保存，或[取消]放弃保存？&quot;,\n	confirmExit: &quot;--------------------------------\sn\snTiddlyWiki 以更改内容尚未保存，继续的话将遗失这些更动\sn\sn--------------------------------&quot;,\n	saveInstructions: &quot;SaveChanges&quot;,\n	unsupportedTWFormat: &quot;未支援此 TiddlyWiki 格式：'%0'&quot;,\n	tiddlerSaveError: &quot;保存文章 '%0' 时，发生错误。&quot;,\n	tiddlerLoadError: &quot;载入文章 '%0' 时，发生错误。&quot;,\n	wrongSaveFormat: &quot;无法使用格式 '%0' 保存，请使用标准格式存放&quot;,\n	invalidFieldName: &quot;无效的栏位名称：%0&quot;,\n	fieldCannotBeChanged: &quot;无法变更栏位：'%0'&quot;,\n	loadingMissingTiddler: &quot;正从伺服器 '%1' 的：\sn\sn工作区 '%3' 中的 '%2' 撷取文章 '%0'&quot;});\n\nmerge(config.messages.messageClose,{\n	text: &quot;关闭&quot;,\n	tooltip: &quot;关闭此讯息&quot;});\n\nconfig.messages.backstage = {\n	open: {text: &quot;控制台&quot;, tooltip: &quot;开启控制台执行编写工作&quot;},\n	close: {text: &quot;关闭&quot;, tooltip: &quot;关闭控制台&quot;},\n	prompt: &quot;控制台：&quot;,\n	decal: {\n		edit: {text: &quot;编辑&quot;, tooltip: &quot;编辑 '%0'&quot;}\n	}\n};\n\nconfig.messages.listView = {\n	tiddlerTooltip: &quot;查看全文&quot;,\n	previewUnavailable: &quot;(无法预览)&quot;\n};\n\nconfig.messages.dates.months = [&quot;一月&quot;, &quot;二月&quot;, &quot;三月&quot;, &quot;四月&quot;, &quot;五月&quot;, &quot;六月&quot;, &quot;七月&quot;, &quot;八月&quot;, &quot;九月&quot;, &quot;十月&quot;, &quot;十一月&quot;, &quot;十二月&quot;];\nconfig.messages.dates.days = [&quot;日&quot;, &quot;一&quot;,&quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;];\nconfig.messages.dates.shortMonths = [&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;];\nconfig.messages.dates.shortDays = [&quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;];\n// suffixes for dates, eg &quot;1st&quot;,&quot;2nd&quot;,&quot;3rd&quot;...&quot;30th&quot;,&quot;31st&quot;\nconfig.messages.dates.daySuffixes = [&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,\n		&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,\n		&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,\n		&quot;st&quot;];\nconfig.messages.dates.am = &quot;上午&quot;;\nconfig.messages.dates.pm = &quot;下午&quot;;\n\nmerge(config.messages.tiddlerPopup,{ \n	});\n\nmerge(config.views.wikified.tag,{\n	labelNoTags: &quot;未设标签&quot;,\n	labelTags: &quot;标签: &quot;,\n	openTag: &quot;开启标签 '%0'&quot;,\n	tooltip: &quot;显示标签为 '%0' 的文章&quot;,\n	openAllText: &quot;开启以下所有文章&quot;,\n	openAllTooltip: &quot;开启以下所有文章&quot;,\n	popupNone: &quot;仅此文标签为 '%0'&quot;});\n\nmerge(config.views.wikified,{\n	defaultText: &quot;&quot;,\n	defaultModifier: &quot;(未完成)&quot;,\n	shadowModifier: &quot;(默认)&quot;,\n	dateFormat: &quot;YYYY年0MM月0DD日&quot;,\n	createdPrompt: &quot;创建于&quot;});\n\nmerge(config.views.editor,{\n	tagPrompt: &quot;设置标签之间以空白区隔，[[标签含空白时请使用双中括弧]]，或点选现有之标签加入&quot;,\n	defaultText: &quot;&quot;});\n\nmerge(config.views.editor.tagChooser,{\n	text: &quot;标签&quot;,\n	tooltip: &quot;点选现有之标签加至本文章&quot;,\n	popupNone: &quot;未设置标签&quot;,\n	tagTooltip: &quot;加入标签 '%0'&quot;});\n\n	merge(config.messages,{\n	sizeTemplates:\n		[\n		{unit: 1024*1024*1024, template: &quot;%0\su00a0GB&quot;},\n		{unit: 1024*1024, template: &quot;%0\su00a0MB&quot;},\n		{unit: 1024, template: &quot;%0\su00a0KB&quot;},\n		{unit: 1, template: &quot;%0\su00a0B&quot;}\n		]});\n\nmerge(config.macros.search,{\n	label: &quot; 寻找&quot;,\n	prompt: &quot;搜寻本 Wiki&quot;,\n	accessKey: &quot;F&quot;,\n	successMsg: &quot; %0 篇符合条件: %1&quot;,\n	failureMsg: &quot; 无符合条件: %0&quot;});\n\nmerge(config.macros.tagging,{\n	label: &quot;引用标签:&quot;,\n	labelNotTag: &quot;无引用标签&quot;,\n	tooltip: &quot;列出标签为 '%0' 的文章&quot;});\n\nmerge(config.macros.timeline,{\n	dateFormat: &quot;YYYY年0MM月0DD日&quot;});\n\nmerge(config.macros.allTags,{\n	tooltip: &quot;显示文章- 标签为'%0'&quot;,\n	noTags: &quot;没有标签&quot;});\n\nconfig.macros.list.all.prompt = &quot;依字母排序&quot;;\nconfig.macros.list.missing.prompt = &quot;被引用且内容空白的文章&quot;;\nconfig.macros.list.orphans.prompt = &quot;未被引用的文章&quot;;\nconfig.macros.list.shadowed.prompt = &quot;这些隐藏的文章已定义默认内容&quot;;\nconfig.macros.list.touched.prompt = &quot;自下载或添加后被修改过的文章&quot;; \n\nmerge(config.macros.closeAll,{\n	label: &quot;全部关闭&quot;,\n	prompt: &quot;关闭所有开启中的 tiddler (编辑中除外)&quot;});\n\nmerge(config.macros.permaview,{\n	label: &quot;永久链接&quot;,\n	prompt: &quot;可存取现有开启之文章的链接位址&quot;});\n\nmerge(config.macros.saveChanges,{\n	label: &quot;保存变更&quot;,\n	prompt: &quot;保存所有文章，产生新的版本&quot;,\n	accessKey: &quot;S&quot;});\n\nmerge(config.macros.newTiddler,{\n	label: &quot;创建文章&quot;,\n	prompt: &quot;创建 tiddler&quot;,\n	title: &quot;创建文章&quot;,\n	accessKey: &quot;N&quot;});\n\nmerge(config.macros.newJournal,{\n	label: &quot;创建日志&quot;,\n	prompt: &quot;创建 jounal&quot;,\n	accessKey: &quot;J&quot;});\n\nmerge(config.macros.options,{\n	wizardTitle: &quot;增订的进阶选项&quot;,\n	step1Title: &quot;增订的选项保存于浏览器的 cookies&quot;,\n	step1Html: &quot;&lt;input type='hidden' name='markList'&gt;&lt;/input&gt;&lt;br&gt;&lt;input type='checkbox' checked='false' name='chkUnknown'&gt;显示未知选项&lt;/input&gt;&quot;,\n	unknownDescription: &quot;//(未知)//&quot;,\n	listViewTemplate: {\n		columns: [\n			{name: 'Option', field: 'option', title: &quot;选项&quot;, type: 'String'},\n			{name: 'Description', field: 'description', title: &quot;说明&quot;, type: 'WikiText'},\n			{name: 'Name', field: 'name', title: &quot;名称&quot;, type: 'String'}\n			],\n		rowClasses: [\n			{className: 'lowlight', field: 'lowlight'} \n			]}\n	});\n\nmerge(config.macros.plugins,{\n	wizardTitle: &quot;插件管理&quot;,\n	step1Title: &quot;- 已载入之插件&quot;,\n	step1Html: &quot;&lt;input type='hidden' name='markList'&gt;&lt;/input&gt;&quot;, // DO NOT TRANSLATE\n	skippedText: &quot;(此插件因刚加入，故尚未执行)&quot;,\n	noPluginText: &quot;未安装插件&quot;,\n	confirmDeleteText: &quot;确认是否删除此文章:\sn\sn%0&quot;,\n	removeLabel: &quot;移除 'systemConfig' 标签&quot;,\n	removePrompt: &quot;移除 'systemConfig' 标签&quot;,\n	deleteLabel: &quot;删除&quot;,\n	deletePrompt: &quot;永远删除所选插件&quot;,\n	listViewTemplate : {\n		columns: [\n			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},\n			{name: 'Tiddler', field: 'tiddler', title: &quot;套件&quot;, type: 'Tiddler'},\n			{name: 'Size', field: 'size', tiddlerLink: 'size', title: &quot;大小&quot;, type: 'Size'},\n			{name: 'Forced', field: 'forced', title: &quot;强制执行&quot;, tag: 'systemConfigDisable', type: 'TagCheckbox'},\n			{name: 'Disabled', field: 'disabled', title: &quot;停用&quot;, tag: 'systemConfigDisable', type: 'TagCheckbox'},\n			{name: 'Executed', field: 'executed', title: &quot;已载入&quot;, type: 'Boolean', trueText: &quot;是&quot;, falseText: &quot;否&quot;},\n			{name: 'Startup Time', field: 'startupTime', title: &quot;载入时间&quot;, type: 'String'},\n			{name: 'Error', field: 'error', title: &quot;载入状态&quot;, type: 'Boolean', trueText: &quot;错误&quot;, falseText: &quot;正常&quot;},\n			{name: 'Log', field: 'log', title: &quot;记录&quot;, type: 'StringList'}\n			],\n		rowClasses: [\n			{className: 'error', field: 'error'},\n			{className: 'warning', field: 'warning'}\n			]}\n	});\n\nmerge(config.macros.toolbar,{\n	moreLabel: &quot;其他&quot;,\n	morePrompt: &quot;显示更多工具命令&quot;});\n\nmerge(config.macros.refreshDisplay,{\n	label: &quot;刷新&quot;,\n	prompt: &quot;刷新此 TiddlyWiki 显示&quot;\n	});\n\nmerge(config.macros.importTiddlers,{\n	readOnlyWarning: &quot;TiddlyWiki 于唯读模式下，不支援导入文章。请由本机（file://）开启 TiddlyWiki 文件&quot;,\n	wizardTitle: &quot;自其他文件服务器导入文章&quot;,\n	wizardTitle: &quot;自其他档案或服务器汇入文章&quot;,\n	step1Title: &quot;步骤一：指定服务器或来源文件&quot;,\n	step1Html: &quot;指定服务器类型：&lt;select name='selTypes'&gt;&lt;option value=''&gt;选取...&lt;/option&gt;&lt;/select&gt;&lt;br&gt;请输入网址或路径：&lt;input type='text' size=50 name='txtPath'&gt;&lt;br&gt;...或选择来源文件：&lt;input type='file' size=50 name='txtBrowse'&gt;&lt;br&gt;&lt;hr&gt;...或选择指定的馈入来源：&lt;select name='selFeeds'&gt;&lt;option value=''&gt;选取...&lt;/option&gt;&lt;/select&gt;&quot;,\n	openLabel: &quot;开启&quot;,\n	openPrompt: &quot;开启文件或&quot;,\n	openError: &quot;读取来源文件时发生错误&quot;,\n	statusOpenHost: &quot;正与服务器建立连线&quot;,\n	statusGetWorkspaceList: &quot;正在取得可用之文章清单&quot;,\n	step2Title: &quot;步骤二：选择工作区&quot;,\n	step2Html: &quot;输入工作区名称：&lt;input type='text' size=50 name='txtWorkspace'&gt;&lt;br&gt;...或选择工作区：&lt;select name='selWorkspace'&gt;&lt;option value=''&gt;选取...&lt;/option&gt;&lt;/select&gt;&quot;,\n	cancelLabel: &quot;取消&quot;,\n	cancelPrompt: &quot;取消本次导入动作&quot;,\n	statusOpenWorkspace: &quot;正在开启工作区&quot;,\n	statusGetTiddlerList: &quot;正在取得可用之文章清单&quot;,\n	step3Title: &quot;步骤三：选择欲导入之文章&quot;,\n	step3Html: &quot;&lt;input type='hidden' name='markList'&gt;&lt;/input&gt;&lt;br&gt;&lt;input type='checkbox' checked='true' name='chkSync'&gt;保持这些文章与伺服器连结，便于同步后续的变更。&lt;/input&gt;&lt;br&gt;&lt;input type='checkbox' name='chkSave'&gt;保存此服务器的详细资讯于标签为 'systemServer' 的文章名为：&lt;/input&gt; &lt;input type='text' size=25 name='txtSaveTiddler'&gt;&quot;, \n	importLabel: &quot;导入&quot;,\n	importPrompt: &quot;导入所选文章&quot;,\n	confirmOverwriteText: &quot;确定要覆写这些文章：\sn\sn%0&quot;,\n	step4Title: &quot;步骤四：正在导入%0 篇文章&quot;,\n	step4Html: &quot;&lt;input type='hidden' name='markReport'&gt;&lt;/input&gt;&quot;, // DO NOT TRANSLATE\n	doneLabel: &quot;完成&quot;,\n	donePrompt: &quot;关闭&quot;,\n	statusDoingImport: &quot;正在导入文章 ...&quot;,\n	statusDoneImport: &quot;所选文章已导入&quot;,\n	systemServerNamePattern: &quot;%2 位于 %1&quot;,\n	systemServerNamePatternNoWorkspace: &quot;%1&quot;,\n	confirmOverwriteSaveTiddler: &quot;此 tiddler '%0' 已经存在。点击“确定”以服务器上料覆写之，或“取消”不变更后离开&quot;,\n	serverSaveTemplate: &quot;|''Type:''|%0|\sn|''网址：''|%1|\sn|''工作区：''|%2|\sn\sn此文为自动产生纪录伺服器之相关资讯。&quot;,\n	serverSaveModifier: &quot;（系统）&quot;,\n	listViewTemplate: {\n		columns: [\n			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},\n			{name: 'Tiddler', field: 'tiddler', title: &quot;文章&quot;, type: 'Tiddler'},\n			{name: 'Size', field: 'size', tiddlerLink: 'size', title: &quot;大小&quot;, type: 'Size'},\n			{name: 'Tags', field: 'tags', title: &quot;标签&quot;, type: 'Tags'}\n			],\n		rowClasses: [\n			]}\n	});\n\nmerge(config.macros.sync,{\n	listViewTemplate: {\n		columns: [\n			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},\n			{name: 'Tiddler', field: 'tiddler', title: &quot;文章&quot;, type: 'Tiddler'},\n			{name: 'Server Type', field: 'serverType', title: &quot;服务器类型&quot;, type: 'String'},\n			{name: 'Server Host', field: 'serverHost', title: &quot;服务器主机&quot;, type: 'String'},\n			{name: 'Server Workspace', field: 'serverWorkspace', title: &quot;服务器工作区&quot;, type: 'String'},\n			{name: 'Status', field: 'status', title: &quot;同步情形&quot;, type: 'String'},\n			{name: 'Server URL', field: 'serverUrl', title: &quot;服务器网址&quot;, text: &quot;View&quot;, type: 'Link'}\n			],\n		rowClasses: [\n			],\n		buttons: [\n			{caption: &quot;同步更新这些文章&quot;, name: 'sync'}\n			]},\n	wizardTitle: &quot;将你的资料内容与外部服务器与文件同步&quot;,\n	step1Title: &quot;选择欲同步的文章&quot;,\n	step1Html: '&lt;input type=&quot;hidden&quot; name=&quot;markList&quot;&gt;&lt;/input&gt;',\n	syncLabel: &quot;同步&quot;,\n	syncPrompt: &quot;同步更新这些文章&quot;,\n	hasChanged: &quot;已更动&quot;,\n	hasNotChanged: &quot;未更动&quot;,\n	syncStatusList: {\n		none: {text: &quot;...&quot;, color: 'none'},\n		changedServer: {text: &quot;服务器资料已更动&quot;, color: '#80ff80'},\n		changedLocally: {text: &quot;本机资料已更动&quot;, color: '#80ff80'},\n		changedBoth: {text: &quot;已同时更新本机与服务器上的资料&quot;, color: '#ff8080'},\n		notFound: {text: &quot;服务器无此资料&quot;, color: 'ffff80'},\n		putToServer: {text: &quot;已储存更新资料至服务器&quot;, color: '#ff80ff'},\n		gotFromServer: {text: &quot;已从服务器撷取更新资料&quot;, color: '#80ffff'}\n		}\n	});\n\nmerge(config.macros.annotations,{\n	});\n\nmerge(config.commands.closeTiddler,{\n	text: &quot;关闭&quot;,\n	tooltip: &quot;关闭本文&quot;});\n\nmerge(config.commands.closeOthers,{\n	text: &quot;关闭其他&quot;,\n	tooltip: &quot;关闭其他文章&quot;});\n\nmerge(config.commands.editTiddler,{\n	text: &quot;编辑&quot;,\n	tooltip: &quot;编辑本文&quot;,\n	readOnlyText: &quot;查阅&quot;,\n	readOnlyTooltip: &quot;查阅本文之原始内容&quot;});\n\nmerge(config.commands.saveTiddler,{\n	text: &quot;完成&quot;,\n	tooltip: &quot;确定修改&quot;});\n\nmerge(config.commands.cancelTiddler,{\n	text: &quot;取消&quot;,\n	tooltip: &quot;取消修改&quot;,\n	warning: &quot;确定取消对 '%0' 的修改吗?&quot;,\n	readOnlyText: &quot;完成&quot;,\n	readOnlyTooltip: &quot;返回正常显示模式&quot;});\n\nmerge(config.commands.deleteTiddler,{\n	text: &quot;删除&quot;,\n	tooltip: &quot;删除文章&quot;,\n	warning: &quot;确定删除 '%0'?&quot;});\n\nmerge(config.commands.permalink,{\n	text: &quot;永久链接&quot;,\n	tooltip: &quot;本文永久链接&quot;});\n\nmerge(config.commands.references,{\n	text: &quot;引用&quot;,\n	tooltip: &quot;引用本文的文章&quot;,\n	popupNone: &quot;本文未被引用&quot;});\n\nmerge(config.commands.jump,{\n	text: &quot;跳转&quot;,\n	tooltip: &quot;跳转至其他已开启的文章&quot;});\n\nmerge(config.commands.syncing,{\n	text: &quot;同步&quot;,\n	tooltip: &quot;本文章与服务器或其他外部文件的同步资讯&quot;,\n	currentlySyncing: &quot;&lt;div&gt;同步类型：&lt;span class='popupHighlight'&gt;'%0'&lt;/span&gt;&lt;/&quot;+&quot;div&gt;&lt;div&gt;与服务器：&lt;span class='popupHighlight'&gt;%1 同步&lt;/span&gt;&lt;/&quot;+&quot;div&gt;&lt;div&gt;工作区：&lt;span class='popupHighlight'&gt;%2&lt;/span&gt;&lt;/&quot;+&quot;div&gt;&quot;, // Note escaping of closing &lt;div&gt; tag\n	notCurrentlySyncing: &quot;无进行中的同步动作&quot;,\n	captionUnSync: &quot;停止同步此文章&quot;,\n	chooseServer: &quot;与其他服务器同步此文章:&quot;,\n	currServerMarker: &quot;\su25cf &quot;,\n	notCurrServerMarker: &quot;  &quot;});\n\nmerge(config.commands.fields,{\n	text: &quot;栏位&quot;,\n	tooltip: &quot;显示此文章的扩充资讯&quot;,\n	emptyText: &quot;此文章没有扩充栏位&quot;,\n	listViewTemplate: {\n		columns: [\n			{name: 'Field', field: 'field', title: &quot;扩充栏位&quot;, type: 'String'},\n			{name: 'Value', field: 'value', title: &quot;内容&quot;, type: 'String'}\n			],\n		rowClasses: [\n			],\n		buttons: [\n			]}});\n\nmerge(config.shadowTiddlers,{\n	DefaultTiddlers: &quot;GettingStarted&quot;,\n	GettingStarted: &quot;使用此 TiddlyWiki 的空白范本之前，请先修改以下默认文章：\sn* SiteTitle 及 SiteSubtitle：网站的标题和副标题，显示于页面上方&lt;br /&gt;（在保存变更后，将显示于浏览器视窗的标题列）。\sn* MainMenu：主菜单（通常在页面左侧）。\sn* DefaultTiddlers：包含一些文章的标题，可于进入TiddlyWiki 后开启。\sn请输入您的大名，作为所创建/ 编辑文章的署名：&lt;&lt;option txtUserName&gt;&gt;&quot;,\n	MainMenu: &quot;[[使用说明|GettingStarted]]\sn\sn\sn^^~TiddlyWiki 版本：&lt;&lt;version&gt;&gt;\sn© 2007 [[UnaMesa|http://www.unamesa.org/]]^^&quot;,\n	OptionsPanel: &quot;这些设置将缓存于浏览器\sn请签名&lt;&lt;option txtUserName&gt;&gt;\sn(范例：WikiWord)\sn\sn&lt;&lt;option chkSaveBackups&gt;&gt; 保存备份\sn&lt;&lt;option chkAutoSave&gt;&gt; 自动保存\sn&lt;&lt;option chkRegExpSearch&gt;&gt; 正规式搜寻\sn&lt;&lt;option chkCaseSensitiveSearch&gt;&gt; 区分大小写搜寻\sn&lt;&lt;option chkAnimate&gt;&gt; 使用动画显示\sn----\sn[[进阶选项|AdvancedOptions]]&quot;,\n	SiteTitle: &quot;我的 TiddlyWiki&quot;,\n	SiteSubtitle: &quot;一个可重复使用的个人网页式笔记本&quot;,\n	SiteUrl: 'http://www.tiddlywiki.com/',\n	SideBarOptions: '&lt;&lt;search&gt;&gt;&lt;&lt;closeAll&gt;&gt;&lt;&lt;permaview&gt;&gt;&lt;&lt;newTiddler&gt;&gt;&lt;&lt;newJournal &quot; YYYY年0MM月0DD日&quot;&gt;&gt;&lt;&lt;saveChanges&gt;&gt;&lt;&lt;slider chkSliderOptionsPanel OptionsPanel  &quot;偏好设置 »&quot; &quot;变更 TiddlyWiki 选项&quot;&gt;&gt;',\n	SideBarTabs: '&lt;&lt;tabs txtMainTab &quot;最近更新&quot; &quot;依更新日期排序&quot; TabTimeline &quot;全部&quot; &quot;所有文章&quot; TabAll &quot;分类&quot; &quot;所有标签&quot; TabTags &quot;更多&quot; &quot;其他&quot; TabMore&gt;&gt;',\n	StyleSheet: '[[StyleSheetLocale]]',\n	TabMore: '&lt;&lt;tabs txtMoreTab &quot;未完成&quot; &quot;内容空白的文章&quot; TabMoreMissing &quot;未引用&quot; &quot;未被引用的文章&quot; TabMoreOrphans &quot;默认文章&quot; &quot;默认的影子文章&quot; TabMoreShadowed&gt;&gt;'});\n\nmerge(config.annotations,{\n	AdvancedOptions: &quot;此默认文章可以存取一些进阶选项。&quot;,\n	ColorPalette: &quot;此默认文章里的设定值，将决定 ~TiddlyWiki 使用者介面的配色。&quot;,\n	DefaultTiddlers: &quot;当 ~TiddlyWiki 在浏览器中开启时，此默认文章里列出的文章，将被自动显示。&quot;,\n	EditTemplate: &quot;此默认文章里的 HTML template 将决定文章进入编辑模式时的显示版面。&quot;,\n	GettingStarted: &quot;此默认文章提供基本的使用说明。&quot;,\n	ImportTiddlers: &quot;此默认文章提供存取导入中的文章。&quot;,\n	MainMenu: &quot;此默认文章的内容，为于萤幕左侧主菜单的内容&quot;,\n	MarkupPreHead: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;head&gt; 段落的起始&quot;,\n	MarkupPostHead: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;head&gt; 段落的最后&quot;,\n	MarkupPreBody: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;body&gt; 段落的起始&quot;,\n	MarkupPostBody: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;body&gt; 段落的最后，于 script 区块之前&quot;,\n	OptionsPanel: &quot;此默认文章的内容，为于萤幕右侧副菜单中的选项面板里的内容&quot;,\n	PageTemplate: &quot;此默认文章里的 HTML template 决定的 ~TiddlyWiki 主要的版面配置&quot;,\n	PluginManager: &quot;此默认文章提供存取套件管理员&quot;,\n	SideBarOptions: &quot;此默认文章的内容，为于萤幕右侧副菜单中选项面板里的内容&quot;,\n	SideBarTabs: &quot;此默认文章的内容，为于萤幕右侧副菜单中的页签面板里的内容&quot;,\n	SiteSubtitle: &quot;此默认文章的内容为页面的副标题&quot;,\n	SiteTitle: &quot;此默认文章的内容为页面的主标题&quot;,\n	SiteUrl: &quot;此默认文章的内容须设定为文件发布时的完整网址&quot;,\n	StyleSheetColours: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的配色&quot;,\n	StyleSheet: &quot;此默认文章内容可包含 CSS 规则&quot;,\n	StyleSheetLayout: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的版面配置&quot;,\n	StyleSheetLocale: &quot;此默认文章内含的 CSS 规则，可依翻译语系做适当调整&quot;,\n	StyleSheetPrint: &quot;此默认文章内含的 CSS 规则，用于列印时的样式&quot;,\n	TabAll: &quot;此默认文章的内容，为于萤幕右侧的“全部”页签的内容&quot;,\n	TabMore: &quot;此默认文章的内容，为于萤幕右侧的“更多”页签的内容&quot;,\n	TabMoreMissing: &quot;此默认文章的内容，为于萤幕右侧的“未完成”页签的内容&quot;,\n	TabMoreOrphans: &quot;此默认文章的内容，为于萤幕右侧的“未引用”页签的内容&quot;,\n	TabMoreShadowed: &quot;此默认文章的内容，为于萤幕右侧的“默认文章”页签的内容&quot;,\n	TabTags: &quot;此默认文章的内容，为于萤幕右侧的“分类”页签的内容&quot;,\n	TabTimeline: &quot;此默认文章的内容，为于萤幕右侧的“最近更新”页签的内容&quot;,\n	ViewTemplate: &quot;此默认文章里的 HTML template 决定文章显示的样子&quot;\n	});\n//}}}\n</div>
+<div title="locale.zh-Hans" modifier="BramChen" created="200611301200" modified="200708261200" tags="zh-Hans systemConfig excludeLists excludeSearch excludeMissing">
+<pre>/***
+|''Name:''|zh-HansTranslationPlugin|
+|''Description:''|Translation of TiddlyWiki into Simply Chinese|
+|''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
+|''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hans/locale.zh-Hans.js|
+|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
+|''Version:''|2.2.5|
+|''Date:''|Aug 26, 2007|
+|''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
+|''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
+|''~CoreVersion:''|2.2.0|
+***/
+
+//{{{
+// --
+// -- Translateable strings
+// --
+
+// Strings in &quot;double quotes&quot; should be translated; strings in 'single quotes' should be left alone
+
+config.locale = 'zh-Hans'; // W3C language tag
+
+if (config.options.txtUserName == 'YourName' || !config.options.txtUserName) // do not translate this line, but do translate the next line
+	merge(config.options,{txtUserName: &quot;YourName&quot;});
+
+merge(config.tasks,{
+	save: {text: &quot;保存&quot;, tooltip: &quot;保存变更至此 TiddlyWiki&quot;, action: saveChanges},
+	sync: {text: &quot;同步&quot;, tooltip: &quot;将你的资料内容与外部服务器与文件同步&quot;, content: '&lt;&lt;sync&gt;&gt;'},
+	importTask: {text: &quot;导入&quot;, tooltip: &quot;自其他文件或服务器导入文章或插件&quot;, content: '&lt;&lt;importTiddlers&gt;&gt;'},
+	tweak: {text: &quot;选项&quot;, tooltip: &quot;改变此 TiddlyWiki 显示与行为设置&quot;, content: '&lt;&lt;options&gt;&gt;'},
+	plugins: {text: &quot;套件管理&quot;, tooltip: &quot;管理已安装的套件&quot;, content: '&lt;&lt;plugins&gt;&gt;'}
+});
+
+merge(config.optionsDesc,{
+	txtUserName: &quot;编辑文章所使用之作者署名&quot;,
+	chkRegExpSearch: &quot;启用正规式查找&quot;,
+	chkCaseSensitiveSearch: &quot;查找时，区分大小写&quot;,
+	chkAnimate: &quot;使用动画显示&quot;,
+	chkSaveBackups: &quot;保存变更前，保留备份文件&quot;,
+	chkAutoSave: &quot;自动保存变更&quot;,
+	chkGenerateAnRssFeed: &quot;保存变更时，也保存 RSS feed&quot;,
+	chkSaveEmptyTemplate: &quot;保存变更时，也保存空白范本&quot;,
+	chkOpenInNewWindow: &quot;于新视窗开启连结&quot;,
+	chkToggleLinks: &quot;点击已开启文章将其关闭&quot;,
+	chkHttpReadOnly: &quot;非本机浏览文件时，隐藏编辑功能&quot;,
+	chkForceMinorUpdate: &quot;修改文章时，不变更作者名称与日期时间&quot;,
+	chkConfirmDelete: &quot;删除文章前须确认&quot;,
+	chkInsertTabs: &quot;使用 tab 键插入定位字符，而非跳至下一个栏位&quot;,
+	txtBackupFolder: &quot;存放备份文件的资料夹&quot;,
+	txtMaxEditRows: &quot;编辑模式中显示列数&quot;,
+	txtFileSystemCharSet: &quot;指定保存文件所在之档案系统之字符集 (仅适用于 Firefox/Mozilla only)&quot;});
+
+// Messages
+merge(config.messages,{
+	customConfigError: &quot;插件载入发生错误，详细请参考 PluginManager&quot;,
+	pluginError: &quot;发生错误: %0&quot;,
+	pluginDisabled: &quot;未执行，因标签设为 'systemConfigDisable'&quot;,
+	pluginForced: &quot;已执行，因标签设为 'systemConfigForce'&quot;,
+	pluginVersionError: &quot;未执行，插件需较新版本的 TiddlyWiki&quot;,
+	nothingSelected: &quot;尚未作任何选择，至少需选择一项&quot;,
+	savedSnapshotError: &quot;此 TiddlyWiki 未正确保存，详见 http://www.tiddlywiki.com/#DownloadSoftware&quot;,
+	subtitleUnknown: &quot;(未知)&quot;,
+	undefinedTiddlerToolTip: &quot;'%0' 尚无内容&quot;,
+	shadowedTiddlerToolTip: &quot;'%0' 尚无内容, 但已定义隐藏的默认值&quot;,
+	tiddlerLinkTooltip: &quot;%0 - %1, %2&quot;,
+	externalLinkTooltip: &quot;外部链接至 %0&quot;,
+	noTags: &quot;未设置标签的文章&quot;,
+	notFileUrlError: &quot;须先将此 TiddlyWiki 存至本机文件，才可保存变更&quot;,
+	cantSaveError: &quot;无法保存变更。可能的原因有：\n- 你的浏览器不支援此保存功能（Firefox, Internet Explorer, Safari and Opera 经适当设定后可保存变更）\n- 也可能是你的 TiddlyWiki 文件名称包含不合法的字符所致。\n- 或是 TiddlyWiki 文件被改名或搬移。&quot;,
+	invalidFileError: &quot; '%0' 非有效之 TiddlyWiki 文件&quot;,
+	backupSaved: &quot;已保存备份&quot;,
+	backupFailed: &quot;无法保存备份&quot;,
+	rssSaved: &quot;RSS feed 已保存&quot;,
+	rssFailed: &quot;无法保存 RSS feed &quot;,
+	emptySaved: &quot;已保存范本&quot;,
+	emptyFailed: &quot;无法保存范本&quot;,
+	mainSaved: &quot;主要的TiddlyWiki已保存&quot;,
+	mainFailed: &quot;无法保存主要 TiddlyWiki，所作的改变未保存&quot;,
+	macroError: &quot;宏 &lt;&lt;\%0&gt;&gt; 执行错误&quot;,
+	macroErrorDetails: &quot;执行宏 &lt;&lt;\%0&gt;&gt; 时，发生错误 :\n%1&quot;,
+	missingMacro: &quot;无此宏&quot;,
+	overwriteWarning: &quot;'%0' 已存在，[确定]覆盖之&quot;,
+	unsavedChangesWarning: &quot;注意！ 尚未保存变更\n\n[确定]保存，或[取消]放弃保存？&quot;,
+	confirmExit: &quot;--------------------------------\n\nTiddlyWiki 以更改内容尚未保存，继续的话将遗失这些更动\n\n--------------------------------&quot;,
+	saveInstructions: &quot;SaveChanges&quot;,
+	unsupportedTWFormat: &quot;未支援此 TiddlyWiki 格式：'%0'&quot;,
+	tiddlerSaveError: &quot;保存文章 '%0' 时，发生错误。&quot;,
+	tiddlerLoadError: &quot;载入文章 '%0' 时，发生错误。&quot;,
+	wrongSaveFormat: &quot;无法使用格式 '%0' 保存，请使用标准格式存放&quot;,
+	invalidFieldName: &quot;无效的栏位名称：%0&quot;,
+	fieldCannotBeChanged: &quot;无法变更栏位：'%0'&quot;,
+	loadingMissingTiddler: &quot;正从伺服器 '%1' 的：\n\n工作区 '%3' 中的 '%2' 撷取文章 '%0'&quot;});
+
+merge(config.messages.messageClose,{
+	text: &quot;关闭&quot;,
+	tooltip: &quot;关闭此讯息&quot;});
+
+config.messages.backstage = {
+	open: {text: &quot;控制台&quot;, tooltip: &quot;开启控制台执行编写工作&quot;},
+	close: {text: &quot;关闭&quot;, tooltip: &quot;关闭控制台&quot;},
+	prompt: &quot;控制台：&quot;,
+	decal: {
+		edit: {text: &quot;编辑&quot;, tooltip: &quot;编辑 '%0'&quot;}
+	}
+};
+
+config.messages.listView = {
+	tiddlerTooltip: &quot;查看全文&quot;,
+	previewUnavailable: &quot;(无法预览)&quot;
+};
+
+config.messages.dates.months = [&quot;一月&quot;, &quot;二月&quot;, &quot;三月&quot;, &quot;四月&quot;, &quot;五月&quot;, &quot;六月&quot;, &quot;七月&quot;, &quot;八月&quot;, &quot;九月&quot;, &quot;十月&quot;, &quot;十一月&quot;, &quot;十二月&quot;];
+config.messages.dates.days = [&quot;日&quot;, &quot;一&quot;,&quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;];
+config.messages.dates.shortMonths = [&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;];
+config.messages.dates.shortDays = [&quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;];
+// suffixes for dates, eg &quot;1st&quot;,&quot;2nd&quot;,&quot;3rd&quot;...&quot;30th&quot;,&quot;31st&quot;
+config.messages.dates.daySuffixes = [&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,
+		&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,
+		&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,
+		&quot;st&quot;];
+config.messages.dates.am = &quot;上午&quot;;
+config.messages.dates.pm = &quot;下午&quot;;
+
+merge(config.messages.tiddlerPopup,{ 
+	});
+
+merge(config.views.wikified.tag,{
+	labelNoTags: &quot;未设标签&quot;,
+	labelTags: &quot;标签: &quot;,
+	openTag: &quot;开启标签 '%0'&quot;,
+	tooltip: &quot;显示标签为 '%0' 的文章&quot;,
+	openAllText: &quot;开启以下所有文章&quot;,
+	openAllTooltip: &quot;开启以下所有文章&quot;,
+	popupNone: &quot;仅此文标签为 '%0'&quot;});
+
+merge(config.views.wikified,{
+	defaultText: &quot;&quot;,
+	defaultModifier: &quot;(未完成)&quot;,
+	shadowModifier: &quot;(默认)&quot;,
+	dateFormat: &quot;YYYY年0MM月0DD日&quot;,
+	createdPrompt: &quot;创建于&quot;});
+
+merge(config.views.editor,{
+	tagPrompt: &quot;设置标签之间以空白区隔，[[标签含空白时请使用双中括弧]]，或点选现有之标签加入&quot;,
+	defaultText: &quot;&quot;});
+
+merge(config.views.editor.tagChooser,{
+	text: &quot;标签&quot;,
+	tooltip: &quot;点选现有之标签加至本文章&quot;,
+	popupNone: &quot;未设置标签&quot;,
+	tagTooltip: &quot;加入标签 '%0'&quot;});
+
+	merge(config.messages,{
+	sizeTemplates:
+		[
+		{unit: 1024*1024*1024, template: &quot;%0\u00a0GB&quot;},
+		{unit: 1024*1024, template: &quot;%0\u00a0MB&quot;},
+		{unit: 1024, template: &quot;%0\u00a0KB&quot;},
+		{unit: 1, template: &quot;%0\u00a0B&quot;}
+		]});
+
+merge(config.macros.search,{
+	label: &quot; 寻找&quot;,
+	prompt: &quot;搜寻本 Wiki&quot;,
+	accessKey: &quot;F&quot;,
+	successMsg: &quot; %0 篇符合条件: %1&quot;,
+	failureMsg: &quot; 无符合条件: %0&quot;});
+
+merge(config.macros.tagging,{
+	label: &quot;引用标签:&quot;,
+	labelNotTag: &quot;无引用标签&quot;,
+	tooltip: &quot;列出标签为 '%0' 的文章&quot;});
+
+merge(config.macros.timeline,{
+	dateFormat: &quot;YYYY年0MM月0DD日&quot;});
+
+merge(config.macros.allTags,{
+	tooltip: &quot;显示文章- 标签为'%0'&quot;,
+	noTags: &quot;没有标签&quot;});
+
+config.macros.list.all.prompt = &quot;依字母排序&quot;;
+config.macros.list.missing.prompt = &quot;被引用且内容空白的文章&quot;;
+config.macros.list.orphans.prompt = &quot;未被引用的文章&quot;;
+config.macros.list.shadowed.prompt = &quot;这些隐藏的文章已定义默认内容&quot;;
+config.macros.list.touched.prompt = &quot;自下载或添加后被修改过的文章&quot;; 
+
+merge(config.macros.closeAll,{
+	label: &quot;全部关闭&quot;,
+	prompt: &quot;关闭所有开启中的 tiddler (编辑中除外)&quot;});
+
+merge(config.macros.permaview,{
+	label: &quot;永久链接&quot;,
+	prompt: &quot;可存取现有开启之文章的链接位址&quot;});
+
+merge(config.macros.saveChanges,{
+	label: &quot;保存变更&quot;,
+	prompt: &quot;保存所有文章，产生新的版本&quot;,
+	accessKey: &quot;S&quot;});
+
+merge(config.macros.newTiddler,{
+	label: &quot;创建文章&quot;,
+	prompt: &quot;创建 tiddler&quot;,
+	title: &quot;创建文章&quot;,
+	accessKey: &quot;N&quot;});
+
+merge(config.macros.newJournal,{
+	label: &quot;创建日志&quot;,
+	prompt: &quot;创建 jounal&quot;,
+	accessKey: &quot;J&quot;});
+
+merge(config.macros.options,{
+	wizardTitle: &quot;增订的进阶选项&quot;,
+	step1Title: &quot;增订的选项保存于浏览器的 cookies&quot;,
+	step1Html: &quot;&lt;input type='hidden' name='markList'&gt;&lt;/input&gt;&lt;br&gt;&lt;input type='checkbox' checked='false' name='chkUnknown'&gt;显示未知选项&lt;/input&gt;&quot;,
+	unknownDescription: &quot;//(未知)//&quot;,
+	listViewTemplate: {
+		columns: [
+			{name: 'Option', field: 'option', title: &quot;选项&quot;, type: 'String'},
+			{name: 'Description', field: 'description', title: &quot;说明&quot;, type: 'WikiText'},
+			{name: 'Name', field: 'name', title: &quot;名称&quot;, type: 'String'}
+			],
+		rowClasses: [
+			{className: 'lowlight', field: 'lowlight'}
+			]}
+	});
+
+merge(config.macros.plugins,{
+	wizardTitle: &quot;插件管理&quot;,
+	step1Title: &quot;- 已载入之插件&quot;,
+	step1Html: &quot;&lt;input type='hidden' name='markList'&gt;&lt;/input&gt;&quot;, // DO NOT TRANSLATE
+	skippedText: &quot;(此插件因刚加入，故尚未执行)&quot;,
+	noPluginText: &quot;未安装插件&quot;,
+	confirmDeleteText: &quot;确认是否删除此文章:\n\n%0&quot;,
+	removeLabel: &quot;移除 'systemConfig' 标签&quot;,
+	removePrompt: &quot;移除 'systemConfig' 标签&quot;,
+	deleteLabel: &quot;删除&quot;,
+	deletePrompt: &quot;永远删除所选插件&quot;,
+	listViewTemplate : {
+		columns: [
+			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
+			{name: 'Tiddler', field: 'tiddler', title: &quot;套件&quot;, type: 'Tiddler'},
+			{name: 'Size', field: 'size', tiddlerLink: 'size', title: &quot;大小&quot;, type: 'Size'},
+			{name: 'Forced', field: 'forced', title: &quot;强制执行&quot;, tag: 'systemConfigDisable', type: 'TagCheckbox'},
+			{name: 'Disabled', field: 'disabled', title: &quot;停用&quot;, tag: 'systemConfigDisable', type: 'TagCheckbox'},
+			{name: 'Executed', field: 'executed', title: &quot;已载入&quot;, type: 'Boolean', trueText: &quot;是&quot;, falseText: &quot;否&quot;},
+			{name: 'Startup Time', field: 'startupTime', title: &quot;载入时间&quot;, type: 'String'},
+			{name: 'Error', field: 'error', title: &quot;载入状态&quot;, type: 'Boolean', trueText: &quot;错误&quot;, falseText: &quot;正常&quot;},
+			{name: 'Log', field: 'log', title: &quot;记录&quot;, type: 'StringList'}
+			],
+		rowClasses: [
+			{className: 'error', field: 'error'},
+			{className: 'warning', field: 'warning'}
+			]}
+	});
+
+merge(config.macros.toolbar,{
+	moreLabel: &quot;其他&quot;,
+	morePrompt: &quot;显示更多工具命令&quot;});
+
+merge(config.macros.refreshDisplay,{
+	label: &quot;刷新&quot;,
+	prompt: &quot;刷新此 TiddlyWiki 显示&quot;
+	});
+
+merge(config.macros.importTiddlers,{
+	readOnlyWarning: &quot;TiddlyWiki 于唯读模式下，不支援导入文章。请由本机（file://）开启 TiddlyWiki 文件&quot;,
+	wizardTitle: &quot;自其他文件服务器导入文章&quot;,
+	wizardTitle: &quot;自其他档案或服务器汇入文章&quot;,
+	step1Title: &quot;步骤一：指定服务器或来源文件&quot;,
+	step1Html: &quot;指定服务器类型：&lt;select name='selTypes'&gt;&lt;option value=''&gt;选取...&lt;/option&gt;&lt;/select&gt;&lt;br&gt;请输入网址或路径：&lt;input type='text' size=50 name='txtPath'&gt;&lt;br&gt;...或选择来源文件：&lt;input type='file' size=50 name='txtBrowse'&gt;&lt;br&gt;&lt;hr&gt;...或选择指定的馈入来源：&lt;select name='selFeeds'&gt;&lt;option value=''&gt;选取...&lt;/option&gt;&lt;/select&gt;&quot;,
+	openLabel: &quot;开启&quot;,
+	openPrompt: &quot;开启文件或&quot;,
+	openError: &quot;读取来源文件时发生错误&quot;,
+	statusOpenHost: &quot;正与服务器建立连线&quot;,
+	statusGetWorkspaceList: &quot;正在取得可用之文章清单&quot;,
+	step2Title: &quot;步骤二：选择工作区&quot;,
+	step2Html: &quot;输入工作区名称：&lt;input type='text' size=50 name='txtWorkspace'&gt;&lt;br&gt;...或选择工作区：&lt;select name='selWorkspace'&gt;&lt;option value=''&gt;选取...&lt;/option&gt;&lt;/select&gt;&quot;,
+	cancelLabel: &quot;取消&quot;,
+	cancelPrompt: &quot;取消本次导入动作&quot;,
+	statusOpenWorkspace: &quot;正在开启工作区&quot;,
+	statusGetTiddlerList: &quot;正在取得可用之文章清单&quot;,
+	step3Title: &quot;步骤三：选择欲导入之文章&quot;,
+	step3Html: &quot;&lt;input type='hidden' name='markList'&gt;&lt;/input&gt;&lt;br&gt;&lt;input type='checkbox' checked='true' name='chkSync'&gt;保持这些文章与伺服器连结，便于同步后续的变更。&lt;/input&gt;&lt;br&gt;&lt;input type='checkbox' name='chkSave'&gt;保存此服务器的详细资讯于标签为 'systemServer' 的文章名为：&lt;/input&gt; &lt;input type='text' size=25 name='txtSaveTiddler'&gt;&quot;, 
+	importLabel: &quot;导入&quot;,
+	importPrompt: &quot;导入所选文章&quot;,
+	confirmOverwriteText: &quot;确定要覆写这些文章：\n\n%0&quot;,
+	step4Title: &quot;步骤四：正在导入%0 篇文章&quot;,
+	step4Html: &quot;&lt;input type='hidden' name='markReport'&gt;&lt;/input&gt;&quot;, // DO NOT TRANSLATE
+	doneLabel: &quot;完成&quot;,
+	donePrompt: &quot;关闭&quot;,
+	statusDoingImport: &quot;正在导入文章 ...&quot;,
+	statusDoneImport: &quot;所选文章已导入&quot;,
+	systemServerNamePattern: &quot;%2 位于 %1&quot;,
+	systemServerNamePatternNoWorkspace: &quot;%1&quot;,
+	confirmOverwriteSaveTiddler: &quot;此 tiddler '%0' 已经存在。点击“确定”以服务器上料覆写之，或“取消”不变更后离开&quot;,
+	serverSaveTemplate: &quot;|''Type:''|%0|\n|''网址：''|%1|\n|''工作区：''|%2|\n\n此文为自动产生纪录伺服器之相关资讯。&quot;,
+	serverSaveModifier: &quot;（系统）&quot;,
+	listViewTemplate: {
+		columns: [
+			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
+			{name: 'Tiddler', field: 'tiddler', title: &quot;文章&quot;, type: 'Tiddler'},
+			{name: 'Size', field: 'size', tiddlerLink: 'size', title: &quot;大小&quot;, type: 'Size'},
+			{name: 'Tags', field: 'tags', title: &quot;标签&quot;, type: 'Tags'}
+			],
+		rowClasses: [
+			]}
+	});
+
+merge(config.macros.sync,{
+	listViewTemplate: {
+		columns: [
+			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},
+			{name: 'Tiddler', field: 'tiddler', title: &quot;文章&quot;, type: 'Tiddler'},
+			{name: 'Server Type', field: 'serverType', title: &quot;服务器类型&quot;, type: 'String'},
+			{name: 'Server Host', field: 'serverHost', title: &quot;服务器主机&quot;, type: 'String'},
+			{name: 'Server Workspace', field: 'serverWorkspace', title: &quot;服务器工作区&quot;, type: 'String'},
+			{name: 'Status', field: 'status', title: &quot;同步情形&quot;, type: 'String'},
+			{name: 'Server URL', field: 'serverUrl', title: &quot;服务器网址&quot;, text: &quot;View&quot;, type: 'Link'}
+			],
+		rowClasses: [
+			],
+		buttons: [
+			{caption: &quot;同步更新这些文章&quot;, name: 'sync'}
+			]},
+	wizardTitle: &quot;将你的资料内容与外部服务器与文件同步&quot;,
+	step1Title: &quot;选择欲同步的文章&quot;,
+	step1Html: '&lt;input type=&quot;hidden&quot; name=&quot;markList&quot;&gt;&lt;/input&gt;',
+	syncLabel: &quot;同步&quot;,
+	syncPrompt: &quot;同步更新这些文章&quot;,
+	hasChanged: &quot;已更动&quot;,
+	hasNotChanged: &quot;未更动&quot;,
+	syncStatusList: {
+		none: {text: &quot;...&quot;, color: 'none'},
+		changedServer: {text: &quot;服务器资料已更动&quot;, color: '#80ff80'},
+		changedLocally: {text: &quot;本机资料已更动&quot;, color: '#80ff80'},
+		changedBoth: {text: &quot;已同时更新本机与服务器上的资料&quot;, color: '#ff8080'},
+		notFound: {text: &quot;服务器无此资料&quot;, color: 'ffff80'},
+		putToServer: {text: &quot;已储存更新资料至服务器&quot;, color: '#ff80ff'},
+		gotFromServer: {text: &quot;已从服务器撷取更新资料&quot;, color: '#80ffff'}
+		}
+	});
+
+merge(config.macros.annotations,{
+	});
+
+merge(config.commands.closeTiddler,{
+	text: &quot;关闭&quot;,
+	tooltip: &quot;关闭本文&quot;});
+
+merge(config.commands.closeOthers,{
+	text: &quot;关闭其他&quot;,
+	tooltip: &quot;关闭其他文章&quot;});
+
+merge(config.commands.editTiddler,{
+	text: &quot;编辑&quot;,
+	tooltip: &quot;编辑本文&quot;,
+	readOnlyText: &quot;查阅&quot;,
+	readOnlyTooltip: &quot;查阅本文之原始内容&quot;});
+
+merge(config.commands.saveTiddler,{
+	text: &quot;完成&quot;,
+	tooltip: &quot;确定修改&quot;});
+
+merge(config.commands.cancelTiddler,{
+	text: &quot;取消&quot;,
+	tooltip: &quot;取消修改&quot;,
+	warning: &quot;确定取消对 '%0' 的修改吗?&quot;,
+	readOnlyText: &quot;完成&quot;,
+	readOnlyTooltip: &quot;返回正常显示模式&quot;});
+
+merge(config.commands.deleteTiddler,{
+	text: &quot;删除&quot;,
+	tooltip: &quot;删除文章&quot;,
+	warning: &quot;确定删除 '%0'?&quot;});
+
+merge(config.commands.permalink,{
+	text: &quot;永久链接&quot;,
+	tooltip: &quot;本文永久链接&quot;});
+
+merge(config.commands.references,{
+	text: &quot;引用&quot;,
+	tooltip: &quot;引用本文的文章&quot;,
+	popupNone: &quot;本文未被引用&quot;});
+
+merge(config.commands.jump,{
+	text: &quot;跳转&quot;,
+	tooltip: &quot;跳转至其他已开启的文章&quot;});
+
+merge(config.commands.syncing,{
+	text: &quot;同步&quot;,
+	tooltip: &quot;本文章与服务器或其他外部文件的同步资讯&quot;,
+	currentlySyncing: &quot;&lt;div&gt;同步类型：&lt;span class='popupHighlight'&gt;'%0'&lt;/span&gt;&lt;/&quot;+&quot;div&gt;&lt;div&gt;与服务器：&lt;span class='popupHighlight'&gt;%1 同步&lt;/span&gt;&lt;/&quot;+&quot;div&gt;&lt;div&gt;工作区：&lt;span class='popupHighlight'&gt;%2&lt;/span&gt;&lt;/&quot;+&quot;div&gt;&quot;, // Note escaping of closing &lt;div&gt; tag
+	notCurrentlySyncing: &quot;无进行中的同步动作&quot;,
+	captionUnSync: &quot;停止同步此文章&quot;,
+	chooseServer: &quot;与其他服务器同步此文章:&quot;,
+	currServerMarker: &quot;\u25cf &quot;,
+	notCurrServerMarker: &quot;  &quot;});
+
+merge(config.commands.fields,{
+	text: &quot;栏位&quot;,
+	tooltip: &quot;显示此文章的扩充资讯&quot;,
+	emptyText: &quot;此文章没有扩充栏位&quot;,
+	listViewTemplate: {
+		columns: [
+			{name: 'Field', field: 'field', title: &quot;扩充栏位&quot;, type: 'String'},
+			{name: 'Value', field: 'value', title: &quot;内容&quot;, type: 'String'}
+			],
+		rowClasses: [
+			],
+		buttons: [
+			]}});
+
+merge(config.shadowTiddlers,{
+	DefaultTiddlers: &quot;GettingStarted&quot;,
+	GettingStarted: &quot;使用此 TiddlyWiki 的空白范本之前，请先修改以下默认文章：\n* SiteTitle 及 SiteSubtitle：网站的标题和副标题，显示于页面上方&lt;br /&gt;（在保存变更后，将显示于浏览器视窗的标题列）。\n* MainMenu：主菜单（通常在页面左侧）。\n* DefaultTiddlers：包含一些文章的标题，可于进入TiddlyWiki 后开启。\n请输入您的大名，作为所创建/ 编辑文章的署名：&lt;&lt;option txtUserName&gt;&gt;&quot;,
+	MainMenu: &quot;[[使用说明|GettingStarted]]\n\n\n^^~TiddlyWiki 版本：&lt;&lt;version&gt;&gt;\n© 2007 [[UnaMesa|http://www.unamesa.org/]]^^&quot;,
+	OptionsPanel: &quot;这些设置将缓存于浏览器\n请签名&lt;&lt;option txtUserName&gt;&gt;\n(范例：WikiWord)\n\n&lt;&lt;option chkSaveBackups&gt;&gt; 保存备份\n&lt;&lt;option chkAutoSave&gt;&gt; 自动保存\n&lt;&lt;option chkRegExpSearch&gt;&gt; 正规式搜寻\n&lt;&lt;option chkCaseSensitiveSearch&gt;&gt; 区分大小写搜寻\n&lt;&lt;option chkAnimate&gt;&gt; 使用动画显示\n----\n[[进阶选项|AdvancedOptions]]&quot;,
+	SiteTitle: &quot;我的 TiddlyWiki&quot;,
+	SiteSubtitle: &quot;一个可重复使用的个人网页式笔记本&quot;,
+	SiteUrl: 'http://www.tiddlywiki.com/',
+	SideBarOptions: '&lt;&lt;search&gt;&gt;&lt;&lt;closeAll&gt;&gt;&lt;&lt;permaview&gt;&gt;&lt;&lt;newTiddler&gt;&gt;&lt;&lt;newJournal &quot; YYYY年0MM月0DD日&quot;&gt;&gt;&lt;&lt;saveChanges&gt;&gt;&lt;&lt;slider chkSliderOptionsPanel OptionsPanel  &quot;偏好设置 »&quot; &quot;变更 TiddlyWiki 选项&quot;&gt;&gt;',
+	SideBarTabs: '&lt;&lt;tabs txtMainTab &quot;最近更新&quot; &quot;依更新日期排序&quot; TabTimeline &quot;全部&quot; &quot;所有文章&quot; TabAll &quot;分类&quot; &quot;所有标签&quot; TabTags &quot;更多&quot; &quot;其他&quot; TabMore&gt;&gt;',
+	StyleSheet: '[[StyleSheetLocale]]',
+	TabMore: '&lt;&lt;tabs txtMoreTab &quot;未完成&quot; &quot;内容空白的文章&quot; TabMoreMissing &quot;未引用&quot; &quot;未被引用的文章&quot; TabMoreOrphans &quot;默认文章&quot; &quot;默认的影子文章&quot; TabMoreShadowed&gt;&gt;'});
+
+merge(config.annotations,{
+	AdvancedOptions: &quot;此默认文章可以存取一些进阶选项。&quot;,
+	ColorPalette: &quot;此默认文章里的设定值，将决定 ~TiddlyWiki 使用者介面的配色。&quot;,
+	DefaultTiddlers: &quot;当 ~TiddlyWiki 在浏览器中开启时，此默认文章里列出的文章，将被自动显示。&quot;,
+	EditTemplate: &quot;此默认文章里的 HTML template 将决定文章进入编辑模式时的显示版面。&quot;,
+	GettingStarted: &quot;此默认文章提供基本的使用说明。&quot;,
+	ImportTiddlers: &quot;此默认文章提供存取导入中的文章。&quot;,
+	MainMenu: &quot;此默认文章的内容，为于萤幕左侧主菜单的内容&quot;,
+	MarkupPreHead: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;head&gt; 段落的起始&quot;,
+	MarkupPostHead: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;head&gt; 段落的最后&quot;,
+	MarkupPreBody: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;body&gt; 段落的起始&quot;,
+	MarkupPostBody: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;body&gt; 段落的最后，于 script 区块之前&quot;,
+	OptionsPanel: &quot;此默认文章的内容，为于萤幕右侧副菜单中的选项面板里的内容&quot;,
+	PageTemplate: &quot;此默认文章里的 HTML template 决定的 ~TiddlyWiki 主要的版面配置&quot;,
+	PluginManager: &quot;此默认文章提供存取套件管理员&quot;,
+	SideBarOptions: &quot;此默认文章的内容，为于萤幕右侧副菜单中选项面板里的内容&quot;,
+	SideBarTabs: &quot;此默认文章的内容，为于萤幕右侧副菜单中的页签面板里的内容&quot;,
+	SiteSubtitle: &quot;此默认文章的内容为页面的副标题&quot;,
+	SiteTitle: &quot;此默认文章的内容为页面的主标题&quot;,
+	SiteUrl: &quot;此默认文章的内容须设定为文件发布时的完整网址&quot;,
+	StyleSheetColours: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的配色&quot;,
+	StyleSheet: &quot;此默认文章内容可包含 CSS 规则&quot;,
+	StyleSheetLayout: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的版面配置&quot;,
+	StyleSheetLocale: &quot;此默认文章内含的 CSS 规则，可依翻译语系做适当调整&quot;,
+	StyleSheetPrint: &quot;此默认文章内含的 CSS 规则，用于列印时的样式&quot;,
+	TabAll: &quot;此默认文章的内容，为于萤幕右侧的“全部”页签的内容&quot;,
+	TabMore: &quot;此默认文章的内容，为于萤幕右侧的“更多”页签的内容&quot;,
+	TabMoreMissing: &quot;此默认文章的内容，为于萤幕右侧的“未完成”页签的内容&quot;,
+	TabMoreOrphans: &quot;此默认文章的内容，为于萤幕右侧的“未引用”页签的内容&quot;,
+	TabMoreShadowed: &quot;此默认文章的内容，为于萤幕右侧的“默认文章”页签的内容&quot;,
+	TabTags: &quot;此默认文章的内容，为于萤幕右侧的“分类”页签的内容&quot;,
+	TabTimeline: &quot;此默认文章的内容，为于萤幕右侧的“最近更新”页签的内容&quot;,
+	ViewTemplate: &quot;此默认文章里的 HTML template 决定文章显示的样子&quot;
+	});
+//}}}</pre>
+</div>
 </div>
 <!--POST-STOREAREA-->
 <!--POST-BODY-START-->
@@ -563,7 +1026,7 @@ config.options = {
 	txtFileSystemCharSet: "UTF-8"
 	};
 config.optionsDesc = {};
-	
+
 // List of notification functions to be called when certain tiddlers are changed or deleted
 config.notifyTiddlers = [
 	{name: "StyleSheetLayout", notify: refreshStyles},
@@ -702,7 +1165,7 @@ config.textPrimitives.cssLookaheadRegExp = new RegExp(config.textPrimitives.cssL
 config.textPrimitives.brackettedLink = "\\[\\[([^\\]]+)\\]\\]";
 config.textPrimitives.titledBrackettedLink = "\\[\\[([^\\[\\]\\|]+)\\|([^\\[\\]\\|]+)\\]\\]";
 config.textPrimitives.tiddlerForcedLinkRegExp = new RegExp("(?:" + config.textPrimitives.titledBrackettedLink + ")|(?:" +
-	config.textPrimitives.brackettedLink + ")|(?:" + 
+	config.textPrimitives.brackettedLink + ")|(?:" +
 	config.textPrimitives.urlPattern + ")","mg");
 config.textPrimitives.tiddlerAnyLinkRegExp = new RegExp("("+ config.textPrimitives.wikiLink + ")|(?:" +
 	config.textPrimitives.titledBrackettedLink + ")|(?:" +
@@ -712,7 +1175,7 @@ config.textPrimitives.tiddlerAnyLinkRegExp = new RegExp("("+ config.textPrimitiv
 config.glyphs = {
 	browsers: [
 		function() {return config.browser.isIE;},
-		function() {return true}
+		function() {return true;}
 	],
 	currBrowser: null,
 	codes: {
@@ -950,7 +1413,7 @@ merge(config.macros.options,{
 			{name: 'Name', field: 'name', title: "Name", type: 'String'}
 			],
 		rowClasses: [
-			{className: 'lowlight', field: 'lowlight'} 
+			{className: 'lowlight', field: 'lowlight'}
 			]}
 	});
 
@@ -1303,9 +1766,10 @@ function loadPlugins()
 		var p = getPluginInfo(tiddlers[i]);
 		installedPlugins[i] = p;
 		var n = p.Name;
-		if(n) 
+		if(n)
 			map[n] = p;
-		if(n = p.Source) 
+		n = p.Source;
+		if(n)
 			map[n] = p;
 	}
 	var visit = function(p) {
@@ -1320,8 +1784,8 @@ function loadPlugins()
 		}
 		toLoad.push(p);
 	};
-	for(i=0; i<nPlugins; i++) 
-		visit(installedPlugins[i]);	
+	for(i=0; i<nPlugins; i++)
+		visit(installedPlugins[i]);
 	for(i=0; i<toLoad.length; i++) {
 		p = toLoad[i];
 		pluginInfo = p;
@@ -1338,7 +1802,7 @@ function loadPlugins()
 					p.log.push(config.messages.pluginError.format([exceptionText(ex)]));
 					p.error = true;
 				}
-				pluginInfo.startupTime = String((new Date()) - startTime) + "ms"; 
+				pluginInfo.startupTime = String((new Date()) - startTime) + "ms";
 			} else {
 				nPlugins--;
 			}
@@ -1517,7 +1981,7 @@ config.formatterHelpers = {
 	{
 		w.subWikifyTerm(createTiddlyElement(w.output,this.element),this.termRegExp);
 	},
-	
+
 	inlineCssHelper: function(w)
 	{
 		var styles = [];
@@ -1721,7 +2185,7 @@ config.formatters = [
 	{
 		var stack = [w.output];
 		var currLevel = 0, currType = null;
-		var listLevel, listType, itemType;
+		var listLevel, listType, itemType, baseType;
 		w.nextMatch = w.matchStart;
 		this.lookaheadRegExp.lastIndex = w.nextMatch;
 		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
@@ -1739,6 +2203,8 @@ config.formatters = [
 				listType = "dl";
 				itemType = "dd";
 			}
+			if (!baseType)
+			   baseType = listType;
 			listLevel = lookaheadMatch[0].length;
 			w.nextMatch += lookaheadMatch[0].length;
 			var t;
@@ -1747,6 +2213,9 @@ config.formatters = [
 					var target = (currLevel == 0) ? stack[stack.length-1] : stack[stack.length-1].lastChild;
 					stack.push(createTiddlyElement(target,listType));
 				}
+			} else if (listType!=baseType && listLevel==1) {
+				w.nextMatch -= lookaheadMatch[0].length;
+				return;
 			} else if(listLevel < currLevel) {
 				for(t=currLevel; t>listLevel; t--)
 					stack.pop();
@@ -1861,7 +2330,7 @@ config.formatters = [
 	name: "wikifyCommentForTemplate",
 	match: "^<!---\\n",
 	termRegExp: /(^--->\n)/mg,
-	handler: function(w) 
+	handler: function(w)
 	{
 		w.subWikifyTerm(w.output,this.termRegExp);
 	}
@@ -2154,13 +2623,14 @@ function getParser(tiddler,format)
 	if(tiddler) {
 		if(!format)
 			format = tiddler.fields["wikiformat"];
+		var i;
 		if(format) {
-			for(var i in config.parsers) {
+			for(i in config.parsers) {
 				if(format == config.parsers[i].format)
 					return config.parsers[i];
 			}
 		} else {
-			for(var i in config.parsers) {
+			for(i in config.parsers) {
 				if(tiddler.isTagged(config.parsers[i].formatTag))
 					return config.parsers[i];
 			}
@@ -2486,9 +2956,9 @@ config.macros.search.onClick = function(e)
 	return false;
 };
 
-config.macros.search.onKeyPress = function(e)
+config.macros.search.onKeyPress = function(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	switch(e.keyCode) {
 		case 13: // Ctrl-Enter
 		case 10: // Ctrl-Enter on IE PC
@@ -2548,7 +3018,7 @@ config.macros.tiddler.handler = function(place,macroName,params,wikifier,paramSt
 	}
 };
 
-config.macros.tiddler.renderText = function(place,text,tiddlerName,params) 
+config.macros.tiddler.renderText = function(place,text,tiddlerName,params)
 {
 	wikify(text,place,null,store.getTiddler(tiddlerName));
 };
@@ -2631,9 +3101,9 @@ config.macros.saveChanges.onClick = function(e)
 	return false;
 };
 
-config.macros.slider.onClickSlider = function(e)
+config.macros.slider.onClickSlider = function(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	var n = this.nextSibling;
 	var cookie = n.getAttribute("cookie");
 	var isOpen = n.style.display != "none";
@@ -2648,11 +3118,11 @@ config.macros.slider.onClickSlider = function(e)
 
 config.macros.slider.createSlider = function(place,cookie,title,tooltip)
 {
-	var cookie = cookie ? cookie : "";
+	var c = cookie ? cookie : "";
 	var btn = createTiddlyButton(place,title,tooltip,this.onClickSlider);
 	var panel = createTiddlyElement(null,"div",null,"sliderPanel");
-	panel.setAttribute("cookie",cookie);
-	panel.style.display = config.options[cookie] ? "block" : "none";
+	panel.setAttribute("cookie",c);
+	panel.style.display = config.options[c] ? "block" : "none";
 	place.appendChild(panel);
 	return panel;
 };
@@ -2762,7 +3232,7 @@ config.macros.options.handler = function(place,macroName,params,wikifier,paramSt
 };
 
 config.macros.options.refreshOptions = function(listWrapper,showUnknown)
-{	
+{
 	var opts = [];
 	for(var n in config.options) {
 		var opt = {};
@@ -2817,7 +3287,7 @@ config.macros.newTiddler.createNewTiddlerButton = function(place,title,params,la
 	if(customFields !== "")
 		btn.setAttribute("customFields",customFields);
 	var text = getParam(params,"text");
-	if(text !== undefined) 
+	if(text !== undefined)
 		btn.setAttribute("newText",text);
 	return btn;
 };
@@ -2872,8 +3342,9 @@ config.macros.sparkline.handler = function(place,macroName,params)
 	var data = [];
 	var min = 0;
 	var max = 0;
+	var v;
 	for(var t=0; t<params.length; t++) {
-		var v = parseInt(params[t]);
+		v = parseInt(params[t]);
 		if(v < min)
 			min = v;
 		if(v > max)
@@ -2896,7 +3367,7 @@ config.macros.sparkline.handler = function(place,macroName,params)
 		tick.src = "data:image/gif,GIF89a%01%00%01%00%91%FF%00%FF%FF%FF%00%00%00%C0%C0%C0%00%00%00!%F9%04%01%00%00%02%00%2C%00%00%00%00%01%00%01%00%40%02%02T%01%00%3B";
 		tick.style.left = d*2 + "px";
 		tick.style.width = "2px";
-		var v = Math.floor(((data[d] - min)/(max-min)) * h);
+		v = Math.floor(((data[d] - min)/(max-min)) * h);
 		tick.style.top = (h-v) + "px";
 		tick.style.height = v + "px";
 		box.appendChild(tick);
@@ -3038,14 +3509,15 @@ config.macros.edit.handler = function(place,macroName,params,wikifier,paramStrin
 	var rows = params[1];
 	if((tiddler instanceof Tiddler) && field) {
 		story.setDirty(tiddler.title,true);
+		var e,v;
 		if(field != "text" && !rows) {
-			var e = createTiddlyElement(null,"input");
+			e = createTiddlyElement(null,"input");
 			if(tiddler.isReadOnly())
 				e.setAttribute("readOnly","readOnly");
 			e.setAttribute("edit",field);
 			e.setAttribute("type","text");
-			var v = store.getValue(tiddler,field);
-			if(!v) 
+			v = store.getValue(tiddler,field);
+			if(!v)
 				v = "";
 			e.value = v;
 			e.setAttribute("size","40");
@@ -3054,14 +3526,14 @@ config.macros.edit.handler = function(place,macroName,params,wikifier,paramStrin
 		} else {
 			var wrapper1 = createTiddlyElement(null,"fieldset",null,"fieldsetFix");
 			var wrapper2 = createTiddlyElement(wrapper1,"div");
-			var e = createTiddlyElement(wrapper2,"textarea");
+			e = createTiddlyElement(wrapper2,"textarea");
 			if(tiddler.isReadOnly())
 				e.setAttribute("readOnly","readOnly");
-			var v = store.getValue(tiddler,field);
-			if(!v) 
+			v = store.getValue(tiddler,field);
+			if(!v)
 				v = "";
 			e.value = v;
-			var rows = rows ? rows : 10;
+			rows = rows ? rows : 10;
 			var lines = v.match(/\n/mg);
 			var maxLines = Math.max(parseInt(config.options.txtMaxEditRows),5);
 			if(lines != null && lines.length > rows)
@@ -3074,9 +3546,9 @@ config.macros.edit.handler = function(place,macroName,params,wikifier,paramStrin
 	}
 };
 
-config.macros.tagChooser.onClick = function(e)
+config.macros.tagChooser.onClick = function(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	var lingo = config.views.editor.tagChooser;
 	var popup = Popup.create(this);
 	var tags = store.getTags();
@@ -3093,9 +3565,9 @@ config.macros.tagChooser.onClick = function(e)
 	return false;
 };
 
-config.macros.tagChooser.onTagClick = function(e)
+config.macros.tagChooser.onTagClick = function(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	var tag = this.getAttribute("tag");
 	var title = this.getAttribute("tiddler");
 	if(!readOnly)
@@ -3167,18 +3639,18 @@ config.macros.toolbar.getCommandTooltip = function(command,tiddler)
 	return tiddler.isReadOnly() && command.readOnlyTooltip ? command.readOnlyTooltip : command.tooltip;
 };
 
-config.macros.toolbar.onClickCommand = function(e)
+config.macros.toolbar.onClickCommand = function(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	e.cancelBubble = true;
 	if (e.stopPropagation) e.stopPropagation();
 	var command = config.commands[this.getAttribute("commandName")];
 	return command.handler(e,this,this.getAttribute("tiddler"));
 };
 
-config.macros.toolbar.onClickPopup = function(e)
+config.macros.toolbar.onClickPopup = function(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	e.cancelBubble = true;
 	if (e.stopPropagation) e.stopPropagation();
 	var popup = Popup.create(this);
@@ -3205,7 +3677,7 @@ config.macros.toolbar.invokeCommand = function(place,theClass,event)
 	}
 };
 
-config.macros.toolbar.onClickMore = function(e)
+config.macros.toolbar.onClickMore = function(ev)
 {
 	var e = this.nextSibling;
 	e.style.display = "inline";
@@ -4308,19 +4780,20 @@ TiddlyWiki.prototype.forEachField = function(tiddler,callback,onlyExtendedFields
 	var t = this.resolveTiddler(tiddler);
 	if(!t)
 		return undefined;
-	for(var n in t.fields) {
-		var result = callback(t,n,t.fields[n]);
+	var n,result;
+	for(n in t.fields) {
+		result = callback(t,n,t.fields[n]);
 		if(result)
 			return result;
 		}
 	if(onlyExtendedFields)
 		return undefined;
-	for(var n in TiddlyWiki.standardFieldAccess) {
+	for(n in TiddlyWiki.standardFieldAccess) {
 		if(n == "tiddler")
 			// even though the "title" field can also be referenced through the name "tiddler"
 			// we only visit this field once.
 			continue;
-		var result = callback(t,n,TiddlyWiki.standardFieldAccess[n].get(t));
+		result = callback(t,n,TiddlyWiki.standardFieldAccess[n].get(t));
 		if(result)
 			return result;
 	}
@@ -4483,7 +4956,12 @@ Story.prototype.refreshTiddler = function(title,template,force,customFields,defa
 		var currTemplate = tiddlerElem.getAttribute("template");
 		if((template != currTemplate) || force) {
 			var tiddler = store.getTiddler(title);
-			if(!tiddler) {
+			if(tiddler) {
+				var f = tiddler.fields;
+				if(customFields)
+					f = merge(customFields.decodeHashMap(),f);
+				customFields = String.encodeHashMap(f);
+			} else {
 				tiddler = new Tiddler();
 				if(store.isShadowTiddler(title)) {
 					tiddler.set(title,store.getTiddlerText(title),config.views.wikified.shadowModifier,version.date,[],version.date);
@@ -4543,14 +5021,14 @@ Story.prototype.addCustomFields = function(place,customFields)
 	}
 };
 
-Story.prototype.refreshAllTiddlers = function() 
+Story.prototype.refreshAllTiddlers = function()
 {
 	var place = document.getElementById(this.container);
 	var e = place.firstChild;
 	if(!e)
 		return;
 	this.refreshTiddler(e.getAttribute("tiddler"),e.getAttribute("template"),true);
-	while((e = e.nextSibling) != null) 
+	while((e = e.nextSibling) != null)
 		this.refreshTiddler(e.getAttribute("tiddler"),e.getAttribute("template"),true);
 };
 
@@ -4566,9 +5044,9 @@ Story.prototype.onTiddlerMouseOut = function(e)
 		removeClass(this,"selected");
 };
 
-Story.prototype.onTiddlerDblClick = function(e)
+Story.prototype.onTiddlerDblClick = function(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	var theTarget = resolveTarget(e);
 	if(theTarget && theTarget.nodeName.toLowerCase() != "input" && theTarget.nodeName.toLowerCase() != "textarea") {
 		if(document.selection && document.selection.empty)
@@ -4582,18 +5060,18 @@ Story.prototype.onTiddlerDblClick = function(e)
 	}
 };
 
-Story.prototype.onTiddlerKeyPress = function(e)
+Story.prototype.onTiddlerKeyPress = function(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	clearMessage();
-	var consume = false; 
+	var consume = false;
 	var title = this.getAttribute("tiddler");
 	var target = resolveTarget(e);
 	switch(e.keyCode) {
 		case 9: // Tab
 			if(config.options.chkInsertTabs && target.tagName.toLowerCase() == "textarea") {
 				replaceSelection(target,String.fromCharCode(9));
-				consume = true; 
+				consume = true;
 			}
 			if(config.isOpera) {
 				target.onblur = function() {
@@ -4610,7 +5088,7 @@ Story.prototype.onTiddlerKeyPress = function(e)
 				config.macros.toolbar.invokeCommand(this,"defaultCommand",e);
 				consume = true;
 			}
-			break; 
+			break;
 		case 27: // Escape
 			blurElement(this);
 			config.macros.toolbar.invokeCommand(this,"cancelCommand",e);
@@ -4815,11 +5293,11 @@ Story.prototype.saveTiddler = function(title,minorUpdate)
 		if(!store.tiddlerExists(newTitle))
 			minorUpdate = false;
 		var newDate = new Date();
-		var extendedFields = store.tiddlerExists(newTitle) ? store.fetchTiddler(newTitle).fields : {};
+		var extendedFields = store.tiddlerExists(newTitle) ? store.fetchTiddler(newTitle).fields : (newTitle!=title && store.tiddlerExists(title) ? store.fetchTiddler(title).fields : {});
 		for(var n in fields) {
 			if(!TiddlyWiki.isStandardField(n))
 				extendedFields[n] = fields[n];
-			}
+		}
 		var tiddler = store.saveTiddler(title,newTitle,fields.text,minorUpdate ? undefined : config.options.txtUserName,minorUpdate ? undefined : newDate,fields.tags,extendedFields);
 		autoSaveChanges(null,[tiddler]);
 		return newTitle;
@@ -4893,11 +5371,11 @@ var backstage = {
 		else
 			this.hide();
 	},
-	
+
 	isVisible: function () {
 		return this.area ? this.area.style.display == "block" : false;
 	},
-	
+
 	show: function() {
 		this.area.style.display = "block";
 		if(anim && config.options.chkAnimate) {
@@ -4991,7 +5469,7 @@ var backstage = {
 		removeChildren(backstage.panelBody);
 		return backstage.panelBody;
 	},
-	
+
 	showPanel: function() {
 		backstage.panel.style.display = "block";
 		if(anim && config.options.chkAnimate) {
@@ -5005,7 +5483,7 @@ var backstage = {
 		}
 		return backstage.panelBody;
 	},
-	
+
 	hidePanel: function() {
 		backstage.currTabName = null;
 		backstage.currTabElem = null;
@@ -5331,7 +5809,7 @@ config.macros.importTiddlers.onGetTiddler = function(context,wizard)
 		store.setValue(tiddler.title,'server',null);
 	}
 	store.resumeNotifications();
-	if(!context.isSynchronous) 
+	if(!context.isSynchronous)
 		store.notify(tiddler.title,true);
 	var remainingImports = wizard.getValue("remainingImports")-1;
 	wizard.setValue("remainingImports",remainingImports);
@@ -5795,7 +6273,7 @@ config.refreshers = {
 		refreshTiddlyLink(e,title);
 		return true;
 		},
-	
+
 	tiddler: function(e,changeList)
 		{
 		var title = e.getAttribute("tiddler");
@@ -6817,8 +7295,10 @@ function onClickTiddlerLink(e)
 		noToggle = theLink.getAttribute("noToggle");
 		theLink = theLink.parentNode;
 	} while(title == null && theLink != null);
-	if(!fields && !store.isShadowTiddler(title))
-		fields = String.encodeHashMap(config.defaultCustomFields);
+	if(!store.isShadowTiddler(title)) {
+		var f = fields ? fields.decodeHashMap() : {};
+		fields = String.encodeHashMap(merge(f,config.defaultCustomFields,true));
+	}
 	if(title) {
 		var toggling = e.metaKey || e.ctrlKey;
 		if(config.options.chkToggleLinks)
@@ -6842,9 +7322,9 @@ function createTagButton(place,tag,excludeTiddler)
 }
 
 // Event handler for clicking on a tiddler tag
-function onClickTag(e)
+function onClickTag(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	var popup = Popup.create(this);
 	var tag = this.getAttribute("tag");
 	var title = this.getAttribute("tiddler");
@@ -6878,9 +7358,9 @@ function onClickTag(e)
 }
 
 // Event handler for 'open all' on a tiddler popup
-function onClickTagOpenAll(e)
+function onClickTagOpenAll(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	var tag = this.getAttribute("tag");
 	var tagged = store.getTaggedTiddlers(tag);
 	var titles = [];
@@ -6890,9 +7370,9 @@ function onClickTagOpenAll(e)
 	return false;
 }
 
-function onClickError(e)
+function onClickError(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	var popup = Popup.create(this);
 	var lines = this.getAttribute("errorText").split("\n");
 	for(var t=0; t<lines.length; t++)
@@ -6927,9 +7407,9 @@ function createTiddlyPopup(place,caption,tooltip,tiddler)
 	}
 }
 
-function onClickTiddlyPopup(e)
+function onClickTiddlyPopup(ev)
 {
-	if(!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	var tiddler = this.tiddler;
 	if(tiddler.text) {
 		var popup = Popup.create(this,"div","popupTiddler");
@@ -7192,9 +7672,9 @@ Popup.create = function(root,elem,theClass)
 	return popup;
 };
 
-Popup.onDocumentClick = function(e)
+Popup.onDocumentClick = function(ev)
 {
-	if (!e) var e = window.event;
+	var e = ev ? ev : window.event;
 	if(e.eventPhase == undefined)
 		Popup.remove();
 	else if(e.eventPhase == Event.BUBBLING_PHASE || e.eventPhase == Event.AT_TARGET)
@@ -7230,7 +7710,7 @@ Popup.place = function(root,popup,offset)
 	popup.style.left = popupLeft + "px";
 	popup.style.top = popupTop + "px";
 	popup.style.display = "block";
-}
+};
 
 Popup.remove = function()
 {
@@ -7866,7 +8346,7 @@ String.prototype.readBracketedList = function(unique)
 };
 
 // Returns array with start and end index of chunk between given start and end marker, or undefined.
-String.prototype.getChunkRange = function(start,end) 
+String.prototype.getChunkRange = function(start,end)
 {
 	var s = this.indexOf(start);
 	if(s != -1) {
@@ -7940,7 +8420,7 @@ String.zeroPad = function(n,d)
 	return s;
 };
 
-String.prototype.startsWith = function(prefix) 
+String.prototype.startsWith = function(prefix)
 {
 	return !prefix || this.substring(0,prefix.length) == prefix;
 };
@@ -7997,7 +8477,7 @@ Date.prototype.getWeek = function()
 	var d = dt.getDay();
 	if (d==0) d=7;// JavaScript Sun=0, ISO Sun=7
 	dt.setTime(dt.getTime()+(4-d)*86400000);// shift day to Thurs of same week to calculate weekNo
-	var n = Math.floor((dt.getTime()-new Date(dt.getFullYear(),0,1)+3600000)/86400000); 
+	var n = Math.floor((dt.getTime()-new Date(dt.getFullYear(),0,1)+3600000)/86400000);
 	return Math.floor(n/7)+1;
 };
 
@@ -8487,6 +8967,8 @@ function removeNode(e)
 // Remove any event handlers or non-primitve custom attributes
 function scrubNode(e)
 {
+	if(!config.browser.isIE)
+		return;
 	var att = e.attributes;
 	if(att) {
 		for(var t=0; t<att.length; t++) {
@@ -8569,7 +9051,7 @@ function replaceSelection(e,text)
 // Returns the text of the given (text) node, possibly merging subsequent text nodes
 function getNodeText(e)
 {
-	var t = ""; 
+	var t = "";
 	while(e && e.nodeName == "#text") {
 		t += e.nodeValue;
 		e = e.nextSibling;
