@@ -1,3 +1,5 @@
+prehead: ../../../tiddlers/MarkupPreHead.tiddler
+shadow: ../../../tiddlers/MarkupPreHead.tiddler
 shadow: ../../../tiddlers/ColorPalette.tiddler
 shadow: ../../../tiddlers/StyleSheetColors.tiddler
 shadow: ../../../tiddlers/StyleSheetLayout.tiddler
@@ -6,4 +8,5 @@ shadow: ../../../tiddlers/StyleSheetPrint.tiddler
 shadow: ../../../tiddlers/PageTemplate.tiddler
 shadow: ViewTemplate.tiddler
 shadow: ../../../tiddlers/EditTemplate.tiddler
+shadow: ../../../tiddlers/ImportTiddlers.tiddler
 shadow: DateFormat.tiddler

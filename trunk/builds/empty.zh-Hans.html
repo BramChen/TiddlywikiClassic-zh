@@ -3,7 +3,7 @@
 <head>
 <script type="text/javascript">
 //<![CDATA[
-var version = {title: "TiddlyWiki", major: 2, minor: 2, revision: 6, date: new Date("Oct 18, 2007"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 3, revision: 0, date: new Date("Dec 4, 2007"), extensions: {}};
 //]]>
 </script>
 <!--
@@ -36,8 +36,11 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <!--PRE-HEAD-START-->
+<!--{{{-->
+<link rel='alternate' type='application/rss+xml' title='RSS' href='index.xml'/>
+<!--}}}-->
 <!--PRE-HEAD-END-->
 <title>
 </title>
@@ -72,6 +75,11 @@ Welcome to TiddlyWiki created by Jeremy Ruston, Copyright &copy; 2007 UnaMesa As
 <div id="contentWrapper"></div>
 <div id="contentStash"></div>
 <div id="shadowArea">
+<div title="MarkupPreHead">
+<pre>&lt;!--{{{--&gt;
+&lt;link rel='alternate' type='application/rss+xml' title='RSS' href='index.xml'/&gt;
+&lt;!--}}}--&gt;</pre>
+</div>
 <div title="ColorPalette">
 <pre>Background: #fff
 Foreground: #000
@@ -396,21 +404,15 @@ table.listView th, table.listView td, table.listView tr {padding:0px 3px 0px 3px
 <div title="StyleSheetLocale">
 <pre>/***
 StyleSheet for use when a translation requires any css style changes.
-This StyleSheet can be used directly by languages such as Chinese, Japanese and Korean which use a logographic writing system and need larger font sizes.
+This StyleSheet can be used directly by languages such as Chinese, Japanese and Korean which need larger font sizes.
 ***/
-
 /*{{{*/
 body {font-size:0.8em;}
-
 #sidebarOptions {font-size:1.05em;}
 #sidebarOptions a {font-style:normal;}
 #sidebarOptions .sliderPanel {font-size:0.95em;}
-
 .subtitle {font-size:0.8em;}
-
 .viewer table.listView {font-size:0.95em;}
-
-.htmlarea .toolbarHA table {border:1px solid ButtonFace; margin:0em 0em;}
 /*}}}*/</pre>
 </div>
 <div title="StyleSheetPrint">
@@ -489,18 +491,21 @@ Your username for signing your edits. Write it as a WikiWord (eg JoeBloggs)
 ----
 Also see AdvancedOptions</pre>
 </div>
+<div title="ImportTiddlers">
+<pre>&lt;&lt;importTiddlers&gt;&gt;</pre>
+</div>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="locale.zh-Hans" modifier="BramChen" created="200611301200" modified="200708271200" tags="zh-Hans systemConfig excludeLists excludeSearch excludeMissing">
+<div title="locale.zh-Hans" modifier="BramChen" created="200611301200" modified="200712011200" tags="zh-Hans systemConfig excludeLists excludeSearch">
 <pre>/***
 |''Name:''|zh-HansTranslationPlugin|
 |''Description:''|Translation of TiddlyWiki into Simply Chinese|
 |''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hans/locale.zh-Hans.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''Version:''|2.2.5|
-|''Date:''|Aug 26, 2007|
+|''Version:''|2.2.6|
+|''Date:''|Dec 01, 2007|
 |''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.2.0|
@@ -605,9 +610,12 @@ config.messages.listView = {
 };
 
 config.messages.dates.months = [&quot;一月&quot;, &quot;二月&quot;, &quot;三月&quot;, &quot;四月&quot;, &quot;五月&quot;, &quot;六月&quot;, &quot;七月&quot;, &quot;八月&quot;, &quot;九月&quot;, &quot;十月&quot;, &quot;十一月&quot;, &quot;十二月&quot;];
-config.messages.dates.days = [&quot;日&quot;, &quot;一&quot;,&quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;];
-config.messages.dates.shortMonths = [&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;];
-config.messages.dates.shortDays = [&quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;];
+config.messages.dates.days = [&quot;周日&quot;, &quot;周一&quot;,&quot;周二&quot;, &quot;周三&quot;, &quot;周四&quot;, &quot;周五&quot;, &quot;周六&quot;];
+// config.messages.dates.shortMonths = [&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;];
+config.messages.dates.shortMonths = [&quot;一&quot;, &quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;, &quot;七&quot;, &quot;八&quot;, &quot;九&quot;, &quot;十&quot;, &quot;十一&quot;, &quot;十二&quot;];
+// config.messages.dates.shortDays = [&quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;];
+config.messages.dates.shortDays = [&quot;日&quot;, &quot;一&quot;,&quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;];
+
 // suffixes for dates, eg &quot;1st&quot;,&quot;2nd&quot;,&quot;3rd&quot;...&quot;30th&quot;,&quot;31st&quot;
 config.messages.dates.daySuffixes = [&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,
 		&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,
@@ -825,7 +833,7 @@ merge(config.macros.sync,{
 	hasChanged: &quot;已更动&quot;,
 	hasNotChanged: &quot;未更动&quot;,
 	syncStatusList: {
-		none: {text: &quot;...&quot;, color: 'none'},
+		none: {text: &quot;...&quot;, color: 'transparent'},
 		changedServer: {text: &quot;服务器资料已更动&quot;, color: '#80ff80'},
 		changedLocally: {text: &quot;本机资料已更动&quot;, color: '#80ff80'},
 		changedBoth: {text: &quot;已同时更新本机与服务器上的资料&quot;, color: '#ff8080'},
@@ -913,7 +921,7 @@ merge(config.shadowTiddlers,{
 	SiteTitle: &quot;我的 TiddlyWiki&quot;,
 	SiteSubtitle: &quot;一个可重复使用的个人网页式笔记本&quot;,
 	SiteUrl: 'http://www.tiddlywiki.com/',
-	SideBarOptions: '&lt;&lt;search&gt;&gt;&lt;&lt;closeAll&gt;&gt;&lt;&lt;permaview&gt;&gt;&lt;&lt;newTiddler&gt;&gt;&lt;&lt;newJournal &quot; YYYY年0MM月0DD日&quot;&gt;&gt;&lt;&lt;saveChanges&gt;&gt;&lt;&lt;slider chkSliderOptionsPanel OptionsPanel  &quot;偏好设置 »&quot; &quot;变更 TiddlyWiki 选项&quot;&gt;&gt;',
+	SideBarOptions: '&lt;&lt;search&gt;&gt;&lt;&lt;closeAll&gt;&gt;&lt;&lt;permaview&gt;&gt;&lt;&lt;newTiddler&gt;&gt;&lt;&lt;newJournal &quot; YYYY年0MM月0DD日&quot; &quot;日志&quot;&gt;&gt;&lt;&lt;saveChanges&gt;&gt;&lt;&lt;slider chkSliderOptionsPanel OptionsPanel  &quot;偏好设置 »&quot; &quot;变更 TiddlyWiki 选项&quot;&gt;&gt;',
 	SideBarTabs: '&lt;&lt;tabs txtMainTab &quot;最近更新&quot; &quot;依更新日期排序&quot; TabTimeline &quot;全部&quot; &quot;所有文章&quot; TabAll &quot;分类&quot; &quot;所有标签&quot; TabTags &quot;更多&quot; &quot;其他&quot; TabMore&gt;&gt;',
 	StyleSheet: '[[StyleSheetLocale]]',
 	TabMore: '&lt;&lt;tabs txtMoreTab &quot;未完成&quot; &quot;内容空白的文章&quot; TabMoreMissing &quot;未引用&quot; &quot;未被引用的文章&quot; TabMoreOrphans &quot;默认文章&quot; &quot;默认的影子文章&quot; TabMoreShadowed&gt;&gt;'});
@@ -938,9 +946,9 @@ merge(config.annotations,{
 	SiteSubtitle: &quot;此默认文章的内容为页面的副标题&quot;,
 	SiteTitle: &quot;此默认文章的内容为页面的主标题&quot;,
 	SiteUrl: &quot;此默认文章的内容须设定为文件发布时的完整网址&quot;,
-	StyleSheetColours: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的配色&quot;,
+	StyleSheetColors: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的配色。''勿修改此文''，請於 StyleSheet 中作增修。&quot;,
 	StyleSheet: &quot;此默认文章内容可包含 CSS 规则&quot;,
-	StyleSheetLayout: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的版面配置&quot;,
+	StyleSheetLayout: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的版面配置。''勿修改此文''，請於 StyleSheet 中作增修。&quot;,
 	StyleSheetLocale: &quot;此默认文章内含的 CSS 规则，可依翻译语系做适当调整&quot;,
 	StyleSheetPrint: &quot;此默认文章内含的 CSS 规则，用于列印时的样式&quot;,
 	TabAll: &quot;此默认文章的内容，为于屏幕右侧的“全部”页签的内容&quot;,
@@ -952,6 +960,313 @@ merge(config.annotations,{
 	TabTimeline: &quot;此默认文章的内容，为于屏幕右侧的“最近更新”页签的内容&quot;,
 	ViewTemplate: &quot;此默认文章里的 HTML template 决定文章显示的样子&quot;
 	});
+//}}}</pre>
+</div>
+<div title="SparklinePlugin" created="200710125045" tags="systemConfig excludeLists excludeSearch">
+<pre>/***
+|''Name:''|SparklinePlugin|
+|''Description:''|Sparklines macro|
+***/
+//{{{
+if(!version.extensions.SparklinePlugin) {
+version.extensions.SparklinePlugin = {installed:true};
+
+//--
+//-- Sparklines
+//--
+
+config.macros.sparkline = {};
+config.macros.sparkline.handler = function(place,macroName,params)
+{
+	var data = [];
+	var min = 0;
+	var max = 0;
+	var v;
+	for(var t=0; t&lt;params.length; t++) {
+		v = parseInt(params[t]);
+		if(v &lt; min)
+			min = v;
+		if(v &gt; max)
+			max = v;
+		data.push(v);
+	}
+	if(data.length &lt; 1)
+		return;
+	var box = createTiddlyElement(place,&quot;span&quot;,null,&quot;sparkline&quot;,String.fromCharCode(160));
+	box.title = data.join(&quot;,&quot;);
+	var w = box.offsetWidth;
+	var h = box.offsetHeight;
+	box.style.paddingRight = (data.length * 2 - w) + &quot;px&quot;;
+	box.style.position = &quot;relative&quot;;
+	for(var d=0; d&lt;data.length; d++) {
+		var tick = document.createElement(&quot;img&quot;);
+		tick.border = 0;
+		tick.className = &quot;sparktick&quot;;
+		tick.style.position = &quot;absolute&quot;;
+		tick.src = &quot;data:image/gif,GIF89a%01%00%01%00%91%FF%00%FF%FF%FF%00%00%00%C0%C0%C0%00%00%00!%F9%04%01%00%00%02%00%2C%00%00%00%00%01%00%01%00%40%02%02T%01%00%3B&quot;;
+		tick.style.left = d*2 + &quot;px&quot;;
+		tick.style.width = &quot;2px&quot;;
+		v = Math.floor(((data[d] - min)/(max-min)) * h);
+		tick.style.top = (h-v) + &quot;px&quot;;
+		tick.style.height = v + &quot;px&quot;;
+		box.appendChild(tick);
+	}
+};
+
+
+}
+//}}}</pre>
+</div>
+<div title="CryptoFunctionsPlugin" created="200612223831" tags="systemConfig excludeLists excludeSearch">
+<pre>/***
+|''Name:''|CryptoFunctionsPlugin|
+|''Description:''|Support for cryptographic functions|
+***/
+//{{{
+if(!version.extensions.CryptoFunctionsPlugin) {
+version.extensions.CryptoFunctionsPlugin = {installed:true};
+
+//--
+//-- Crypto functions and associated conversion routines
+//--
+
+// Crypto &quot;namespace&quot;
+function Crypto() {}
+
+// Convert a string to an array of big-endian 32-bit words
+Crypto.strToBe32s = function(str)
+{
+	var be = Array();
+	var len = Math.floor(str.length/4);
+	var i, j;
+	for(i=0, j=0; i&lt;len; i++, j+=4) {
+		be[i] = ((str.charCodeAt(j)&amp;0xff) &lt;&lt; 24)|((str.charCodeAt(j+1)&amp;0xff) &lt;&lt; 16)|((str.charCodeAt(j+2)&amp;0xff) &lt;&lt; 8)|(str.charCodeAt(j+3)&amp;0xff);
+	}
+	while (j&lt;str.length) {
+		be[j&gt;&gt;2] |= (str.charCodeAt(j)&amp;0xff)&lt;&lt;(24-(j*8)%32);
+		j++;
+	}
+	return be;
+};
+
+// Convert an array of big-endian 32-bit words to a string
+Crypto.be32sToStr = function(be)
+{
+	var str = &quot;&quot;;
+	for(var i=0;i&lt;be.length*32;i+=8)
+		str += String.fromCharCode((be[i&gt;&gt;5]&gt;&gt;&gt;(24-i%32)) &amp; 0xff);
+	return str;
+};
+
+// Convert an array of big-endian 32-bit words to a hex string
+Crypto.be32sToHex = function(be)
+{
+	var hex = &quot;0123456789ABCDEF&quot;;
+	var str = &quot;&quot;;
+	for(var i=0;i&lt;be.length*4;i++)
+		str += hex.charAt((be[i&gt;&gt;2]&gt;&gt;((3-i%4)*8+4))&amp;0xF) + hex.charAt((be[i&gt;&gt;2]&gt;&gt;((3-i%4)*8))&amp;0xF);
+	return str;
+};
+
+// Return, in hex, the SHA-1 hash of a string
+Crypto.hexSha1Str = function(str)
+{
+	return Crypto.be32sToHex(Crypto.sha1Str(str));
+};
+
+// Return the SHA-1 hash of a string
+Crypto.sha1Str = function(str)
+{
+	return Crypto.sha1(Crypto.strToBe32s(str),str.length);
+};
+
+// Calculate the SHA-1 hash of an array of blen bytes of big-endian 32-bit words
+Crypto.sha1 = function(x,blen)
+{
+	// Add 32-bit integers, wrapping at 32 bits
+	add32 = function(a,b)
+	{
+		var lsw = (a&amp;0xFFFF)+(b&amp;0xFFFF);
+		var msw = (a&gt;&gt;16)+(b&gt;&gt;16)+(lsw&gt;&gt;16);
+		return (msw&lt;&lt;16)|(lsw&amp;0xFFFF);
+	};
+	// Add five 32-bit integers, wrapping at 32 bits
+	add32x5 = function(a,b,c,d,e)
+	{
+		var lsw = (a&amp;0xFFFF)+(b&amp;0xFFFF)+(c&amp;0xFFFF)+(d&amp;0xFFFF)+(e&amp;0xFFFF);
+		var msw = (a&gt;&gt;16)+(b&gt;&gt;16)+(c&gt;&gt;16)+(d&gt;&gt;16)+(e&gt;&gt;16)+(lsw&gt;&gt;16);
+		return (msw&lt;&lt;16)|(lsw&amp;0xFFFF);
+	};
+	// Bitwise rotate left a 32-bit integer by 1 bit
+	rol32 = function(n)
+	{
+		return (n&gt;&gt;&gt;31)|(n&lt;&lt;1);
+	};
+
+	var len = blen*8;
+	// Append padding so length in bits is 448 mod 512
+	x[len&gt;&gt;5] |= 0x80 &lt;&lt; (24-len%32);
+	// Append length
+	x[((len+64&gt;&gt;9)&lt;&lt;4)+15] = len;
+	var w = Array(80);
+
+	var k1 = 0x5A827999;
+	var k2 = 0x6ED9EBA1;
+	var k3 = 0x8F1BBCDC;
+	var k4 = 0xCA62C1D6;
+
+	var h0 = 0x67452301;
+	var h1 = 0xEFCDAB89;
+	var h2 = 0x98BADCFE;
+	var h3 = 0x10325476;
+	var h4 = 0xC3D2E1F0;
+
+	for(var i=0;i&lt;x.length;i+=16) {
+		var j,t;
+		var a = h0;
+		var b = h1;
+		var c = h2;
+		var d = h3;
+		var e = h4;
+		for(j = 0;j&lt;16;j++) {
+			w[j] = x[i+j];
+			t = add32x5(e,(a&gt;&gt;&gt;27)|(a&lt;&lt;5),d^(b&amp;(c^d)),w[j],k1);
+			e=d; d=c; c=(b&gt;&gt;&gt;2)|(b&lt;&lt;30); b=a; a = t;
+		}
+		for(j=16;j&lt;20;j++) {
+			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
+			t = add32x5(e,(a&gt;&gt;&gt;27)|(a&lt;&lt;5),d^(b&amp;(c^d)),w[j],k1);
+			e=d; d=c; c=(b&gt;&gt;&gt;2)|(b&lt;&lt;30); b=a; a = t;
+		}
+		for(j=20;j&lt;40;j++) {
+			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
+			t = add32x5(e,(a&gt;&gt;&gt;27)|(a&lt;&lt;5),b^c^d,w[j],k2);
+			e=d; d=c; c=(b&gt;&gt;&gt;2)|(b&lt;&lt;30); b=a; a = t;
+		}
+		for(j=40;j&lt;60;j++) {
+			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
+			t = add32x5(e,(a&gt;&gt;&gt;27)|(a&lt;&lt;5),(b&amp;c)|(d&amp;(b|c)),w[j],k3);
+			e=d; d=c; c=(b&gt;&gt;&gt;2)|(b&lt;&lt;30); b=a; a = t;
+		}
+		for(j=60;j&lt;80;j++) {
+			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
+			t = add32x5(e,(a&gt;&gt;&gt;27)|(a&lt;&lt;5),b^c^d,w[j],k4);
+			e=d; d=c; c=(b&gt;&gt;&gt;2)|(b&lt;&lt;30); b=a; a = t;
+		}
+
+		h0 = add32(h0,a);
+		h1 = add32(h1,b);
+		h2 = add32(h2,c);
+		h3 = add32(h3,d);
+		h4 = add32(h4,e);
+	}
+	return Array(h0,h1,h2,h3,h4);
+};
+
+
+}
+//}}}</pre>
+</div>
+<div title="DeprecatedFunctionsPlugin" created="200710125045" tags="systemConfig excludeLists excludeSearch">
+<pre>/***
+|''Name:''|DeprecatedFunctionsPlugin|
+|''Description:''|Support for deprecated functions removed from core|
+***/
+//{{{
+if(!version.extensions.DeprecatedFunctionsPlugin) {
+version.extensions.DeprecatedFunctionsPlugin = {installed:true};
+
+//--
+//-- Deprecated code
+//--
+
+// @Deprecated: Use createElementAndWikify and this.termRegExp instead
+config.formatterHelpers.charFormatHelper = function(w)
+{
+	w.subWikify(createTiddlyElement(w.output,this.element),this.terminator);
+};
+
+// @Deprecated: Use enclosedTextHelper and this.lookaheadRegExp instead
+config.formatterHelpers.monospacedByLineHelper = function(w)
+{
+	var lookaheadRegExp = new RegExp(this.lookahead,&quot;mg&quot;);
+	lookaheadRegExp.lastIndex = w.matchStart;
+	var lookaheadMatch = lookaheadRegExp.exec(w.source);
+	if(lookaheadMatch &amp;&amp; lookaheadMatch.index == w.matchStart) {
+		var text = lookaheadMatch[1];
+		if(config.browser.isIE)
+			text = text.replace(/\n/g,&quot;\r&quot;);
+		createTiddlyElement(w.output,&quot;pre&quot;,null,null,text);
+		w.nextMatch = lookaheadRegExp.lastIndex;
+	}
+};
+
+// @Deprecated: Use &lt;br&gt; or &lt;br /&gt; instead of &lt;&lt;br&gt;&gt;
+config.macros.br = {};
+config.macros.br.handler = function(place)
+{
+	createTiddlyElement(place,&quot;br&quot;);
+};
+
+// Find an entry in an array. Returns the array index or null
+// @Deprecated: Use indexOf instead
+Array.prototype.find = function(item)
+{
+	var i = this.indexOf(item);
+	return i == -1 ? null : i;
+};
+
+// Load a tiddler from an HTML DIV. The caller should make sure to later call Tiddler.changed()
+// @Deprecated: Use store.getLoader().internalizeTiddler instead
+Tiddler.prototype.loadFromDiv = function(divRef,title)
+{
+	return store.getLoader().internalizeTiddler(store,this,title,divRef);
+};
+
+// Format the text for storage in an HTML DIV
+// @Deprecated Use store.getSaver().externalizeTiddler instead.
+Tiddler.prototype.saveToDiv = function()
+{
+	return store.getSaver().externalizeTiddler(store,this);
+};
+
+// @Deprecated: Use store.allTiddlersAsHtml() instead
+function allTiddlersAsHtml()
+{
+	return store.allTiddlersAsHtml();
+}
+
+// @Deprecated: Use refreshPageTemplate instead
+function applyPageTemplate(title)
+{
+	refreshPageTemplate(title);
+}
+
+// @Deprecated: Use story.displayTiddlers instead
+function displayTiddlers(srcElement,titles,template,unused1,unused2,animate,unused3)
+{
+	story.displayTiddlers(srcElement,titles,template,animate);
+}
+
+// @Deprecated: Use story.displayTiddler instead
+function displayTiddler(srcElement,title,template,unused1,unused2,animate,unused3)
+{
+	story.displayTiddler(srcElement,title,template,animate);
+}
+
+// @Deprecated: Use functions on right hand side directly instead
+var createTiddlerPopup = Popup.create;
+var scrollToTiddlerPopup = Popup.show;
+var hideTiddlerPopup = Popup.remove;
+
+// @Deprecated: Use right hand side directly instead
+var regexpBackSlashEn = new RegExp(&quot;\\\\n&quot;,&quot;mg&quot;);
+var regexpBackSlash = new RegExp(&quot;\\\\&quot;,&quot;mg&quot;);
+var regexpBackSlashEss = new RegExp(&quot;\\\\s&quot;,&quot;mg&quot;);
+var regexpNewLine = new RegExp(&quot;\n&quot;,&quot;mg&quot;);
+var regexpCarriageReturn = new RegExp(&quot;\r&quot;,&quot;mg&quot;);
+
+}
 //}}}</pre>
 </div>
 </div>
@@ -1023,7 +1338,8 @@ config.options = {
 	txtMainTab: "tabTimeline",
 	txtMoreTab: "moreTabAll",
 	txtMaxEditRows: "30",
-	txtFileSystemCharSet: "UTF-8"
+	txtFileSystemCharSet: "UTF-8",
+	txtTheme: ""
 	};
 config.optionsDesc = {};
 
@@ -1149,6 +1465,7 @@ if(config.browser.isBadSafari) {
 	};
 }
 config.textPrimitives.sliceSeparator = "::";
+config.textPrimitives.sectionSeparator = "##";
 config.textPrimitives.urlPattern = "(?:file|http|https|mailto|ftp|irc|news|data):[^\\s'\"]+(?:/|\\b)";
 config.textPrimitives.unWikiLink = "~";
 config.textPrimitives.wikiLink = "(?:(?:" + config.textPrimitives.upperLetter + "+" +
@@ -1191,7 +1508,7 @@ config.glyphs = {
 
 config.shadowTiddlers = {
 	StyleSheet: "",
-	MarkupPreHead: "<!--{{{-->\n<link rel='alternate' type='application/rss+xml' title='RSS' href='index.xml'/>\n<!--}}}-->",
+	MarkupPreHead: "",
 	MarkupPostHead: "",
 	MarkupPreBody: "",
 	MarkupPostBody: "",
@@ -1202,8 +1519,7 @@ config.shadowTiddlers = {
 	TabMoreOrphans: '<<list orphans>>',
 	TabMoreShadowed: '<<list shadowed>>',
 	AdvancedOptions: '<<options>>',
-	PluginManager: '<<plugins>>',
-	ImportTiddlers: '<<importTiddlers>>'
+	PluginManager: '<<plugins>>'
 };
 
 //--
@@ -1522,7 +1838,7 @@ merge(config.macros.sync,{
 	hasChanged: "Changed while unplugged",
 	hasNotChanged: "Unchanged while unplugged",
 	syncStatusList: {
-		none: {text: "...", color: "none"},
+		none: {text: "...", color: "transparent"},
 		changedServer: {text: "Changed on server", color: '#80ff80'},
 		changedLocally: {text: "Changed while unplugged", color: '#80ff80'},
 		changedBoth: {text: "Changed while unplugged and on server", color: '#ff8080'},
@@ -1608,7 +1924,7 @@ merge(config.shadowTiddlers,{
 	SiteTitle: "My TiddlyWiki",
 	SiteSubtitle: "a reusable non-linear personal web notebook",
 	SiteUrl: "http://www.tiddlywiki.com/",
-	SideBarOptions: '<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal "DD MMM YYYY">><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel "options »" "Change TiddlyWiki advanced options">>',
+	SideBarOptions: '<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal "DD MMM YYYY" "journal">><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel "options »" "Change TiddlyWiki advanced options">>',
 	SideBarTabs: '<<tabs txtMainTab "Timeline" "Timeline" TabTimeline "All" "All tiddlers" TabAll "Tags" "All tags" TabTags "More" "More lists" TabMore>>',
 	TabMore: '<<tabs txtMoreTab "Missing" "Missing tiddlers" TabMoreMissing "Orphans" "Orphaned tiddlers" TabMoreOrphans "Shadowed" "Shadowed tiddlers" TabMoreShadowed>>'});
 
@@ -1632,9 +1948,9 @@ merge(config.annotations,{
 	SiteSubtitle: "This shadow tiddler is used as the second part of the page title",
 	SiteTitle: "This shadow tiddler is used as the first part of the page title",
 	SiteUrl: "This shadow tiddler should be set to the full target URL for publication",
-	StyleSheetColours: "This shadow tiddler contains CSS definitions related to the color of page elements",
+	StyleSheetColors: "This shadow tiddler contains CSS definitions related to the color of page elements. ''DO NOT EDIT THIS TIDDLER'', instead make your changes in the StyleSheet shadow tiddler.",
 	StyleSheet: "This tiddler can contain custom CSS definitions",
-	StyleSheetLayout: "This shadow tiddler contains CSS definitions related to the layout of page elements",
+	StyleSheetLayout: "This shadow tiddler contains CSS definitions related to the layout of page elements. ''DO NOT EDIT THIS TIDDLER'', instead make your changes in the StyleSheet shadow tiddler.",
 	StyleSheetLocale: "This shadow tiddler contains CSS definitions related to the translation locale",
 	StyleSheetPrint: "This shadow tiddler contains CSS definitions for printing",
 	TabAll: "This shadow tiddler contains the contents of the 'All' tab in the right-hand sidebar",
@@ -1656,11 +1972,12 @@ var store = null; // TiddlyWiki storage
 var story = null; // Main story
 var formatter = null; // Default formatters for the wikifier
 config.parsers = {}; // Hashmap of alternative parsers for the wikifier
-var anim = new Animator(); // Animation engine
+var anim = typeof Animator == "function" ? new Animator() : null; // Animation engine
 var readOnly = false; // Whether we're in readonly mode
 var highlightHack = null; // Embarrassing hack department...
 var hadConfirmExit = false; // Don't warn more than once
 var safeMode = false; // Disable all plugins and cookies
+var showBackstage; // Whether to include the backstage area
 var installedPlugins = []; // Information filled in when plugins are executed
 var startingUp = false; // Whether we're in the process of starting up
 var pluginInfo,tiddler; // Used to pass information to plugins in loadPlugins()
@@ -1693,9 +2010,11 @@ function main()
 	invokeParamifier(params,"onload");
 	t4 = new Date();
 	readOnly = (window.location.protocol == "file:") ? false : config.options.chkHttpReadOnly;
+	showBackstage = !readOnly;
 	var pluginProblem = loadPlugins();
 	t5 = new Date();
 	formatter = new Formatter(config.formatters);
+	story.switchTheme(config.options.txtTheme);
 	invokeParamifier(params,"onconfig");
 	t6 = new Date();
 	store.notifyAll();
@@ -1711,7 +2030,7 @@ function main()
 			config.macros[m].init();
 	}
 	t9 = new Date();
-	if(!readOnly)
+	if(showBackstage)
 		backstage.init();
 	t10 = new Date();
 	if(config.options.chkDisplayStartupTime) {
@@ -1732,9 +2051,7 @@ function restart()
 	invokeParamifier(params,"onstart");
 	if(story.isEmpty()) {
 		var tiddlers = store.filterTiddlers(store.getTiddlerText("DefaultTiddlers"));
-		for(var t=0; t<tiddlers.length; t++) {
-			story.displayTiddler("bottom",tiddlers[t].title);
-		}
+		story.displayTiddlers(null,tiddlers);
 	}
 	window.scrollTo(0,0);
 }
@@ -1931,8 +2248,7 @@ config.paramifiers.searchRegExp = {
 config.paramifiers.tag = {
 	onstart: function(v) {
 		var tagged = store.getTaggedTiddlers(v,"title");
-		for(var t=0; t<tagged.length; t++)
-			story.displayTiddler("bottom",tagged[t].title,null,false,null);
+		story.displayTiddlers(null,tagged,null,false,null);
 	}
 };
 
@@ -1960,6 +2276,13 @@ config.paramifiers.readOnly = {
 	onconfig: function(v) {
 		var p = v.toLowerCase();
 		readOnly = p == "yes" ? true : (p == "no" ? false : readOnly);
+	}
+};
+
+
+config.paramifiers.theme = {
+	onconfig: function(v) {
+		story.switchTheme(v);
 	}
 };
 
@@ -2062,7 +2385,6 @@ config.formatters = [
 	cellRegExp: /(?:\|([^\n\|]*)\|)|(\|[fhck]?$\n?)/mg,
 	cellTermRegExp: /((?:\x20*)\|)/mg,
 	rowTypes: {"c":"caption", "h":"thead", "":"tbody", "f":"tfoot"},
-
 	handler: function(w)
 	{
 		var table = createTiddlyElement(w.output,"table",null,"twtable");
@@ -2091,7 +2413,10 @@ config.formatters = [
 					rowContainer.setAttribute("align",rowCount == 0?"top":"bottom");
 					w.subWikifyTerm(rowContainer,this.rowTermRegExp);
 				} else {
-					this.rowHandler(w,createTiddlyElement(rowContainer,"tr",null,(rowCount&1)?"oddRow":"evenRow"),prevColumns);
+					var theRow = createTiddlyElement(rowContainer,"tr",null,(rowCount&1)?"oddRow":"evenRow");
+					theRow.onmouseover = function() {addClass(this,"hoverRow");};
+					theRow.onmouseout = function() {removeClass(this,"hoverRow");};
+					this.rowHandler(w,theRow,prevColumns);
 					rowCount++;
 				}
 			}
@@ -2206,8 +2531,8 @@ config.formatters = [
 				listType = "dl";
 				itemType = "dd";
 			}
-			if (!baseType)
-			   baseType = listType;
+			if(!baseType)
+				baseType = listType;
 			listLevel = lookaheadMatch[0].length;
 			w.nextMatch += lookaheadMatch[0].length;
 			var t;
@@ -2216,7 +2541,7 @@ config.formatters = [
 					var target = (currLevel == 0) ? stack[stack.length-1] : stack[stack.length-1].lastChild;
 					stack.push(createTiddlyElement(target,listType));
 				}
-			} else if (listType!=baseType && listLevel==1) {
+			} else if(listType!=baseType && listLevel==1) {
 				w.nextMatch -= lookaheadMatch[0].length;
 				return;
 			} else if(listLevel < currLevel) {
@@ -2289,53 +2614,37 @@ config.formatters = [
 
 {
 	name: "monospacedByLine",
-	match: "^\\{\\{\\{\\n",
-	lookaheadRegExp: /^\{\{\{\n((?:^[^\n]*\n)+?)(^\}\}\}$\n?)/mg,
+	match: "^(?:/\\*\\{\\{\\{\\*/|\\{\\{\\{|//\\{\\{\\{|<!--\\{\\{\\{-->)\\n",
 	element: "pre",
-	handler: config.formatterHelpers.enclosedTextHelper
-},
-
-{
-	name: "monospacedByLineForCSS",
-	match: "^/\\*\\{\\{\\{\\*/\\n",
-	lookaheadRegExp: /\/\*\{\{\{\*\/\n*((?:^[^\n]*\n)+?)(\n*^\/\*\}\}\}\*\/$\n?)/mg,
-	element: "pre",
-	handler: config.formatterHelpers.enclosedTextHelper
-},
-
-{
-	name: "monospacedByLineForPlugin",
-	match: "^//\\{\\{\\{\\n",
-	lookaheadRegExp: /^\/\/\{\{\{\n\n*((?:^[^\n]*\n)+?)(\n*^\/\/\}\}\}$\n?)/mg,
-	element: "pre",
-	handler: config.formatterHelpers.enclosedTextHelper
-},
-
-{
-	name: "monospacedByLineForTemplate",
-	match: "^<!--\\{\\{\\{-->\\n",
-	lookaheadRegExp: /<!--\{\{\{-->\n*((?:^[^\n]*\n)+?)(\n*^<!--\}\}\}-->$\n?)/mg,
-	element: "pre",
-	handler: config.formatterHelpers.enclosedTextHelper
-},
-
-{
-	name: "wikifyCommentForPlugin",
-	match: "^/\\*\\*\\*\\n",
-	termRegExp: /(^\*\*\*\/\n)/mg,
 	handler: function(w)
 	{
-		w.subWikifyTerm(w.output,this.termRegExp);
+		switch(w.matchText) {
+		case "/*{{{*/\n": // CSS
+			this.lookaheadRegExp = /\/\*\{\{\{\*\/\n*((?:^[^\n]*\n)+?)(\n*^\/\*\}\}\}\*\/$\n?)/mg;
+			break;
+		case "{{{\n": // monospaced block
+			this.lookaheadRegExp = /^\{\{\{\n((?:^[^\n]*\n)+?)(^\}\}\}$\n?)/mg;
+			break;
+		case "//{{{\n": // plugin
+			this.lookaheadRegExp = /^\/\/\{\{\{\n\n*((?:^[^\n]*\n)+?)(\n*^\/\/\}\}\}$\n?)/mg;
+			break;
+		case "<!--{{{-->\n": //template
+			this.lookaheadRegExp = /<!--\{\{\{-->\n*((?:^[^\n]*\n)+?)(\n*^<!--\}\}\}-->$\n?)/mg;
+			break;
+		default:
+			break;
+		}
+		config.formatterHelpers.enclosedTextHelper.call(this,w);
 	}
 },
 
 {
-	name: "wikifyCommentForTemplate",
-	match: "^<!---\\n",
-	termRegExp: /(^--->\n)/mg,
+	name: "wikifyComment",
+	match: "^(?:/\\*\\*\\*|<!---)\\n",
 	handler: function(w)
 	{
-		w.subWikifyTerm(w.output,this.termRegExp);
+		var termRegExp = (w.matchText == "/***\n") ? (/(^\*\*\*\/\n)/mg) : (/(^--->\n)/mg);
+		w.subWikifyTerm(w.output,termRegExp);
 	}
 },
 
@@ -2398,7 +2707,7 @@ config.formatters = [
 				return;
 			}
 		}
-		if(w.autoLinkWikiWords == true || store.isShadowTiddler(w.matchText)) {
+		if(w.autoLinkWikiWords || store.isShadowTiddler(w.matchText)) {
 			var link = createTiddlyLink(w.output,w.matchText,false,null,w.isStatic,w.tiddler);
 			w.outputText(link,w.matchStart,w.nextMatch);
 		} else {
@@ -2473,81 +2782,77 @@ config.formatters = [
 },
 
 {
-	name: "boldByChar",
-	match: "''",
-	termRegExp: /('')/mg,
-	element: "strong",
-	handler: config.formatterHelpers.createElementAndWikify
-},
-
-{
-	name: "italicByChar",
-	match: "//",
-	termRegExp: /(\/\/)/mg,
-	element: "em",
-	handler: config.formatterHelpers.createElementAndWikify
-},
-
-{
-	name: "underlineByChar",
-	match: "__",
-	termRegExp: /(__)/mg,
-	element: "u",
-	handler: config.formatterHelpers.createElementAndWikify
-},
-
-{
-	name: "strikeByChar",
-	match: "--(?!\\s|$)",
-	termRegExp: /((?!\s)--|(?=\n\n))/mg,
-	element: "strike",
-	handler: config.formatterHelpers.createElementAndWikify
-},
-
-{
-	name: "superscriptByChar",
-	match: "\\^\\^",
-	termRegExp: /(\^\^)/mg,
-	element: "sup",
-	handler: config.formatterHelpers.createElementAndWikify
-},
-
-{
-	name: "subscriptByChar",
-	match: "~~",
-	termRegExp: /(~~)/mg,
-	element: "sub",
-	handler: config.formatterHelpers.createElementAndWikify
-},
-
-{
-	name: "monospacedByChar",
-	match: "\\{\\{\\{",
-	lookaheadRegExp: /\{\{\{((?:.|\n)*?)\}\}\}/mg,
+	name: "characterFormat",
+	match: "''|//|__|\\^\\^|~~|--(?!\\s|$)|\\{\\{\\{",
 	handler: function(w)
 	{
-		this.lookaheadRegExp.lastIndex = w.matchStart;
-		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		if(lookaheadMatch && lookaheadMatch.index == w.matchStart) {
-			createTiddlyElement(w.output,"code",null,null,lookaheadMatch[1]);
-			w.nextMatch = this.lookaheadRegExp.lastIndex;
+		switch(w.matchText) {
+		case "''":
+			w.subWikifyTerm(w.output.appendChild(document.createElement("strong")),/('')/mg);
+			break;
+		case "//":
+			w.subWikifyTerm(createTiddlyElement(w.output,"em"),/(\/\/)/mg);
+			break;
+		case "__":
+			w.subWikifyTerm(createTiddlyElement(w.output,"u"),/(__)/mg);
+			break;
+		case "^^":
+			w.subWikifyTerm(createTiddlyElement(w.output,"sup"),/(\^\^)/mg);
+			break;
+		case "~~":
+			w.subWikifyTerm(createTiddlyElement(w.output,"sub"),/(~~)/mg);
+			break;
+		case "--":
+			w.subWikifyTerm(createTiddlyElement(w.output,"strike"),/(--)/mg);
+			break;
+		case "{{{":
+			var lookaheadRegExp = /\{\{\{((?:.|\n)*?)\}\}\}/mg;
+			lookaheadRegExp.lastIndex = w.matchStart;
+			var lookaheadMatch = lookaheadRegExp.exec(w.source);
+			if(lookaheadMatch && lookaheadMatch.index == w.matchStart) {
+				createTiddlyElement(w.output,"code",null,null,lookaheadMatch[1]);
+				w.nextMatch = lookaheadRegExp.lastIndex;
+			}
+			break;
 		}
 	}
 },
 
 {
-	name: "styleByChar",
-	match: "@@",
-	termRegExp: /(@@)/mg,
+	name: "customFormat",
+	match: "@@|\\{\\{",
 	handler: function(w)
 	{
-		var e = createTiddlyElement(w.output,"span");
-		var styles = config.formatterHelpers.inlineCssHelper(w);
-		if(styles.length == 0)
-			e.className = "marked";
-		else
-			config.formatterHelpers.applyCssHelper(e,styles);
-		w.subWikifyTerm(e,this.termRegExp);
+		switch(w.matchText) {
+		case "@@":
+			var e = createTiddlyElement(w.output,"span");
+			var styles = config.formatterHelpers.inlineCssHelper(w);
+			if(styles.length == 0)
+				e.className = "marked";
+			else
+				config.formatterHelpers.applyCssHelper(e,styles);
+			w.subWikifyTerm(e,/(@@)/mg);
+			break;
+		case "{{":
+			lookaheadRegExp = /\{\{[\s]*([\w]+[\s\w]*)[\s]*\{(\n?)/mg;
+			lookaheadRegExp.lastIndex = w.matchStart;
+			lookaheadMatch = lookaheadRegExp.exec(w.source);
+			if(lookaheadMatch) {
+				w.nextMatch = lookaheadRegExp.lastIndex;
+				e = createTiddlyElement(w.output,lookaheadMatch[2] == "\n" ? "div" : "span",null,lookaheadMatch[1]);
+				w.subWikifyTerm(e,/(\}\}\})/mg);
+			}
+			break;
+		}
+	}
+},
+
+{
+	name: "mdash",
+	match: "--",
+	handler: function(w)
+	{
+		createTiddlyElement(w.output,"span").innerHTML = "&mdash;";
 	}
 },
 
@@ -2576,37 +2881,11 @@ config.formatters = [
 },
 
 {
-	name: "mdash",
-	match: "--",
-	handler: function(w)
-	{
-		createTiddlyElement(w.output,"span").innerHTML = "&mdash;";
-	}
-},
-
-{
 	name: "htmlEntitiesEncoding",
 	match: "(?:(?:&#?[a-zA-Z0-9]{2,8};|.)(?:&#?(?:x0*(?:3[0-6][0-9a-fA-F]|1D[c-fC-F][0-9a-fA-F]|20[d-fD-F][0-9a-fA-F]|FE2[0-9a-fA-F])|0*(?:76[89]|7[7-9][0-9]|8[0-7][0-9]|761[6-9]|76[2-7][0-9]|84[0-3][0-9]|844[0-7]|6505[6-9]|6506[0-9]|6507[0-1]));)+|&#?[a-zA-Z0-9]{2,8};)",
 	handler: function(w)
 	{
 		createTiddlyElement(w.output,"span").innerHTML = w.matchText;
-	}
-},
-
-{
-	name: "customClasses",
-	match: "\\{\\{",
-	termRegExp: /(\}\}\})/mg,
-	lookaheadRegExp: /\{\{[\s]*([\w]+[\s\w]*)[\s]*\{(\n?)/mg,
-	handler: function(w)
-	{
-		this.lookaheadRegExp.lastIndex = w.matchStart;
-		var lookaheadMatch = this.lookaheadRegExp.exec(w.source);
-		if(lookaheadMatch) {
-			var e = createTiddlyElement(w.output,lookaheadMatch[2] == "\n" ? "div" : "span",null,lookaheadMatch[1]);
-			w.nextMatch = this.lookaheadRegExp.lastIndex;
-			w.subWikifyTerm(e,this.termRegExp);
-		}
 	}
 }
 
@@ -2723,7 +3002,6 @@ Wikifier.prototype.subWikify = function(output,terminator)
 
 Wikifier.prototype.subWikifyUnterm = function(output)
 {
-	// subWikify() can be indirectly recursive, so we need to save the old output pointer
 	var oldOutput = this.output;
 	this.output = output;
 	this.formatter.formatterRegExp.lastIndex = this.nextMatch;
@@ -2755,10 +3033,8 @@ Wikifier.prototype.subWikifyUnterm = function(output)
 
 Wikifier.prototype.subWikifyTerm = function(output,terminatorRegExp)
 {
-	// subWikify() can be indirectly recursive, so we need to save the old output pointer
 	var oldOutput = this.output;
 	this.output = output;
-	// Get the first matches for the formatter and terminator RegExps
 	terminatorRegExp.lastIndex = this.nextMatch;
 	var terminatorMatch = terminatorRegExp.exec(this.source);
 	this.formatter.formatterRegExp.lastIndex = this.nextMatch;
@@ -3141,7 +3417,8 @@ config.macros.view.handler = function(place,macroName,params,wikifier,paramStrin
 config.macros.edit.handler = function(place,macroName,params,wikifier,paramString,tiddler)
 {
 	var field = params[0];
-	var rows = params[1];
+	var rows = params[1] || 0;
+	var defVal = params[2] || '';
 	if((tiddler instanceof Tiddler) && field) {
 		story.setDirty(tiddler.title,true);
 		var e,v;
@@ -3151,10 +3428,7 @@ config.macros.edit.handler = function(place,macroName,params,wikifier,paramStrin
 				e.setAttribute("readOnly","readOnly");
 			e.setAttribute("edit",field);
 			e.setAttribute("type","text");
-			v = store.getValue(tiddler,field);
-			if(!v)
-				v = "";
-			e.value = v;
+			e.value = store.getValue(tiddler,field) || defVal;
 			e.setAttribute("size","40");
 			e.setAttribute("autocomplete","off");
 			place.appendChild(e);
@@ -3164,10 +3438,7 @@ config.macros.edit.handler = function(place,macroName,params,wikifier,paramStrin
 			e = createTiddlyElement(wrapper2,"textarea");
 			if(tiddler.isReadOnly())
 				e.setAttribute("readOnly","readOnly");
-			v = store.getValue(tiddler,field);
-			if(!v)
-				v = "";
-			e.value = v;
+			e.value = v = store.getValue(tiddler,field) || defVal;
 			rows = rows ? rows : 10;
 			var lines = v.match(/\n/mg);
 			var maxLines = Math.max(parseInt(config.options.txtMaxEditRows),5);
@@ -3178,6 +3449,7 @@ config.macros.edit.handler = function(place,macroName,params,wikifier,paramStrin
 			e.setAttribute("edit",field);
 			place.appendChild(wrapper1);
 		}
+		return e;
 	}
 };
 
@@ -3450,48 +3722,6 @@ config.macros.tabs.switchTab = function(tabset,tab)
 			config.options[cookie] = tab;
 			saveOptionCookie(cookie);
 		}
-	}
-};
-
-//--
-//-- Sparklines
-//--
-
-config.macros.sparkline = {};
-config.macros.sparkline.handler = function(place,macroName,params)
-{
-	var data = [];
-	var min = 0;
-	var max = 0;
-	var v;
-	for(var t=0; t<params.length; t++) {
-		v = parseInt(params[t]);
-		if(v < min)
-			min = v;
-		if(v > max)
-			max = v;
-		data.push(v);
-	}
-	if(data.length < 1)
-		return;
-	var box = createTiddlyElement(place,"span",null,"sparkline",String.fromCharCode(160));
-	box.title = data.join(",");
-	var w = box.offsetWidth;
-	var h = box.offsetHeight;
-	box.style.paddingRight = (data.length * 2 - w) + "px";
-	box.style.position = "relative";
-	for(var d=0; d<data.length; d++) {
-		var tick = document.createElement("img");
-		tick.border = 0;
-		tick.className = "sparktick";
-		tick.style.position = "absolute";
-		tick.src = "data:image/gif,GIF89a%01%00%01%00%91%FF%00%FF%FF%FF%00%00%00%C0%C0%C0%00%00%00!%F9%04%01%00%00%02%00%2C%00%00%00%00%01%00%01%00%40%02%02T%01%00%3B";
-		tick.style.left = d*2 + "px";
-		tick.style.width = "2px";
-		v = Math.floor(((data[d] - min)/(max-min)) * h);
-		tick.style.top = (h-v) + "px";
-		tick.style.height = v + "px";
-		box.appendChild(tick);
 	}
 };
 
@@ -3863,19 +4093,23 @@ Tiddler.prototype.isTouched = function()
 	return changeCount > 0;
 };
 
-// Format the text for storage in an RSS item
-Tiddler.prototype.saveToRss = function(url)
+// Return the tiddler as an RSS item
+Tiddler.prototype.toRssItem = function(uri)
 {
 	var s = [];
-	s.push("<item>");
 	s.push("<title" + ">" + this.title.htmlEncode() + "</title" + ">");
 	s.push("<description>" + wikifyStatic(this.text,null,this).htmlEncode() + "</description>");
 	for(var t=0; t<this.tags.length; t++)
 		s.push("<category>" + this.tags[t] + "</category>");
-	s.push("<link>" + url + "#" + encodeURIComponent(String.encodeTiddlyLink(this.title)) + "</link>");
+	s.push("<link>" + uri + "#" + encodeURIComponent(String.encodeTiddlyLink(this.title)) + "</link>");
 	s.push("<pubDate>" + this.modified.toGMTString() + "</pubDate>");
-	s.push("</item>");
 	return s.join("\n");
+};
+
+// Format the text for storage in an RSS item
+Tiddler.prototype.saveToRss = function(uri)
+{
+	return "<item>\n" + this.toRssItem(uri) + "\n</item>";
 };
 
 // Change the text and other attributes of a tiddler
@@ -4026,7 +4260,8 @@ function TiddlyWiki()
 		this.setDirty(false);
 	};
 	this.fetchTiddler = function(title) {
-		return tiddlers[title];
+		var t = tiddlers[title];
+		return t instanceof Tiddler ? t : null;
 	};
 	this.deleteTiddler = function(title) {
 		delete this.slices[title];
@@ -4132,16 +4367,37 @@ TiddlyWiki.prototype.getTiddler = function(title)
 
 TiddlyWiki.prototype.getTiddlerText = function(title,defaultText)
 {
-	var tiddler = this.fetchTiddler(title);
-	if(tiddler)
-		return tiddler.text;
-	if(!title)
+  	if(!title)
 		return defaultText;
-	var pos = title.indexOf(config.textPrimitives.sliceSeparator);
+	var pos = title.indexOf(config.textPrimitives.sectionSeparator);
+	var section = null;
+	if(pos != -1) {
+		section = title.substr(pos + config.textPrimitives.sectionSeparator.length);
+		title = title.substr(0,pos);
+	}
+	pos = title.indexOf(config.textPrimitives.sliceSeparator);
 	if(pos != -1) {
 		var slice = this.getTiddlerSlice(title.substr(0,pos),title.substr(pos + config.textPrimitives.sliceSeparator.length));
 		if(slice)
 			return slice;
+	}
+	var tiddler = this.fetchTiddler(title);
+	if(tiddler) {
+		if(!section)
+			return tiddler.text;
+		var re = new RegExp("(^!{1,6}" + section.escapeRegExp() + ")","mg");
+		re.lastIndex = 0;
+		var match =  re.exec(tiddler.text);
+		if(match) {
+			var t = tiddler.text.substr(match.index+match[1].length);
+			var re2 = /^!/mg;
+			re2.lastIndex = 0;
+			match = re2.exec(t); //# search for the next heading
+			if(match)
+				t = t.substr(0,match.index);
+			return t;
+		}
+		return defaultText;
 	}
 	if(this.isShadowTiddler(title))
 		return config.shadowTiddlers[title];
@@ -4534,29 +4790,28 @@ TiddlyWiki.prototype.filterTiddlers = function(filter)
 		var re = /([^ \[\]]+)|(?:\[([ \w]+)\[([^\]]+)\]\])|(?:\[\[([^\]]+)\]\])/mg;
 		var match = re.exec(filter);
 		while(match) {
-			if(match[1]) {
-				var title = match[1];
+			if(match[1] || match[4]) {
+				var title = match[1] ? match[1] : match[4];
 				tiddler = this.fetchTiddler(title);
 				if(tiddler) {
-					results.push(tiddler);
-				} else {
-					if(store.isShadowTiddler(title)) {
-						tiddler = new Tiddler();
-						tiddler.set(title,store.getTiddlerText(title));
-						results.push(tiddler);
-					}
+					results.pushUnique(tiddler);
+				} else if(store.isShadowTiddler(title)) {
+					tiddler = new Tiddler();
+					tiddler.set(title,store.getTiddlerText(title));
+					results.pushUnique(tiddler);
 				}
 			} else if(match[2]) {
-				if(match[2]=="tag") {
-					this.forEachTiddler(function(title,tiddler) {
-						if(tiddler.isTagged(match[3]))
-							results.push(tiddler);
-					});
+				switch(match[2]) {
+					case "tag":
+						this.forEachTiddler(function(title,tiddler) {
+							if(tiddler.isTagged(match[3]))
+								results.pushUnique(tiddler);
+						});
+						break;
+					case "sort":
+						results = this.sortTiddlers(results,match[3]);
+						break; 
 				}
-			} else if(match[4]) {
-				tiddler = this.fetchTiddler(match[4]);
-				if(tiddler)
-					results.push(tiddler);
 			}
 			match = re.exec(filter);
 		}
@@ -4564,6 +4819,24 @@ TiddlyWiki.prototype.filterTiddlers = function(filter)
 	return results;
 };
 
+// Sort a list of tiddlers
+TiddlyWiki.prototype.sortTiddlers = function(tiddlers,field)
+{
+	var asc = +1;
+	switch(field.substr(0,1)) {
+		case "-":
+			asc = -1;
+			// Note: this fall-through is intentional
+		case "+":
+			field = field.substr(1);
+			break;
+	}
+	if(TiddlyWiki.standardFieldAccess[field])
+		tiddlers.sort(function(a,b) {return a[field] < b[field] ? -asc : (a[field] == b[field] ? 0 : asc);});
+	else
+		tiddlers.sort(function(a,b) {return a.fields[field] < b.fields[field] ? -asc : (a.fields[field] == b.fields[field] ? 0 : +asc);});
+	return tiddlers;
+};
 // Returns true if path is a valid field name (path),
 // i.e. a sequence of identifiers, separated by '.'
 TiddlyWiki.isValidFieldName = function(name)
@@ -4760,8 +5033,9 @@ Story.prototype.displayTiddlers = function(srcElement,titles,template,animate,un
 		this.displayTiddler(srcElement,titles[t],template,animate,unused,customFields);
 };
 
-Story.prototype.displayTiddler = function(srcElement,title,template,animate,unused,customFields,toggle)
+Story.prototype.displayTiddler = function(srcElement,tiddler,template,animate,unused,customFields,toggle)
 {
+	var title = (tiddler instanceof Tiddler)? tiddler.title : tiddler;  
 	var place = document.getElementById(this.container);
 	var tiddlerElem = document.getElementById(this.idPrefix + title);
 	if(tiddlerElem) {
@@ -4828,7 +5102,7 @@ Story.prototype.loadMissingTiddler = function(title,fields,tiddlerElem)
 	var serverType = tiddler.getServerType();
 	var host = tiddler.fields['server.host'];
 	var workspace = tiddler.fields['server.workspace'];
-	if(!serverType | !host)
+	if(!serverType || !host)
 		return null;
 	var sm = new SyncMachine(serverType,{
 			start: function() {
@@ -4838,9 +5112,10 @@ Story.prototype.loadMissingTiddler = function(title,fields,tiddlerElem)
 				return this.openWorkspace(workspace,"getTiddler");
 			},
 			getTiddler: function() {
-				return this.getTiddler(title,"gotTiddler");
+				return this.getTiddler(title,"onGetTiddler");
 			},
-			gotTiddler: function(tiddler) {
+			onGetTiddler: function(context) {
+				var tiddler = context.tiddler;
 				if(tiddler && tiddler.text) {
 					var downloaded = new Date();
 					if(!tiddler.created)
@@ -4945,15 +5220,15 @@ Story.prototype.addCustomFields = function(place,customFields)
 	}
 };
 
-Story.prototype.refreshAllTiddlers = function()
+Story.prototype.refreshAllTiddlers = function(force)
 {
 	var place = document.getElementById(this.container);
 	var e = place.firstChild;
 	if(!e)
 		return;
-	this.refreshTiddler(e.getAttribute("tiddler"),e.getAttribute("template"),true);
+	this.refreshTiddler(e.getAttribute("tiddler"),force ? null : e.getAttribute("template"),true);
 	while((e = e.nextSibling) != null)
-		this.refreshTiddler(e.getAttribute("tiddler"),e.getAttribute("template"),true);
+		this.refreshTiddler(e.getAttribute("tiddler"),force ? null : e.getAttribute("template"),true);
 };
 
 Story.prototype.onTiddlerMouseOver = function(e)
@@ -5145,14 +5420,11 @@ Story.prototype.search = function(text,useCaseSensitive,useRegExp)
 	this.closeAllTiddlers();
 	highlightHack = new RegExp(useRegExp ?	 text : text.escapeRegExp(),useCaseSensitive ? "mg" : "img");
 	var matches = store.search(highlightHack,"title","excludeSearch");
-	var titles = [];
-	for(var t=0;t<matches.length;t++)
-		titles.push(matches[t].title);
-	this.displayTiddlers(null,titles);
+	this.displayTiddlers(null,matches);
 	highlightHack = null;
 	var q = useRegExp ? "/" : "'";
 	if(matches.length > 0)
-		displayMessage(config.macros.search.successMsg.format([titles.length.toString(),q + text + q]));
+		displayMessage(config.macros.search.successMsg.format([matches.length.toString(),q + text + q]));
 	else
 		displayMessage(config.macros.search.failureMsg.format([q + text + q]));
 };
@@ -5202,6 +5474,8 @@ Story.prototype.saveTiddler = function(title,minorUpdate)
 		var fields = {};
 		this.gatherSaveFields(tiddlerElem,fields);
 		var newTitle = fields.title ? fields.title : title;
+		if(!store.tiddlerExists(newTitle))
+			newTitle = newTitle.trim();
 		if(store.tiddlerExists(newTitle) && newTitle != title) {
 			if(!confirm(config.messages.overwriteWarning.format([newTitle.toString()])))
 				return null;
@@ -5240,6 +5514,63 @@ Story.prototype.permaView = function()
 		t = "#";
 	if(window.location.hash != t)
 		window.location.hash = t;
+};
+
+
+Story.prototype.switchTheme = function(theme)
+{
+	if(safeMode) 
+		return;
+		
+	isAvailable = function(title) { 
+		var s = title ? title.indexOf(config.textPrimitives.sectionSeparator) : -1; 
+		if(s!=-1) 
+			title = title.substr(0,s); 
+		return store.tiddlerExists(title) || store.isShadowTiddler(title); 
+ 	};
+
+	getSlice = function(theme,slice) {
+		var r = store.getTiddlerSlice(theme,slice);
+		if(r && r.indexOf(config.textPrimitives.sectionSeparator)==0)
+			r = theme + r;
+		return isAvailable(r) ? r : slice;
+	};
+
+	replaceNotification = function(i,name,newName) {
+		if(name==newName)
+			return name;
+		if(store.namedNotifications[i].name == name) {
+			store.namedNotifications[i].name = newName;
+			return newName;
+		}
+		return name;
+	};
+
+	for(var i=0; i<config.notifyTiddlers.length; i++) {
+		var name = config.notifyTiddlers[i].name;
+		switch(name) {
+		case "PageTemplate":
+			config.refreshers.pageTemplate = replaceNotification(i,config.refreshers.pageTemplate,getSlice(theme,name));
+			break;
+		case "StyleSheet":
+			removeStyleSheet(config.refreshers.styleSheet);
+			config.refreshers.styleSheet = replaceNotification(i,config.refreshers.styleSheet,getSlice(theme,name));
+			break;
+		case "ColorPalette":
+			config.refreshers.colorPalette = replaceNotification(i,config.refreshers.colorPalette,getSlice(theme,name));
+			break;
+		default:
+			break;
+		}
+	}
+	config.tiddlerTemplates[DEFAULT_VIEW_TEMPLATE] = getSlice(theme,"ViewTemplate");
+	config.tiddlerTemplates[DEFAULT_EDIT_TEMPLATE] = getSlice(theme,"EditTemplate");
+	if(!startingUp) {
+		refreshAll();
+		story.refreshAllTiddlers(true);
+		config.options.txtTheme = theme;
+		saveOptionCookie("txtTheme");
+	}
 };
 
 //--
@@ -5561,6 +5892,18 @@ config.macros.importTiddlers.onGetWorkspaceList = function(context,wizard)
 {
 	if(context.status !== true)
 		displayMessage("Error in importTiddlers.onGetWorkspaceList: " + context.statusText);
+	wizard.setValue("context",context);
+	var workspace = wizard.getValue("feedWorkspace");
+	if(!workspace && context.workspaces.length==1)
+		workspace = context.workspaces[0].title;
+	if(workspace) {
+		var ret = context.adaptor.openWorkspace(workspace,context,wizard,config.macros.importTiddlers.onOpenWorkspace);
+		if(ret !== true)
+			displayMessage(ret);
+		wizard.setValue("workspace",workspace);
+		wizard.setButtons([{caption: config.macros.importTiddlers.cancelLabel, tooltip: config.macros.importTiddlers.cancelPrompt, onClick: config.macros.importTiddlers.onCancel}],config.macros.importTiddlers.statusOpenWorkspace);
+		return;
+	}
 	wizard.addStep(config.macros.importTiddlers.step2Title,config.macros.importTiddlers.step2Html);
 	var s = wizard.getElement("selWorkspace");
 	s.onchange = config.macros.importTiddlers.onWorkspaceChange;
@@ -5578,12 +5921,10 @@ config.macros.importTiddlers.onGetWorkspaceList = function(context,wizard)
 			}
 		}
 	}
-	var workspace = wizard.getValue("feedWorkspace");
 	if(workspace) {
 		t = wizard.getElement("txtWorkspace");
 		t.value = workspace;
 	}
-	wizard.setValue("context",context);
 	wizard.setButtons([{caption: config.macros.importTiddlers.openLabel, tooltip: config.macros.importTiddlers.openPrompt, onClick: config.macros.importTiddlers.onChooseWorkspace}]);
 };
 
@@ -5862,9 +6203,10 @@ config.macros.sync.createSyncTask = function(syncItem)
 			return this.openWorkspace(st.serverWorkspace,"getTiddlerList");
 		},
 		getTiddlerList: function() {
-			return this.getTiddlerList("gotTiddlerList");
+			return this.getTiddlerList("onGetTiddlerList");
 		},
-		gotTiddlerList: function(tiddlers) {
+		onGetTiddlerList: function(context) {
+			var tiddlers = context.tiddlers;
 			for(var t=0; t<st.syncItems.length; t++) {
 				var si = st.syncItems[t];
 				var f = tiddlers.findByField("title",si.title);
@@ -5881,7 +6223,8 @@ config.macros.sync.createSyncTask = function(syncItem)
 		getTiddler: function(title) {
 			return this.getTiddler(title,"onGetTiddler");
 		},
-		onGetTiddler: function(tiddler) {
+		onGetTiddler: function(context) {
+			var tiddler = context.tiddler;
 			var syncItem = st.syncItems.findByField("title",tiddler.title);
 			if(syncItem !== null) {
 				syncItem = st.syncItems[syncItem];
@@ -5893,11 +6236,12 @@ config.macros.sync.createSyncTask = function(syncItem)
 		putTiddler: function(tiddler) {
 			return this.putTiddler(tiddler,"onPutTiddler");
 		},
-		onPutTiddler: function(tiddler) {
-			var syncItem = st.syncItems.findByField("title",tiddler.title);
+		onPutTiddler: function(context) {
+			var title = context.title;
+			var syncItem = st.syncItems.findByField("title",title);
 			if(syncItem !== null) {
 				syncItem = st.syncItems[syncItem];
-				store.resetTiddler(tiddler.title);
+				store.resetTiddler(title);
 				syncItem.syncStatus = config.macros.sync.syncStatusList.putToServer;
 				config.macros.sync.updateSyncStatus(syncItem);
 			}
@@ -5959,17 +6303,17 @@ function SyncMachine(serverType,steps)
 	this.steps = steps;
 }
 
-SyncMachine.prototype.go = function(step,varargs)
+SyncMachine.prototype.go = function(step,context)
 {
-	if(!step)
-		step = "start";
-	var h = this.steps[step];
+	var r = context ? context.status : null;
+	if(typeof r == "string") {
+		this.invokeError(r);
+		return r;
+	}
+	var h = this.steps[step ? step : "start"];
 	if(!h)
 		return null;
-	var a = [];
-	for(var t=1; t<arguments.length; t++)
-		a.push(arguments[t]);
-	var r = h.apply(this,a);
+	r = h.call(this,context);
 	if(typeof r == "string")
 		this.invokeError(r);
 	return r;
@@ -5984,45 +6328,25 @@ SyncMachine.prototype.invokeError = function(message)
 SyncMachine.prototype.openHost = function(host,nextStep)
 {
 	var me = this;
-	return me.adaptor.openHost(host,null,null,function(context) {
-		if(typeof context.status == "string")
-			me.invokeError(context.status);
-		else
-			me.go(nextStep);
-	});
+	return me.adaptor.openHost(host,null,null,function(context) {me.go(nextStep,context);});
 };
 
 SyncMachine.prototype.getWorkspaceList = function(nextStep)
 {
 	var me = this;
-	return me.adaptor.getWorkspaceList(null,null,function(context) {
-		if(typeof context.status == "string")
-			me.invokeError(context.status);
-		else
-			me.go(nextStep,context.workspaces);
-	});
+	return me.adaptor.getWorkspaceList(null,null,function(context) {me.go(nextStep,context);});
 };
 
 SyncMachine.prototype.openWorkspace = function(workspace,nextStep)
 {
 	var me = this;
-	return me.adaptor.openWorkspace(workspace,null,null,function(context) {
-		if(typeof context.status == "string")
-			me.invokeError(context.status);
-		else
-			me.go(nextStep);
-	});
+	return me.adaptor.openWorkspace(workspace,null,null,function(context) {me.go(nextStep,context);});
 };
 
 SyncMachine.prototype.getTiddlerList = function(nextStep)
 {
 	var me = this;
-	return me.adaptor.getTiddlerList(null,null,function(context) {
-		if(typeof context.status == "string")
-			me.invokeError(context.status);
-		else
-			me.go(nextStep,context.tiddlers);
-	});
+	return me.adaptor.getTiddlerList(null,null,function(context) {me.go(nextStep,context);});
 };
 
 SyncMachine.prototype.generateTiddlerInfo = function(tiddler)
@@ -6033,23 +6357,13 @@ SyncMachine.prototype.generateTiddlerInfo = function(tiddler)
 SyncMachine.prototype.getTiddler = function(title,nextStep)
 {
 	var me = this;
-	return me.adaptor.getTiddler(title,null,null,function(context) {
-		if(typeof context.status == "string")
-			me.invokeError(context.status);
-		else
-			me.go(nextStep,context.tiddler);
-	});
+	return me.adaptor.getTiddler(title,null,null,function(context) {me.go(nextStep,context);});
 };
 
 SyncMachine.prototype.putTiddler = function(tiddler,nextStep)
 {
 	var me = this;
-	return me.adaptor.putTiddler(tiddler,null,null,function(context) {
-		if(typeof context.status == "string")
-			me.invokeError(context.status);
-		else
-			me.go(nextStep,tiddler);
-	});
+	return me.adaptor.putTiddler(tiddler,null,null,function(context) {me.go(nextStep,context);});
 };
 
 //--
@@ -6230,7 +6544,13 @@ config.refreshers = {
 		if(macro && macro.refresh)
 			macro.refresh(e,params);
 		return true;
-		}
+		},
+	styleSheet: "StyleSheet", 
+	defaultStyleSheet: "StyleSheet", 
+	pageTemplate: "PageTemplate", 
+	defaultPageTemplate: "PageTemplate", 
+	colorPalette: "ColorPalette", 
+	defaultColorPalette: "ColorPalette" 
 };
 
 function refreshElements(root,changeList)
@@ -6284,9 +6604,18 @@ function refreshPageTemplate(title)
 			stash.appendChild(nodes[t]);
 	}
 	var wrapper = document.getElementById("contentWrapper");
-	if(!title)
-		title = "PageTemplate";
-	var html = store.getRecursiveTiddlerText(title,null,10);
+
+	isAvailable = function(title) { 
+		var s = title ? title.indexOf(config.textPrimitives.sectionSeparator) : -1; 
+		if(s!=-1) 
+			title = title.substr(0,s); 
+		return store.tiddlerExists(title) || store.isShadowTiddler(title); 
+ 	};
+	if(!title || !isAvailable(title))
+		title = config.refreshers.pageTemplate;
+	if(!isAvailable(title))
+		title = config.refreshers.defaultPageTemplate; //# this one is always avaialable
+	html = store.getRecursiveTiddlerText(title,null,10);
 	wrapper.innerHTML = html;
 	applyHtmlMacros(wrapper);
 	refreshElements(wrapper);
@@ -6326,9 +6655,7 @@ function getPageTitle()
 
 function refreshStyles(title,doc)
 {
-	if(!doc)
-		doc = document;
-	setStylesheet(title == null ? "" : store.getRecursiveTiddlerText(title,"",10),title,doc);
+	setStylesheet(title == null ? "" : store.getRecursiveTiddlerText(title,"",10),title,doc ? doc : document);
 }
 
 function refreshColorPalette(title)
@@ -6343,7 +6670,7 @@ function refreshAll()
 	refreshDisplay();
 	refreshStyles("StyleSheetLayout");
 	refreshStyles("StyleSheetColors");
-	refreshStyles("StyleSheet");
+	refreshStyles(config.refreshers.styleSheet);
 	refreshStyles("StyleSheetPrint");
 }
 
@@ -6658,7 +6985,6 @@ function saveChanges(onlyIfDirty,tiddlers)
 
 function saveBackup(localPath,original)
 {
-	// Save the backup
 	if(config.options.chkSaveBackups) {
 		var backupPath = getBackupPath(localPath);
 		var backup = config.browser.isIE ? ieCopyFile(backupPath,localPath) : saveFile(backupPath,original);
@@ -6745,19 +7071,22 @@ function getLocalPath(origPath)
 	return localPath;
 }
 
-function getBackupPath(localPath)
+function getBackupPath(localPath,title,extension)
 {
-	var backSlash = true;
+	var slash = "\\";
 	var dirPathPos = localPath.lastIndexOf("\\");
 	if(dirPathPos == -1) {
 		dirPathPos = localPath.lastIndexOf("/");
-		backSlash = false;
+		slash = "/";
 	}
 	var backupFolder = config.options.txtBackupFolder;
 	if(!backupFolder || backupFolder == "")
 		backupFolder = ".";
-	var backupPath = localPath.substr(0,dirPathPos) + (backSlash ? "\\" : "/") + backupFolder + localPath.substr(dirPathPos);
-	backupPath = backupPath.substr(0,backupPath.lastIndexOf(".")) + "." + (new Date()).convertToYYYYMMDDHHMMSSMMM() + ".html";
+	var backupPath = localPath.substr(0,dirPathPos) + slash + backupFolder + localPath.substr(dirPathPos);
+	backupPath = backupPath.substr(0,backupPath.lastIndexOf(".")) + ".";
+	if(title)
+		backupPath += title.replace(/[\\\/\*\?\":<> ]/g,"_") + ".";
+	backupPath += (new Date()).convertToYYYYMMDDHHMMSSMMM() + "." + (extension ? extension : "html");
 	return backupPath;
 }
 
@@ -6783,8 +7112,9 @@ function generateRss()
 	// The body
 	var tiddlers = store.getTiddlers("modified","excludeLists");
 	var n = config.numRssItems > tiddlers.length ? 0 : tiddlers.length-config.numRssItems;
-	for (var t=tiddlers.length-1; t>=n; t--)
-		s.push(tiddlers[t].saveToRss(u));
+	for (var t=tiddlers.length-1; t>=n; t--) {
+		s.push("<item>\n" + tiddlers[t].toRssItem(u) + "\n</item>");
+	}
 	// And footer
 	s.push("</channel>");
 	s.push("</rss>");
@@ -6901,9 +7231,39 @@ function loadFile(fileUrl)
 	return r;
 }
 
+function ieCreatePath(path)
+{
+	try {
+		var fso = new ActiveXObject("Scripting.FileSystemObject");
+	} catch(ex) {
+		return null;
+	}
+
+	var pos = path.lastIndexOf("\\");
+	if(pos!=-1)
+		path = path.substring(0, pos+1);
+
+	var scan = [];
+	scan.push(path);
+	var i = 0;
+	do {
+		var parent = fso.GetParentFolderName(scan[i++]);
+		if (fso.FolderExists(parent))
+			break;
+		scan.push(parent);
+	} while(true);
+
+	for(i=scan.length-1;i>=0;i--) {
+		if (!fso.FolderExists(scan[i]))
+			fso.CreateFolder(scan[i]);
+	}
+	return true;
+}
+
 // Returns null if it can't do it, false if there's an error, true if it saved OK
 function ieSaveFile(filePath,content)
 {
+	ieCreatePath(filePath);
 	try {
 		var fso = new ActiveXObject("Scripting.FileSystemObject");
 	} catch(ex) {
@@ -6931,6 +7291,7 @@ function ieLoadFile(filePath)
 
 function ieCopyFile(dest,source)
 {
+	ieCreatePath(dest);
 	try {
 		var fso = new ActiveXObject("Scripting.FileSystemObject");
 		fso.GetFile(source).Copy(dest);
@@ -7034,7 +7395,7 @@ function javaLoadFile(filePath)
 }
 
 //--
-//-- Server adaptor for talking to static files
+//-- Server adaptor for talking to static TiddlyWiki files
 //--
 
 function FileAdaptor()
@@ -7044,76 +7405,116 @@ function FileAdaptor()
 	return this;
 }
 
-FileAdaptor.NotLoadedError = "TiddlyWiki file has not been loaded";
 FileAdaptor.serverType = 'file';
 
-// Open the specified host/server
+FileAdaptor.prototype.setContext = function(context,userParams,callback)
+{
+	if(!context) context = {};
+	context.userParams = userParams;
+	if(callback) context.callback = callback;
+	context.adaptor = this;
+	if(!context.host)
+		context.host = this.host;
+	context.host = FileAdaptor.fullHostName(context.host);
+	if(!context.workspace)
+		context.workspace = this.workspace;
+	return context;
+};
+
+FileAdaptor.fullHostName = function(host)
+{
+	if(!host)
+		return '';
+	if(!host.match(/:\/\//))
+		host = 'http://' + host;
+	return host;
+};
+
+FileAdaptor.minHostName = function(host)
+{
+	return host ? host.replace(/^http:\/\//,'').replace(/\/$/,'') : '';
+};
+
+// Open the specified host
 FileAdaptor.prototype.openHost = function(host,context,userParams,callback)
 {
 	this.host = host;
-	if(!context)
-		context = {};
-	context.adaptor = this;
-	context.callback = callback;
-	context.userParams = userParams;
-	var ret = loadRemoteFile(host,FileAdaptor.openHostCallback,context);
-	return typeof(ret) == "string" ? ret : true;
+	context = this.setContext(context,userParams,callback);
+	context.status = true;
+	if(callback)
+		window.setTimeout(function() {callback(context,userParams);},10);
+	return true;
 };
 
-FileAdaptor.openHostCallback = function(status,context,responseText,url,xhr)
+FileAdaptor.loadTiddlyWikiCallback = function(status,context,responseText,url,xhr)
 {
-	var adaptor = context.adaptor;
 	context.status = status;
 	if(!status) {
 		context.statusText = "Error reading file: " + xhr.statusText;
 	} else {
-		// Load the content into a TiddlyWiki() object
-		adaptor.store = new TiddlyWiki();
-		if(!adaptor.store.importTiddlyWiki(responseText))
+		context.adaptor.store = new TiddlyWiki();
+		if(!context.adaptor.store.importTiddlyWiki(responseText))
 			context.statusText = config.messages.invalidFileError.format([url]);
 	}
-	context.callback(context,context.userParams);
+	context.complete(context,context.userParams);
 };
 
-// Gets the list of workspaces on a given server
+// Get the list of workspaces on a given server
 FileAdaptor.prototype.getWorkspaceList = function(context,userParams,callback)
 {
-	if(!context)
-		context = {};
+	context = this.setContext(context,userParams,callback);
 	context.workspaces = [{title:"(default)"}];
 	context.status = true;
-	window.setTimeout(function() {callback(context,userParams);},10);
+	if(callback)
+		window.setTimeout(function() {callback(context,userParams);},10);
 	return true;
 };
 
 // Open the specified workspace
 FileAdaptor.prototype.openWorkspace = function(workspace,context,userParams,callback)
 {
-	if(!context)
-		context = {};
+	this.workspace = workspace;
+	context = this.setContext(context,userParams,callback);
 	context.status = true;
-	window.setTimeout(function() {callback(context,userParams);},10);
+	if(callback)
+		window.setTimeout(function() {callback(context,userParams);},10);
 	return true;
 };
 
 // Gets the list of tiddlers within a given workspace
 FileAdaptor.prototype.getTiddlerList = function(context,userParams,callback,filter)
 {
-	if(!this.store)
-		return FileAdaptor.NotLoadedError;
-	if(!context)
-		context = {};
-	if(filter) {
-		context.tiddlers = this.store.filterTiddlers(filter);
+	context = this.setContext(context,userParams,callback);
+	if(!context.filter)
+		context.filter = filter;
+	context.complete = FileAdaptor.getTiddlerListComplete;
+	if(this.store) {
+		var ret = context.complete(context,context.userParams);
+	} else {
+		ret = loadRemoteFile(context.host,FileAdaptor.loadTiddlyWikiCallback,context);
+		if(typeof ret != "string")
+			ret = true;
+	}
+	return ret;
+};
+
+FileAdaptor.getTiddlerListComplete = function(context,userParams)
+{
+	if(context.filter) {
+		context.tiddlers = context.adaptor.store.filterTiddlers(context.filter);
 	} else {
 		context.tiddlers = [];
-		this.store.forEachTiddler(function(title,tiddler) {context.tiddlers.push(tiddler);});
+		context.adaptor.store.forEachTiddler(function(title,tiddler) {context.tiddlers.push(tiddler);});
 	}
-	for(var t=0; t<context.tiddlers.length; t++) {
-		context.tiddlers[t].fields['server.page.revision'] = context.tiddlers[t].modified.convertToYYYYMMDDHHMM();
+	for(var i=0; i<context.tiddlers.length; i++) {
+		context.tiddlers[i].fields['server.type'] = FileAdaptor.serverType;
+		context.tiddlers[i].fields['server.host'] = FileAdaptor.minHostName(context.host);
+		context.tiddlers[i].fields['server.page.revision'] = context.tiddlers[i].modified.convertToYYYYMMDDHHMM();
 	}
 	context.status = true;
-	window.setTimeout(function() {callback(context,userParams);},10);
+	if(context.callback) {
+		window.setTimeout(function() {context.callback(context,userParams);},10);
+	}
 	return true;
 };
 
@@ -7124,23 +7525,28 @@ FileAdaptor.prototype.generateTiddlerInfo = function(tiddler)
 	return info;
 };
 
-// Retrieves a tiddler from a given workspace on a given server
+// Retrieve a tiddler from a given workspace on a given server
 FileAdaptor.prototype.getTiddler = function(title,context,userParams,callback)
 {
-	if(!this.store)
-		return FileAdaptor.NotLoadedError;
-	if(!context)
-		context = {};
-	context.tiddler = this.store.fetchTiddler(title);
-	if(context.tiddler) {
-		context.tiddler.fields['server.type'] = FileAdaptor.serverType;
-		context.tiddler.fields['server.host'] = this.host;
-		context.tiddler.fields['server.page.revision'] = context.tiddler.modified.convertToYYYYMMDDHHMM();
-	}
+	context = this.setContext(context,userParams,callback);
+	context.title = title;
+	context.complete = FileAdaptor.getTiddlerComplete;
+	return context.adaptor.store ? 
+		context.complete(context,context.userParams) :
+		loadRemoteFile(context.host,FileAdaptor.loadTiddlyWikiCallback,context);
+};
+
+FileAdaptor.getTiddlerComplete = function(context,userParams)
+{
+	var t = context.adaptor.store.fetchTiddler(context.title);
+	t.fields['server.type'] = FileAdaptor.serverType;
+	t.fields['server.host'] = FileAdaptor.minHostName(context.host);
+	t.fields['server.page.revision'] = t.modified.convertToYYYYMMDDHHMM();
+	context.tiddler = t;
 	context.status = true;
 	if(context.allowSynchronous) {
 		context.isSynchronous = true;
-		callback(context,userParams);
+		context.callback(context,userParams);
 	} else {
 		window.setTimeout(function() {callback(context,userParams);},10);
 	}
@@ -7182,8 +7588,13 @@ function doHttp(type,url,data,contentType,username,password,callback,params,head
 	if(!x)
 		return "Can't create XMLHttpRequest object";
 	x.onreadystatechange = function() {
-		if (x.readyState == 4 && callback && (x.status !== undefined)) {
-			if([0, httpStatus.OK, httpStatus.ContentCreated, httpStatus.NoContent, httpStatus.MultiStatus].contains(x.status))
+		try {
+			var status = x.status;
+		} catch(ex) {
+			status = false;
+		}
+		if (x.readyState == 4 && callback && (status !== undefined)) {
+			if([0, httpStatus.OK, httpStatus.ContentCreated, httpStatus.NoContent, httpStatus.MultiStatus].contains(status))
 				callback(true,params,x.responseText,url,x);
 			else
 				callback(false,params,null,url,x);
@@ -7244,9 +7655,9 @@ function createTiddlyButton(parent,text,tooltip,action,className,id,accessKey,at
 	btn.className = className ? className : "button";
 	if(id)
 		btn.id = id;
-	if(attribs){
-		for(var n in attribs){
-			e.setAttribute(n,attribs[n]);
+	if(attribs) {
+		for(var n in attribs) {
+			btn.setAttribute(n,attribs[n]);
 		}
 	}
 	if(parent)
@@ -7302,7 +7713,7 @@ function getTiddlyLinkInfo(title,currClasses)
 			classes.remove("shadow");
 		}
 	}
-	if(config.annotations[title])
+	if(typeof config.annotations[title]=="string")
 		subTitle = config.annotations[title];
 	return {classes: classes.join(" "),subTitle: subTitle};
 }
@@ -7404,10 +7815,7 @@ function onClickTagOpenAll(ev)
 	var e = ev ? ev : window.event;
 	var tag = this.getAttribute("tag");
 	var tagged = store.getTaggedTiddlers(tag);
-	var titles = [];
-	for(var t=0; t<tagged.length; t++)
-		titles.push(tagged[t].title);
-	story.displayTiddlers(this,titles);
+	story.displayTiddlers(this,tagged);
 	return false;
 }
 
@@ -7511,6 +7919,7 @@ function glyph(name)
 	return g.codes[name][b];
 }
 
+
 //-
 //- Animation engine
 //-
@@ -7524,7 +7933,7 @@ function Animator()
 }
 
 // Start animation engine
-Animator.prototype.startAnimating = function() // Variable number of arguments
+Animator.prototype.startAnimating = function() //# Variable number of arguments
 {
 	for(var t=0; t<arguments.length; t++)
 		this.animations.push(arguments[t]);
@@ -7551,7 +7960,6 @@ Animator.prototype.doAnimate = function(me)
 	}
 };
 
-// Map a 0..1 value to 0..1, but slow down at the start and end
 Animator.slowInSlowOut = function(progress)
 {
 	return(1-((Math.cos(progress * Math.PI)+1)/2));
@@ -8193,7 +8601,15 @@ Array.prototype.remove = function(item)
 		this.splice(p,1);
 };
 
-// Get characters from the right end of a string
+if(!Array.prototype.map){
+Array.prototype.map = function(fn, thisObj) {
+    var scope = thisObj || window;
+    var a = [];
+    for ( var i=0, j=this.length; i < j; ++i ) {
+        a.push(fn.call(scope, this[i], i, this));
+    }
+    return a;
+};}// Get characters from the right end of a string
 String.prototype.right = function(n)
 {
 	return n < this.length ? this.slice(this.length-n) : this;
@@ -8579,143 +8995,6 @@ Date.convertFromYYYYMMDDHHMM = function(d)
 };
 
 //--
-//-- Crypto functions and associated conversion routines
-//--
-
-// Crypto "namespace"
-function Crypto() {}
-
-// Convert a string to an array of big-endian 32-bit words
-Crypto.strToBe32s = function(str)
-{
-	var be = Array();
-	var len = Math.floor(str.length/4);
-	var i, j;
-	for(i=0, j=0; i<len; i++, j+=4) {
-		be[i] = ((str.charCodeAt(j)&0xff) << 24)|((str.charCodeAt(j+1)&0xff) << 16)|((str.charCodeAt(j+2)&0xff) << 8)|(str.charCodeAt(j+3)&0xff);
-	}
-	while (j<str.length) {
-		be[j>>2] |= (str.charCodeAt(j)&0xff)<<(24-(j*8)%32);
-		j++;
-	}
-	return be;
-};
-
-// Convert an array of big-endian 32-bit words to a string
-Crypto.be32sToStr = function(be)
-{
-	var str = "";
-	for(var i=0;i<be.length*32;i+=8)
-		str += String.fromCharCode((be[i>>5]>>>(24-i%32)) & 0xff);
-	return str;
-};
-
-// Convert an array of big-endian 32-bit words to a hex string
-Crypto.be32sToHex = function(be)
-{
-	var hex = "0123456789ABCDEF";
-	var str = "";
-	for(var i=0;i<be.length*4;i++)
-		str += hex.charAt((be[i>>2]>>((3-i%4)*8+4))&0xF) + hex.charAt((be[i>>2]>>((3-i%4)*8))&0xF);
-	return str;
-};
-
-// Return, in hex, the SHA-1 hash of a string
-Crypto.hexSha1Str = function(str)
-{
-	return Crypto.be32sToHex(Crypto.sha1Str(str));
-};
-
-// Return the SHA-1 hash of a string
-Crypto.sha1Str = function(str)
-{
-	return Crypto.sha1(Crypto.strToBe32s(str),str.length);
-};
-
-// Calculate the SHA-1 hash of an array of blen bytes of big-endian 32-bit words
-Crypto.sha1 = function(x,blen)
-{
-	// Add 32-bit integers, wrapping at 32 bits
-	add32 = function(a,b)
-	{
-		var lsw = (a&0xFFFF)+(b&0xFFFF);
-		var msw = (a>>16)+(b>>16)+(lsw>>16);
-		return (msw<<16)|(lsw&0xFFFF);
-	};
-	// Add five 32-bit integers, wrapping at 32 bits
-	add32x5 = function(a,b,c,d,e)
-	{
-		var lsw = (a&0xFFFF)+(b&0xFFFF)+(c&0xFFFF)+(d&0xFFFF)+(e&0xFFFF);
-		var msw = (a>>16)+(b>>16)+(c>>16)+(d>>16)+(e>>16)+(lsw>>16);
-		return (msw<<16)|(lsw&0xFFFF);
-	};
-	// Bitwise rotate left a 32-bit integer by 1 bit
-	rol32 = function(n)
-	{
-		return (n>>>31)|(n<<1);
-	};
-
-	var len = blen*8;
-	// Append padding so length in bits is 448 mod 512
-	x[len>>5] |= 0x80 << (24-len%32);
-	// Append length
-	x[((len+64>>9)<<4)+15] = len;
-	var w = Array(80);
-
-	var k1 = 0x5A827999;
-	var k2 = 0x6ED9EBA1;
-	var k3 = 0x8F1BBCDC;
-	var k4 = 0xCA62C1D6;
-
-	var h0 = 0x67452301;
-	var h1 = 0xEFCDAB89;
-	var h2 = 0x98BADCFE;
-	var h3 = 0x10325476;
-	var h4 = 0xC3D2E1F0;
-
-	for(var i=0;i<x.length;i+=16) {
-		var j,t;
-		var a = h0;
-		var b = h1;
-		var c = h2;
-		var d = h3;
-		var e = h4;
-		for(j = 0;j<16;j++) {
-			w[j] = x[i+j];
-			t = add32x5(e,(a>>>27)|(a<<5),d^(b&(c^d)),w[j],k1);
-			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-		}
-		for(j=16;j<20;j++) {
-			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
-			t = add32x5(e,(a>>>27)|(a<<5),d^(b&(c^d)),w[j],k1);
-			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-		}
-		for(j=20;j<40;j++) {
-			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
-			t = add32x5(e,(a>>>27)|(a<<5),b^c^d,w[j],k2);
-			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-		}
-		for(j=40;j<60;j++) {
-			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
-			t = add32x5(e,(a>>>27)|(a<<5),(b&c)|(d&(b|c)),w[j],k3);
-			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-		}
-		for(j=60;j<80;j++) {
-			w[j] = rol32(w[j-3]^w[j-8]^w[j-14]^w[j-16]);
-			t = add32x5(e,(a>>>27)|(a<<5),b^c^d,w[j],k4);
-			e=d; d=c; c=(b>>>2)|(b<<30); b=a; a = t;
-		}
-
-		h0 = add32(h0,a);
-		h1 = add32(h1,b);
-		h2 = add32(h2,c);
-		h3 = add32(h3,d);
-		h4 = add32(h4,e);
-	}
-	return Array(h0,h1,h2,h3,h4);
-};
-
-//--
 //-- RGB colour object
 //--
 
@@ -8906,6 +9185,14 @@ function resolveTarget(e)
 	return obj;
 }
 
+// Prevent an event from bubbling
+function stopEvent(e){
+	var ev = e? e : window.event;
+	ev.cancelBubble = true;
+	if (ev.stopPropagation) ev.stopPropagation();
+	return false;	
+}
+
 // Return the content of an element as plain text with no formatting
 function getPlainText(e)
 {
@@ -9062,6 +9349,13 @@ function setStylesheet(s,id,doc)
 			doc.getElementsByTagName("head")[0].appendChild(n);
 		}
 	}
+}
+
+function removeStyleSheet(id)
+{
+	var e = document.getElementById(id);
+	if(e)
+		e.parentNode.removeChild(e);
 }
 
 // Force the browser to do a document reflow when needed to workaround browser bugs
@@ -9244,95 +9538,6 @@ TW21Saver.prototype.externalizeTiddler = function(store,tiddler)
 	}
 };
 
-//--
-//-- Deprecated code
-//--
-
-// @Deprecated: Use createElementAndWikify and this.termRegExp instead
-config.formatterHelpers.charFormatHelper = function(w)
-{
-	w.subWikify(createTiddlyElement(w.output,this.element),this.terminator);
-};
-
-// @Deprecated: Use enclosedTextHelper and this.lookaheadRegExp instead
-config.formatterHelpers.monospacedByLineHelper = function(w)
-{
-	var lookaheadRegExp = new RegExp(this.lookahead,"mg");
-	lookaheadRegExp.lastIndex = w.matchStart;
-	var lookaheadMatch = lookaheadRegExp.exec(w.source);
-	if(lookaheadMatch && lookaheadMatch.index == w.matchStart) {
-		var text = lookaheadMatch[1];
-		if(config.browser.isIE)
-			text = text.replace(/\n/g,"\r");
-		createTiddlyElement(w.output,"pre",null,null,text);
-		w.nextMatch = lookaheadRegExp.lastIndex;
-	}
-};
-
-// @Deprecated: Use <br> or <br /> instead of <<br>>
-config.macros.br = {};
-config.macros.br.handler = function(place)
-{
-	createTiddlyElement(place,"br");
-};
-
-// Find an entry in an array. Returns the array index or null
-// @Deprecated: Use indexOf instead
-Array.prototype.find = function(item)
-{
-	var i = this.indexOf(item);
-	return i == -1 ? null : i;
-};
-
-// Load a tiddler from an HTML DIV. The caller should make sure to later call Tiddler.changed()
-// @Deprecated: Use store.getLoader().internalizeTiddler instead
-Tiddler.prototype.loadFromDiv = function(divRef,title)
-{
-	return store.getLoader().internalizeTiddler(store,this,title,divRef);
-};
-
-// Format the text for storage in an HTML DIV
-// @Deprecated Use store.getSaver().externalizeTiddler instead.
-Tiddler.prototype.saveToDiv = function()
-{
-	return store.getSaver().externalizeTiddler(store,this);
-};
-
-// @Deprecated: Use store.allTiddlersAsHtml() instead
-function allTiddlersAsHtml()
-{
-	return store.allTiddlersAsHtml();
-}
-
-// @Deprecated: Use refreshPageTemplate instead
-function applyPageTemplate(title)
-{
-	refreshPageTemplate(title);
-}
-
-// @Deprecated: Use story.displayTiddlers instead
-function displayTiddlers(srcElement,titles,template,unused1,unused2,animate,unused3)
-{
-	story.displayTiddlers(srcElement,titles,template,animate);
-}
-
-// @Deprecated: Use story.displayTiddler instead
-function displayTiddler(srcElement,title,template,unused1,unused2,animate,unused3)
-{
-	story.displayTiddler(srcElement,title,template,animate);
-}
-
-// @Deprecated: Use functions on right hand side directly instead
-var createTiddlerPopup = Popup.create;
-var scrollToTiddlerPopup = Popup.show;
-var hideTiddlerPopup = Popup.remove;
-
-// @Deprecated: Use right hand side directly instead
-var regexpBackSlashEn = new RegExp("\\\\n","mg");
-var regexpBackSlash = new RegExp("\\\\","mg");
-var regexpBackSlashEss = new RegExp("\\\\s","mg");
-var regexpNewLine = new RegExp("\n","mg");
-var regexpCarriageReturn = new RegExp("\r","mg");
 //--
 //-- End of scripts
 //--
