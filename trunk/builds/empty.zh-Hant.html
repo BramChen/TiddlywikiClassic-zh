@@ -1407,7 +1407,7 @@ config.macros = {
 	tabs: {},
 	gradient: {},
 	message: {},
-	view: {},
+	view: {defaultView: "text"},
 	edit: {},
 	tagChooser: {},
 	toolbar: {},
@@ -2920,7 +2920,7 @@ function wikify(source,output,highlightRegExp,tiddler)
 {
 	if(source && source != "") {
 		var wikifier = new Wikifier(source,getParser(tiddler),highlightRegExp,tiddler);
-		wikifier.subWikifyUnterm(output);
+		wikifier.subWikify(output);
 	}
 }
 
@@ -2932,7 +2932,7 @@ function wikifyStatic(source,highlightRegExp,tiddler,format)
 	if(source && source != "") {
 		var wikifier = new Wikifier(source,getParser(tiddler,format),highlightRegExp,tiddler);
 		wikifier.isStatic = true;
-		wikifier.subWikifyUnterm(e);
+		wikifier.subWikify(e);
 		html = e.innerHTML;
 		removeNode(e);
 	}
@@ -2986,6 +2986,7 @@ function Wikifier(source,formatter,highlightRegExp,tiddler)
 Wikifier.prototype.wikifyPlain = function()
 {
 	var e = createTiddlyElement(document.body,"div");
+	e.style.display = "none";
 	this.subWikify(e);
 	var text = getPlainText(e);
 	removeNode(e);
@@ -2994,10 +2995,14 @@ Wikifier.prototype.wikifyPlain = function()
 
 Wikifier.prototype.subWikify = function(output,terminator)
 {
-	if(terminator)
-		this.subWikifyTerm(output,new RegExp("(" + terminator + ")","mg"));
-	else
-		this.subWikifyUnterm(output);
+	try {
+		if(terminator)
+			this.subWikifyTerm(output,new RegExp("(" + terminator + ")","mg"));
+		else
+			this.subWikifyUnterm(output);
+	} catch(ex) {
+		showException(ex);
+	}
 };
 
 Wikifier.prototype.subWikifyUnterm = function(output)
@@ -3378,15 +3383,38 @@ config.macros.gradient.handler = function(place,macroName,params,wikifier)
 config.macros.message.handler = function(place,macroName,params)
 {
 	if(params[0]) {
-		var m = config;
-		var p = params[0].split(".");
-		for(var t=0; t<p.length; t++) {
-			if(p[t] in m)
-				m = m[p[t]];
-			else
-				break;
-		}
+		var names = params[0].split(".");
+		var lookupMessage = function(root,nameIndex) {
+				if(names[nameIndex] in root) {
+					if(nameIndex < names.length-1)
+						return (lookupMessage(root[names[nameIndex]],nameIndex+1));
+					else
+						return root[names[nameIndex]];
+				} else
+					return null;
+			};
+		var m = lookupMessage(config,0);
+		if(m == null)
+			m = lookupMessage(window,0);
 		createTiddlyText(place,m.toString().format(params.splice(1)));
+	}
+};
+
+
+config.macros.view.views = {
+	text: function(value,place,params,wikifier,paramString,tiddler) {
+		highlightify(value,place,highlightHack,tiddler);
+	},
+	link: function(value,place,params,wikifier,paramString,tiddler) {
+		createTiddlyLink(place,value,true);
+	},
+	wikified: function(value,place,params,wikifier,paramString,tiddler) {
+		value = params[2] ? ("" + params[2]).format([value]) : value;
+		wikify(value,place,highlightHack,tiddler);
+	},
+	date: function(value,place,params,wikifier,paramString,tiddler) {
+		value = Date.convertFromYYYYMMDDHHMM(value);
+		createTiddlyText(place,value.formatString(params[2] ? params[2] : config.views.wikified.dateFormat));	
 	}
 };
 
@@ -3394,22 +3422,11 @@ config.macros.view.handler = function(place,macroName,params,wikifier,paramStrin
 {
 	if((tiddler instanceof Tiddler) && params[0]) {
 		var value = store.getValue(tiddler,params[0]);
-		if(value != undefined) {
-			switch(params[1]) {
-				case undefined:
-					highlightify(value,place,highlightHack,tiddler);
-					break;
-				case "link":
-					createTiddlyLink(place,value,true);
-					break;
-				case "wikified":
-					wikify(value,place,highlightHack,tiddler);
-					break;
-				case "date":
-					value = Date.convertFromYYYYMMDDHHMM(value);
-					createTiddlyText(place,value.formatString(params[2] ? params[2] : config.views.wikified.dateFormat));
-					break;
-			}
+		if(value) {
+			var type = params[1] ? params[1] : config.macros.view.defaultView;
+			var handler = config.macros.view.views[type];
+			if (handler)
+				handler(value,place,params,wikifier,paramString,tiddler);
 		}
 	}
 };
@@ -3597,8 +3614,8 @@ config.macros.newJournal.handler = function(place,macroName,params,wikifier,para
 config.macros.search.handler = function(place,macroName,params)
 {
 	var searchTimeout = null;
-	var btn = createTiddlyButton(place,this.label,this.prompt,this.onClick);
-	var txt = createTiddlyElement(place,"input",null,"txtOptionInput");
+	var btn = createTiddlyButton(place,this.label,this.prompt,this.onClick,"searchButton");
+	var txt = createTiddlyElement(place,"input",null,"txtOptionInput searchField");
 	if(params[0])
 		txt.value = params[0];
 	txt.onkeyup = this.onKeyPress;
@@ -3671,7 +3688,7 @@ config.macros.tabs.handler = function(place,macroName,params)
 {
 	var cookie = params[0];
 	var numTabs = (params.length-1)/3;
-	var wrapper = createTiddlyElement(null,"div",null,cookie);
+	var wrapper = createTiddlyElement(null,"div",null,"tabsetWrapper " + cookie);
 	var tabset = createTiddlyElement(wrapper,"div",null,"tabset");
 	tabset.setAttribute("cookie",cookie);
 	var validTab = false;
@@ -4385,7 +4402,7 @@ TiddlyWiki.prototype.getTiddlerText = function(title,defaultText)
 	if(tiddler) {
 		if(!section)
 			return tiddler.text;
-		var re = new RegExp("(^!{1,6}" + section.escapeRegExp() + ")","mg");
+		var re = new RegExp("(^!{1,6}" + section.escapeRegExp() + " *\n)","mg");
 		re.lastIndex = 0;
 		var match =  re.exec(tiddler.text);
 		if(match) {
@@ -4394,7 +4411,7 @@ TiddlyWiki.prototype.getTiddlerText = function(title,defaultText)
 			re2.lastIndex = 0;
 			match = re2.exec(t); //# search for the next heading
 			if(match)
-				t = t.substr(0,match.index);
+				t = t.substr(0,match.index-1);//# don't include final \n
 			return t;
 		}
 		return defaultText;
@@ -4787,7 +4804,7 @@ TiddlyWiki.prototype.filterTiddlers = function(filter)
 	var results = [];
 	if(filter) {
 		var tiddler;
-		var re = /([^ \[\]]+)|(?:\[([ \w]+)\[([^\]]+)\]\])|(?:\[\[([^\]]+)\]\])/mg;
+		var re = /([^\s\[\]]+)|(?:\[([ \w]+)\[([^\]]+)\]\])|(?:\[\[([^\]]+)\]\])/mg;
 		var match = re.exec(filter);
 		while(match) {
 			if(match[1] || match[4]) {
@@ -5176,26 +5193,21 @@ Story.prototype.refreshTiddler = function(title,template,force,customFields,defa
 			tiddlerElem.setAttribute("tags",tiddler.tags.join(" "));
 			tiddlerElem.setAttribute("tiddler",title);
 			tiddlerElem.setAttribute("template",template);
-			var me = this;
 			tiddlerElem.onmouseover = this.onTiddlerMouseOver;
 			tiddlerElem.onmouseout = this.onTiddlerMouseOut;
 			tiddlerElem.ondblclick = this.onTiddlerDblClick;
 			tiddlerElem[window.event?"onkeydown":"onkeypress"] = this.onTiddlerKeyPress;
-			var html = this.getTemplateForTiddler(title,template,tiddler);
-			tiddlerElem.innerHTML = html;
+			tiddlerElem.innerHTML = this.getTemplateForTiddler(title,template,tiddler);
 			applyHtmlMacros(tiddlerElem,tiddler);
 			if(store.getTaggedTiddlers(title).length > 0)
 				addClass(tiddlerElem,"isTag");
 			else
 				removeClass(tiddlerElem,"isTag");
-			if(!store.tiddlerExists(title)) {
-				if(store.isShadowTiddler(title))
-					addClass(tiddlerElem,"shadow");
-				else
-					addClass(tiddlerElem,"missing");
-			} else {
+			if(store.tiddlerExists(title)) {
 				removeClass(tiddlerElem,"shadow");
 				removeClass(tiddlerElem,"missing");
+			} else {
+				addClass(tiddlerElem,store.isShadowTiddler(title) ? "shadow" : "missing");
 			}
 			if(customFields)
 				this.addCustomFields(tiddlerElem,customFields);
@@ -5550,14 +5562,14 @@ Story.prototype.switchTheme = function(theme)
 		var name = config.notifyTiddlers[i].name;
 		switch(name) {
 		case "PageTemplate":
-			config.refreshers.pageTemplate = replaceNotification(i,config.refreshers.pageTemplate,getSlice(theme,name));
+			config.refresherData.pageTemplate = replaceNotification(i,config.refresherData.pageTemplate,getSlice(theme,name));
 			break;
 		case "StyleSheet":
-			removeStyleSheet(config.refreshers.styleSheet);
-			config.refreshers.styleSheet = replaceNotification(i,config.refreshers.styleSheet,getSlice(theme,name));
+			removeStyleSheet(config.refresherData.styleSheet);
+			config.refresherData.styleSheet = replaceNotification(i,config.refresherData.styleSheet,getSlice(theme,name));
 			break;
 		case "ColorPalette":
-			config.refreshers.colorPalette = replaceNotification(i,config.refreshers.colorPalette,getSlice(theme,name));
+			config.refresherData.colorPalette = replaceNotification(i,config.refresherData.colorPalette,getSlice(theme,name));
 			break;
 		default:
 			break;
@@ -6544,13 +6556,16 @@ config.refreshers = {
 		if(macro && macro.refresh)
 			macro.refresh(e,params);
 		return true;
-		},
-	styleSheet: "StyleSheet", 
-	defaultStyleSheet: "StyleSheet", 
-	pageTemplate: "PageTemplate", 
-	defaultPageTemplate: "PageTemplate", 
-	colorPalette: "ColorPalette", 
-	defaultColorPalette: "ColorPalette" 
+		}
+};
+
+config.refresherData = {
+	styleSheet: "StyleSheet",
+	defaultStyleSheet: "StyleSheet",
+	pageTemplate: "PageTemplate",
+	defaultPageTemplate: "PageTemplate",
+	colorPalette: "ColorPalette",
+	defaultColorPalette: "ColorPalette"
 };
 
 function refreshElements(root,changeList)
@@ -6606,15 +6621,15 @@ function refreshPageTemplate(title)
 	var wrapper = document.getElementById("contentWrapper");
 
 	isAvailable = function(title) { 
-		var s = title ? title.indexOf(config.textPrimitives.sectionSeparator) : -1; 
+		var s = title ? title.indexOf(config.textPrimitives.sectionSeparator) : -1;
 		if(s!=-1) 
 			title = title.substr(0,s); 
-		return store.tiddlerExists(title) || store.isShadowTiddler(title); 
+		return store.tiddlerExists(title) || store.isShadowTiddler(title);
  	};
 	if(!title || !isAvailable(title))
-		title = config.refreshers.pageTemplate;
+		title = config.refresherData.pageTemplate;
 	if(!isAvailable(title))
-		title = config.refreshers.defaultPageTemplate; //# this one is always avaialable
+		title = config.refresherData.defaultPageTemplate; //# this one is always avaialable
 	html = store.getRecursiveTiddlerText(title,null,10);
 	wrapper.innerHTML = html;
 	applyHtmlMacros(wrapper);
@@ -6670,7 +6685,7 @@ function refreshAll()
 	refreshDisplay();
 	refreshStyles("StyleSheetLayout");
 	refreshStyles("StyleSheetColors");
-	refreshStyles(config.refreshers.styleSheet);
+	refreshStyles(config.refresherData.styleSheet);
 	refreshStyles("StyleSheetPrint");
 }
 
@@ -7442,7 +7457,7 @@ FileAdaptor.prototype.openHost = function(host,context,userParams,callback)
 	context = this.setContext(context,userParams,callback);
 	context.status = true;
 	if(callback)
-		window.setTimeout(function() {callback(context,userParams);},10);
+		window.setTimeout(function() {context.callback(context,userParams);},10);
 	return true;
 };
 
@@ -8928,6 +8943,9 @@ Date.prototype.formatString = function(template)
 	t = t.replace(/0DD/g,String.zeroPad(this.getDate(),2));
 	t = t.replace(/DDth/g,this.getDate()+this.daySuffix());
 	t = t.replace(/DD/g,this.getDate());
+	var tz = this.getTimezoneOffset();
+	var atz = Math.abs(tz);
+	t = t.replace(/TZD/g,(tz < 0 ? '+' : '-') + String.zeroPad(Math.floor(atz / 60),2) + ':' + String.zeroPad(atz % 60,2));
 	return t;
 };
 
