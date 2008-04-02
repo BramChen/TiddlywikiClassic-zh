@@ -505,7 +505,7 @@ Also see AdvancedOptions</pre>
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hans/locale.zh-Hans.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''Version:''|2.3.0|
-|''Date:''|Jan 19, 2008|
+|''Date:''|Apr 2, 2008|
 |''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.2.0|
@@ -922,7 +922,8 @@ merge(config.shadowTiddlers,{
 	SideBarOptions: '&lt;&lt;search&gt;&gt;&lt;&lt;closeAll&gt;&gt;&lt;&lt;permaview&gt;&gt;&lt;&lt;newTiddler&gt;&gt;&lt;&lt;newJournal &quot; YYYY年0MM月0DD日&quot; &quot;日志&quot;&gt;&gt;&lt;&lt;saveChanges&gt;&gt;&lt;&lt;slider chkSliderOptionsPanel OptionsPanel  &quot;偏好设置 »&quot; &quot;变更 TiddlyWiki 选项&quot;&gt;&gt;',
 	SideBarTabs: '&lt;&lt;tabs txtMainTab &quot;最近更新&quot; &quot;依更新日期排序&quot; TabTimeline &quot;全部&quot; &quot;所有文章&quot; TabAll &quot;分类&quot; &quot;所有标签&quot; TabTags &quot;更多&quot; &quot;其他&quot; TabMore&gt;&gt;',
 	StyleSheet: '[[StyleSheetLocale]]',
-	TabMore: '&lt;&lt;tabs txtMoreTab &quot;未完成&quot; &quot;内容空白的文章&quot; TabMoreMissing &quot;未引用&quot; &quot;未被引用的文章&quot; TabMoreOrphans &quot;默认文章&quot; &quot;默认的影子文章&quot; TabMoreShadowed&gt;&gt;'});
+	TabMore: '&lt;&lt;tabs txtMoreTab &quot;未完成&quot; &quot;内容空白的文章&quot; TabMoreMissing &quot;未引用&quot; &quot;未被引用的文章&quot; TabMoreOrphans &quot;默认文章&quot; &quot;默认的影子文章&quot; TabMoreShadowed&gt;&gt;',
+	ToolbarCommands: &quot;|~ViewToolbar|closeTiddler closeOthers +editTiddler &gt; fields syncing permalink references jump|\n|~EditToolbar|+saveTiddler -cancelTiddler deleteTiddler|&quot;});
 
 merge(config.annotations,{
 	AdvancedOptions: &quot;此默认文章可以存取一些进阶选项。&quot;,
@@ -935,7 +936,7 @@ merge(config.annotations,{
 	MarkupPreHead: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;head&gt; 段落的起始&quot;,
 	MarkupPostHead: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;head&gt; 段落的最后&quot;,
 	MarkupPreBody: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;body&gt; 段落的起始&quot;,
-	MarkupPostBody: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;body&gt; 段落的最后，于 script 区块之前&quot;,
+	MarkupPostBody: &quot;此文章的内容将加至 TiddlyWiki 文件的 &lt;body&gt; 段落的最后，于 script 区块之後&quot;,
 	OptionsPanel: &quot;此默认文章的内容，为于屏幕右侧副菜单中的选项面板里的内容&quot;,
 	PageTemplate: &quot;此默认文章里的 HTML template 决定的 ~TiddlyWiki 主要的版面配置&quot;,
 	PluginManager: &quot;此默认文章提供存取插件管理员&quot;,
@@ -944,9 +945,9 @@ merge(config.annotations,{
 	SiteSubtitle: &quot;此默认文章的内容为页面的副标题&quot;,
 	SiteTitle: &quot;此默认文章的内容为页面的主标题&quot;,
 	SiteUrl: &quot;此默认文章的内容须设定为文件发布时的完整网址&quot;,
-	StyleSheetColors: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的配色。''勿修改此文''，請於 StyleSheet 中作增修。&quot;,
+	StyleSheetColors: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的配色。''勿修改此文''，請於 StyleSheet 中作增修&quot;,
 	StyleSheet: &quot;此默认文章内容可包含 CSS 规则&quot;,
-	StyleSheetLayout: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的版面配置。''勿修改此文''，請於 StyleSheet 中作增修。&quot;,
+	StyleSheetLayout: &quot;此默认文章内含的 CSS 规则，为相关的页面元素的版面配置。''勿修改此文''，請於 StyleSheet 中作增修&quot;,
 	StyleSheetLocale: &quot;此默认文章内含的 CSS 规则，可依翻译语系做适当调整&quot;,
 	StyleSheetPrint: &quot;此默认文章内含的 CSS 规则，用于列印时的样式&quot;,
 	TabAll: &quot;此默认文章的内容，为于屏幕右侧的“全部”页签的内容&quot;,
@@ -956,6 +957,7 @@ merge(config.annotations,{
 	TabMoreShadowed: &quot;此默认文章的内容，为于屏幕右侧的“默认文章”页签的内容&quot;,
 	TabTags: &quot;此默认文章的内容，为于屏幕右侧的“分类”页签的内容&quot;,
 	TabTimeline: &quot;此默认文章的内容，为于屏幕右侧的“最近更新”页签的内容&quot;,
+	ToolbarCommands: &quot;此預設文章的內容，為顯示於文章工具列之命令&quot;,
 	ViewTemplate: &quot;此默认文章里的 HTML template 决定文章显示的样子&quot;
 	});
 //}}}</pre>
