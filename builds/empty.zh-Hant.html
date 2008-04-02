@@ -505,7 +505,7 @@ Also see AdvancedOptions</pre>
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''Version:''|2.3.0|
-|''Date:''|Jan 19, 2008|
+|''Date:''|Apr 2, 2008|
 |''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.2.0|
@@ -596,33 +596,32 @@ merge(config.messages.messageClose,{
 	text: &quot;關閉&quot;,
 	tooltip: &quot;關閉此訊息&quot;});
 
-config.messages.backstage = {
-	open: {text: &quot;控制台&quot;, tooltip: &quot;開啟控制台執行編寫工作&quot;},
-	close: {text: &quot;關閉&quot;, tooltip: &quot;關閉控制台&quot;},
-	prompt: &quot;控制台：&quot;,
-	decal: {
-		edit: {text: &quot;編輯&quot;, tooltip: &quot;編輯 '%0'&quot;}
-	}
-};
+merge(config.messages,{
+	backstage: {
+		open: {text: &quot;控制台&quot;, tooltip: &quot;開啟控制台執行編寫工作&quot;},
+		close: {text: &quot;關閉&quot;, tooltip: &quot;關閉控制台&quot;},
+		prompt: &quot;控制台：&quot;,
+		decal: {
+			edit: {text: &quot;編輯&quot;, tooltip: &quot;編輯 '%0'&quot;}
+		}}});
 
-config.messages.listView = {
-	tiddlerTooltip: &quot;檢視全文&quot;,
-	previewUnavailable: &quot;(無法預覽)&quot;
-};
+merge(config.messages,{
+	listView: {
+		tiddlerTooltip: &quot;檢視全文&quot;,
+		previewUnavailable: &quot;(無法預覽)&quot;}});
 
-config.messages.dates.months = [&quot;一月&quot;, &quot;二月&quot;, &quot;三月&quot;, &quot;四月&quot;, &quot;五月&quot;, &quot;六月&quot;, &quot;七月&quot;, &quot;八月&quot;, &quot;九月&quot;, &quot;十月&quot;, &quot;十一月&quot;, &quot;十二月&quot;];
-config.messages.dates.days = [&quot;星期日&quot;, &quot;星期一&quot;,&quot;星期二&quot;, &quot;星期三&quot;, &quot;星期四&quot;, &quot;星期五&quot;, &quot;星期六&quot;];
-// config.messages.dates.shortMonths = [&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;];
-config.messages.dates.shortMonths = [&quot;一&quot;, &quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;, &quot;七&quot;, &quot;八&quot;, &quot;九&quot;, &quot;十&quot;, &quot;十一&quot;, &quot;十二&quot;];
-// config.messages.dates.shortDays = [&quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;, &quot;Sat&quot;];
-config.messages.dates.shortDays = [&quot;日&quot;, &quot;一&quot;,&quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;];
-// suffixes for dates, eg &quot;1st&quot;,&quot;2nd&quot;,&quot;3rd&quot;...&quot;30th&quot;,&quot;31st&quot;
-config.messages.dates.daySuffixes = [&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,
+merge(config.messages,{
+	dates: {
+	months: [&quot;一月&quot;, &quot;二月&quot;, &quot;三月&quot;, &quot;四月&quot;, &quot;五月&quot;, &quot;六月&quot;, &quot;七月&quot;, &quot;八月&quot;, &quot;九月&quot;, &quot;十月&quot;, &quot;十一月&quot;, &quot;十二月&quot;],
+	days: [&quot;星期日&quot;, &quot;星期一&quot;,&quot;星期二&quot;, &quot;星期三&quot;, &quot;星期四&quot;, &quot;星期五&quot;, &quot;星期六&quot;],
+	shortMonths: [&quot;一&quot;, &quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;, &quot;七&quot;, &quot;八&quot;, &quot;九&quot;, &quot;十&quot;, &quot;十一&quot;, &quot;十二&quot;],
+	shortDays: [&quot;日&quot;, &quot;一&quot;,&quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;],
+	daySuffixes: [&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,
 		&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,
 		&quot;st&quot;,&quot;nd&quot;,&quot;rd&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,&quot;th&quot;,
-		&quot;st&quot;];
-config.messages.dates.am = &quot;上午&quot;;
-config.messages.dates.pm = &quot;下午&quot;;
+		&quot;st&quot;],
+	am: &quot;上午&quot;,
+	pm: &quot;下午&quot;}});
 
 merge(config.messages.tiddlerPopup,{ 
 	});
@@ -938,7 +937,7 @@ merge(config.annotations,{
 	MarkupPreHead: &quot;此文章的內容將加至 TiddlyWiki 文件的 &lt;head&gt; 段落的起始&quot;,
 	MarkupPostHead: &quot;此文章的內容將加至 TiddlyWiki 文件的 &lt;head&gt; 段落的最後&quot;,
 	MarkupPreBody: &quot;此文章的內容將加至 TiddlyWiki 文件的 &lt;body&gt; 段落的起始&quot;,
-	MarkupPostBody: &quot;此文章的內容將加至 TiddlyWiki 文件的 &lt;body&gt; 段落的最後，於 script 區塊之前&quot;,
+	MarkupPostBody: &quot;此文章的內容將加至 TiddlyWiki 文件的 &lt;body&gt; 段落的最後，於 script 區塊之後&quot;,
 	OptionsPanel: &quot;此預設文章的內容，為於螢幕右側副選單中的選項面板裡的內容&quot;,
 	PageTemplate: &quot;此預設文章裡的 HTML template 決定的 ~TiddlyWiki 主要的版面配置&quot;,
 	PluginManager: &quot;此預設文章提供存取套件管理員&quot;,
@@ -947,9 +946,9 @@ merge(config.annotations,{
 	SiteSubtitle: &quot;此預設文章的內容為頁面的副標題&quot;,
 	SiteTitle: &quot;此預設文章的內容為頁面的主標題&quot;,
 	SiteUrl: &quot;此預設文章的內容須設定為文件發佈時的完整網址&quot;,
-	StyleSheetColors: &quot;此預設文章內含的 CSS 規則，為相關的頁面元素的配色。''勿修改此文''，請於 StyleSheet 中作增修。&quot;,
+	StyleSheetColors: &quot;此預設文章內含的 CSS 規則，為相關的頁面元素的配色。''勿修改此文''，請於 StyleSheet 中作增修&quot;,
 	StyleSheet: &quot;此預設文章內容可包含 CSS 規則&quot;,
-	StyleSheetLayout: &quot;此預設文章內含的 CSS 規則，為相關的頁面元素的版面配置。''勿修改此文''，請於 StyleSheet 中作增修。&quot;,
+	StyleSheetLayout: &quot;此預設文章內含的 CSS 規則，為相關的頁面元素的版面配置。''勿修改此文''，請於 StyleSheet 中作增修&quot;,
 	StyleSheetLocale: &quot;此預設文章內含的 CSS 規則，可依翻譯語系做適當調整&quot;,
 	StyleSheetPrint: &quot;此預設文章內含的 CSS 規則，用於列印時的樣式&quot;,
 	TabAll: &quot;此預設文章的內容，為於螢幕右側副選單中的「全部」頁籤的內容&quot;,
@@ -959,6 +958,7 @@ merge(config.annotations,{
 	TabMoreShadowed: &quot;此預設文章的內容，為於螢幕右側副選單中的「預設文章」頁籤的內容&quot;,
 	TabTags: &quot;此預設文章的內容，為於螢幕右側副選單中的「分類」頁籤的內容&quot;,
 	TabTimeline: &quot;此預設文章的內容，為於螢幕右側副選單中的「最近更新」頁籤的內容&quot;,
+	ToolbarCommands: &quot;此預設文章的內容，為顯示於文章工具列之命令&quot;,
 	ViewTemplate: &quot;此預設文章裡的 HTML template 決定文章顯示的樣子&quot;
 	});
 //}}}</pre>
