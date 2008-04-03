@@ -497,7 +497,7 @@ Also see AdvancedOptions</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="locale.zh-Hant" modifier="BramChen" created="200611301200" modified="200801191200" tags="zh-Hant systemConfig excludeLists excludeSearch">
+<div title="locale.zh-Hant" modifier="BramChen" created="200611301200" modified="200804021200" tags="zh-Hant systemConfig excludeLists excludeSearch">
 <pre>/***
 |''Name:''|zh-HantTranslationPlugin|
 |''Description:''|Translation of TiddlyWiki into Traditional Chinese|
@@ -508,7 +508,7 @@ Also see AdvancedOptions</pre>
 |''Date:''|Apr 2, 2008|
 |''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
-|''~CoreVersion:''|2.2.0|
+|''~CoreVersion:''|2.3.0|
 ***/
 
 //{{{
@@ -924,7 +924,8 @@ merge(config.shadowTiddlers,{
 	SideBarOptions: '&lt;&lt;search&gt;&gt;&lt;&lt;closeAll&gt;&gt;&lt;&lt;permaview&gt;&gt;&lt;&lt;newTiddler&gt;&gt;&lt;&lt;newJournal &quot; YYYY年0MM月0DD日&quot; &quot;日誌&quot;&gt;&gt;&lt;&lt;saveChanges&gt;&gt;&lt;&lt;slider chkSliderOptionsPanel OptionsPanel  &quot;偏好設定 »&quot; &quot;變更 TiddlyWiki 選項&quot;&gt;&gt;',
 	SideBarTabs: '&lt;&lt;tabs txtMainTab &quot;最近更新&quot; &quot;依更新日期排序&quot; TabTimeline &quot;全部&quot; &quot;所有文章&quot; TabAll &quot;分類&quot; &quot;所有標籤&quot; TabTags &quot;更多&quot; &quot;其他&quot; TabMore&gt;&gt;',
 	StyleSheet: '[[StyleSheetLocale]]',
-	TabMore: '&lt;&lt;tabs txtMoreTab &quot;未完成&quot; &quot;內容空白的文章&quot; TabMoreMissing &quot;未引用&quot; &quot;未被引用的文章&quot; TabMoreOrphans &quot;預設文章&quot; &quot;已預設內容的隱藏文章&quot; TabMoreShadowed&gt;&gt;'});
+	TabMore: '&lt;&lt;tabs txtMoreTab &quot;未完成&quot; &quot;內容空白的文章&quot; TabMoreMissing &quot;未引用&quot; &quot;未被引用的文章&quot; TabMoreOrphans &quot;預設文章&quot; &quot;已預設內容的隱藏文章&quot; TabMoreShadowed&gt;&gt;',
+	ToolbarCommands: &quot;|~ViewToolbar|closeTiddler closeOthers +editTiddler &gt; fields syncing permalink references jump|\n|~EditToolbar|+saveTiddler -cancelTiddler deleteTiddler|&quot;});
 
 merge(config.annotations,{
 	AdvancedOptions: &quot;此預設文章可以存取一些進階選項。&quot;,
@@ -8051,8 +8052,10 @@ var Popup = {
 
 Popup.create = function(root,elem,theClass)
 {
-	Popup.remove();
+	var stackPosition = this.find(root,"popup");
+	Popup.remove(stackPosition+1);
 	var popup = createTiddlyElement(document.body,elem ? elem : "ol","popup",theClass ? theClass : "popup");
+	popup.stackPosition = stackPosition;
 	Popup.stack.push({root: root, popup: popup});
 	return popup;
 };
@@ -8067,10 +8070,10 @@ Popup.onDocumentClick = function(ev)
 	return true;
 };
 
-Popup.show = function(unused1,unused2)
+Popup.show = function(valign,halign,offset)
 {
 	var curr = Popup.stack[Popup.stack.length-1];
-	this.place(curr.root,curr.popup);
+	this.place(curr.root,curr.popup,valign,halign,offset);
 	addClass(curr.root,"highlight");
 	if(config.options.chkAnimate && anim && typeof Scroller == "function")
 		anim.startAnimating(new Scroller(curr.popup));
@@ -8078,30 +8081,51 @@ Popup.show = function(unused1,unused2)
 		window.scrollTo(0,ensureVisible(curr.popup));
 };
 
-Popup.place = function(root,popup,offset)
+Popup.place = function(root,popup,valign,halign,offset) 
 {
-	if(!offset) var offset = {x:0, y:0};
+	if(!offset)
+		var offset = {x:0,y:0};
+	if(popup.stackPosition >= 0 && !valign && !halign) {
+		offset.x = offset.x + root.offsetWidth;
+	} else {
+		offset.x = (halign == 'right') ? offset.x + root.offsetWidth : offset.x;
+		offset.y = (valign == 'top') ? offset.y : offset.y + root.offsetHeight;
+	}
 	var rootLeft = findPosX(root);
 	var rootTop = findPosY(root);
-	var rootHeight = root.offsetHeight;
 	var popupLeft = rootLeft + offset.x;
-	var popupTop = rootTop + rootHeight + offset.y;
+	var popupTop = rootTop + offset.y;
 	var winWidth = findWindowWidth();
 	if(popup.offsetWidth > winWidth*0.75)
 		popup.style.width = winWidth*0.75 + "px";
 	var popupWidth = popup.offsetWidth;
 	var scrollWidth = winWidth - document.body.offsetWidth;
-	if(popupLeft + popupWidth > winWidth - scrollWidth - 1)
-		popupLeft = winWidth - popupWidth - scrollWidth - 1;
+	if(popupLeft + popupWidth > winWidth - scrollWidth - 1) {
+		if(halign == 'right')
+			popupLeft = popupLeft - root.offsetWidth - popupWidth;
+		else
+			popupLeft = winWidth - popupWidth - scrollWidth - 1;
+	}
 	popup.style.left = popupLeft + "px";
 	popup.style.top = popupTop + "px";
 	popup.style.display = "block";
 };
 
-Popup.remove = function()
+Popup.find = function(e)
 {
-	if(Popup.stack.length > 0) {
-		Popup.removeFrom(0);
+	var pos = -1;
+	for (var t=this.stack.length-1; t>=0; t--) {
+		if(isDescendant(e,this.stack[t].popup))
+			pos = i;
+	}
+	return pos;		
+};
+
+Popup.remove = function(pos)
+{
+	if(!pos) var pos = 0;
+	if(Popup.stack.length > pos) {
+		Popup.removeFrom(pos);
 	}
 };
 
@@ -8114,7 +8138,6 @@ Popup.removeFrom = function(from)
 	}
 	Popup.stack = Popup.stack.slice(0,from);
 };
-
 //--
 //-- Wizard support
 //--
@@ -9480,7 +9503,16 @@ function getNodeText(e)
 	return t;
 }
 
-
+// Returns true if the element e has a given ancestor element
+function isDescendant(e,ancestor)
+{
+	while(e) {
+		if(e === ancestor)
+			return true;
+		e = e.parentNode;
+	}
+	return false;
+}
 //--
 //-- LoaderBase and SaverBase
 //--
