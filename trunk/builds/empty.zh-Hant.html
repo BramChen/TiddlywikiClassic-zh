@@ -3,7 +3,7 @@
 <head>
 <script id="versionArea" type="text/javascript">
 //<![CDATA[
-var version = {title: "TiddlyWiki", major: 2, minor: 4, revision: 0, beta: 2, date: new Date("Apr 18, 2008"), extensions: {}};
+var version = {title: "TiddlyWiki", major: 2, minor: 4, revision: 0, beta: 3, date: new Date("Apr 24, 2008"), extensions: {}};
 //]]>
 </script>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -497,7 +497,7 @@ Also see AdvancedOptions</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="locale.zh-Hant" modifier="BramChen" created="200611301200" modified="200804241200" tags="zh-Hant systemConfig excludeLists excludeSearch">
+<div title="locale.zh-Hant" modifier="BramChen" created="200611301200" modified="2008042541200" tags="zh-Hant systemConfig excludeLists excludeSearch">
 <pre>/***
 |''Name:''|zh-HantTranslationPlugin|
 |''Description:''|Translation of TiddlyWiki into Traditional Chinese|
@@ -505,7 +505,7 @@ Also see AdvancedOptions</pre>
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''Version:''|2.4.0|
-|''Date:''|Apr 24, 2008|
+|''Date:''|Apr 25, 2008|
 |''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''~CoreVersion:''|2.4.0|
@@ -537,6 +537,7 @@ merge(config.optionsDesc,{
 	txtUserName: &quot;編輯文章所使用之作者署名&quot;,
 	chkRegExpSearch: &quot;啟用正規式搜尋&quot;,
 	chkCaseSensitiveSearch: &quot;搜尋時，區分大小寫&quot;,
+	chkIncrementalSearch: &quot;隨打即找搜尋&quot;,
 	chkAnimate: &quot;使用動畫顯示&quot;,
 	chkSaveBackups: &quot;儲存變更前，保留備份檔案&quot;,
 	chkAutoSave: &quot;自動儲存變更&quot;,
@@ -815,6 +816,7 @@ merge(config.macros.upgrade,{
 	wizardTitle: &quot;更新 TiddlyWiki 核心程式&quot;,
 	step1Title: &quot;更新或修補此 TiddlyWiki 至最新版本&quot;,
 	step1Html: &quot;您將更新至最新版本的 TiddlyWiki 核心程式 (自 &lt;a href='%0' class='externalLink' target='_blank'&gt;%1&lt;/a&gt;)。 在更新過程中，您的資料將被保留。&lt;br&gt;&lt;br&gt;請注意：更新核心可能不相容於其他套件。若對更新的檔案有問題，詳見 &lt;a href='http://www.tiddlywiki.org/wiki/CoreUpgrades' class='externalLink' target='_blank'&gt;http://www.tiddlywiki.org/wiki/CoreUpgrades&lt;/a&gt;&quot;,
+	errorCantUpgrade: &quot;j無法更新此 TiddlyWiki. 您只能自本機端的 TiddlyWiki 檔案執行更新程序&quot;,
 	errorNotSaved: &quot;執行更新之前，請先儲存變更&quot;,
 	step2Title: &quot;確認更新步驟&quot;,
 	step2Html_downgrade: &quot;您的 TiddlyWiki 將自 %1 版降級至 %0版。&lt;br&gt;&lt;br&gt;不建議降級至較舊的版本。&quot;,
@@ -1050,6 +1052,7 @@ config.messages = {
 config.options = {
 	chkRegExpSearch: false,
 	chkCaseSensitiveSearch: false,
+	chkIncrementalSearch: true,
 	chkAnimate: true,
 	chkSaveBackups: true,
 	chkAutoSave: false,
@@ -1279,6 +1282,7 @@ merge(config.optionsDesc,{
 	txtUserName: "Username for signing your edits",
 	chkRegExpSearch: "Enable regular expressions for searches",
 	chkCaseSensitiveSearch: "Case-sensitive searching",
+	chkIncrementalSearch: "Incremental key-by-key searching",
 	chkAnimate: "Enable animations",
 	chkSaveBackups: "Keep backup file when saving changes",
 	chkAutoSave: "Automatically save changes",
@@ -1554,6 +1558,7 @@ merge(config.macros.upgrade,{
 	wizardTitle: "Upgrade TiddlyWiki core code",
 	step1Title: "Update or repair this TiddlyWiki to the latest release",
 	step1Html: "You are about to upgrade to the latest release of the TiddlyWiki core code (from <a href='%0' class='externalLink' target='_blank'>%1</a>). Your content will be preserved across the upgrade.<br><br>Note that core upgrades have been known to interfere with older plugins. If you run into problems with the upgraded file, see <a href='http://www.tiddlywiki.org/wiki/CoreUpgrades' class='externalLink' target='_blank'>http://www.tiddlywiki.org/wiki/CoreUpgrades</a>",
+	errorCantUpgrade: "Unable to upgrade this TiddlyWiki. You can only perform upgrades on TiddlyWiki files stored locally",
 	errorNotSaved: "You must save changes before you can perform an upgrade",
 	step2Title: "Confirm the upgrade details",
 	step2Html_downgrade: "You are about to downgrade to TiddlyWiki version %0 from %1.<br><br>Downgrading to an earlier version of the core code is not recommended",
@@ -3443,16 +3448,18 @@ config.macros.search.onKeyPress = function(ev)
 			clearMessage();
 			break;
 	}
-	if(this.value.length > 2) {
-		if(this.value != this.getAttribute("lastSearchText")) {
+	if(config.options.chkIncrementalSearch) {
+		if(this.value.length > 2) {
+			if(this.value != this.getAttribute("lastSearchText")) {
+				if(config.macros.search.timeout)
+					clearTimeout(config.macros.search.timeout);
+				var txt = this;
+				config.macros.search.timeout = setTimeout(function() {config.macros.search.doSearch(txt);},500);
+			}
+		} else {
 			if(config.macros.search.timeout)
 				clearTimeout(config.macros.search.timeout);
-			var txt = this;
-			config.macros.search.timeout = setTimeout(function() {config.macros.search.doSearch(txt);},500);
 		}
-	} else {
-		if(config.macros.search.timeout)
-			clearTimeout(config.macros.search.timeout);
 	}
 };
 
@@ -4610,10 +4617,9 @@ TiddlyWiki.prototype.filterTiddlers = function(filter)
 			} else if(match[2]) {
 				switch(match[2]) {
 					case "tag":
-						this.forEachTiddler(function(title,tiddler) {
-							if(tiddler.isTagged(match[3]))
-								results.pushUnique(tiddler);
-						});
+						var matched = this.getTaggedTiddlers(match[3]);
+						for(var m = 0; m < matched.length; m++)
+							results.pushUnique(matched[m]);
 						break;
 					case "sort":
 						results = this.sortTiddlers(results,match[3]);
@@ -5942,9 +5948,13 @@ config.macros.upgrade.onClickUpgrade = function(e)
 {
 	var me = config.macros.upgrade;
 	var w = new Wizard(this);
+	if(window.location.protocol != "file:") {
+		alert(me.errorCantUpgrade);
+		return false;
+	}	
 	if(story.areAnyDirty() || store.isDirty()) {
 		alert(me.errorNotSaved);
-		return;
+		return false;
 	}
 	var localPath = getLocalPath(document.location.toString());
 	var backupPath = getBackupPath(localPath,me.backupExtension);
@@ -5956,15 +5966,16 @@ config.macros.upgrade.onClickUpgrade = function(e)
 	if(backup != true) {
 		w.setButtons([],me.errorSavingBackup);
 		alert(me.errorSavingBackup);
-		return;
+		return false;
 	}
 	w.setButtons([],me.statusLoadingCore);
 	var load = loadRemoteFile(me.source,me.onLoadCore,w);
 	if(typeof load == "string") {
 		w.setButtons([],me.errorLoadingCore);
 		alert(me.errorLoadingCore);
-		return;
+		return false;
 	}
+	return false;
 };
 
 config.macros.upgrade.onLoadCore = function(status,params,responseText,url,xhr)
@@ -6002,6 +6013,7 @@ config.macros.upgrade.onCancel = function(e)
 	var w = new Wizard(this);
 	w.addStep(me.step3Title,me.step3Html);
 	w.setButtons([]);
+	return false;
 }
 
 config.macros.upgrade.extractVersion = function(upgradeFile)
@@ -6014,7 +6026,10 @@ config.macros.upgrade.extractVersion = function(upgradeFile)
 function upgradeFrom(path)
 {
 	var importStore = new TiddlyWiki();
-	importStore.importTiddlyWiki(loadFile(path));
+	var tw = loadFile(path);
+	if(window.netscape !== undefined)
+		tw = convertUTF8ToUnicode(tw);
+	importStore.importTiddlyWiki(tw);
 	importStore.forEachTiddler(function(title,tiddler) {
 		if(!store.getTiddler(title)) {
 			store.addTiddler(tiddler);
@@ -6845,7 +6860,7 @@ function updateMarkupBlock(s,blockName,tiddlerName)
 	return s.replaceChunk(
 			"<!--%0-START-->".format([blockName]),
 			"<!--%0-END-->".format([blockName]),
-			"\n" + store.getRecursiveTiddlerText(tiddlerName,"") + "\n");
+			"\n" + convertUnicodeToUTF8(store.getRecursiveTiddlerText(tiddlerName,"")) + "\n");
 }
 
 function updateOriginal(original,posDiv)
@@ -9511,8 +9526,8 @@ function removeStyleSheet(id)
 function forceReflow()
 {
 	if(config.browser.isGecko) {
-		setStylesheet("body {top:-1em;margin-top:1em;}");
-		setStylesheet("");
+		setStylesheet("body {top:0px;margin-top:0px;}","forceReflow");
+		setTimeout(function() {setStylesheet("","forceReflow");},1);
 	}
 }
 
