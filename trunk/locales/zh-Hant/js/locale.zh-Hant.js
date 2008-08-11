@@ -4,11 +4,11 @@
 |''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''Version:''|2.4.0|
-|''Date:''|Apr 25, 2008|
+|''Version:''|2.4.1|
+|''Date:''|Jul 28, 2008|
 |''Comments:''|Please make comments at http://groups-beta.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
-|''~CoreVersion:''|2.4.0|
+|''~CoreVersion:''|2.4.1|
 ***/
 
 //{{{
@@ -44,7 +44,7 @@ merge(config.optionsDesc,{
 	chkGenerateAnRssFeed: "儲存變更時，也儲存 RSS feed",
 	chkSaveEmptyTemplate: "儲存變更時，也儲存空白範本",
 	chkOpenInNewWindow: "於新視窗開啟連結",
-	chkToggleLinks: "點擊已開啟文章將其關閉",
+	chkToggleLinks: "點擊已開啟文章連結時，將其關閉",
 	chkHttpReadOnly: "非本機瀏覽文件時，隱藏編輯功能",
 	chkForceMinorUpdate: "修改文章時，不變更作者名稱與日期時間",
 	chkConfirmDelete: "刪除文章前須確認",
@@ -235,11 +235,11 @@ merge(config.macros.plugins,{
 	step1Html: "<input type='hidden' name='markList'></input>", // DO NOT TRANSLATE
 	skippedText: "(此套件因剛加入，故尚未執行)",
 	noPluginText: "未安裝套件",
-	confirmDeleteText: "確認是否刪除此文章:\n\n%0",
+	confirmDeleteText: "確認是否刪除所選套件:\n\n%0",
 	removeLabel: "移除 systemConfig 標籤",
 	removePrompt: "移除 systemConfig 標籤",
 	deleteLabel: "刪除",
-	deletePrompt: "永遠刪除所選",
+	deletePrompt: "永遠刪除所選套件",
 
 	listViewTemplate : {
 		columns: [
@@ -278,6 +278,7 @@ merge(config.macros.importTiddlers,{
 	openError: "讀取來源文件時發生錯誤",
 	statusOpenHost: "正與伺服器建立連線",
 	statusGetWorkspaceList: "正在取得可用之文章清單",
+	errorGettingTiddlerList: "取得文章清單時發生錯誤，請點選「取消」後重試。",
 	step2Title: "步驟二：選擇工作區",
 	step2Html: "輸入工作區名稱：<input type='text' size=50 name='txtWorkspace'><br>...或選擇工作區：<select name='selWorkspace'><option value=''>選取...</option></select>",
 	cancelLabel: "取消",
@@ -364,13 +365,13 @@ merge(config.macros.sync,{
 	hasChanged: "已更動",
 	hasNotChanged: "未更動",
 	syncStatusList: {
-		none: {text: "...", color: 'transparent'},
-		changedServer: {text: "伺服器資料已更動", color: '#80ff80'},
-		changedLocally: {text: "本機資料已更動", color: '#80ff80'},
-		changedBoth: {text: "已同時更新本機與伺服器上的資料", color: '#ff8080'},
-		notFound: {text: "伺服器無此資料", color: '#ffff80'},
-		putToServer: {text: "已儲存更新資料至伺服器", color: '#ff80ff'},
-		gotFromServer: {text: "已從伺服器擷取更新資料", color: '#80ffff'}
+		none: {text: "...", display:null, className:'notChanged'},
+		changedServer: {text: "伺服器資料已更動", display:null, className:'changedServer'},
+		changedLocally: {text: "本機資料已更動", display:null, className:'changedLocally'},
+		changedBoth: {text: "已同時更新本機與伺服器上的資料", display:null, className:'changedBoth'},
+		notFound: {text: "伺服器無此資料", display:null, className:'notFound'},
+		putToServer: {text: "已儲存更新資料至伺服器", display:null, className:'putToServer'},
+		gotFromServer: {text: "已從伺服器擷取更新資料", display:null, className:'gotFromServer'}
 		}
 	});
 
@@ -445,9 +446,9 @@ merge(config.commands.fields,{
 			]}});
 
 merge(config.shadowTiddlers,{
-	DefaultTiddlers: "GettingStarted",
+	DefaultTiddlers: "[[GettingStarted]]",
 	GettingStarted: "使用此 TiddlyWiki 的空白範本之前，請先修改以下預設文章：\n* SiteTitle 及 SiteSubtitle：網站的標題和副標題，顯示於頁面上方<br />（在儲存變更後，將顯示於瀏覽器視窗的標題列）。\n* MainMenu：主選單（通常在頁面左側）。\n* DefaultTiddlers：內含一些文章的標題，可於載入TiddlyWiki 後的預設開啟。\n請輸入您的大名，作為所建立/ 編輯的文章署名：<<option txtUserName>>",
-	MainMenu: "[[使用說明|GettingStarted]]\n\n\n^^~TiddlyWiki 版本：<<version>>\n© 2007 [[UnaMesa|http://www.unamesa.org/]]^^",
+	MainMenu: "[[使用說明|GettingStarted]]\n\n\n^^~TiddlyWiki 版本：<<version>>",
 	OptionsPanel: "這些設定將暫存於瀏覽器\n請簽名<<option txtUserName>>\n (範例：WikiWord)\n\n <<option chkSaveBackups>> 儲存備份\n <<option chkAutoSave>> 自動儲存\n <<option chkRegExpSearch>> 正規式搜尋\n <<option chkCaseSensitiveSearch>> 區分大小寫搜尋\n <<option chkAnimate>> 使用動畫顯示\n----\n [[進階選項|AdvancedOptions]]",
 	SiteTitle: "我的 TiddlyWiki",
 	SiteSubtitle: "一個可重複使用的個人網頁式筆記本",
