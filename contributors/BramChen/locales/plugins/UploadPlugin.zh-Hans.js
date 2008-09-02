@@ -1,7 +1,7 @@
 /***
-|''Name:''|UploadPlugin.zh-Hant|
+|''Name:''|UploadPlugin.zh-Hans|
 |''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
-|''Require:''|[[UploadPlugin|http://tiddlywiki.bidix.info/#UploadPlugin]]|
+|''Requires:''|[[UploadPlugin|http://tiddlywiki.bidix.info/#UploadPlugin]]|
 ***/
 //{{{
 if (typeof config.macros.upload != "undefined"){
@@ -15,7 +15,7 @@ if (typeof config.macros.upload != "undefined"){
 		promptParamMacro: "储存并上传此 TiddlyWiki 文件于 %0",
 		saveLabel: "远端保存", 
 		saveToDisk: "本机保存",
-		uploadLabel: "上传"	
+		uploadLabel: "上传"
 	});
 
 	merge(config.macros.uploadOptions, {
@@ -23,10 +23,10 @@ if (typeof config.macros.upload != "undefined"){
 		step1Title: "这些设置将保存于浏览器的 cookies",
 		step1Html: "<input type='hidden' name='markList'></input><br>",
 		cancelButton: "取消",
-		cancelButtonPrompt: "取消设定",
+		cancelButtonPrompt: "取消设置",
 		listViewTemplate: {
 			columns: [
-				{name: 'Description', field: 'description', title: "说明", type: 'WikiText'},
+				{name: 'Description', field: 'description', title: "帮助", type: 'WikiText'},
 				{name: 'Option', field: 'option', title: "选项", type: 'String'},
 				{name: 'Name', field: 'name', title: "名称", type: 'String'}
 				],
@@ -48,7 +48,7 @@ if (typeof config.macros.upload != "undefined"){
 		mainFailed: "上传 TiddlyWiki 失败，所作变更未完成保存",
 		//specific upload
 		loadOriginalHttpPostError: "无法载入原始文件",
-		aboutToSaveOnHttpPost: '关于上传 TiddlyWiki 至 %0 ...',
+		aboutToSaveOnHttpPost: '正在上传 TiddlyWiki 至 %0 ...',
 		storePhpNotFound: "无服务端 store script '%0'。"
 	};
 
@@ -64,7 +64,7 @@ if (typeof config.macros.upload != "undefined"){
 	});
 	
 	merge(config.tasks,{
-		uploadOptions: {text: "上传", tooltip: "修改上传设置, content: '<<uploadOptions>>'}
+		uploadOptions: {text: "上传", tooltip: "修改上传设置", content: '<<uploadOptions>>'}
 	});
 
 	config.macros.saveChanges.label = (document.location.toString().substr(0,4) == "http")?"远端保存":"本机保存";
