@@ -21,6 +21,10 @@ merge(config.taggly,{
 			numCols:	"欄數\u00b1", // 加減號
 			label:		"標籤 '%0':",
 			excerpts:   "顯示摘要",
+			descr:      "說明",
+			slices:     "所有段落",
+			contents:   "內容",
+			sliders:    "下拉式",
 			noexcerpts: "隱藏摘要"
 		},
 
@@ -34,7 +38,14 @@ merge(config.taggly,{
 			group:		"依標籤分群顯示",
 			sitemap:	"改以站台導覽風格顯示",
 			commas:		"改以逗點區隔列表",
-			numCols:	"更改顯示之欄位數"
+			numCols:	"更改顯示之欄位數",
+			excerpts: "點擊以顯示摘要",
+			descr:    "點擊以顯示說明段落",
+			slices:    "點擊以顯示所有段落",
+			contents: "點擊以顯示 tiddler內容",
+			sliders:  "點擊以下拉式顯示 tiddler 內容",
+			noexcerpts: "點擊以隱藏摘要，僅顯示標題"
+
 		}
 	}
 });

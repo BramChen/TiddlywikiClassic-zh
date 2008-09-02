@@ -48,7 +48,7 @@ if (typeof config.macros.upload != "undefined"){
 		mainFailed: "上傳 TiddlyWiki 失敗，所作變更未完成儲存",
 		//specific upload
 		loadOriginalHttpPostError: "無法載入原始檔案",
-		aboutToSaveOnHttpPost: '關於上傳 TiddlyWiki 至 %0 ...',
+		aboutToSaveOnHttpPost: '正在上傳 TiddlyWiki 至 %0 ...',
 		storePhpNotFound: "無伺服端 store script '%0'。"
 	};
 
