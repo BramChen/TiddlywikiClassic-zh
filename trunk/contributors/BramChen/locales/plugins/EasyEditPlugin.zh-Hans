@@ -1,3 +1,8 @@
+/***
+|''Name:''|	EasyEditPlugin.zh-Hans|
+|''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
+|''Requires:''|EasyEditPlugin|
+***/
 //{{{
 merge(EditorToolbar.buttons,{
 	separator: {separator: true},
