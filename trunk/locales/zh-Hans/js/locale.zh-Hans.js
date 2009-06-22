@@ -261,8 +261,11 @@ merge(config.macros.plugins,{
 	});
 
 merge(config.macros.toolbar,{
-	moreLabel: "其他",
-	morePrompt: "显示更多工具命令"
+	moreLabel: "+",
+	morePrompt: "显示更多工具命令",
+	lessLabel: "-",
+	lessPrompt: "隐藏部份工具命令",
+	separator: "|"
 	});
 
 merge(config.macros.refreshDisplay,{
