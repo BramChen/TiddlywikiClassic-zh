@@ -4,8 +4,8 @@
 |''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hans/locale.zh-Hans.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''Version:''|2.5.1|
-|''Date:''|Jnu 22, 2009|
+|''Version:''|2.6|
+|''Date:''|Dec 23, 2009|
 |''Comments:''|Please make comments at http://groups.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 3.0 License|http://creativecommons.org/licenses/by-sa/3.0/]]|
 |''~CoreVersion:''|2.4.1|
@@ -37,7 +37,7 @@ merge(config.optionsDesc,{
 	txtUserName: "编辑文章所使用之作者署名",
 	chkRegExpSearch: "启用正则式查找",
 	chkCaseSensitiveSearch: "查找时，区分大小写",
-	chkIncrementalSearch: "随打即找搜寻",
+	chkIncrementalSearch: "随打即找搜索",
 	chkAnimate: "使用动画显示",
 	chkSaveBackups: "保存变更前，保留备份文件",
 	chkAutoSave: "自动保存变更",
@@ -214,7 +214,7 @@ merge(config.macros.newJournal,{
 	accessKey: "J"});
 
 merge(config.macros.options,{
-	wizardTitle: "增订的进阶选项",
+	wizardTitle: "增订的高级选项",
 	step1Title: "增订的选项保存于浏览器的 cookies",
 	step1Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='false' name='chkUnknown'>显示未知选项</input>",
 	unknownDescription: "//(未知)//",
@@ -320,7 +320,7 @@ merge(config.macros.importTiddlers,{
 merge(config.macros.upgrade,{
 	wizardTitle: "更新 TiddlyWiki 核心程序",
 	step1Title: "更新或修补此 TiddlyWiki 至最新版本",
-	step1Html: "您将更新至最新版本的 TiddlyWiki 核心程序 (自 <a href='%0' class='externalLink' target='_blank'>%1</a>)。 在更新过程中，您的资料将被保留。<br><br>请注意：更新核心可能不相容于其他套件。若对更新的档案有问题，详见 <a href='http://www.tiddlywiki.org/wiki/CoreUpgrades' class='externalLink' target='_blank'>http://www.tiddlywiki.org/wiki/CoreUpgrades</a>",
+	step1Html: "您将更新至最新版本的 TiddlyWiki 核心程序 (自 <a href='%0' class='externalLink' target='_blank'>%1</a>)。 在更新过程中，您的资料将被保留。<br><br>请注意：更新核心可能不相容于其他插件。若对更新的档案有问题，详见 <a href='http://www.tiddlywiki.org/wiki/CoreUpgrades' class='externalLink' target='_blank'>http://www.tiddlywiki.org/wiki/CoreUpgrades</a>",
 	errorCantUpgrade: "j无法更新此 TiddlyWiki. 您只能自本机端的 TiddlyWiki 文件执行更新程序",
 	errorNotSaved: "执行更新之前，请先保存变更",
 	step2Title: "确认更新步骤",
@@ -455,7 +455,7 @@ merge(config.shadowTiddlers,{
 	OptionsPanel: "这些设置将缓存于浏览器\n请签名<<option txtUserName>>\n(范例：WikiWord)\n\n<<option chkSaveBackups>> 保存备份\n<<option chkAutoSave>> 自动保存\n<<option chkRegExpSearch>> 正则式搜索\n<<option chkCaseSensitiveSearch>> 区分大小写搜索\n<<option chkAnimate>> 使用动画显示\n----\n[[进阶选项|AdvancedOptions]]",
 	SiteTitle: "我的 TiddlyWiki",
 	SiteSubtitle: "一个可重复使用的个人网页式笔记本",
-	SiteUrl: 'http://www.tiddlywiki.com/',
+	SiteUrl: '',
 	SideBarOptions: '<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal " YYYY年0MM月0DD日" "日志">><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel "偏好设置 \u00bb" "变更 TiddlyWiki 选项">>',
 	SideBarTabs: '<<tabs txtMainTab "最近更新" "依更新日期排序" TabTimeline "全部" "所有文章" TabAll "分类" "所有标签" TabTags "更多" "其他" TabMore>>',
 	StyleSheet: '[[StyleSheetLocale]]',
