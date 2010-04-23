@@ -1,92 +1,89 @@
 /***
 |''Name:''|SearchOptionsPlugin.zh-Hant|
 |''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
-|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''Require:''|[[SearchOptionsPlugin|http://www.tiddlytools.com/#SearchOptionsPlugin]]|
 ***/
 //{{{
-config.shadowTiddlers.AdvancedOptions += "\n設定搜尋選項：\n<<<";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchTitles>> 搜尋文章標題";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchText>> 搜尋文章標題";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchTags>> 搜尋文章標籤";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchFields>> 搜尋文章資料欄";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchShadows>> 搜尋預設文章";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchTitlesFirst>> 結果顯示第一個符合條件者";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchList>> 結果顯示符合條件的文章列表";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchByDate>> 結果顯示依修改日期排序";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchIncremental>> 遞增式搜尋";
-config.shadowTiddlers.AdvancedOptions += "\n<<<";
-config.macros.search.reportTitle="搜尋結果";
 
-window.reportSearchResults=function(text,matches){
-	var title=config.macros.search.reportTitle
-	var q = config.options.chkRegExpSearch ? "/" : "'";
-	var body="\n";
+config.macros.search.reportTitle="查詢結果";
 
+window.formatSearchResults_again=function(text,matches)
+{
+	var title=config.macros.search.reportTitle;
+	var body='';
+	// search again
+	body+='{{span{<<search "'+text.replace(/"/g,'&#x22;')+'">> /%\n';
+//'
+	body+='%/<html><input type="button" value="重新查詢"';
+	body+=' onclick="var t=this.parentNode.parentNode.getElementsByTagName(\'input\')[0];';
+	body+=' config.macros.search.doSearch(t); return false;">';
+	body+=' <a href="javascript:;" onclick="';
+	body+=' var e=this.parentNode.nextSibling;';
+	body+=' var show=e.style.display!=\'block\';';
+	body+=' if(!config.options.chkAnimate) e.style.display=show?\'block\':\'none\';';
+	body+=' else anim.startAnimating(new Slider(e,show,false,\'none\'));';
+	body+=' return false;"> 選項 ...</a>';
+	body+='</html>@@display:none;border-left:1px dotted;margin-left:1em;padding:0;padding-left:.5em;font-size:90%;/%\n';
+	body+='	%/<<option chkSearchTitles>>標題 /%\n';
+	body+='	%/<<option chkSearchText>>內文 /%\n';
+	body+='	%/<<option chkSearchTags>>標籤 /%\n';
+	body+='	%/<<option chkSearchFields>>擴充欄位 /%\n';
+	body+='	%/<<option chkSearchShadows>>預設文章\n';
+	body+='	<<option chkCaseSensitiveSearch>>區分大小寫 /%\n';
+	body+='	%/<<option chkRegExpSearch>>正規表示式 /%\n';
+	body+='	%/<<option chkSearchByDate>>依修改日期排序（最近更新的優先）\n';
+	body+='	<<option chkSearchHighlight>> 在顯示的文章中標示查詢的關鍵字\n';
+	body+='	<<option chkSearchList>> 顯示符合查詢之清單\n';
+	body+='	<<option chkSearchListTiddler>> 將清單寫至 [[查詢結果]] \n';
+	body+=' <<option chkSearchTitlesFirst>>優先顯示標題符合條件者\n';
+	body+='	<<option chkIncrementalSearch>> 遞增式查詢，/%\n';
+	body+='	%/最少匹配之字元數：<<option txtIncrementalSearchMin>>，延遲秒數：<<option txtIncrementalSearchDelay>>\n';
+	body+='	<<option chkSearchOpenTiddlers>> 僅於目前已開啟的文章中查詢\n';
+	body+='	<<option chkSearchExcludeTags>>排除查詢的文章標籤為：\n';
+	body+='	{{editor{<<option txtSearchExcludeTags>>}}}/%\n';
+	body+='%/@@}}}\n\n';
+	return body;
+}
+
+window.formatSearchResults_summary=function(text,matches)
+{
 	// summary: nn tiddlers found matching '...', options used
+	var body='';
+	var co=config.options; // abbrev
+	var title=config.macros.search.reportTitle
+	var q = co.chkRegExpSearch ? "/" : "'";
 	body+="''"+config.macros.search.successMsg.format([matches.length,q+"{{{"+text+"}}}"+q])+"''\n";
-	body+="^^//搜尋範圍：// ";
-	body+=(config.options.chkSearchTitles?"''標題'' ":"");
-	body+=(config.options.chkSearchText?"''內容'' ":"");
-	body+=(config.options.chkSearchTags?"''標籤'' ":"");
-	body+=(config.options.chkSearchFields?"''擴充欄位'' ":"");
-	body+=(config.options.chkSearchShadows?"''預設文章'' ":"");
-	if (config.options.chkCaseSensitiveSearch||config.options.chkRegExpSearch) {
-		body+=" //選項:// ";
-		body+=(config.options.chkCaseSensitiveSearch?"''區別大小寫'' ":"");
-		body+=(config.options.chkRegExpSearch?"''正規表示式'' ":"");
-	}
-	body+="^^";
+	var opts=[];
+	if (co.chkSearchTitles) opts.push("titles");
+	if (co.chkSearchText) opts.push("text");
+	if (co.chkSearchTags) opts.push("tags");
+	if (co.chkSearchFields) opts.push("fields");
+	if (co.chkSearchShadows) opts.push("shadows");
+	if (co.chkSearchOpenTiddlers) body+="^^//search limited to displayed tiddlers only//^^\n";
+	body+="~~&nbsp; 查詢範圍： "+opts.join(" + ")+"~~\n";
+	body+=(co.chkCaseSensitiveSearch||co.chkRegExpSearch?"^^&nbsp; using ":"")
+		+(co.chkCaseSensitiveSearch?"case-sensitive ":"")
+		+(co.chkRegExpSearch?"pattern ":"")
+		+(co.chkCaseSensitiveSearch||co.chkRegExpSearch?"matching^^\n":"");
+	return body;
+}
 
-	// numbered list of links to matching tiddlers
-	body+="\n<<<";
-	for(var t=0;t<matches.length;t++) {
-		var date=config.options.chkSearchByDate?(matches[t].modified.formatString('YYYY年0MM月0DD 0hh:0mm')+" "):"";
-		body+="\n# "+date+"[["+matches[t].title+"]]";
-	}
-	body+="\n<<<\n";
-
-	// open all matches button
-	body+="<html><input type=\"button\" href=\"javascript:;\" ";
-	body+="onclick=\"story.displayTiddlers(null,["
+window.formatSearchResults_buttons=function(text,matches)
+{
+	// embed buttons only if writing SearchResults to tiddler
+	if (!config.options.chkSearchListTiddler) return "";
+	// "open all" button
+	var title=config.macros.search.reportTitle;
+	var body="";
+	body+="@@diplay:block;<html><input type=\"button\" href=\"javascript:;\" "
+		+"onclick=\"story.displayTiddlers(null,[";
 	for(var t=0;t<matches.length;t++)
 		body+="'"+matches[t].title.replace(/\'/mg,"\\'")+"'"+((t<matches.length-1)?", ":"");
-	body+="],1);\" ";
-	body+="accesskey=\"O\" ";
-	body+="value=\"開啟所有符合條件的文章\"></html> ";
-
-	// discard search results button
-	body+="<html><input type=\"button\" href=\"javascript:;\" ";
-	body+="onclick=\"story.closeTiddler('"+title+"'); store.deleteTiddler('"+title+"'); store.notify('"+title+"',true);\" ";
-	body+="value=\"關閉 "+title+"\"></html>";
-
-	// search again
-	body+="\n\n----\n";
-	body+="<<search \""+text+"\">>\n";
-	body+="<<option chkSearchTitles>>標題 ";
-	body+="<<option chkSearchText>>內容 ";
-	body+="<<option chkSearchTags>>標籤";
-	body+="<<option chkSearchFields>>擴充欄位";
-	body+="<<option chkSearchShadows>>預設文章";
-	body+="<<option chkCaseSensitiveSearch>>區別大小寫 ";
-	body+="<<option chkRegExpSearch>>正規表示式";
-	body+="<<option chkSearchByDate>>依修改日期排序";
-
-	// create/update the tiddler
-	var tiddler=store.getTiddler(title); if (!tiddler) tiddler=new Tiddler();
-	tiddler.set(title,body,config.options.txtUserName,(new Date()),"excludeLists excludeSearch temporary");
-	store.addTiddler(tiddler); story.closeTiddler(title);
-
-	// use alternate "search again" label in <<search>> macro
-	var oldprompt=config.macros.search.label;
-	config.macros.search.label="重新查詢";
-
-	// render/refresh tiddler
-	story.displayTiddler(null,title,1);
-	store.notify(title,true);
-
-	// restore standard search label
-	config.macros.search.label=oldprompt;
+	body+="],1);\" accesskey=\"O\" value=\"開啟所有符合條件的文章\"></html> ";
+	// "discard SearchResults" button
+	body+="<html><input type=\"button\" href=\"javascript:;\" "
+		+"onclick=\"discardSearchResults()\" value=\"關閉 "+title+"\"></html>";
+	body+="@@\n";
+	return body;
 }
 //}}}

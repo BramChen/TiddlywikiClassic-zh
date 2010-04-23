@@ -1,92 +1,89 @@
 /***
 |''Name:''|SearchOptionsPlugin.zh-Hans|
 |''Source:''|[[TiddlyWiki-zh|http://tiddlywiki-zh.googlecode.com/svn/trunk/contributors/BramChen/locales/plugins/]]|
-|''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''License:''|[[Creative Commons Attribution-ShareAlike 2.5 License|http://creativecommons.org/licenses/by-sa/2.5/]]|
 |''Require:''|[[SearchOptionsPlugin|http://www.tiddlytools.com/#SearchOptionsPlugin]]|
 ***/
 //{{{
-config.shadowTiddlers.AdvancedOptions += "\n设定查找选项：\n<<<";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchTitles>> 查找文章标题";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchText>> 查找文章标题";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchTags>> 查找文章标签";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchFields>> 查找文章资料栏";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchShadows>> 查找预设文章";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchTitlesFirst>> 结果显示第一个匹配条件者";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchList>> 结果显示匹配条件的文章列表";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchByDate>> 结果显示依修改日期排序";
-config.shadowTiddlers.AdvancedOptions += "\n<<option chkSearchIncremental>> 递增式查找";
-config.shadowTiddlers.AdvancedOptions += "\n<<<";
+
 config.macros.search.reportTitle="查找结果";
 
-window.reportSearchResults=function(text,matches){
-	var title=config.macros.search.reportTitle
-	var q = config.options.chkRegExpSearch ? "/" : "'";
-	var body="\n";
+window.formatSearchResults_again=function(text,matches)
+{
+	var title=config.macros.search.reportTitle;
+	var body='';
+	// search again
+	body+='{{span{<<search "'+text.replace(/"/g,'&#x22;')+'">> /%\n';
+//'
+	body+='%/<html><input type="button" value="重新查找"';
+	body+=' onclick="var t=this.parentNode.parentNode.getElementsByTagName(\'input\')[0];';
+	body+=' config.macros.search.doSearch(t); return false;">';
+	body+=' <a href="javascript:;" onclick="';
+	body+=' var e=this.parentNode.nextSibling;';
+	body+=' var show=e.style.display!=\'block\';';
+	body+=' if(!config.options.chkAnimate) e.style.display=show?\'block\':\'none\';';
+	body+=' else anim.startAnimating(new Slider(e,show,false,\'none\'));';
+	body+=' return false;"> 选项 ...</a>';
+	body+='</html>@@display:none;border-left:1px dotted;margin-left:1em;padding:0;padding-left:.5em;font-size:90%;/%\n';
+	body+='	%/<<option chkSearchTitles>>标题 /%\n';
+	body+='	%/<<option chkSearchText>>内文 /%\n';
+	body+='	%/<<option chkSearchTags>>标签 /%\n';
+	body+='	%/<<option chkSearchFields>>扩充栏位 /%\n';
+	body+='	%/<<option chkSearchShadows>>默认文章\n';
+	body+='	<<option chkCaseSensitiveSearch>>区分大小写 /%\n';
+	body+='	%/<<option chkRegExpSearch>>正规表示式 /%\n';
+	body+='	%/<<option chkSearchByDate>>依修改日期排序（最近更新的优先）\n';
+	body+='	<<option chkSearchHighlight>> 在显示的文章中标示查询的关键字\n';
+	body+='	<<option chkSearchList>> 显示符合查询之清单\n';
+	body+='	<<option chkSearchListTiddler>> 将清单写至 [[查找结果]] \n';
+	body+=' <<option chkSearchTitlesFirst>>优先显示标题符合条件者\n';
+	body+='	<<option chkIncrementalSearch>> 递增式查找，/%\n';
+	body+='	%/最少匹配之字元数：<<option txtIncrementalSearchMin>>，延迟秒数：<<option txtIncrementalSearchDelay>>\n';
+	body+='	<<option chkSearchOpenTiddlers>> 仅于目前已开启的文章中查找\n';
+	body+='	<<option chkSearchExcludeTags>>排除查找的文章标签为：\n';
+	body+='	{{editor{<<option txtSearchExcludeTags>>}}}/%\n';
+	body+='%/@@}}}\n\n';
+	return body;
+}
 
+window.formatSearchResults_summary=function(text,matches)
+{
 	// summary: nn tiddlers found matching '...', options used
+	var body='';
+	var co=config.options; // abbrev
+	var title=config.macros.search.reportTitle
+	var q = co.chkRegExpSearch ? "/" : "'";
 	body+="''"+config.macros.search.successMsg.format([matches.length,q+"{{{"+text+"}}}"+q])+"''\n";
-	body+="^^//查找范围：// ";
-	body+=(config.options.chkSearchTitles?"''标题'' ":"");
-	body+=(config.options.chkSearchText?"''内容'' ":"");
-	body+=(config.options.chkSearchTags?"''标签'' ":"");
-	body+=(config.options.chkSearchFields?"''扩充栏位'' ":"");
-	body+=(config.options.chkSearchShadows?"''预设文章'' ":"");
-	if (config.options.chkCaseSensitiveSearch||config.options.chkRegExpSearch) {
-		body+=" //选项:// ";
-		body+=(config.options.chkCaseSensitiveSearch?"''区别大小写'' ":"");
-		body+=(config.options.chkRegExpSearch?"''正规表示式'' ":"");
-	}
-	body+="^^";
+	var opts=[];
+	if (co.chkSearchTitles) opts.push("titles");
+	if (co.chkSearchText) opts.push("text");
+	if (co.chkSearchTags) opts.push("tags");
+	if (co.chkSearchFields) opts.push("fields");
+	if (co.chkSearchShadows) opts.push("shadows");
+	if (co.chkSearchOpenTiddlers) body+="^^//search limited to displayed tiddlers only//^^\n";
+	body+="~~&nbsp; 查找范围： "+opts.join(" + ")+"~~\n";
+	body+=(co.chkCaseSensitiveSearch||co.chkRegExpSearch?"^^&nbsp; using ":"")
+		+(co.chkCaseSensitiveSearch?"case-sensitive ":"")
+		+(co.chkRegExpSearch?"pattern ":"")
+		+(co.chkCaseSensitiveSearch||co.chkRegExpSearch?"matching^^\n":"");
+	return body;
+}
 
-	// numbered list of links to matching tiddlers
-	body+="\n<<<";
-	for(var t=0;t<matches.length;t++) {
-		var date=config.options.chkSearchByDate?(matches[t].modified.formatString('YYYY年0MM月0DD 0hh:0mm')+" "):"";
-		body+="\n# "+date+"[["+matches[t].title+"]]";
-	}
-	body+="\n<<<\n";
-
-	// open all matches button
-	body+="<html><input type=\"button\" href=\"javascript:;\" ";
-	body+="onclick=\"story.displayTiddlers(null,["
+window.formatSearchResults_buttons=function(text,matches)
+{
+	// embed buttons only if writing SearchResults to tiddler
+	if (!config.options.chkSearchListTiddler) return "";
+	// "open all" button
+	var title=config.macros.search.reportTitle;
+	var body="";
+	body+="@@diplay:block;<html><input type=\"button\" href=\"javascript:;\" "
+		+"onclick=\"story.displayTiddlers(null,[";
 	for(var t=0;t<matches.length;t++)
 		body+="'"+matches[t].title.replace(/\'/mg,"\\'")+"'"+((t<matches.length-1)?", ":"");
-	body+="],1);\" ";
-	body+="accesskey=\"O\" ";
-	body+="value=\"开启所有匹配条件的文章\"></html> ";
-
-	// discard search results button
-	body+="<html><input type=\"button\" href=\"javascript:;\" ";
-	body+="onclick=\"story.closeTiddler('"+title+"'); store.deleteTiddler('"+title+"'); store.notify('"+title+"',true);\" ";
-	body+="value=\"关闭 "+title+"\"></html>";
-
-	// search again
-	body+="\n\n----\n";
-	body+="<<search \""+text+"\">>\n";
-	body+="<<option chkSearchTitles>>标题 ";
-	body+="<<option chkSearchText>>内容 ";
-	body+="<<option chkSearchTags>>标签";
-	body+="<<option chkSearchFields>>扩充栏位";
-	body+="<<option chkSearchShadows>>预设文章";
-	body+="<<option chkCaseSensitiveSearch>>区别大小写 ";
-	body+="<<option chkRegExpSearch>>正规表示式";
-	body+="<<option chkSearchByDate>>依修改日期排序";
-
-	// create/update the tiddler
-	var tiddler=store.getTiddler(title); if (!tiddler) tiddler=new Tiddler();
-	tiddler.set(title,body,config.options.txtUserName,(new Date()),"excludeLists excludeSearch temporary");
-	store.addTiddler(tiddler); story.closeTiddler(title);
-
-	// use alternate "search again" label in <<search>> macro
-	var oldprompt=config.macros.search.label;
-	config.macros.search.label="重新查找";
-
-	// render/refresh tiddler
-	story.displayTiddler(null,title,1);
-	store.notify(title,true);
-
-	// restore standard search label
-	config.macros.search.label=oldprompt;
+	body+="],1);\" accesskey=\"O\" value=\"开启所有符合条件的文章\"></html> ";
+	// "discard SearchResults" button
+	body+="<html><input type=\"button\" href=\"javascript:;\" "
+		+"onclick=\"discardSearchResults()\" value=\"关闭 "+title+"\"></html>";
+	body+="@@\n";
+	return body;
 }
 //}}}
