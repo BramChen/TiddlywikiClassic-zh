@@ -5,7 +5,7 @@
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''Version:''|2.6|
-|''Date:''|Oct 13, 2009|
+|''Date:''|Aug 06, 2010|
 |''Comments:''|Please make comments at http://groups.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 3.0 License|http://creativecommons.org/licenses/by-sa/3.0/]]|
 |''~CoreVersion:''|2.4.1|
@@ -94,7 +94,8 @@ merge(config.messages,{
 	invalidFieldName: "無效的欄位名稱：%0",
 	fieldCannotBeChanged: "無法變更欄位：'%0'",
 	loadingMissingTiddler: "正從伺服器 '%1' 的：\n\n工作區 '%3' 中的 '%2' 擷取文章 '%0'",
-	upgradeDone: "已更新至 %0 版\n\n點擊 '確定' 重新載入更新後的 TiddlyWiki"});
+	upgradeDone: "已更新至 %0 版\n\n點擊 '確定' 重新載入更新後的 TiddlyWiki",
+	invalidCookie: "無效的 cookie '%0'"});
 
 merge(config.messages.messageClose,{
 	text: "關閉",
@@ -246,7 +247,7 @@ merge(config.macros.plugins,{
 		columns: [
 			{name: 'Selected', field: 'Selected', rowName: 'title', type: 'Selector'},
 			{name: 'Tiddler', field: 'tiddler', title: "套件", type: 'Tiddler'},
-			{name: 'Description', field: 'desc', title: "說明", type: 'String'},
+			{name: 'Description', field: 'Description', title: "說明", type: 'String'},
 			{name: 'Version', field: 'Version', title: "版本", type: 'String'},
 			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "大小", type: 'Size'},
 			{name: 'Forced', field: 'forced', title: "強制執行", tag: 'systemConfigForce', type: 'TagCheckbox'},
@@ -282,7 +283,6 @@ merge(config.macros.importTiddlers,{
 	step1Html: "指定伺服器類型：<select name='selTypes'><option value=''>選取...</option></select><br>請輸入網址或路徑：<input type='text' size=50 name='txtPath'><br>...或選擇來源文件：<input type='file' size=50 name='txtBrowse'><br><hr>...或選擇指定的饋入來源：<select name='selFeeds'><option value=''>選取...</option></select>",
 	openLabel: "開啟",
 	openPrompt: "開啟檔案或",
-	openError: "讀取來源文件時發生錯誤",
 	statusOpenHost: "正與伺服器建立連線",
 	statusGetWorkspaceList: "正在取得可用之文章清單",
 	errorGettingTiddlerList: "取得文章清單時發生錯誤，請點選「取消」後重試。",
