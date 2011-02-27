@@ -4,8 +4,8 @@
 |''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''Version:''|2.6|
-|''Date:''|Aug 06, 2010|
+|''Version:''|2.6.2|
+|''Date:''|Feb 27, 2011|
 |''Comments:''|Please make comments at http://groups.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 3.0 License|http://creativecommons.org/licenses/by-sa/3.0/]]|
 |''~CoreVersion:''|2.4.1|
@@ -260,6 +260,21 @@ merge(config.macros.plugins,{
 		rowClasses: [
 			{className: 'error', field: 'error'},
 			{className: 'warning', field: 'warning'}
+			]},
+	listViewTemplateReadOnly: {
+		columns: [
+			{name: 'Tiddler', field: 'tiddler', title: "套件", type: 'Tiddler'},
+			{name: 'Description', field: 'Description', title: "說明", type: 'String'},
+			{name: 'Version', field: 'Version', title: "版本", type: 'String'},
+			{name: 'Size', field: 'size', tiddlerLink: 'size', title: "大小", type: 'Size'},
+			{name: 'Executed', field: 'executed', title: "已載入", type: 'Boolean', trueText: "是", falseText: "否"},
+			{name: 'Startup Time', field: 'startupTime', title: "載入時間", type: 'String'},
+			{name: 'Error', field: 'error', title: "載入狀態", type: 'Boolean', trueText: "錯誤", falseText: "正常"},
+			{name: 'Log', field: 'log', title: "紀錄", type: 'StringList'}
+			],
+		rowClasses: [
+			{className: 'error', field: 'error'},
+			{className: 'warning', field: 'warning'}
 			]}
 	});
 
@@ -372,7 +387,7 @@ merge(config.macros.sync,{
 	hasChanged: "已更動",
 	hasNotChanged: "未更動",
 	syncStatusList: {
-		none: {text: "...", display:null, className:'notChanged'},
+		none: {text: "...", display:'none', className:'notChanged'},
 		changedServer: {text: "伺服器資料已更動", display:null, className:'changedServer'},
 		changedLocally: {text: "本機資料已更動", display:null, className:'changedLocally'},
 		changedBoth: {text: "已同時更新本機與伺服器上的資料", display:null, className:'changedBoth'},
@@ -460,7 +475,7 @@ merge(config.shadowTiddlers,{
 	SiteTitle: "我的 TiddlyWiki",
 	SiteSubtitle: "一個可重複使用的個人網頁式筆記本",
 	SiteUrl: '',
-	SideBarOptions: '<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal " YYYY年0MM月0DD日" "日誌">><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel "偏好設定 \u00bb" "變更 TiddlyWiki 選項">>',
+	SideBarOptions: '<<search>><<closeAll>><<permaview>><<newTiddler>><<newJournal "YYYY年0MM月0DD日" "日誌">><<saveChanges>><<slider chkSliderOptionsPanel OptionsPanel "偏好設定 \u00bb" "變更 TiddlyWiki 選項">>',
 	SideBarTabs: '<<tabs txtMainTab "最近更新" "依更新日期排序" TabTimeline "全部" "所有文章" TabAll "分類" "所有標籤" TabTags "更多" "其他" TabMore>>',
 	StyleSheet: '[[StyleSheetLocale]]',
 	TabMore: '<<tabs txtMoreTab "未完成" "內容空白的文章" TabMoreMissing "未引用" "未被引用的文章" TabMoreOrphans "預設文章" "已預設內容的隱藏文章" TabMoreShadowed>>'
@@ -491,6 +506,7 @@ merge(config.annotations,{
 	StyleSheetLayout: "此預設文章內含的 CSS 規則，為相關的頁面元素的版面配置。''勿修改此文''，請於 StyleSheet 中作增修",
 	StyleSheetLocale: "此預設文章內含的 CSS 規則，可依翻譯語系做適當調整",
 	StyleSheetPrint: "此預設文章內含的 CSS 規則，用於列印時的樣式",
+	SystemSettings: "此預設文章用於儲存此 TiddlyWiki 文件的選項設定",
 	TabAll: "此預設文章的內容，為於螢幕右側副選單中的「全部」頁籤的內容",
 	TabMore: "此預設文章的內容，為於螢幕右側副選單中的「更多」頁籤的內容",
 	TabMoreMissing: "此預設文章的內容，為於螢幕右側副選單中的「未完成」頁籤的內容",
