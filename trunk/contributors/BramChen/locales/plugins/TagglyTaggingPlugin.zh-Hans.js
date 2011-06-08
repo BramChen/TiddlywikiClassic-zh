@@ -20,12 +20,14 @@ merge(config.taggly,{
 			sitemap:	"导览",
 			numCols:	"栏数\u00b1", // 加减号
 			label:		"标签 '%0':",
+			exprLabel:	"Matching tag expression '%0':",
 			excerpts:   "显示摘要",
 			descr:      "说明",
 			slices:     "所有段落",
 			contents:   "内容",
 			sliders:    "下拉式",
-			noexcerpts: "隐藏摘要"
+			noexcerpts: "隐藏摘要",
+			noneFound:	"(none)"
 		},
 
 		tooltips: {
@@ -45,8 +47,9 @@ merge(config.taggly,{
 			contents: "点击以显示 tiddler内容",
 			sliders:  "点击以下拉式显示 tiddler 内容",
 			noexcerpts: "点击以隐藏摘要，仅显示标题"
+		},
 
-		}
+		tooDeepMessage: "* //sitemap too deep...//"
 	}
 });
 //}}}
