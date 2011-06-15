@@ -5,7 +5,7 @@
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
 |''Version:''|2.6.2|
-|''Date:''|Feb 27, 2011|
+|''Date:''|Jun 15, 2011|
 |''Comments:''|Please make comments at http://groups.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 3.0 License|http://creativecommons.org/licenses/by-sa/3.0/]]|
 |''~CoreVersion:''|2.4.1|
@@ -321,7 +321,7 @@ merge(config.macros.importTiddlers,{
 	systemServerNamePattern: "%2 位於 %1",
 	systemServerNamePatternNoWorkspace: "%1",
 	confirmOverwriteSaveTiddler: "此 tiddler '%0' 已經存在。點擊「確定」以伺服器上料覆寫之，或「取消」不變更後離開",
-	serverSaveTemplate: "|''Type:''|%0|\n|''網址：''|%1|\n|''工作區：''|%2|\n\n此文為自動產生紀錄伺服器之相關資訊。",
+	serverSaveTemplate: "|''Type:''|%0|\n|''URL:''|%1|\n|''Workspace:''|%2|\n\n此文為自動產生紀錄伺服器之相關資訊。",
 	serverSaveModifier: "（系統）",
 
 	listViewTemplate: {
