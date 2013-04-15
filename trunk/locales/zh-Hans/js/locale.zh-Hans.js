@@ -4,8 +4,8 @@
 |''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hans/locale.zh-Hans.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''Version:''|2.6.2|
-|''Date:''|Jun 15, 2011|
+|''Version:''|2.6.6|
+|''Date:''|Oct 10, 2012|
 |''Comments:''|Please make comments at http://groups.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 3.0 License|http://creativecommons.org/licenses/by-sa/3.0/]]|
 |''~CoreVersion:''|2.4.1|
@@ -26,7 +26,6 @@ if (config.options.txtUserName == 'YourName' || !config.options.txtUserName) // 
 
 merge(config.tasks,{
 	save: {text: "保存", tooltip: "保存变更至此 TiddlyWiki", action: saveChanges},
-	sync: {text: "同步", tooltip: "将你的资料内容与外部服务器与文件同步", content: '<<sync>>'},
 	importTask: {text: "导入", tooltip: "自其他文件或服务器导入文章或插件", content: '<<importTiddlers>>'},
 	tweak: {text: "选项", tooltip: "改变此 TiddlyWiki 显示与行为设置", content: '<<options>>'},
 	upgrade: {text: "更新", tooltip: "更新 TiddlyWiki 核心程序", content: '<<upgrade>>'},
@@ -80,8 +79,8 @@ merge(config.messages,{
 	emptyFailed: "无法保存模版",
 	mainSaved: "主要的TiddlyWiki已保存",
 	mainFailed: "无法保存主要 TiddlyWiki，所作的改变未保存",
-	macroError: "宏 <<\%0>> 执行错误",
-	macroErrorDetails: "执行宏 <<\%0>> 时，发生错误 :\n%1",
+	macroError: "宏 <<%0>> 执行错误",
+	macroErrorDetails: "执行宏 <<%0>> 时，发生错误 :\n%1",
 	missingMacro: "无此宏",
 	overwriteWarning: "'%0' 已存在，[确定]覆盖之",
 	unsavedChangesWarning: "注意！ 尚未保存变更\n\n[确定]保存，或[取消]放弃保存？",
@@ -168,6 +167,7 @@ merge(config.views.editor.tagChooser,{
 merge(config.macros.search,{
 	label: " 查找",
 	prompt: "搜索本 Wiki",
+	placeholder: "",
 	accessKey: "F",
 	successMsg: " %0 篇符合条件: %1",
 	failureMsg: " 无符合条件: %0"});
@@ -306,6 +306,9 @@ merge(config.macros.importTiddlers,{
 	cancelPrompt: "取消本次导入动作",
 	statusOpenWorkspace: "正在开启工作区",
 	statusGetTiddlerList: "正在取得可用之文章清单",
+	errorGettingTiddlerListHttp404: "读取 tiddlers 发生错误，请确认来源网址。点击[取消]重试。",
+	errorGettingTiddlerListHttp: "读取 tiddlers 发生错误，请确认来源网址且已启用<a href='http://enable-cors.org/'>CORS</a>",
+	errorGettingTiddlerListFile: "从本机档案读取 tiddlers 发生错误，请确认来源位于此 TiddlyWiki 文件相同的资料夹。点击[取消]重试。",
 	step3Title: "步骤三：选择欲导入之文章",
 	step3Html: "<input type='hidden' name='markList'></input><br><input type='checkbox' checked='true' name='chkSync'>保持这些文章与服务器链接，便于同步后续的变更。</input><br><input type='checkbox' name='chkSave'>保存此服务器的详细资讯于标签为 'systemServer' 的文章名为：</input> <input type='text' size=25 name='txtSaveTiddler'>", 
 	importLabel: "导入",
@@ -360,40 +363,6 @@ merge(config.macros.upgrade,{
 	step3Html: "您已取消更新作业"
 	});
 
-merge(config.macros.sync,{
-	listViewTemplate: {
-		columns: [
-			{name: 'Selected', field: 'selected', rowName: 'title', type: 'Selector'},
-			{name: 'Tiddler', field: 'tiddler', title: "文章", type: 'Tiddler'},
-			{name: 'Server Type', field: 'serverType', title: "服务器类型", type: 'String'},
-			{name: 'Server Host', field: 'serverHost', title: "服务器主机", type: 'String'},
-			{name: 'Server Workspace', field: 'serverWorkspace', title: "服务器工作区", type: 'String'},
-			{name: 'Status', field: 'status', title: "同步情形", type: 'String'},
-			{name: 'Server URL', field: 'serverUrl', title: "服务器网址", text: "检视", type: 'Link'}
-			],
-		rowClasses: [
-			],
-		buttons: [
-			{caption: "同步更新这些文章", name: 'sync'}
-			]},
-	wizardTitle: "将你的资料内容与外部服务器与文件同步",
-	step1Title: "选择欲同步的文章",
-	step1Html: '<input type="hidden" name="markList"></input>',
-	syncLabel: "同步",
-	syncPrompt: "同步更新这些文章",
-	hasChanged: "已更动",
-	hasNotChanged: "未更动",
-	syncStatusList: {
-		none: {text: "...", display:'none', className:'notChanged'},
-		changedServer: {text: "服务器资料已更动", display:null, className:'changedServer'},
-		changedLocally: {text: "本机资料已更动", display:null, className:'changedLocally'},
-		changedBoth: {text: "已同时更新本机与服务器上的资料", display:null, className:'changedBoth'},
-		notFound: {text: "服务器无此资料", className:'notFound'},
-		putToServer: {text: "已储存更新资料至服务器", display:null, className:'putToServer'},
-		gotFromServer: {text: "已从服务器撷取更新资料", display:null, className:'gotFromServer'}
-		}
-	});
-
 merge(config.macros.annotations,{
 	});
 
@@ -439,16 +408,6 @@ merge(config.commands.references,{
 merge(config.commands.jump,{
 	text: "跳转",
 	tooltip: "跳转至其他已开启的文章"});
-
-merge(config.commands.syncing,{
-	text: "同步",
-	tooltip: "本文章与服务器或其他外部文件的同步资讯",
-	currentlySyncing: "<div>同步类型：<span class='popupHighlight'>'%0'</span></"+"div><div>与服务器：<span class='popupHighlight'>%1 同步</span></"+"div><div>工作区：<span class='popupHighlight'>%2</span></"+"div>", // Note escaping of closing <div> tag
-	notCurrentlySyncing: "无进行中的同步动作",
-	captionUnSync: "停止同步此文章",
-	chooseServer: "与其他服务器同步此文章:",
-	currServerMarker: "\u25cf ",
-	notCurrServerMarker: "  "});
 
 merge(config.commands.fields,{
 	text: "栏位",
