@@ -4,11 +4,11 @@
 |''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''Version:''|2.6.6|
-|''Date:''|Oct 10, 2012|
+|''Version:''|2.8.0|
+|''Date:''|May 22, 2013|
 |''Comments:''|Please make comments at http://groups.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 3.0 License|http://creativecommons.org/licenses/by-sa/3.0/]]|
-|''~CoreVersion:''|2.4.1|
+|''~CoreVersion:''|2.6.6|
 ***/
 
 //{{{
@@ -78,6 +78,8 @@ merge(config.messages,{
 	emptySaved: "已儲存範本",
 	emptyFailed: "無法儲存範本",
 	mainSaved: "主要的TiddlyWiki已儲存",
+	mainDownload: "正在下載/ 儲存 TiddlyWiki 檔案",
+	mainDownloadManual: "於此點擊滑鼠右鍵下載/ 儲存 TiddlyWiki 檔案",
 	mainFailed: "無法儲存主要 TiddlyWiki，所作的改變未儲存",
 	macroError: "巨集 <<%0>> 執行錯誤",
 	macroErrorDetails: "執行巨集 <<%0>> 時，發生錯誤 :\n%1",

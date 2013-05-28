@@ -4,11 +4,11 @@
 |''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
 |''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hans/locale.zh-Hans.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''Version:''|2.6.6|
-|''Date:''|Oct 10, 2012|
+|''Version:''|2.8.0|
+|''Date:''|May 22, 2013|
 |''Comments:''|Please make comments at http://groups.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 3.0 License|http://creativecommons.org/licenses/by-sa/3.0/]]|
-|''~CoreVersion:''|2.4.1|
+|''~CoreVersion:''|2.6.6|
 ***/
 
 //{{{
@@ -78,6 +78,8 @@ merge(config.messages,{
 	emptySaved: "已保存模版",
 	emptyFailed: "无法保存模版",
 	mainSaved: "主要的TiddlyWiki已保存",
+	mainDownload: "正在下载/ 储存 TiddlyWiki 档案",
+	mainDownloadManual: "于此点击右键下载/ 储存 TiddlyWiki 档案",
 	mainFailed: "无法保存主要 TiddlyWiki，所作的改变未保存",
 	macroError: "宏 <<%0>> 执行错误",
 	macroErrorDetails: "执行宏 <<%0>> 时，发生错误 :\n%1",
