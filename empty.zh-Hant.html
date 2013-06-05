@@ -1779,7 +1779,8 @@ if(!window || !window.console) {
 // Starting up
 function main()
 {
-	window.originalHTML=recreateOriginal();
+	if (config.browser.isIE && config.browser.isVersion > "8.0")
+		window.originalHTML=recreateOriginal();
 
 	var t10,t9,t8,t7,t6,t5,t4,t3,t2,t1,t0 = new Date();
 	startingUp = true;
