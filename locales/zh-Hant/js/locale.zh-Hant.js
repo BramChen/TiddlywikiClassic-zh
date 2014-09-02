@@ -2,13 +2,13 @@
 |''Name:''|zh-HantTranslationPlugin|
 |''Description:''|Translation of TiddlyWiki into Traditional Chinese|
 |''Source:''|http://tiddlywiki-zh.googlecode.com/svn/trunk/|
-|''Subversion:''|http://svn.tiddlywiki.org/Trunk/association/locales/core/zh-Hant/locale.zh-Hant.js|
+|''Subversion:''|https://code.google.com/p/tiddlywiki-zh/source/browse/trunk/locales/zh-Hant/js/locale.zh-Hant.js|
 |''Author:''|BramChen (bram.chen (at) gmail (dot) com)|
-|''Version:''|2.8.0|
-|''Date:''|May 22, 2013|
+|''Version:''|2.9.0|
+|''Date:''|Aug 24, 2014|
 |''Comments:''|Please make comments at http://groups.google.com/group/TiddlyWiki-zh/|
 |''License:''|[[Creative Commons Attribution-ShareAlike 3.0 License|http://creativecommons.org/licenses/by-sa/3.0/]]|
-|''~CoreVersion:''|2.6.6|
+|''~CoreVersion:''|2.8.0|
 ***/
 
 //{{{
@@ -25,7 +25,7 @@ if (config.options.txtUserName == 'YourName' || !config.options.txtUserName) // 
 	merge(config.options,{txtUserName: "YourName"});
 
 merge(config.tasks,{
-	save: {text: "儲存", tooltip: "儲存變更至此 TiddlyWiki", action: saveChanges},
+	save: {text: "儲存", tooltip: "儲存變更至此 TiddlyWiki"},
 	importTask: {text: "導入", tooltip: "自其他檔案或伺服器導入文章或套件", content: '<<importTiddlers>>'},
 	tweak: {text: "選項", tooltip: "改變此 TiddlyWiki 的顯示與行為的設定", content: '<<options>>'},
 	upgrade: {text: "更新", tooltip: "更新 TiddlyWiki 核心程式", content: '<<upgrade>>'},
@@ -48,6 +48,7 @@ merge(config.optionsDesc,{
 	chkForceMinorUpdate: "修改文章時，不變更作者名稱與日期時間",
 	chkConfirmDelete: "刪除文章前須確認",
 	chkInsertTabs: "使用 tab 鍵插入定位字元，而非跳至下一個欄位",
+	chkRemoveExtraMarkers: "用空白替換未使用的 transclusion 標標記", // #162
 	txtBackupFolder: "存放備份檔案的資料夾",
 	txtMaxEditRows: "編輯模式中顯示列數",
 	txtTheme: "使用的佈景名稱",
@@ -61,7 +62,7 @@ merge(config.messages,{
 	pluginForced: "已執行，因標籤設為 'systemConfigForce'",
 	pluginVersionError: "未執行，套件需較新版本的 TiddlyWiki",
 	nothingSelected: "尚未作任何選擇，至少需選擇一項",
-	savedSnapshotError: "此 TiddlyWiki 未正確存檔，詳見 http://www.tiddlywiki.com/#Download",
+	savedSnapshotError: "此 TiddlyWiki 未正確存檔，詳見 http://classic.tiddlywiki.com/#Download",
 	subtitleUnknown: "(未知)",
 	undefinedTiddlerToolTip: "'%0' 尚無內容",
 	shadowedTiddlerToolTip: "'%0' 尚無內容, 但已定義隱藏的預設值",
@@ -169,7 +170,7 @@ merge(config.messages,{
 
 merge(config.macros.search,{
 	label: " 尋找",
-	prompt: "搜尋本 Wiki",
+	prompt: "搜尋此 TiddlyWiki",
 	placeholder: "",
 	accessKey: "F",
 	successMsg: " %0 篇符合條件: %1",
@@ -343,8 +344,8 @@ merge(config.macros.importTiddlers,{
 merge(config.macros.upgrade,{
 	wizardTitle: "更新 TiddlyWiki 核心程式",
 	step1Title: "更新或修補此 TiddlyWiki 至最新版本",
-	step1Html: "您將更新至最新版本的 TiddlyWiki 核心程式 (自 <a href='%0' class='externalLink' target='_blank'>%1</a>)。 在更新過程中，您的資料將被保留。<br><br>請注意：更新核心可能不相容於其他套件。若對更新的檔案有問題，詳見 <a href='http://www.tiddlywiki.org/wiki/CoreUpgrades' class='externalLink' target='_blank'>http://www.tiddlywiki.org/wiki/CoreUpgrades</a>",
-	errorCantUpgrade: "j無法更新此 TiddlyWiki. 您只能自本機端的 TiddlyWiki 檔案執行更新程序",
+	step1Html: "您將更新至最新版本的 TiddlyWiki 核心程式 (自 <a href='%0' class='externalLink' target='_blank'>%1</a>)。 在更新過程中，您的資料將被保留。<br><br>請注意：更新核心可能不相容於舊的套件。若對更新的檔案有問題，詳見 <a href='http://tiddlywiki.org/#search:Upgrade' class='externalLink' target='_blank'>http://tiddlywiki.org/#search:Upgrade</a>",
+	errorCantUpgrade: "無法更新此 TiddlyWiki. 您只能自本機端的 TiddlyWiki 檔案執行更新程序",
 	errorNotSaved: "執行更新之前，請先儲存變更",
 	step2Title: "確認更新步驟",
 	step2Html_downgrade: "您的 TiddlyWiki 將自 %1 版降級至 %0版。<br><br>不建議降級至較舊的版本。",
